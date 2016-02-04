@@ -1,20 +1,99 @@
-<% content_for :content do %>
-  </br>
-  <p id="notice"><%= notice %></p>
-  </br>
-  <h1><%= "#{@user.name}'s Profile" %></h1>
-  </br>
+<%# <% content_for :content do %1> %>
+<%#   </br> %>
+<%#   <p id="notice"><%= notice %1></p> %>
+<%#   </br> %>
+<%#   <h1><%= "#{@user.name}'s Profile" %1></h1> %>
+<%#   </br> %>
 
-  <p>
-  <h3>Name: <%= @user.name %></h3>
-  </p>
-  <h3>Email: <%= @user.email%></h3>
-  </p>
-  <h3>Status: <%= @user.role%></h3>
-  </p>
-  </br> 
-  more user related infos like number of published entries here...
-  </br> 
-  </br> 
-  <%= link_to 'Back', users_path %>
+<%#   <p> %>
+<%#   <h3>Name: <%= @user.name %1></h3> %>
+<%#   </p> %>
+<%#   <h3>Email: <%= @user.email%></h3> %>
+<%#   </p> %>
+<%#   <h3>Status: <%= @user.role%></h3> %>
+<%#   </br> %>
+<%#   <% @user.entries.all.map do |entry| %1> %>
+<%#     <p><%= entry.uebersetzung %1></p> %>
+<%#   <% end %1> %>
+<%#   </p> %>
+<%#   </br> %> 
+<%#   more user related infos like number of published entries here... %>
+<%#   </br> %> 
+<%#   </br> %> 
+<%#   <%= link_to 'Back', users_path %1> %>
+<%# <% end %1> %>
+
+<% content_for :sidebar do %>
+  <div class="well sidebar-nav">
+    <ul class="nav nav-list">
+      <li class="nav-header">Suche</li>
+      <%= form_tag entries_path, method: "get", id: "search_form", target: "_self" do %>
+        <fieldset>
+          <li>
+            <label for="search">Suchbegriff</label>
+            <input type="text" id="search" name="search" class="span12" value="<%= params[:search] %>"></input>
+          </li>
+        <fieldset>
+        <li>
+          <button id="search_button" class="btn">Suchen</button>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<% content_for :content do %>
+  <% if flash[:notice] %>
+    <div class="alert alert-notice">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <strong><%= raw(flash[:notice]) %></strong>
+    </div>
+  <% end %>
+  <h1><%= "#{@user.name}'s Einträge" %></h1>
+  <span class="label"><%= @user.entries.count %>
+    <%= @user.entries.count > 1 ? "Einträge" : "Eintrag" %>
+  </span>
+
+  <%# <%= paginate @user.entries %1> %>
+  <table class="table table-striped">
+    <tr>
+      <th>Verfasser</th>
+      <th>Namenskürzel</th>
+      <th>Kennzahl</th>
+      <th>Japanische umschrift</th>
+      <th>Kanji</th>
+      <th>Aktionen</th>
+      <th>Kommentar</th>
+    </tr>
+
+    <% @user.entries.each do |entry| %>
+      <tr>
+        <td><%= entry.user.name %></td>
+        <td><%= entry.namenskuerzel %></td>
+        <td><%= entry.kennzahl %></td>
+        <td><%= entry.japanische_umschrift %></td>
+        <td><%= entry.kanji %></td>
+        <td><%= link_to 'Anzeigen', entry %>
+        <% if entry.user == current_user || current_user.admin? %>
+          <br/>
+          <%= link_to 'Bearbeiten', edit_entry_path(entry) %>
+        <% end %>
+        <% if current_user.admin? %>
+          <br/>
+          <%= link_to 'Löschen', entry, method: :delete, data: { confirm: 'Wollen Sie diesen Eintrag wirklich löschen?' }%>
+        <% end %>
+        </td>
+        <td>
+          <% if entry.comments.length != 0 %>
+            <%= link_to entry.comments.length, entry_path(entry) + "#comments", :class => "badge badge-important comments" %>
+          <% end %>
+          <% if entry.freigeschaltet %>
+            <span class="label label-success">Freigeschaltet</span>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+  <%# <%= paginate @user.entries %1> %>
+
 <% end %>
