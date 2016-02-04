@@ -46,6 +46,7 @@ describe User do
       admin.destroy 
       entry.reload
       expect(entry.user_id).to be(nil)
+      # expect(entry.user_id).to eq(1)
     end
 
 
