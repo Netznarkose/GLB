@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   # has_many :entries, dependent: :destroy
+  has_many :entries, dependent: :nullify
   has_many :entries
   has_many :comments
   # Include default devise modules. Others available are:

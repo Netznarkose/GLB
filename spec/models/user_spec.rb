@@ -31,15 +31,25 @@ describe User do
     let(:admin) { FactoryGirl.create(:admin) }
 
     it "does not delete the corresponding entries" do
-      # entry = FactoryGirl.create(:entry, user_id: admin.id)
-      # admin.reload
-      # admin.destroy # model level
-      # expect(entry.persisted?).to be(true)
-
       admin.entries << FactoryGirl.create(:entry)
       admin.destroy # model level
       expect(Entry.count).to eq(1)
     end
+    # it "does not delete the corresponding entries2" do
+    #   entry = FactoryGirl.create(:entry, user_id: admin.id)
+    #   admin.destroy # model level
+    #   expect(entry.persisted?).to be(true)
+    # end
+    it "nullify all corresponding entries" do
+      admin.entries << FactoryGirl.create(:entry)
+      entry = admin.entries.first
+      admin.destroy 
+      entry.reload
+      expect(entry.user_id).to be(nil)
+    end
+
+
+      
   end
 end
 

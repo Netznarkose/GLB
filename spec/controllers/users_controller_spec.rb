@@ -4,7 +4,6 @@ describe UsersController, type: :controller do
   let(:admin) { FactoryGirl.create(:admin) }
   let(:editor) { FactoryGirl.create(:editor) }
   let(:user) { FactoryGirl.create(:user) }
-  let(:entry) { FactoryGirl.create(:entry) }
 
   describe 'get index' do
     context 'as admin' do
@@ -186,23 +185,6 @@ describe UsersController, type: :controller do
           delete :destroy, id: user.id
         }.to change(User, :count).by(-1)
         expect(response).to redirect_to(users_path)
-      end
-      it 'I can delete users but their entries remain' do
-        all_entries = Entry.all.count
-        user.id = 3
-        sign_in admin
-        entry
-        expect{entry.save}.to change(Entry, :count).by(1)
-        # expect{
-        #   delete :destroy, id: user.id
-        # }.to change(User, :count).by(-1)
-        # expect{
-        #   delete :destroy, id: user.id
-        # }.to change(Entry, :count).by(-1)
-
-#         expect(entry.user_id).to eq(3)
-#         binding.pry
-
       end
     end
     context 'as editor' do
