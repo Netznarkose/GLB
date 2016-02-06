@@ -29,6 +29,7 @@ describe User do
 
   context 'if we delete a user' do
     let(:admin) { FactoryGirl.create(:admin) }
+    let(:superadmin) { FactoryGirl.create(:superadmin) }
 
     it "does not delete the corresponding entries" do
       admin.entries << FactoryGirl.create(:entry)
@@ -40,13 +41,21 @@ describe User do
     #   admin.destroy # model level
     #   expect(entry.persisted?).to be(true)
     # end
-    it "nullify all corresponding entries" do
+    # it "nullify all corresponding entries" do
+    #   admin.entries << FactoryGirl.create(:entry)
+    #   entry = admin.entries.first
+    #   admin.destroy 
+    #   entry.reload
+    #   expect(entry.user_id).to be(nil)
+    #   expect(entry.user_id).to eq(1)
+    # end
+    it "should assign all corresponding entries to superadmin" do
+      superadmin
       admin.entries << FactoryGirl.create(:entry)
       entry = admin.entries.first
       admin.destroy 
       entry.reload
-      expect(entry.user_id).to be(nil)
-      # expect(entry.user_id).to eq(1)
+      expect(entry.user).to eq(superadmin)
     end
 
 

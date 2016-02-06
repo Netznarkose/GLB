@@ -74,8 +74,6 @@ class UsersController < ApplicationController
   def destroy
     respond_to do |format|
       @user = User.find(params[:id])
-      assign_me_to_superuser
-      flash[:notice] = 'Corresponding Entries have been assigned to SuperUser'
       @user.destroy
       format.html { redirect_to users_url, notice: "User #{@user.name} was successfully deleted." }
       format.json { head :no_content }
