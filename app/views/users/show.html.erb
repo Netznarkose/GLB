@@ -54,7 +54,7 @@
     <%= @user.entries.count > 1 ? "Einträge" : "Eintrag" %>
   </span>
 
-  <%= @user.entries.paginate %>
+  <%# <%= @user.entries.paginate %1> %>
   <table class="table table-striped">
     <tr>
       <th>Verfasser</th>
@@ -94,6 +94,6 @@
       </tr>
     <% end %>
   </table>
-  <%= @user.entries.paginate %>
+  <%# <%= @user.entries.paginate %1> %>
 
 <% end %>
