@@ -9,8 +9,9 @@ class ProfilesController < ApplicationController
       redirect_to edit_profile_path, notice: "error"
     end
   end
-end
-private
+
+  private
+
   def user_params
     if admin?
       params.require(:user).permit(:name, :email, :password, :password_confirmation, :role)
@@ -18,3 +19,4 @@ private
       params.require(:user).permit(:name, :email, :password, :password_confirmation)
     end
   end
+end

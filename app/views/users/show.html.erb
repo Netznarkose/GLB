@@ -49,7 +49,11 @@
       <strong><%= raw(flash[:notice]) %></strong>
     </div>
   <% end %>
-  <h1><%= "#{@user.name}'s Einträge" %></h1>
+  <% if @user == current_user %>
+    <h1><%= "Meine Einträge" %></h1>
+  <% else %>
+    <h1><%= "#{@user.name}'s Einträge" %></h1>
+  <% end %>
   <span class="label"><%= @user.entries.count %>
     <%= @user.entries.count > 1 ? "Einträge" : "Eintrag" %>
   </span>

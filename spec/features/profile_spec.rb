@@ -29,7 +29,7 @@ describe "user profile functionality" do
       expect(page).to have_field('user_name', :with => 'Michael Jackson')
       expect(page).to have_field('user_email', :with => 'michael_jackson@gmail.com')
     end
-    it "should get an error-message when something is going wrong" do
+    it "should get an error-message when input is faulty" do
       visit edit_profile_path
       fill_in "user_name", with: "Michael Jackson" 
       fill_in "user_email", with: ""
