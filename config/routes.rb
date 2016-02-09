@@ -1,5 +1,9 @@
 DGLB::Application.routes.draw do
 
+  resource :profile, only: [:edit, :update]
+
+
+
   get "entry_html/show"
 
   get "entry_doc/show"

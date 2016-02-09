@@ -49,10 +49,6 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
-    respond_to do |format|
-      format.html # edit.html.erb
-      # no json why then in new?
-    end
   end
 
   # PUT /users/1
