@@ -13,7 +13,7 @@ describe "user profile functionality" do
       visit new_user_session_path
       fill_in "user_email", with: user.email
       fill_in "user_password", with: user.password
-      click_button "Anmelden"
+      click_button('Anmelden')
     end
     it "should be able to edit their profile" do
       visit edit_profile_path
