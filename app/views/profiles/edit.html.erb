@@ -1,2 +1,11 @@
-<h1>Profile#edit</h1>
-<p>Find me in app/views/profile/edit.html.erb</p>
+<% content_for :content do %>
+  </br>
+  <% if flash[:notice] %>
+    <div class="alert alert-notice">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <strong><%= raw(flash[:notice]) %></strong>
+    </div>
+  <% end %>
+  <%= render 'form' %>
+  <%= link_to 'Zurück', :back %>
+<% end %>
