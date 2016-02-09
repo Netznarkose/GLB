@@ -1,4 +1,5 @@
-<%= form_for current_user, :method => :put do |f| %>
+<%# <%= form_for current_user, :method => :put do |f| %1> %>
+  <%= form_for current_user, url: profile_path do |f| %>
   <fieldset>
     <% if current_user.errors.any? %>
       <div id="error_explanation">

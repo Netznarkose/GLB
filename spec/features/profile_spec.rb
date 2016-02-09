@@ -15,9 +15,26 @@ describe "user profile functionality" do
       fill_in "user_password", with: user.password
       click_button('Anmelden')
     end
-    it "should be able to edit their profile" do
+    it "should be able to visit their profile page" do
       visit edit_profile_path
       expect(current_path).to eq(edit_profile_path)
+    end
+    it "should be able to edit their profile" do
+      visit edit_profile_path
+      fill_in "user_name", with: "Michael Jackson" 
+      fill_in "user_email", with: "michael_jackson@gmail.com"
+      click_button('Speichern')
+      expect(current_path).to eq(edit_profile_path)
+      expect(page).to have_content('profile updated')
+      expect(page).to have_field('user_name', :with => 'Michael Jackson')
+      expect(page).to have_field('user_email', :with => 'michael_jackson@gmail.com')
+    end
+    it "should get an error-message when something is going wrong" do
+      visit edit_profile_path
+      fill_in "user_name", with: "Michael Jackson" 
+      fill_in "user_email", with: ""
+      click_button('Speichern')
+      expect(page).to have_content('error')
     end
   end
 end
