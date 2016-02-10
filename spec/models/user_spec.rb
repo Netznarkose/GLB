@@ -32,6 +32,7 @@ describe User do
     let(:superadmin) { FactoryGirl.create(:superadmin) }
 
     it "does not delete the corresponding entries" do
+      superadmin
       admin.entries << FactoryGirl.create(:entry)
       admin.destroy # model level
       expect(Entry.count).to eq(1)
