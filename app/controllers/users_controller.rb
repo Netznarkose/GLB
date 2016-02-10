@@ -56,7 +56,6 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        raise
         format.html { redirect_to user_path, notice: 'User was successfully updated.' }
         format.json { head :no_content }
       else

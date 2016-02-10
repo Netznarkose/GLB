@@ -37,4 +37,17 @@ describe "user profile functionality" do
       expect(page).to have_content('error')
     end
   end
+  context "not logged in users" do
+    let(:user) { FactoryGirl.create(:user) }
+    before do 
+      visit new_user_session_path
+      fill_in "user_email", with: user.email
+      fill_in "user_password", with: "" 
+      click_button('Anmelden')
+    end
+    it "should not be able to visit their profile page" do
+      visit edit_profile_path
+      expect(current_path).to eq(current_path)
+    end
+  end
 end
