@@ -1,8 +1,20 @@
 <% content_for :content do %>
+  </br>
   <h1>Neuer Eintrag</h1>
+  </br>
 
+  <h2>Kerndaten</h2>
   <%= form_for(Entry.new, :method => :post, :html => {:class => "form"})  do |f| %>
     <%= render :partial => 'entries/form', :locals => {:f => f}%>
+  <% end %>
+  </br>
+  <h2>Sprachen</h2>
+  <%= form_for(Entry.new, :method => :post, :html => {:class => "form"})  do |f| %>
+    <%= render :partial => 'entries/form2', :locals => {:f => f}%>
+  <% end %>
+  <h2>Unterteilung3</h2>
+  <%= form_for(Entry.new, :method => :post, :html => {:class => "form"})  do |f| %>
+    <%= render :partial => 'entries/form3', :locals => {:f => f}%>
   <% end %>
   <%= link_to 'Zurück', entries_path %>
 <% end %>
