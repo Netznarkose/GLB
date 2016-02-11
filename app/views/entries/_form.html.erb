@@ -137,9 +137,9 @@
     <%= f.label :lemma_art, :class => "control-label" %>
     <div class="controls">
       <% if @entry %>
-        <%= f.select(:lemma_art, options_for_select([["Person", "Person"], ["Tempel", "Tempel"], ["Werk", "Werk"], ["Fachtermini", "Fachtermini"], ["Geographische Bezeichnung", "Geographische Bezeichnung"], ["Ereignis", "Ereignis"]], @entry.lemma_art)) %> 
+        <%= f.select(:lemma_art, options_for_select([["", ""], ["Person", "Person"], ["Tempel", "Tempel"], ["Werk", "Werk"], ["Fachtermini", "Fachtermini"], ["Geographische Bezeichnung", "Geographische Bezeichnung"], ["Ereignis", "Ereignis"]], @entry.lemma_art)) %> 
       <% else %>
-        <%= f.select(:lemma_art, options_for_select([["Person", "Person"], ["Tempel", "Tempel"], ["Werk", "Werk"], ["Fachtermini", "Fachtermini"], ["Geographische Bezeichnung", "Geographische Bezeichnung"], ["Ereignis", "Ereignis"]])) %> 
+        <%= f.select(:lemma_art, options_for_select([["", ""], ["Person", "Person"], ["Tempel", "Tempel"], ["Werk", "Werk"], ["Fachtermini", "Fachtermini"], ["Geographische Bezeichnung", "Geographische Bezeichnung"], ["Ereignis", "Ereignis"]])) %> 
       <% end %>
     </div>
   </div>
