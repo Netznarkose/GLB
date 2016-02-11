@@ -22,7 +22,7 @@
             </ul>
           </li>
         <% end %>
-        <li><%= link_to "Profil Ändern", edit_profile_path %></li>
+        <%# <li><%= link_to "Profil Ändern", edit_profile_path %1></li> %>
           <li class="dropdown">
             <a class='dropdown-toggle' data-toggle='dropdown' href='#'>Einträge</a>
             <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
@@ -40,7 +40,14 @@
       </ul>
 
       <ul class="nav pull-right">
-        <li><%= link_to "#{current_user.email} abmelden.", destroy_user_session_path, :method => :delete %></li>
+        <%# <li><%= link_to "#{current_user.email} abmelden.", destroy_user_session_path, :method => :delete %1></li> %>
+          <li class="dropdown">
+          <a class='dropdown-toggle' data-toggle='dropdown' href='#'><%= current_user.name %></a>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+              <li><%= link_to "Profil Bearbeiten", edit_profile_path %></li>
+              <li><%= link_to "Abmelden", destroy_user_session_path, :method => :delete %></li>
+            </ul>
+          </li>
       </ul>
     </div>
   </div>
