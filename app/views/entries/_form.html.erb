@@ -10,6 +10,7 @@
     </div>
   <% end %>
   <fieldset class="inputs well form-horizontal">
+  <h2>Kerndaten</h2>
     <% if current_user.admin? %>
       <div class="control-group">
         <%= f.label :verfasser, :class => "control-label" %>
@@ -63,136 +64,143 @@
     <%= f.text_field :japanische_umschrift_din %>
       </div>
     </div>
-  <%# <div class="control-group"> %>
-  <%#   <%= f.label :kanji, :class => "control-label" %1> %>
-  <%#     <div class="controls"> %>
-  <%#   <%= f.text_field :kanji %1> %>
-  <%# </div> %>
-  <%# </div> %>
+</fieldset>
+  <fieldset class="inputs well form-horizontal">
+  <h2>Sprachen</h2>
+  <div class="control-group">
+    <%= f.label :kanji, :class => "control-label" %>
+      <div class="controls">
+    <%= f.text_field :kanji %>
+  </div>
+  </div>
 
-  <%# <div class="control-group"> %>
-  <%#   <%= f.label :pali, :class => "control-label" %1> %>
-  <%#   <div class="controls"> %>
-  <%#     <%= f.text_field :pali %1> %>
-  <%#   </div> %>
-  <%# </div> %>
+  <div class="control-group">
+    <%= f.label :pali, :class => "control-label" %>
+    <div class="controls">
+      <%= f.text_field :pali %>
+    </div>
+  </div>
 
-  <%# <div class="control-group"> %>
-  <%#   <%= f.label :sanskrit, :class => "control-label" %1> %>
-  <%#   <div class="controls"> %>
-  <%#     <%= f.text_field :sanskrit %1> %>
-  <%#   </div> %>
-  <%# </div> %>
+  <div class="control-group">
+    <%= f.label :sanskrit, :class => "control-label" %>
+    <div class="controls">
+      <%= f.text_field :sanskrit %>
+    </div>
+  </div>
 
-  <%# <div class="control-group"> %>
-  <%#   <%= f.label :chinesisch, :class => "control-label" %1> %>
-  <%#   <div class="controls"> %>
-  <%#     <%= f.text_field :chinesisch %1> %>
-  <%#   </div> %>
-  <%# </div> %>
+  <div class="control-group">
+    <%= f.label :chinesisch, :class => "control-label" %>
+    <div class="controls">
+      <%= f.text_field :chinesisch %>
+    </div>
+  </div>
 
-  <%# <div class="control-group"> %>
-  <%#   <%= f.label :tibetisch, :class => "control-label" %1> %>
-  <%#   <div class="controls"> %>
-  <%#     <%= f.text_field :tibetisch %1> %>
-  <%#   </div> %>
-  <%# </div> %>
+  <div class="control-group">
+    <%= f.label :tibetisch, :class => "control-label" %>
+    <div class="controls">
+      <%= f.text_field :tibetisch %>
+    </div>
+  </div>
 
-  <%# <div class="control-group"> %>
-  <%#   <%= f.label :koreanisch, :class => "control-label" %1> %>
-  <%#   <div class="controls"> %>
-  <%#     <%= f.text_field :koreanisch %1> %>
-  <%#   </div> %>
-  <%# </div> %>
+  <div class="control-group">
+    <%= f.label :koreanisch, :class => "control-label" %>
+    <div class="controls">
+      <%= f.text_field :koreanisch %>
+    </div>
+  </div>
 
-  <%# <div class="control-group"> %>
-  <%#   <%= f.label :weitere_sprachen, :class => "control-label" %1> %>
-  <%#   <div class="controls"> %>
-  <%#     <%= f.text_field :weitere_sprachen %1> %>
-  <%#   </div> %>
-  <%# </div> %>
+  <div class="control-group">
+    <%= f.label :weitere_sprachen, :class => "control-label" %>
+    <div class="controls">
+      <%= f.text_field :weitere_sprachen %>
+    </div>
+  </div>
 
-  <%# <div class="control-group"> %>
-  <%#   <%= f.label :alternative_japanische_lesungen, :class => "control-label" %1> %>
-  <%#   <div class="controls"> %>
-  <%#     <%= f.text_field :alternative_japanische_lesungen %1> %>
-  <%#   </div> %>
-  <%# </div> %>
+  <div class="control-group">
+    <%= f.label :alternative_japanische_lesungen, :class => "control-label" %>
+    <div class="controls">
+      <%= f.text_field :alternative_japanische_lesungen %>
+    </div>
+  </div>
 
-  <%# <div class="control-group"> %>
-  <%#   <%= f.label :schreibvarianten, :class => "control-label" %1> %>
-  <%#   <div class="controls"> %>
-  <%#     <%= f.text_field :schreibvarianten %1> %>
-  <%#   </div> %>
-  <%# </div> %>
+  <div class="control-group">
+    <%= f.label :schreibvarianten, :class => "control-label" %>
+    <div class="controls">
+      <%= f.text_field :schreibvarianten %>
+    </div>
+  </div>
 
-  <%# <div class="control-group"> %>
-  <%#   <%= f.label :deutsche_uebersetzung, :class => "control-label" %1> %>
-  <%#   <div class="controls"> %>
-  <%#     <%= f.text_field :deutsche_uebersetzung %1> %>
-  <%#   </div> %>
-  <%# </div> %>
+  <div class="control-group">
+    <%= f.label :deutsche_uebersetzung, :class => "control-label" %>
+    <div class="controls">
+      <%= f.text_field :deutsche_uebersetzung %>
+    </div>
+  </div>
+</fieldset>
 
-  <%# <div class="control-group"> %>
-  <%#   <%= f.label :lemma_art, :class => "control-label" %1> %>
-  <%#   <div class="controls"> %>
-  <%#     <% if @entry %1> %>
-  <%#       <%= f.select(:lemma_art, options_for_select([["", ""], ["Person", "Person"], ["Tempel", "Tempel"], ["Werk", "Werk"], ["Fachtermini", "Fachtermini"], ["Geographische Bezeichnung", "Geographische Bezeichnung"], ["Ereignis", "Ereignis"]], @entry.lemma_art)) %1> %> 
-  <%#     <% else %1> %>
-  <%#       <%= f.select(:lemma_art, options_for_select([["", ""], ["Person", "Person"], ["Tempel", "Tempel"], ["Werk", "Werk"], ["Fachtermini", "Fachtermini"], ["Geographische Bezeichnung", "Geographische Bezeichnung"], ["Ereignis", "Ereignis"]])) %1> %> 
-  <%#     <% end %1> %>
-  <%#   </div> %>
-  <%# </div> %>
+  <fieldset class="inputs well form-horizontal">
+  <h2>Unterteilung3</h2>
 
-  <%# <div class="control-group"> %>
-  <%#   <%= f.label :jahreszahlen, :class => "control-label" %1> %>
-  <%#   <div class="controls"> %>
-  <%#     <%= f.text_field :jahreszahlen %1> %>
-  <%#   </div> %>
-  <%# </div> %>
+  <div class="control-group">
+    <%= f.label :lemma_art, :class => "control-label" %>
+    <div class="controls">
+      <% if @entry %>
+        <%= f.select(:lemma_art, options_for_select([["", ""], ["Person", "Person"], ["Tempel", "Tempel"], ["Werk", "Werk"], ["Fachtermini", "Fachtermini"], ["Geographische Bezeichnung", "Geographische Bezeichnung"], ["Ereignis", "Ereignis"]], @entry.lemma_art)) %> 
+      <% else %>
+        <%= f.select(:lemma_art, options_for_select([["", ""], ["Person", "Person"], ["Tempel", "Tempel"], ["Werk", "Werk"], ["Fachtermini", "Fachtermini"], ["Geographische Bezeichnung", "Geographische Bezeichnung"], ["Ereignis", "Ereignis"]])) %> 
+      <% end %>
+    </div>
+  </div>
 
-  <%# <div class="control-group"> %>
-  <%#   <%= f.label :uebersetzung, :class => "control-label" %1> %>
-  <%#   <div class="controls"> %>
-  <%#     <%= f.cktext_area :uebersetzung, :ckeditor => {:uiColor => "#AADC6E", :toolbar => "MyToolbar"} %1> %>
-  <%#   </div> %>
-  <%# </div> %>
+  <div class="control-group">
+    <%= f.label :jahreszahlen, :class => "control-label" %>
+    <div class="controls">
+      <%= f.text_field :jahreszahlen %>
+    </div>
+  </div>
 
-  <%# <div class="control-group"> %>
-  <%#   <%= f.label :quellen, :class => "control-label" %1> %>
-  <%#   <div class="controls"> %>
-  <%#     <%= f.cktext_area :quellen, :ckeditor => {:uiColor => "#AADC6E", :toolbar => "MyToolbar"} %1> %>
-  <%#   </div> %>
-  <%# </div> %>
+  <div class="control-group">
+    <%= f.label :uebersetzung, :class => "control-label" %>
+    <div class="controls">
+      <%= f.cktext_area :uebersetzung, :ckeditor => {:uiColor => "#AADC6E", :toolbar => "MyToolbar"} %>
+    </div>
+  </div>
 
-  <%# <div class="control-group"> %>
-  <%#   <%= f.label :literatur, :class => "control-label" %1> %>
-  <%#   <div class="controls"> %>
-  <%#     <%= f.cktext_area :literatur, :ckeditor => {:uiColor => "#AADC6E", :toolbar => "MyToolbar"} %1> %>
-  <%#   </div> %>
-  <%# </div> %>
+  <div class="control-group">
+    <%= f.label :quellen, :class => "control-label" %>
+    <div class="controls">
+      <%= f.cktext_area :quellen, :ckeditor => {:uiColor => "#AADC6E", :toolbar => "MyToolbar"} %>
+    </div>
+  </div>
 
-  <%# <div class="control-group"> %>
-  <%#   <%= f.label :eigene_ergaenzungen, :class => "control-label" %1> %>
-  <%#   <div class="controls"> %>
-  <%#     <%= f.cktext_area :eigene_ergaenzungen, :ckeditor => {:uiColor => "#AADC6E", :toolbar => "MyToolbar"} %1> %>
-  <%#   </div> %>
-  <%# </div> %>
+  <div class="control-group">
+    <%= f.label :literatur, :class => "control-label" %>
+    <div class="controls">
+      <%= f.cktext_area :literatur, :ckeditor => {:uiColor => "#AADC6E", :toolbar => "MyToolbar"} %>
+    </div>
+  </div>
 
-  <%# <div class="control-group"> %>
-  <%#   <%= f.label :quellen_ergaenzungen, :class => "control-label" %1> %>
-  <%#   <div class="controls"> %>
-  <%#     <%= f.cktext_area :quellen_ergaenzungen, :ckeditor => {:uiColor => "#AADC6E", :toolbar => "MyToolbar"} %1> %>
-  <%#   </div> %>
-  <%# </div> %>
+  <div class="control-group">
+    <%= f.label :eigene_ergaenzungen, :class => "control-label" %>
+    <div class="controls">
+      <%= f.cktext_area :eigene_ergaenzungen, :ckeditor => {:uiColor => "#AADC6E", :toolbar => "MyToolbar"} %>
+    </div>
+  </div>
 
-  <%# <div class="control-group"> %>
-  <%#   <%= f.label :literatur_ergaenzungen, :class => "control-label" %1> %>
-  <%#   <div class="controls"> %>
-  <%#     <%= f.cktext_area :literatur_ergaenzungen, :ckeditor => {:uiColor => "#AADC6E", :toolbar => "MyToolbar"} %1> %>
-  <%#   </div> %>
-  <%# </div> %>
-  <%# <div class="actions"> %>
-  <%#   <%= f.submit("Speichern") %1> %>
-  <%# </div> %>
+  <div class="control-group">
+    <%= f.label :quellen_ergaenzungen, :class => "control-label" %>
+    <div class="controls">
+      <%= f.cktext_area :quellen_ergaenzungen, :ckeditor => {:uiColor => "#AADC6E", :toolbar => "MyToolbar"} %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :literatur_ergaenzungen, :class => "control-label" %>
+    <div class="controls">
+      <%= f.cktext_area :literatur_ergaenzungen, :ckeditor => {:uiColor => "#AADC6E", :toolbar => "MyToolbar"} %>
+    </div>
+  </div>
+  <div class="actions">
+    <%= f.submit("Speichern") %>
+  </div>
 </fieldset>
