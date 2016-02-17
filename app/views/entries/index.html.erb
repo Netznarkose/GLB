@@ -33,15 +33,23 @@
   <table class="table table-striped">
 
     <% @entries.each do |entry| %>
-      <tr>
+      <tr class="index-text-container" >
         <td>
+        <% unless entry.japanische_umschrift.blank? %>
           <%= entry.japanische_umschrift %>
+        <% end %>
+        <% unless entry.kanji.blank? %>
           </br>
           <%= entry.kanji %>
+        <% end %>
+        <% unless entry.kennzahl.blank? %>
           </br>
           <%= entry.kennzahl%>
+        <% end %>
+        <% unless entry.comments.blank? %>
           </br>
           Kommentare: <%= entry.comments.count %>
+        <% end %>
         <span class="right-action"><%= link_to 'Anzeigen', entry %>
           <% if entry.user == current_user || current_user.admin? %>
           | <%= link_to 'Bearbeiten', edit_entry_path(entry) %>
@@ -56,7 +64,7 @@
           <td>
             <%# <%= raw(entry.uebersetzung.slice(0,300)) %1> %> 
             <%# <%= raw(entry.uebersetzung) %1> %> 
-            <%= raw(entry.uebersetzung.truncate(200)) %>
+            <%= raw(entry.uebersetzung.truncate(300, omission: '...')) %>
             <%# <%= "(...)" if entry.uebersetzung.length > 300 %1> %>
             <%# <%=  entry.uebersetzung.length  %1> %>
           </td>
