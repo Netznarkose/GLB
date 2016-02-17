@@ -55,7 +55,8 @@
         <tr>
           <td>
             <%# <%= raw(entry.uebersetzung.slice(0,300)) %1> %> 
-            <%= raw(entry.uebersetzung).truncate(400) %> 
+            <%# <%= raw(entry.uebersetzung) %1> %> 
+            <%= raw(entry.uebersetzung.truncate(200)) %>
             <%# <%= "(...)" if entry.uebersetzung.length > 300 %1> %>
             <%# <%=  entry.uebersetzung.length  %1> %>
           </td>
