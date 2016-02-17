@@ -14,7 +14,7 @@ DGLB::Application.routes.draw do
   resources :entries
 
 
-  root :to => "home#index"
+  root :to => "entries#index"
   devise_for :users, :skip => :registration
   
   resources :users

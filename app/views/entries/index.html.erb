@@ -2,7 +2,7 @@
   <div class="well sidebar-nav">
     <ul class="nav nav-list">
       <li class="nav-header">Suche</li>
-      <%= form_tag entries_path, method: "get", id: "search_form", target: "_self" do %>
+      <%= form_tag root_path, method: "get", id: "search_form", target: "_self" do %>
         <fieldset>
           <li>
             <label for="search">Suchbegriff</label>
@@ -24,49 +24,43 @@
       <strong><%= raw(flash[:notice]) %></strong>
     </div>
   <% end %>
-  <h1>Alle Einträge</h1>
+  <h1>Das Große Lexikon des Buddhismus</h1>
   <span class="label"><%= @count %>
     <%= @count > 1 ? "Einträge" : "Eintrag" %>
   </span>
 
   <%= paginate @entries %>
   <table class="table table-striped">
-    <tr>
-      <th>Verfasser</th>
-      <th>Namenskürzel</th>
-      <th>Kennzahl</th>
-      <th>Japanische umschrift</th>
-      <th>Kanji</th>
-      <th>Aktionen</th>
-      <th>Kommentar</th>
-    </tr>
 
     <% @entries.each do |entry| %>
       <tr>
-        <td><%= entry.user.name %></td>
-        <td><%= entry.namenskuerzel %></td>
-        <td><%= entry.kennzahl %></td>
-        <td><%= entry.japanische_umschrift %></td>
-        <td><%= entry.kanji %></td>
-        <td><%= link_to 'Anzeigen', entry %>
-        <% if entry.user == current_user || current_user.admin? %>
-          <br/>
-          <%= link_to 'Bearbeiten', edit_entry_path(entry) %>
-        <% end %>
-        <% if current_user.admin? %>
-          <br/>
-          <%= link_to 'Löschen', entry, method: :delete, data: { confirm: 'Wollen Sie diesen Eintrag wirklich löschen?' }%>
-        <% end %>
-        </td>
         <td>
-          <% if entry.comments.length != 0 %>
-            <%= link_to entry.comments.length, entry_path(entry) + "#comments", :class => "badge badge-important comments" %>
+          <%= entry.japanische_umschrift %>
+          </br>
+          <%= entry.kanji %>
+          </br>
+          <%= entry.kennzahl%>
+          </br>
+          Kommentare: <%= entry.comments.count %>
+        <span class="right-action"><%= link_to 'Anzeigen', entry %>
+          <% if entry.user == current_user || current_user.admin? %>
+          | <%= link_to 'Bearbeiten', edit_entry_path(entry) %>
           <% end %>
-          <% if entry.freigeschaltet %>
-            <span class="label label-success">Freigeschaltet</span>
-          <% end %>
+          </span>
         </td>
       </tr>
+      <% if entry.uebersetzung.blank? %>
+        <tr></tr>
+      <% else %>
+        <tr>
+          <td>
+            <%# <%= raw(entry.uebersetzung.slice(0,300)) %1> %> 
+            <%= raw(entry.uebersetzung).truncate(400) %> 
+            <%# <%= "(...)" if entry.uebersetzung.length > 300 %1> %>
+            <%# <%=  entry.uebersetzung.length  %1> %>
+          </td>
+        </tr>
+      <% end %>
     <% end %>
   </table>
   <%= paginate @entries %>
