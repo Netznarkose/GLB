@@ -10,7 +10,8 @@ class EntriesController < ApplicationController
   # GET /entries.json
   def index
     @count = @selected_entries.count
-    @entries = @selected_entries.page(params[:page])
+    # @entries = @selected_entries.page(params[:page])
+    @entries = Entry.order(params[:sort]) # sorting does not work with search @selected_entries
 
     respond_to do |format|
       format.html # index.html.erb

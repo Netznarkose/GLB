@@ -13,6 +13,12 @@
  *= require bootstrap
  *= require editable
  */
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+ul {
+	list-style: none;
+}
 textarea {
   resize: vertical;
 }
