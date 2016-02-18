@@ -1,16 +1,6 @@
 <% content_for :sidebar do %>
   <div class="well sidebar-nav">
     <ul class="nav nav-list">
-      <li class="nav-header">Sortieren</li>
-          <th><%= link_to 'Kennzahl', :sort => 'kennzahl' %></th>
-          <th><%= link_to 'Japanische Umschrift', :sort => 'japanische_umschrift' %></th>
-          <th><%= link_to 'Id', :sort => 'id' %></th>
-        <fieldset>
-        <fieldset>
-    </ul>
-  </div>
-  <div class="well sidebar-nav">
-    <ul class="nav nav-list">
       <li class="nav-header">Suche</li>
       <%= form_tag root_path, method: "get", id: "search_form", target: "_self" do %>
         <fieldset>
@@ -25,6 +15,28 @@
       <% end %>
     </ul>
   </div>
+
+  <div class="well sidebar-nav">
+    <ul class="nav nav-list">
+      <li class="nav-header">Sortieren</li>
+    <div class="btn-group dropup">
+        <div class="btn-group">
+            <button type="button" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Dropdown <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+                <li><%= link_to 'Kennzahl', :sort => 'kennzahl' %></li>
+                <li><%= link_to 'Japanische Umschrift', :sort => 'japanische_umschrift' %></li>
+                <li><%= link_to 'Id', :sort => 'id' %></li>
+                <%# http://www.tutorialrepublic.com/twitter-bootstrap-tutorial/bootstrap-dropdowns.php %>
+            </ul>
+        </div>
+    </div>
+        <fieldset>
+        <fieldset>
+    </ul>
+  </div>
+
+
+
 <% end %>
 
 <% content_for :content do %>
