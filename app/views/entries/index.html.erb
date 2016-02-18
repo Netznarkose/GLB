@@ -23,9 +23,12 @@
         <div class="btn-group">
             <button type="button" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Dropdown <span class="caret"></span></button>
             <ul class="dropdown-menu">
-                <li><%= link_to 'Kennzahl', :sort => 'kennzahl' %></li>
-                <li><%= link_to 'Japanische Umschrift', :sort => 'japanische_umschrift' %></li>
-                <li><%= link_to 'Id', :sort => 'id' %></li>
+                <li><%= sortable 'kennzahl', 'Kennzahl (up)', 'asc' %></li>
+                <li><%= sortable 'kennzahl', 'Kennzahl (down)', 'desc' %></li>
+                <li><%= sortable 'japanische_umschrift', 'Japanische Umschrift (up)', 'asc' %></li>
+                <li><%= sortable 'japanische_umschrift', 'Japanische Umschrift (down)', 'desc' %></li>
+                <li><%= sortable 'id', 'Id (up)', 'asc' %></li>
+                <li><%= sortable 'id', 'Id (down)', 'desc' %></li>
                 <%# http://www.tutorialrepublic.com/twitter-bootstrap-tutorial/bootstrap-dropdowns.php %>
             </ul>
         </div>

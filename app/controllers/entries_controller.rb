@@ -1,5 +1,6 @@
 #encoding: utf-8
 class EntriesController < ApplicationController
+   helper_method :sort_column, :sort_direction
 
   load_and_authorize_resource
   # uncomment sḱip_before_filter to make entries visible; (preferably in connection with published filter)
@@ -11,8 +12,7 @@ class EntriesController < ApplicationController
   def index
     @count = @selected_entries.count
     # @entries = @selected_entries.page(params[:page])
-    @entries = Entry.order(params[:sort]) # sorting does not work with search @selected_entries
-
+    @entries = Entry.order(sort_column + " " + sort_direction)# sorting does not work with search @selected_entries
     respond_to do |format|
       format.html # index.html.erb
       format.csv {send_data @entries.to_csv, :type => 'text/csv', :disposition => "attachment; filename=glb.csv"}
@@ -142,6 +142,13 @@ class EntriesController < ApplicationController
 
   def record_not_found
     redirect_to entries_url
+  end
+  def sort_column
+    Entry.column_names.include?(params[:sort]) ? params[:sort] : "kennzahl"
+  end
+  
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
   end
 
 end
