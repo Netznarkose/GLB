@@ -12,7 +12,7 @@ class EntriesController < ApplicationController
   def index
     @count = @selected_entries.count
     # @entries = @selected_entries.page(params[:page])
-    @entries = Entry.order(sort_column + " " + sort_direction)# sorting does not work with search @selected_entries
+    # @entries = Entry.order(sort_column + " " + sort_direction)# sorting does not work with search @selected_entries
     @entries = Entry.order(sort_column + " " + sort_direction).page(params[:page])
     respond_to do |format|
       format.html # index.html.erb
