@@ -13,6 +13,7 @@ class EntriesController < ApplicationController
     @count = @selected_entries.count
     # @entries = @selected_entries.page(params[:page])
     @entries = Entry.order(sort_column + " " + sort_direction)# sorting does not work with search @selected_entries
+    @entries = Entry.order(sort_column + " " + sort_direction).page(params[:page])
     respond_to do |format|
       format.html # index.html.erb
       format.csv {send_data @entries.to_csv, :type => 'text/csv', :disposition => "attachment; filename=glb.csv"}
