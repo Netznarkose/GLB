@@ -1,0 +1,23 @@
+
+.index-text-container_truncate {
+  height: 7em;
+  position: relative;
+  display: block;
+  overflow-y: hidden;
+  
+  td {
+    display: block;
+  }
+
+  &:after {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: 0;
+    height: 33%;
+    width: 100%;
+    // background: linear-gradient(to left, white 0, rgba(255,255,255,0) 100);
+   background: linear-gradient(to right, rgba(255,255,255,0) 40%,rgba(255,255,255,1) 100%); 
+  }
+}
+

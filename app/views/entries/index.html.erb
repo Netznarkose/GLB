@@ -88,11 +88,12 @@
       <% if entry.uebersetzung.blank? %>
         <tr></tr>
       <% else %>
-        <tr>
+        <tr class="index-text-container_truncate" >
           <td>
             <%# <%= raw(entry.uebersetzung.slice(0,300)) %1> %> 
             <%# <%= raw(entry.uebersetzung) %1> %> 
             <%= raw(entry.uebersetzung.truncate(300, omission: '...')) %>
+            <%= raw(entry.uebersetzung) %>
             <%# <%= "(...)" if entry.uebersetzung.length > 300 %1> %>
             <%# <%=  entry.uebersetzung.length  %1> %>
           </td>
