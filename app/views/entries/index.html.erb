@@ -24,7 +24,7 @@
       <br>
       <div class="btn-group">
       <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-      Let's Go 
+      Felder Auswahl 
         <span class="caret"></span>
       </a>
       <ul class="dropdown-menu">
@@ -34,6 +34,8 @@
         <li><%= sortable 'japanische_umschrift', 'Japanische Umschrift (reversed)', 'desc' %></li>
         <li><%= sortable 'id', 'Id', 'asc' %></li>
         <li><%= sortable 'id', 'Id (reversed)', 'desc' %></li>
+        <li><%= sortable 'kanji', 'Kanji', 'asc' %></li>
+        <li><%= sortable 'kanji', 'Kanji (reversed)', 'desc' %></li>
       </ul>
     </div>
     </ul>
@@ -62,18 +64,23 @@
         <% unless entry.japanische_umschrift.blank? %>
           <%= entry.japanische_umschrift %>
         <% end %>
+
         <% unless entry.kanji.blank? %>
           </br>
           <%= entry.kanji %>
         <% end %>
+
         <% unless entry.kennzahl.blank? %>
           </br>
           <%= entry.kennzahl%>
         <% end %>
+
         <% unless entry.comments.blank? %>
           </br>
-          Kommentare: <%= entry.comments.count %>
+          <%= entry.comments.count %>
+          <%= entry.comments.count > 1 ? "Kommentare" : "Kommentar" %>
         <% end %>
+
         <span class="right-action"><%= link_to 'Anzeigen', entry %>
           <% if entry.user == current_user || current_user.admin? %>
           | <%= link_to 'Bearbeiten', edit_entry_path(entry) %>
