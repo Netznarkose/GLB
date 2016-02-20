@@ -20,28 +20,24 @@
 
   <div class="well sidebar-nav">
     <ul class="nav nav-list">
-      <li class="nav-header">Sortieren</li>
-    <div class="btn-group dropup">
-        <div class="btn-group">
-            <button type="button" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Dropdown <span class="caret"></span></button>
-            <ul class="dropdown-menu">
-                <li><%= sortable 'kennzahl', 'Kennzahl', 'asc' %></li>
-                <li><%= sortable 'kennzahl', 'Kennzahl (reversed)', 'desc' %></li>
-                <li><%= sortable 'japanische_umschrift', 'Japanische Umschrift', 'asc' %></li>
-                <li><%= sortable 'japanische_umschrift', 'Japanische Umschrift (reversed)', 'desc' %></li>
-                <li><%= sortable 'id', 'Id', 'asc' %></li>
-                <li><%= sortable 'id', 'Id (reversed)', 'desc' %></li>
-                <%# http://www.tutorialrepublic.com/twitter-bootstrap-tutorial/bootstrap-dropdowns.php %>
-            </ul>
-        </div>
+      <li class="nav-header">Index Sortieren</li>
+      <br>
+      <div class="btn-group">
+      <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+      Let's Go 
+        <span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu">
+        <li><%= sortable 'kennzahl', 'Kennzahl', 'asc' %></li>
+        <li><%= sortable 'kennzahl', 'Kennzahl (reversed)', 'desc' %></li>
+        <li><%= sortable 'japanische_umschrift', 'Japanische Umschrift', 'asc' %></li>
+        <li><%= sortable 'japanische_umschrift', 'Japanische Umschrift (reversed)', 'desc' %></li>
+        <li><%= sortable 'id', 'Id', 'asc' %></li>
+        <li><%= sortable 'id', 'Id (reversed)', 'desc' %></li>
+      </ul>
     </div>
-        <fieldset>
-        <fieldset>
     </ul>
   </div>
-
-
-
 <% end %>
 
 <% content_for :content do %>
