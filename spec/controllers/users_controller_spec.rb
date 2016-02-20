@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe UsersController, type: :controller do
+  let(:superadmin) { FactoryGirl.create(:superadmin) }
   let(:admin) { FactoryGirl.create(:admin) }
   let(:editor) { FactoryGirl.create(:editor) }
   let(:user) { FactoryGirl.create(:user) }
@@ -117,24 +118,6 @@ describe UsersController, type: :controller do
   end
 
   describe 'get update' do
-    context 'as admin' do
-      it 'i can make editors to admins' do
-        sign_in admin
-        put :update, id: editor.id, user: { role: 'admin' }
-        expect(assigns(:user)).to eq(editor)
-        editor.reload
-        expect(editor.role).to eq('admin')
-      end
-    end
-    context 'as editor' do
-      it 'i can not change any roles' do
-        sign_in editor
-        put :update, id: editor.id, user: { role: 'admin' }
-        editor.reload
-        expect(editor.role).not_to eq('admin')
-        expect(editor.role).to eq('editor')
-      end
-    end
     context 'as currently loggin editor' do
       it 'I can update my name and email and get a confirmation-message' do
         sign_in editor
@@ -171,12 +154,10 @@ describe UsersController, type: :controller do
     end
   end
 
-  describe 'get update' do
-  end
-
   describe 'DELETE destroy' do
     before do
       user
+      superadmin
     end
     context 'as admin' do
       it 'I can delete users and get redirected to users index' do
