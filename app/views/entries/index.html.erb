@@ -66,19 +66,21 @@
           <% end %>
 
           <% unless entry.kanji.blank? %>
-            <%= entry.kanji %>
+            <strong> | <%= entry.kanji %></strong>
           <% end %>
 
           <% unless entry.kennzahl.blank? %>
-            <%= entry.kennzahl%>
+            <strong> | <%= entry.kennzahl%></strong>
           <% end %>
 
           <% unless entry.comments.blank? %>
-            <%= entry.comments.count %>
-            <%= entry.comments.count > 1 ? "Kommentare" : "Kommentar" %>
+            <% @count_me = entry.comments.count %>
+            <% @comment_me = entry.comments.count > 1 ? "Kommentare" : "Kommentar" %>
+            <span class="right-action"><%= link_to "#{@count_me} #{@comment_me}", entry %> |
+
           <% end %>
 
-          <span class="right-action"><%= link_to 'Anzeigen', entry %>
+          <span class="right-action"> <%= link_to 'Anzeigen', entry %>
             <% if entry.user == current_user || current_user.admin? %>
             | <%= link_to 'Bearbeiten', edit_entry_path(entry) %>
             <% end %>
