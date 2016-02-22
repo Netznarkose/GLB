@@ -59,49 +59,46 @@
   <table class="table table-striped">
 
     <% @entries.each do |entry| %>
-      <tr class="index-text-container" >
-        <td>
-        <% unless entry.japanische_umschrift.blank? %>
-          <%= entry.japanische_umschrift %>
-        <% end %>
-
-        <% unless entry.kanji.blank? %>
-          </br>
-          <%= entry.kanji %>
-        <% end %>
-
-        <% unless entry.kennzahl.blank? %>
-          </br>
-          <%= entry.kennzahl%>
-        <% end %>
-
-        <% unless entry.comments.blank? %>
-          </br>
-          <%= entry.comments.count %>
-          <%= entry.comments.count > 1 ? "Kommentare" : "Kommentar" %>
-        <% end %>
-
-        <span class="right-action"><%= link_to 'Anzeigen', entry %>
-          <% if entry.user == current_user || current_user.admin? %>
-          | <%= link_to 'Bearbeiten', edit_entry_path(entry) %>
-          <% end %>
-          </span>
-        </td>
-      </tr>
-      <% if entry.uebersetzung.blank? %>
-        <tr></tr>
-      <% else %>
-        <tr class="index-text-container_truncate" >
+        <tr class="index-text-container" >
           <td>
-            <%# <%= raw(entry.uebersetzung.slice(0,300)) %1> %> 
-            <%# <%= raw(entry.uebersetzung) %1> %> 
-            <%= raw(entry.uebersetzung.truncate(2000)) %>
-            <%# <%= raw(entry.uebersetzung) %1> %>
-            <%# <%= "(...)" if entry.uebersetzung.length > 300 %1> %>
-            <%# <%=  entry.uebersetzung.length  %1> %>
+          <% unless entry.japanische_umschrift.blank? %>
+            <strong> <%= entry.japanische_umschrift %></strong>
+          <% end %>
+
+          <% unless entry.kanji.blank? %>
+            <%= entry.kanji %>
+          <% end %>
+
+          <% unless entry.kennzahl.blank? %>
+            <%= entry.kennzahl%>
+          <% end %>
+
+          <% unless entry.comments.blank? %>
+            <%= entry.comments.count %>
+            <%= entry.comments.count > 1 ? "Kommentare" : "Kommentar" %>
+          <% end %>
+
+          <span class="right-action"><%= link_to 'Anzeigen', entry %>
+            <% if entry.user == current_user || current_user.admin? %>
+            | <%= link_to 'Bearbeiten', edit_entry_path(entry) %>
+            <% end %>
+            </span>
           </td>
         </tr>
-      <% end %>
+        <% if entry.uebersetzung.blank? %>
+          <tr></tr>
+        <% else %>
+          <tr class="index-text-container_truncate" >
+            <td>
+              <%# <%= raw(entry.uebersetzung.slice(0,300)) %1> %> 
+              <%# <%= raw(entry.uebersetzung) %1> %> 
+              <%= raw(entry.uebersetzung.truncate(2000)) %>
+              <%# <%= raw(entry.uebersetzung) %1> %>
+              <%# <%= "(...)" if entry.uebersetzung.length > 300 %1> %>
+              <%# <%=  entry.uebersetzung.length  %1> %>
+            </td>
+          </tr>
+        <% end %>
     <% end %>
   </table>
   <%= paginate @entries %>

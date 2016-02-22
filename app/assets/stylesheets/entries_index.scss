@@ -1,12 +1,26 @@
 
+.table th, .table td {
+    padding-left: 15px;
+    padding-right: 15px;
+    // line-height: 20px;
+    // text-align: left;
+    // vertical-align: top;
+    // border-top: 1px solid #dddddd;
+  }
+
 .index-text-container_truncate {
-  height: 7em;
+  max-height: 7em;
   position: relative;
   display: block;
   overflow-y: hidden;
+  margin-bottom: 2.5em;
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #DDD;
+  // padding-bottom: 1em;
   
   td {
     display: block;
+    border-top: 0;
   }
 
   &:after {
@@ -14,9 +28,9 @@
     display: block;
     position: absolute;
     bottom: 0;
-    height: 20%;
+    height: 1.5em;
     width: 100%;
-    background: linear-gradient(to right, rgba(255,255,255,0) 70%,rgba(255,255,255,1) 100%); 
+    background: linear-gradient(to right, rgba(249,249,249,0) 70%,rgba(249,249,249,1) 100%); 
   }
 }
 
