@@ -11,6 +11,7 @@ describe EntriesController, :type => :controller do
 
   let(:unpublished_entry) { FactoryGirl.create(:entry) }
   let(:published_entry) { FactoryGirl.create(:published_entry) }
+  let(:entry) { FactoryGirl.create(:entry) }
 
   before :each do
     @editor = FactoryGirl.create(:editor)
@@ -19,6 +20,7 @@ describe EntriesController, :type => :controller do
 
   describe "GET index" do
     it "returns published entries" do
+      sign_in @editor
       unpublished_entry && published_entry
       get :index
       assigns(:entries).tap do |entries|
@@ -34,12 +36,17 @@ describe EntriesController, :type => :controller do
     end
 
     it "doesn't show only published entries" do
-      get :show, {:id => unpublished_entry.to_param}
-      expect(response).to redirect_to(entries_url)
+    # it "does not show an unpublished entry ???" do
+      # pending("tdd? there is no redirect case in the controller")
+      sign_in @editor
+      get :show, id: unpublished_entry.to_param
+      expect(response).to redirect_to(entries_path)
+      # former: expect(response).to redirect_to(entries_url)
     end
 
     it "shows published entries" do
-      get :show, {:id => published_entry.to_param}
+      sign_in @editor
+      get :show, id: published_entry.to_param
       assigns(:entry).should eq(published_entry)
     end
   end
