@@ -78,14 +78,13 @@ describe EntriesController, :type => :controller do
   end
 
   describe "POST create" do
-    describe "Admin creates an entry" do
+    context "Admin is able to creates an entry" do
       before :each do
         sign_in admin
       end
 
-      it "creates a new Entry for herself" do
-        attributes = FactoryGirl.attributes_for(:entry)
-        attributes.delete(:user_id)
+      it "for herself" do
+        attributes = FactoryGirl.attributes_for(:entry, user_id: nil) 
         expect {
           post :create, entry: attributes
         }.to change(Entry, :count).by(1)
@@ -94,77 +93,88 @@ describe EntriesController, :type => :controller do
         end
       end
 
-      context "creates an entry for another user" do
-        it "creates an entry for another editor" do
-        # it "admin is a able to create an entry for an editor" do
-        # refactoring 
-          editor 
-          expect {
-            post :create, entry: FactoryGirl.attributes_for(:entry, user_id: editor.id)
-          }.to change(Entry, :count).by(1)
-          assigns(:entry).tap do |entry|
-            expect(entry.user).to eq(editor)
-          end
-        end
-
-        it "creates an entry for another admin" do
-          admin = FactoryGirl.create(:admin)
-          expect {
-            post :create, :entry => FactoryGirl.attributes_for(:entry).merge({user_id: admin.id })
-          }.to change(Entry, :count).by(1)
-
-          assigns(:entry).tap do |entry|
-            expect(entry.user).to eq(admin)
-          end
-        end
-
-        it "doesn't create an entry for a non admin or editor user" do
-          # ???
-          user = FactoryGirl.create(:user)
-
-          post :create, :entry => FactoryGirl.attributes_for(:entry).merge({user_id: user.id })
-          expect(response.code).to eq(200.to_s)
-        end
-      end
-
-
-      it "redirects to the created entry" do
-        post :create, :entry => FactoryGirl.attributes_for(:entry)
-        expect(response).to redirect_to(Entry.last)
-      end
-    end
-
-    describe "Editor creates an entry" do
-      before :each do
-        sign_in @editor
-      end
-
-      it "creates a new Entry for herself" do
-        attributes = FactoryGirl.attributes_for(:entry)
-        attributes.delete(:user_id)
+      it "for an editor" do
+        editor 
         expect {
-          post :create, :entry => attributes
+          post :create, entry: FactoryGirl.attributes_for(:entry, user_id: editor.id)
         }.to change(Entry, :count).by(1)
-
         assigns(:entry).tap do |entry|
-          expect(entry.user).to eq(@editor)
+          expect(entry.user).to eq(editor)
         end
       end
-    end
 
-    describe "User tries to creates an entry" do
-      it "creates a new Entry for herself" do
-        # it "user gets redirected when she tries to create a new entry" do
-        # sign_in user ???
-        attributes = FactoryGirl.attributes_for(:entry)
-        attributes.delete(:user_id)
-        post :create, :entry => attributes
-        # expect(response).to be_redirect
-        expect(response.code).to eq(302.to_s)
-        expect(response).to redirect_to(new_user_session_path)
+      it "another admin" do
+        admin 
+        expect {
+          post :create, entry: FactoryGirl.attributes_for(:entry, user_id: admin.id)
+        }.to change(Entry, :count).by(1)
+        assigns(:entry).tap do |entry|
+          expect(entry.user).to eq(admin)
       end
+    end
+      
+    it "redirects to the created entry" do
+      post :create, entry: FactoryGirl.attributes_for(:entry)
+      expect(response).to redirect_to(Entry.last)
+    end
+    it "doesn't create an entry for a non admin or editor user" do
+      user = FactoryGirl.create(:user)
+      post :create, :entry => FactoryGirl.attributes_for(:entry).merge({user_id: user.id })
+      expect(response.code).to eq(200.to_s)
     end
   end
+  context "Editor is able to creates an entry" do
+    before :each do
+      sign_in editor
+    end
+
+    it "for herself" do
+      attributes = FactoryGirl.attributes_for(:entry, user_id: nil) 
+      expect {
+        post :create, entry: attributes
+      }.to change(Entry, :count).by(1)
+
+      assigns(:entry).tap do |entry|
+        expect(entry.user).to eq(editor)
+      end
+    end
+      it "for another editor" do
+        editor 
+        expect {
+          post :create, entry: FactoryGirl.attributes_for(:entry, user_id: editor.id)
+        }.to change(Entry, :count).by(1)
+        assigns(:entry).tap do |entry|
+          expect(entry.user).to eq(editor)
+        end
+      end
+      it "an admin" do
+        admin 
+        expect {
+          post :create, entry: FactoryGirl.attributes_for(:entry, user_id: admin.id)
+        }.to change(Entry, :count).by(1)
+        assigns(:entry).tap do |entry|
+          expect(entry.user).to eq(admin)
+      end
+    end
+    it "redirects to the created entry" do
+      post :create, entry: FactoryGirl.attributes_for(:entry)
+      expect(response).to redirect_to(Entry.last)
+    end
+  end
+  context "User" do
+    it "is not able to create an entry and gets redirected" do
+      # it "user gets redirected when she tries to create a new entry" do
+      # sign_in user ???
+      attributes = FactoryGirl.attributes_for(:entry)
+      attributes.delete(:user_id)
+      post :create, :entry => attributes
+      # expect(response).to be_redirect
+      expect(response.code).to eq(302.to_s)
+      expect(response).to redirect_to(new_user_session_path)
+    end
+  end
+end
+
 
   describe "PUT update" do
     describe "with valid params" do
