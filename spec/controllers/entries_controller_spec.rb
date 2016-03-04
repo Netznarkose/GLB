@@ -229,8 +229,8 @@ describe EntriesController, :type => :controller do
 
     it "redirects to the entries list" do
       sign_in @admin
-      delete :destroy, {:id => @entry.to_param}
-      response.should redirect_to(entries_url)
+      delete :destroy, id: published_entry.id
+      response.should redirect_to(entries_path)
       sign_out @admin
     end
   end
