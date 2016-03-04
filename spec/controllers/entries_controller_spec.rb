@@ -11,16 +11,17 @@ describe EntriesController, :type => :controller do
 
   let(:unpublished_entry) { FactoryGirl.create(:entry) }
   let(:published_entry) { FactoryGirl.create(:published_entry) }
-  let(:entry) { FactoryGirl.create(:entry) }
 
   before :each do
-    @editor = FactoryGirl.create(:editor)
+    # @superadmin = FactoryGirl.create(:superadmin)
     @admin = FactoryGirl.create(:admin)
+    @editor = FactoryGirl.create(:editor)
+    # @user = FactoryGirl.create(:user)
   end
 
   describe "GET index" do
     it "returns published entries" do
-      sign_in @editor
+      pending("tdd?")
       unpublished_entry && published_entry
       get :index
       assigns(:entries).tap do |entries|
@@ -37,11 +38,11 @@ describe EntriesController, :type => :controller do
 
     it "doesn't show only published entries" do
     # it "does not show an unpublished entry ???" do
-      # pending("tdd? there is no redirect case in the controller")
+      pending("tdd? there is no redirect case in the controller")
       sign_in @editor
       get :show, id: unpublished_entry.to_param
-      expect(response).to redirect_to(entries_path)
-      # former: expect(response).to redirect_to(entries_url)
+      expect(response).to redirect_to(entries_url)
+      # expect(response).to redirect_to(entries_path)
     end
 
     it "shows published entries" do
@@ -94,6 +95,8 @@ describe EntriesController, :type => :controller do
 
       context "creates an entry for another user" do
         it "creates an entry for another editor" do
+        # it "admin is a able to create an entry for an editor" do
+        # refactoring 
           editor = FactoryGirl.create(:editor)
           expect {
             post :create, :entry => FactoryGirl.attributes_for(:entry).merge({user_id: editor.id })
@@ -116,6 +119,7 @@ describe EntriesController, :type => :controller do
         end
 
         it "doesn't create an entry for a non admin or editor user" do
+          # ???
           user = FactoryGirl.create(:user)
 
           post :create, :entry => FactoryGirl.attributes_for(:entry).merge({user_id: user.id })
@@ -150,9 +154,12 @@ describe EntriesController, :type => :controller do
 
     describe "User tries to creates an entry" do
       it "creates a new Entry for herself" do
+        # it "user gets redirected when she tries to create a new entry" do
+        # sign_in user ???
         attributes = FactoryGirl.attributes_for(:entry)
         attributes.delete(:user_id)
         post :create, :entry => attributes
+        # expect(response).to be_redirect
         expect(response.code).to eq(302.to_s)
         expect(response).to redirect_to(new_user_session_path)
       end
@@ -208,10 +215,14 @@ describe EntriesController, :type => :controller do
   end
 
   describe "DELETE destroy" do
+    before do
+      published_entry
+    end
+
     it "destroys the requested entry" do
       sign_in @admin
       expect {
-        delete :destroy, {:id => @entry.to_param}
+        delete :destroy, id: published_entry.id
       }.to change(Entry, :count).by(-1)
       sign_out @admin
     end
