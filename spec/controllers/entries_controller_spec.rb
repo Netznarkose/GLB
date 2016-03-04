@@ -11,53 +11,56 @@ describe EntriesController, :type => :controller do
 
   let(:unpublished_entry) { FactoryGirl.create(:entry) }
   let(:published_entry) { FactoryGirl.create(:published_entry) }
+  let(:admin) { FactoryGirl.create(:admin) }
+  let(:editor) { FactoryGirl.create(:editor) }
 
   before :each do
-    # @superadmin = FactoryGirl.create(:superadmin)
-    @admin = FactoryGirl.create(:admin)
-    @editor = FactoryGirl.create(:editor)
-    # @user = FactoryGirl.create(:user)
+    admin
+    editor
   end
 
   describe "GET index" do
     it "returns published entries" do
-      pending("tdd?")
-      unpublished_entry && published_entry
+      pending("tdd?, test does not run")
+      published_entry
       get :index
-      assigns(:entries).tap do |entries|
-        expect(entries).to include(published_entry)
-        expect(entries).to_not include(unpublished_entry)
-      end
+      expect(assigns(:entries)).to include(published_entry)
+    end
+    it "does not returns unpublished entries" do
+      pending("tdd?, test does not run")
+      unpublished_entry 
+      get :index
+      expect(assigns(:entries)).not_to include(published_entry)
     end
   end
 
   describe "GET show" do
     before :each do
-      unpublished_entry && published_entry
+      unpublished_entry 
+      published_entry
     end
 
     it "doesn't show only published entries" do
     # it "does not show an unpublished entry ???" do
       pending("tdd? there is no redirect case in the controller")
-      sign_in @editor
-      get :show, id: unpublished_entry.to_param
+      sign_in editor
+      get :show, id: unpublished_entry.id
       expect(response).to redirect_to(entries_url)
       # expect(response).to redirect_to(entries_path)
     end
 
     it "shows published entries" do
-      sign_in @editor
-      get :show, id: published_entry.to_param
-      assigns(:entry).should eq(published_entry)
+      sign_in editor
+      get :show, id: published_entry.id
+      expect(assigns(:entry)).to eq(published_entry)
     end
   end
 
   describe "GET new" do
     it "assigns a new entry as @entry" do
-      sign_in @admin
+      sign_in admin
       get :new
-      assigns(:entry).should be_a_new(Entry)
-      sign_out @admin
+      expect(assigns(:entry)).to be_a_new(Entry)
     end
   end
 
@@ -66,30 +69,28 @@ describe EntriesController, :type => :controller do
       unpublished_entry
     end
     it "assigns the requested entry as @entry" do
-      sign_in @editor
-      unpublished_entry.user = @editor
+      sign_in editor
+      unpublished_entry.user_id = editor.id
       unpublished_entry.reload
-      get :edit, {:id => unpublished_entry.to_param}
-      assigns(:entry).should eq(unpublished_entry)
-      sign_out @editor
+      get :edit, id: unpublished_entry.id
+      expect(assigns(:entry)).to eq(unpublished_entry)
     end
   end
 
   describe "POST create" do
     describe "Admin creates an entry" do
       before :each do
-        sign_in @admin
+        sign_in admin
       end
 
       it "creates a new Entry for herself" do
         attributes = FactoryGirl.attributes_for(:entry)
         attributes.delete(:user_id)
         expect {
-          post :create, :entry => attributes
+          post :create, entry: attributes
         }.to change(Entry, :count).by(1)
-
         assigns(:entry).tap do |entry|
-          expect(entry.user).to eq(@admin)
+          expect(entry.user).to eq(admin)
         end
       end
 
@@ -97,11 +98,10 @@ describe EntriesController, :type => :controller do
         it "creates an entry for another editor" do
         # it "admin is a able to create an entry for an editor" do
         # refactoring 
-          editor = FactoryGirl.create(:editor)
+          editor 
           expect {
-            post :create, :entry => FactoryGirl.attributes_for(:entry).merge({user_id: editor.id })
+            post :create, entry: FactoryGirl.attributes_for(:entry, user_id: editor.id)
           }.to change(Entry, :count).by(1)
-
           assigns(:entry).tap do |entry|
             expect(entry.user).to eq(editor)
           end
