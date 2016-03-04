@@ -13,6 +13,7 @@ describe EntriesController, :type => :controller do
   let(:published_entry) { FactoryGirl.create(:published_entry) }
   let(:admin) { FactoryGirl.create(:admin) }
   let(:editor) { FactoryGirl.create(:editor) }
+  let(:user) { FactoryGirl.create(:user) }
 
   before :each do
     admin
@@ -113,14 +114,9 @@ describe EntriesController, :type => :controller do
       end
     end
       
-    it "redirects to the created entry" do
+    it "and gets redirects to the created entry" do
       post :create, entry: FactoryGirl.attributes_for(:entry)
       expect(response).to redirect_to(Entry.last)
-    end
-    it "doesn't create an entry for a non admin or editor user" do
-      user = FactoryGirl.create(:user)
-      post :create, :entry => FactoryGirl.attributes_for(:entry).merge({user_id: user.id })
-      expect(response.code).to eq(200.to_s)
     end
   end
   context "Editor is able to creates an entry" do
@@ -156,13 +152,14 @@ describe EntriesController, :type => :controller do
           expect(entry.user).to eq(admin)
       end
     end
-    it "redirects to the created entry" do
+    it "and gets redirects to the created entry" do
       post :create, entry: FactoryGirl.attributes_for(:entry)
       expect(response).to redirect_to(Entry.last)
     end
   end
   context "User" do
     it "is not able to create an entry and gets redirected" do
+      sign_in user
       # it "user gets redirected when she tries to create a new entry" do
       # sign_in user ???
       attributes = FactoryGirl.attributes_for(:entry)
