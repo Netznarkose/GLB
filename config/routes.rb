@@ -19,6 +19,8 @@ DGLB::Application.routes.draw do
   
   resources :users
   resources :users_admin, controller: :users
+  match "users/:id/update_role" => "users#update_role", :as => "update_user_role", :via => :put       
+  match "users/:id/entries" => "users#entries", :as => "users_entries", :via => :get
   post "versions/:id/revert" => "versions#revert", :as => "revert_version"
 
   resources :entries
