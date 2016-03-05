@@ -118,7 +118,7 @@ describe UsersController, type: :controller do
   end
 
   describe 'get update' do
-    context 'as currently loggin editor' do
+    context 'as currently logged in editor' do
       it 'I can update my name and email and get a confirmation-message' do
         sign_in editor
         put :update, id: editor.id, user: { name: 'different_editor name',
@@ -138,7 +138,6 @@ describe UsersController, type: :controller do
         expect(flash[:notice]).to eq('Name darf nicht leer sein!')
       end
       it 'I can not update my role' do
-        # pending('role is currently managed in the update_role action')
         sign_in editor 
         put :update, id: editor.id, user: { role: 'alien' }
         editor.reload
