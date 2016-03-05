@@ -172,6 +172,19 @@ describe EntriesController, :type => :controller do
   end
 
 
+  describe 'get update' do
+    context 'as currently logged in editor' do
+      it 'I can update my name and email and get a confirmation-message' do
+        sign_in admin 
+        published_entry
+        put :update, id: published_entry.id, entry: { japanische_umschrift: 'different_content',
+                                            namenskuerzel: 'different_editor' }
+        published_entry.reload
+        expect(published_entry.japanische_umschrift).to eq('different_content')
+        expect(published_entry.namenskuerzel).to eq('different_editor')
+      end
+    end
+  end
   describe "PUT update" do
     describe "with valid params" do
       pending
