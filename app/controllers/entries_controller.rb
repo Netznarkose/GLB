@@ -79,11 +79,6 @@ class EntriesController < ApplicationController
   # PUT /entries/1.json
   def update
     @entry = Entry.find(params[:id])
-    if current_user.role == 'admin'
-      @verfasser = User.find(params[:entry].delete('user_id'))
-      @entry.user = @verfasser
-    end
-
     respond_to do |format|
       if @entry.update_attributes(entry_params)
         format.html { redirect_to @entry, notice: "Eintrag erfolgreich gespeichert. #{undo_link}" }
