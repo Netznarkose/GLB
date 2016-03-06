@@ -173,63 +173,40 @@ describe EntriesController, :type => :controller do
 
 
   describe 'get update' do
-    context 'as currently logged in editor' do
-      it 'I can update my name and email and get a confirmation-message' do
+    context 'as admin' do
+      it 'I can update my entry and get redirected to it' do
         sign_in admin 
-        published_entry
-        put :update, id: published_entry.id, entry: { japanische_umschrift: 'different_content',
-                                            namenskuerzel: 'different_editor' }
+        published_entry.user_id = admin.id
+        put :update, id: published_entry.id, entry: { japanische_umschrift: 'different_content' }
         published_entry.reload
         expect(published_entry.japanische_umschrift).to eq('different_content')
-        expect(published_entry.namenskuerzel).to eq('different_editor')
+        expect(response).to redirect_to(published_entry)
+      end
+      it 'I can update someone elses entry and get redirected to it' do
+        sign_in admin 
+        published_entry.user_id = editor.id
+        put :update, id: published_entry.id, entry: { japanische_umschrift: 'different_content' }
+        published_entry.reload
+        expect(published_entry.japanische_umschrift).to eq('different_content')
+        expect(response).to redirect_to(published_entry)
       end
     end
-  end
-  describe "PUT update" do
-    describe "with valid params" do
-      pending
-      it "updates the requested entry" do
-        entry = Entry.create! FactoryGirl.attributes_for(:entry)
-        # Assuming there are no other entries in the database, this
-        # specifies that the Entry created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
-        Entry.any_instance.should_receive(:update_attributes).with({ "verfasser" => "MyString" })
-        put :update, {:id => entry.to_param, :entry => { "verfasser" => "MyString" }}
-      end
-
-      it "assigns the requested entry as @entry" do
-        entry = Entry.create! FactoryGirl.attributes_for(:entry)
-        put :update, {:id => entry.to_param, :entry => FactoryGirl.attributes_for(:entry)}
-        subject { assigns(:entry) }
-        it {is_expected.to eq(entry) }
-      end
-
-      it "redirects to the entry" do
-        entry = Entry.create! FactoryGirl.attributes_for(:entry)
-        put :update, {:id => entry.to_param, :entry => FactoryGirl.attributes_for(:entry)}
-        expect(response).to redirect_to(entry)
+    context 'as editor' do
+      it 'I can not update entries and get redirected to ???' do
+        pending('tdd')
+        sign_in editor 
+        published_entry
+        put :update, id: published_entry.id, entry: { japanische_umschrift: 'different_content' }
+        published_entry.reload
+        expect(published_entry.japanische_umschrift).not_to eq('different_content')
+        # expect(response).to redirect_to(???)
       end
     end
-
-    describe "with invalid params" do
-      it "assigns the entry as @entry" do
-        sign_in @admin
-        # Trigger the behavior that occurs when invalid params are submitted
-        Entry.any_instance.stub(:save).and_return(false)
-        put :update, {:id => @entry.to_param, :entry => { "namenskuerzel" => "invalid value" }}
-        assigns(:entry).should eq(@entry)
-        sign_out @admin
-      end
-
-      it "re-renders the 'edit' template" do
-        sign_in @admin
-        # Trigger the behavior that occurs when invalid params are submitted
-        Entry.any_instance.stub(:save).and_return(false)
-        put :update, {:id => @entry.to_param, :entry => { "namenskuerzel" => "invalid value" }}
-        response.should render_template("edit")
-        sign_out @admin
-      end
+    context "with valid params" do
+      pending('should this not be tested in the model')
+    end
+    context "with invalid params" do
+      pending('should this not be tested in the model')
     end
   end
 
@@ -239,18 +216,18 @@ describe EntriesController, :type => :controller do
     end
 
     it "destroys the requested entry" do
-      sign_in @admin
+      sign_in admin
       expect {
         delete :destroy, id: published_entry.id
       }.to change(Entry, :count).by(-1)
-      sign_out @admin
+      sign_out admin
     end
 
     it "redirects to the entries list" do
-      sign_in @admin
+      sign_in admin
       delete :destroy, id: published_entry.id
-      response.should redirect_to(entries_path)
-      sign_out @admin
+      expect(response).to redirect_to(entries_path)
+      sign_out admin
     end
   end
 
