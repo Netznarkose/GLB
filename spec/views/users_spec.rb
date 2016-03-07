@@ -2,16 +2,16 @@ require 'spec_helper'
 
 describe "users management api" do
   describe "login, logout and sign up" do
+    let(:user) { FactoryGirl.create(:user) }
     it "should sign in user before displaying dashboard and sign out user" do
-      visit root_path
-      page.should have_content("Sign in")
-      user = FactoryGirl.create(:editor)
-      fill_in "Email", :with => user.email
-      fill_in "Password", :with => "anything"
-      click_button "Sign in"
-      page.should have_content("Signed in successfully.")
-      click_link "abmelden"
-      page.should have_content("Sign in")
+      visit new_user_session_path 
+      page.should have_content("Anmelden")
+      fill_in "user_email", with: user.email
+      fill_in "user_password", with: user.password
+      click_button('Anmelden')
+      page.should have_content("Erfolgreich angemeldet.")
+      click_link "#{user.name}/abmelden"
+      page.should have_content("Anmelden")
     end
     it "should sign up user" do
       visit root_path
