@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :find_user, only: [:show, :update]
+  before_action :find_user, only: [:show, :update, :destroy]
   before_filter :protect_from_non_admins, except: [:entries, :edit, :update]
   before_filter :protect_from_non_currents, only: [:edit, :update]
 
@@ -69,7 +69,6 @@ class UsersController < ApplicationController
   # DELETE /users/1.json
   def destroy
     respond_to do |format|
-      @user = User.find(params[:id])
       @user.destroy
       format.html { redirect_to users_url, notice: "User #{@user.name} was successfully deleted." }
       format.json { head :no_content }
