@@ -2,24 +2,13 @@
   <div class="well sidebar-nav">
     <ul class="nav nav-list">
       <li class="nav-header">Index Suche</li>
-      <%= form_tag users_entries_path, method: "get", id: "entry_sidebar_box", target: "_self" do %>
-        <%= label_tag :search %>
-        <%= text_field %>
-        <%= submit_tag "Suche", name: nil %>
-
-        <fieldset>
-          <li>
-            <label for="search">Suchbegriff</label>
-            <input type="text" id="search" name="search" class="span12" value="<%= params[:search] %>"/>
-          </li>
-        </fieldset>
-        <li>
-          <button id="search_button" class="btn">Suchen</button>
-        </li>
+      </br>
+      <%= form_tag entries_path, method: "get" do %>
+        <%= text_field_tag :search, params[:search] %>
+        <%= submit_tag "Suche", :name => nil, class: "btn"  %>
       <% end %>
     </ul>
   </div>
-  
   <div class="well sidebar-nav">
     <ul class="nav nav-list">
       <li class="nav-header">Index Sortieren</li>
