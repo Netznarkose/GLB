@@ -1,46 +1,4 @@
-<% content_for :sidebar do %>
-  <div class="well sidebar-nav">
-    <ul class="nav nav-list">
-      <li class="nav-header">Suche</li>
-      <%= form_tag entries_path, method: "get", id: "search_form", target: "_self" do %>
-        <fieldset>
-          <li>
-            <label for="search">Suchbegriff</label>
-            <input type="text" id="search" name="search" class="span12" value="<%= params[:search] %>"></input>
-          </li>
-        <fieldset>
-        <li>
-          <button id="search_button" class="btn">Suchen</button>
-        </li>
-      <% end %>
-      <li class="nav-header">Scan der Originalseite</li>
-      <li>
-      <% pages = to_scan_pages(@entry.kennzahl) %>
-      <%= link_to "Seite #{pages[0]} anzeigen", "/SBDJ-Original-JPGs/SBDJ_Seite_#{pages[0]}.jpg", :target => "_blank" %>
-      </li>
-      <li>
-        <%= link_to "Seite #{pages[1]} anzeigen", "/SBDJ-Original-JPGs/SBDJ_Seite_#{pages[1]}.jpg", :target => "_blank" %>
-      </li>
-      <li class="nav-header">Frühere Eintragsversionen</li>
-      <% if @entry.entry_docs.present? %>
-        <% @entry.entry_docs.each do |doc| %>
-          <li>
-          <%= link_to "Word-Datei (" + doc.page_reference + ")", entry_doc_path(doc), :target => "_blank" %>
-          </li>
-        <% end %>
-      <% end %>
-      <% if @entry.entry_htmls.present? %>
-        <% @entry.entry_htmls.each do |html| %>
-          <% if html.page_reference.present? %>
-            <li>
-            <%= link_to "HTML-Datei (" + html.page_reference + ")", entry_html_path(html), :target => "_blank" %>
-            </li>
-          <% end %>
-        <% end %>
-      <% end %>
-    </ul>
-  </div>
-<% end %>
+<%= render 'entries/entry_sidebar_box' %>
 <% content_for :content do %>
     <% if flash[:notice] && flash[:notice][0..4] == "Entry" %> 
       <div class="alert alert-notice">

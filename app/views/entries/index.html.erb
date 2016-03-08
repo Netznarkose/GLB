@@ -1,47 +1,4 @@
-<% content_for :sidebar do %>
-</br>
-</br>
-  <div class="well sidebar-nav">
-    <ul class="nav nav-list">
-      <li class="nav-header">Suche</li>
-      <%= form_tag root_path, method: "get", id: "search_form", target: "_self" do %>
-        <fieldset>
-          <li>
-            <label for="search">Suchbegriff</label>
-            <input type="text" id="search" name="search" class="span12" value="<%= params[:search] %>"></input>
-          </li>
-        <fieldset>
-        <li>
-          <button id="search_button" class="btn">Suchen</button>
-        </li>
-      <% end %>
-    </ul>
-  </div>
-
-  <div class="well sidebar-nav">
-    <ul class="nav nav-list">
-      <li class="nav-header">Index Sortieren</li>
-      <br>
-      <div class="btn-group">
-      <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-      Felder Auswahl 
-        <span class="caret"></span>
-      </a>
-      <ul class="dropdown-menu">
-        <li><%= sortable 'kennzahl', 'Kennzahl', 'asc' %></li>
-        <li><%= sortable 'kennzahl', 'Kennzahl (reversed)', 'desc' %></li>
-        <li><%= sortable 'japanische_umschrift', 'Japanische Umschrift', 'asc' %></li>
-        <li><%= sortable 'japanische_umschrift', 'Japanische Umschrift (reversed)', 'desc' %></li>
-        <li><%= sortable 'id', 'Id', 'asc' %></li>
-        <li><%= sortable 'id', 'Id (reversed)', 'desc' %></li>
-        <li><%= sortable 'kanji', 'Kanji', 'asc' %></li>
-        <li><%= sortable 'kanji', 'Kanji (reversed)', 'desc' %></li>
-      </ul>
-    </div>
-    </ul>
-  </div>
-<% end %>
-
+<%= render 'entries/entry_sidebar_box' %>
 <% content_for :content do %>
 </br>
   <% if flash[:notice] %>
@@ -104,5 +61,4 @@
     <% end %>
   </table>
   <%= paginate @entries %>
-
 <% end %>
