@@ -43,7 +43,9 @@ class Entry < ActiveRecord::Base
   scope :published, -> { where( freigeschaltet: true ) }
 
   def self.search(query)
-    Entry.where("japanische_umschrift LIKE ? OR kanji LIKE ? OR namenskuerzel = ? OR kennzahl = ? OR romaji_order LIKE ?", "%#{query}%", "%#{query}%", "#{query}", "#{query}", "%#{query}%")
+    if query 
+      Entry.where("japanische_umschrift LIKE ? OR kanji LIKE ? OR namenskuerzel = ? OR kennzahl = ? OR romaji_order LIKE ?", "%#{query}%", "%#{query}%", "#{query}", "#{query}", "%#{query}%")
+    end
   end
 
   def cleanup

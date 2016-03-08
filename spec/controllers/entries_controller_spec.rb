@@ -20,18 +20,36 @@ describe EntriesController, :type => :controller do
     editor
   end
 
-  describe "GET index" do
-    it "returns published entries" do
-      pending("tdd?, test does not run")
-      published_entry
-      get :index
-      expect(assigns(:entries)).to include(published_entry)
-    end
-    it "does not returns unpublished entries" do
-      pending("tdd?, test does not run")
-      unpublished_entry 
-      get :index
-      expect(assigns(:entries)).not_to include(published_entry)
+  # describe "GET index" do
+  #   it "returns published entries" do
+  #     pending("tdd?, test does not run")
+  #     published_entry
+  #     get :index
+  #     expect(assigns(:entries)).to include(published_entry)
+  #   end
+  #   it "does not returns unpublished entries" do
+  #     pending("tdd?, test does not run")
+  #     unpublished_entry 
+  #     get :index
+  #     expect(assigns(:entries)).not_to include(published_entry)
+  #   end
+  # end
+
+  describe 'get index' do
+    context 'as admin' do
+      it 'shows user index' do
+        sign_in admin
+        get :index
+        expect(response).to be_success
+      end
+      it 'sorts the index in the right way' do
+        pending('todo')
+        raise
+      end
+      it 'shows the right search results' do
+        pending('todo')
+        raise
+      end
     end
   end
 
@@ -41,8 +59,15 @@ describe EntriesController, :type => :controller do
       published_entry
     end
 
-    it "doesn't show only published entries" do
-    # it "does not show an unpublished entry ???" do
+    it "shows published entries" do
+      sign_in editor
+      get :show, id: published_entry.id
+      expect(assigns(:entry)).to eq(published_entry)
+      expect(response).to be_success
+      expect(response).to render_template :show
+    end
+
+    it "does not show an unpublished entry" do
       pending("tdd? there is no redirect case in the controller")
       sign_in editor
       get :show, id: unpublished_entry.id
@@ -50,11 +75,6 @@ describe EntriesController, :type => :controller do
       # expect(response).to redirect_to(entries_path)
     end
 
-    it "shows published entries" do
-      sign_in editor
-      get :show, id: published_entry.id
-      expect(assigns(:entry)).to eq(published_entry)
-    end
   end
 
   describe "GET new" do

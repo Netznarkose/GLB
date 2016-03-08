@@ -1,25 +1,26 @@
 #encoding: utf-8
 class EntriesController < ApplicationController
-   helper_method :sort_column, :sort_direction
+  before_action :find_entry, only: [:show, :update, :destroy]
+  helper_method :sort_column, :sort_direction
 
   load_and_authorize_resource
   # uncomment sḱip_before_filter to make entries visible; (preferably in connection with published filter)
   #skip_before_filter :authenticate_user!, only: [:index, :show]
-  before_filter :entry, only: [:show]
-  before_filter :selected_entries, only: [:index]
   # GET /entries
   # GET /entries.json
   def index
-    @count = @selected_entries.count
-    # @entries = @selected_entries.page(params[:page])
-    @entries = Entry.order(sort_column + " " + sort_direction).page(params[:page])
+    if Entry.search(params[:search])
+      @entries = Entry.search(params[:search]).page(params[:page])
+    else
+      @entries = Entry.order(sort_column + " " + sort_direction).page(params[:page])
+    end
+    @count = @entries.count
     respond_to do |format|
       format.html # index.html.erb
       format.csv {send_data @entries.to_csv, :type => 'text/csv', :disposition => "attachment; filename=glb.csv"}
       format.xml {send_data @entries.to_xml, :type => 'text/xml', :disposition => "attachment; filename=glb.xml"}
       format.json { render json: @entries }
     end
-
   end
 
   # GET /entries/1
@@ -49,7 +50,7 @@ class EntriesController < ApplicationController
 
   # GET /entries/1/edit
   def edit
-    @entry = Entry.find(params[:id])
+    # @entry = Entry.find(params[:id])
     if @entry.user != current_user && current_user.role != "admin"
       flash[:notice] = "Sie dürfen die Einträge von anderen Mitarbeitern nicht bearbeiten. Hinterlassen Sie stattdessen einen Kommentar."
       redirect_to :action => 'show'
@@ -78,14 +79,9 @@ class EntriesController < ApplicationController
   # PUT /entries/1
   # PUT /entries/1.json
   def update
-    @entry = Entry.find(params[:id])
     respond_to do |format|
       if @entry.update_attributes(entry_params)
-        format.html { redirect_to @entry, notice: "Eintrag erfolgreich gespeichert. #{undo_link}" }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @entry.errors, status: :unprocessable_entity }
+        format.html { redirect_to @entry.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -93,7 +89,6 @@ class EntriesController < ApplicationController
   # DELETE /entries/1
   # DELETE /entries/1.json
   def destroy
-    @entry = Entry.find(params[:id])
     @entry.destroy
 
     respond_to do |format|
@@ -104,15 +99,8 @@ class EntriesController < ApplicationController
 
   private
 
-  def entry
-    # published filter does not apply to any entries yet
-    #@entry = Entry.published.find(params[:id])
+  def find_entry
     @entry = Entry.find(params[:id])
-  end
-
-  def selected_entries
-    params[:search] = nil if params[:search] and params[:search].strip == ""
-    @selected_entries = (params[:search] ? Entry.search(params[:search]) : Entry).order("romaji_order")
   end
 
   def build_entry_comment
