@@ -10,7 +10,7 @@ describe "users management api" do
       fill_in "user_password", with: user.password
       click_button('Anmelden')
       page.should have_content("Erfolgreich angemeldet.")
-      # click_link "#{user.name}/abmelden" ???
+      click_link "Abmelden" 
       page.should have_content("Anmelden")
     end
     it "should sign up user" do
