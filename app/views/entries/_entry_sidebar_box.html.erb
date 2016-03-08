@@ -1,37 +1,4 @@
 <% content_for :sidebar do %>
-  <div class="well sidebar-nav">
-    <ul class="nav nav-list">
-      <li class="nav-header">Index Suche</li>
-      </br>
-      <%= form_tag entries_path, method: "get" do %>
-        <%= text_field_tag :search, params[:search] %>
-        <%= submit_tag "Suche", :name => nil, class: "btn"  %>
-      <% end %>
-    </ul>
-  </div>
-  <div class="well sidebar-nav">
-    <ul class="nav nav-list">
-      <li class="nav-header">Index Sortieren</li>
-      <br>
-      <div class="btn-group">
-      <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-      Felder Auswahl 
-        <span class="caret"></span>
-      </a>
-      <ul class="dropdown-menu">
-        <li><%= sortable 'kennzahl', 'Kennzahl', 'asc' %></li>
-        <li><%= sortable 'kennzahl', 'Kennzahl (reversed)', 'desc' %></li>
-        <li><%= sortable 'japanische_umschrift', 'Japanische Umschrift', 'asc' %></li>
-        <li><%= sortable 'japanische_umschrift', 'Japanische Umschrift (reversed)', 'desc' %></li>
-        <li><%= sortable 'id', 'Id', 'asc' %></li>
-        <li><%= sortable 'id', 'Id (reversed)', 'desc' %></li>
-        <li><%= sortable 'kanji', 'Kanji', 'asc' %></li>
-        <li><%= sortable 'kanji', 'Kanji (reversed)', 'desc' %></li>
-      </ul>
-    </div>
-    </ul>
-  </div>
-  <% if current_page?(edit_entry_path) || current_page?(edit_entry_path)%>
     <div class="well sidebar-nav">
       <ul class="nav nav-list">
         <li class="nav-header">Scan der Originalseite</li>
@@ -75,4 +42,3 @@
       </ul>
     </div>
   <% end %>
-<% end %>
