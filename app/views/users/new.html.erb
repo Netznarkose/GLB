@@ -1,5 +1,4 @@
 <% content_for :content do %>
-
   <% if flash[:notice] %>
     <div class="alert alert-notice">
       <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -28,7 +27,7 @@
         </br>
         <%= f.submit "Speichern", class: "btn" %>
         <%= link_to 'Zurück', users_path, class: "btn"  %>
-    <% end %>
+      <% end %>
+    </div>
   </div>
-</div>
 <% end %>

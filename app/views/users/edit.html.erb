@@ -1,11 +1,29 @@
 <% content_for :content do %>
-  </br>
   <% if flash[:notice] %>
     <div class="alert alert-notice">
       <button type="button" class="close" data-dismiss="alert">&times;</button>
       <strong><%= raw(flash[:notice]) %></strong>
     </div>
   <% end %>
-  <%= render 'form' %>
-  <%= link_to 'Zurück', :back %>
+
+  <div class="row">
+    <div class="span5 offset1">
+      <h1>Status Ändern</h1>
+      </br>
+      </br>
+      </br>
+      <p>
+      <h3>Name: <%= @user.name %></h3>
+      </p>
+      <h3>Email: <%= @user.email%></h3>
+      <%= form_for @user do |f| %>
+        <%= f.label :status %>
+        <%= f.select :role, ['Admin', 'Editor'] %>
+        </br>
+        </br>
+        <%= f.submit "Speichern", class: "btn" %>
+        <%= link_to 'Zurück', users_path, class: "btn"  %>
+      <% end %>
+    </div>
+  </div>
 <% end %>
