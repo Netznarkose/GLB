@@ -41,6 +41,7 @@ class Entry < ActiveRecord::Base
   before_save :cleanup
 
   scope :published, -> { where( freigeschaltet: true ) }
+  scope :by_user, ->(user) { where(user_id: user.id) }
 
   def self.search(query)
     if query 
