@@ -1,5 +1,4 @@
 class ProfilesController < ApplicationController
-  # before_filter :protect_from_non_currents, only: [:edit]
   def edit
     unless current_user
       redirect_to root_path, notice: 'Access denied!' 
