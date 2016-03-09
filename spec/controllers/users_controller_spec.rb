@@ -102,10 +102,12 @@ describe UsersController, type: :controller do
 
   describe 'get edit' do
     context 'as currently logged in editor' do
-      it 'I can render my #edit-view' do
+      it 'I can not render my #edit-view and get 
+      redirected to profile controller edit' do
         sign_in editor
         get :edit, id: editor.id
-        expect(response).to render_template(:edit)
+        expect(response).not_to render_template(:edit)
+        expect(response).to redirect_to(edit_profile_path(editor))
       end
       it 'I get redirected to homepage when I try to render
       someone elses #edit-view & get an error-message' do
