@@ -1,5 +1,4 @@
 <% content_for :content do %>
-  <h1>Mitarbeiter anlegen</h1>
 
   <% if flash[:notice] %>
     <div class="alert alert-notice">
@@ -7,26 +6,29 @@
       <strong><%= raw(flash[:notice]) %></strong>
     </div>
   <% end %>
-  <%= form_for @user, :method => :post do |f| %>
-    <fieldset>
-
+  <div class="row">
+    <div class="span5 offset1">
+      </br>
+      <h1>Mitarbeiter anlegen</h1>
+      </br>
+      </br>
+      </br>
+      <%= form_for @user do |f| %>
         <%= f.label :name %>
-        <%= f.text_field :name, :class => "input-medium" %>
+        <%= f.text_field :name %>
         <%= f.label :email %>
-        <%= f.text_field :email, :class => "input-medium" %>
+        <%= f.text_field :email %>
         <%= f.label :password %>
-        <%= f.text_field :password, :class => "input-medium", :type => "password" %>
+        <%= f.password_field :password %>
         <%= f.label :password_confirmation %>
-        <%= f.text_field :password_confirmation, :class => "input-medium", :type => "password" %>
-        <br />
-        Status
-        <br />
-        <%= f.select(:role, options_for_select([["Admin", "admin"], ["Editor", "editor"]], "editor")) %>
-      <div class="actions">
-        <%= f.submit "Speichern", :id => "update_user"%>
-      </div>
-    </fieldset>
-  <% end %>
-
-  <%= link_to 'Zurück', users_path %>
+        <%= f.password_field :password_confirmation %>
+        <%= f.label :status %>
+        <%= f.select :role, ['Admin', 'Editor'] %>
+        </br>
+        </br>
+        <%= f.submit "Speichern", class: "btn" %>
+        <%= link_to 'Zurück', users_path, class: "btn"  %>
+    <% end %>
+  </div>
+</div>
 <% end %>
