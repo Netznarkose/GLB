@@ -49,6 +49,9 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+    if current_user?
+      redirect_to edit_profile_path(@user) 
+    end
   end
 
   # PUT /users/1
