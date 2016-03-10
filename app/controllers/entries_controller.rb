@@ -81,7 +81,11 @@ class EntriesController < ApplicationController
   def update
     respond_to do |format|
       if @entry.update_attributes(entry_params)
-        format.html { redirect_to @entry.errors, status: :unprocessable_entity }
+        format.html { redirect_to @entry, notice: "Eintrag erfolgreich gespeichert. #{undo_link}" }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @entry.errors, status: :unprocessable_entity }
       end
     end
   end
