@@ -1,5 +1,7 @@
 DGLB::Application.routes.draw do
 
+  get 'user_entries/index'
+
   resource :profile, only: [:edit, :update]
 
 
@@ -11,13 +13,14 @@ DGLB::Application.routes.draw do
   resources :comments
 
 
-  resources :entries
+  resources :users do
+    resources :entries, controller: "user_entries" 
+  end
 
 
   root :to => "entries#index"
   devise_for :users, :skip => :registration
   
-  resources :users
   resources :users_admin, controller: :users
   match "users/:id/update_role" => "users#update_role", :as => "update_user_role", :via => :put       
   match "users/:id/entries" => "users#entries", :as => "users_entries", :via => :get
