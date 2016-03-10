@@ -45,7 +45,7 @@ class Entry < ActiveRecord::Base
 
   def self.search(query)
     if query 
-      Entry.where("japanische_umschrift LIKE ? OR kanji LIKE ? OR namenskuerzel = ? OR kennzahl = ? OR romaji_order LIKE ?", "%#{query}%", "%#{query}%", "#{query}", "#{query}", "%#{query}%")
+      Entry.where("japanische_umschrift LIKE ? OR kanji LIKE ? OR namenskuerzel = ? OR kennzahl = ? OR romaji_order LIKE ? OR uebersetzung LIKE ?", "%#{query}%", "%#{query}%", "#{query}", "#{query}", "%#{query}%", "%#{query}%")
     end
   end
 
