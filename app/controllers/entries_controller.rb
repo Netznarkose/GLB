@@ -9,7 +9,7 @@ class EntriesController < ApplicationController
   # GET /entries
   # GET /entries.json
   def index
-    if Entry.search(params[:search])
+    if params[:search]
       @entries = Entry.search(params[:search]).page(params[:page])
     else
       @entries = Entry.order(sort_column + " " + sort_direction).page(params[:page])
