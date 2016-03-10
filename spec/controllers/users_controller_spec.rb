@@ -23,25 +23,6 @@ describe UsersController, type: :controller do
     end
   end
 
-  describe 'get show' do
-    context 'as admin' do
-      it 'assigns the requested user to @user and renders the #show-view' do
-        sign_in admin
-        get :show, id: user.id
-        expect(assigns(:user)).to eq(user)
-        expect(response).to be_success
-        expect(response).to render_template :show
-      end
-    end
-    context 'as editor' do
-      it 'does not renders the #show-view and redirects to homepage' do
-        sign_in editor
-        get :show, id: user
-        expect(response).to redirect_to(root_path)
-      end
-    end
-  end
-
   describe 'get new' do
     context 'as admin' do
       it 'assigns a new user to @User & renders #new-view' do
