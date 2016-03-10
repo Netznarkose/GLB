@@ -2,9 +2,7 @@
   </br>
   <h1>Neuer Eintrag</h1>
   </br>
-  <%= form_for(Entry.new, :method => :post, :html => {:class => "form"})  do |f| %>
-    <%= render :partial => 'entries/form', :locals => {:f => f}%>
-  <% end %>
+    <%= render 'entries/form' %>
   </br>
   <%= link_to 'Zurück', entries_path %>
 <% end %>

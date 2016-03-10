@@ -1,11 +1,9 @@
-<%= render 'entries/search_and_sort_box' %>
-<%= render 'entries/scan_and_html_box' %>
 <% content_for :content do %>
-  <h1>Eintrag bearbeiten</h1>
-  <%= form_for @entry, :html => {:class => "form-horizontal"} do |f| %>
-    <%= render :partial => 'entries/form', :locals => {:f => f}%>
-  <% end %>
-
+  </br>
+  <h1>Eintrag Bearbeiten</h1>
+  </br>
+    <%= render 'entries/form' %>
+  </br>
   <%= link_to 'Anzeigen', @entry %> |
   <%= link_to 'Zurück', entries_path %>
 <% end %>

@@ -28,7 +28,7 @@
             <a class='dropdown-toggle' data-toggle='dropdown' href='#'>Einträge</a>
             <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
               <li><%= link_to "Alle Einträge", entries_path, :method => :get, :target => "_self" %></li>
-              <li><%= link_to "Meine Einträge", user_entries_path(@user), :method => :get, :target => "_self" %></li>
+              <li><%= link_to "Meine Einträge", user_entries_path(current_user), :method => :get, :target => "_self" %></li>
               <% if current_user.admin? %>
                 <li><%= link_to "Neuer Eintrag", new_entry_path, :method => :get, :target => "_self" %></li>
                 <li><%= link_to "Alle Einträge exportieren (csv)", entries_path(format: :csv), :method => :get %></li>
