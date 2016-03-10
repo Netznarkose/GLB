@@ -1,0 +1,94 @@
+<% content_for :sidebar do %>
+  <div class="well sidebar-nav">
+    <ul class="nav nav-list">
+      <li class="nav-header"><%= "#{@user.name} Suche" %></li>
+      </br>
+      <%= form_tag user_entries_path(@user), method: "get" do %>
+        <%= text_field_tag :search, params[:search] %>
+        <%= submit_tag "Suche", name: nil, class: "btn"  %>
+      <% end %>
+    </ul>
+  </div>
+  <div class="well sidebar-nav">
+    <ul class="nav nav-list">
+      <li class="nav-header">Sortieren</li>
+      <br>
+      <div class="btn-group">
+      <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+      Felder Auswahl 
+        <span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu">
+        <li><%= sortable 'kennzahl', 'Kennzahl', 'asc' %></li>
+        <li><%= sortable 'kennzahl', 'Kennzahl (reversed)', 'desc' %></li>
+        <li><%= sortable 'japanische_umschrift', 'Japanische Umschrift', 'asc' %></li>
+        <li><%= sortable 'japanische_umschrift', 'Japanische Umschrift (reversed)', 'desc' %></li>
+        <li><%= sortable 'id', 'Id', 'asc' %></li>
+        <li><%= sortable 'id', 'Id (reversed)', 'desc' %></li>
+        <li><%= sortable 'kanji', 'Kanji', 'asc' %></li>
+        <li><%= sortable 'kanji', 'Kanji (reversed)', 'desc' %></li>
+      </ul>
+    </div>
+    </ul>
+  </div>
+<% end %>
+
+<% content_for :content do %>
+  <% if flash[:notice] %>
+    <div class="alert alert-notice">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <strong><%= raw(flash[:notice]) %></strong>
+    </div>
+  <% end %>
+  <% if @user == current_user %>
+    <h1><%= "Meine Einträge" %></h1>
+  <% else %>
+    <h1><%= "#{@user.name}'s Einträge" %></h1>
+  <% end %>
+  <span class="label"><%= @user.entries.count %>
+    <%= @user.entries.count > 1 ? "Einträge" : "Eintrag" %>
+  </span>
+
+  <%# <%= @user.entries.paginate %1> %>
+  <table class="table table-striped">
+    <tr>
+      <th>Verfasser</th>
+      <th>Namenskürzel</th>
+      <th>Kennzahl</th>
+      <th>Japanische umschrift</th>
+      <th>Kanji</th>
+      <th>Aktionen</th>
+      <th>Kommentar</th>
+    </tr>
+
+    <% @user_entries.each do |entry| %>
+      <tr>
+        <td><%= entry.user.name %></td>
+        <td><%= entry.namenskuerzel %></td>
+        <td><%= entry.kennzahl %></td>
+        <td><%= entry.japanische_umschrift %></td>
+        <td><%= entry.kanji %></td>
+        <td><%= link_to 'Anzeigen', entry %>
+        <% if entry.user == current_user || current_user.admin? %>
+          <br/>
+          <%= link_to 'Bearbeiten', edit_entry_path(entry) %>
+        <% end %>
+        <% if current_user.admin? %>
+          <br/>
+          <%= link_to 'Löschen', entry, method: :delete, data: { confirm: 'Wollen Sie diesen Eintrag wirklich löschen?' }%>
+        <% end %>
+        </td>
+        <td>
+          <% if entry.comments.length != 0 %>
+            <%= link_to entry.comments.length, entry_path(entry) + "#comments", :class => "badge badge-important comments" %>
+          <% end %>
+          <% if entry.freigeschaltet %>
+            <span class="label label-success">Freigeschaltet</span>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+  <%# <%= @user.entries.paginate %1> %>
+
+<% end %>
