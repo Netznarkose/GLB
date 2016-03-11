@@ -1,29 +1,3 @@
-# namenskuerzel  # Short name version
-# kennzahl  # Index number
-# spaltenzahl  # Number of columns
-# japanische_umschrift  # Japanese transliteration
-# kanji  # Current word dictionary form
-# pali  # Pali Transliteration
-# sanskrit  # Sanscrit Transliteration
-# chinesisch  # Chinese Transliteration
-# tibetisch
-# koreanisch
-# weitere_sprachen  # Other languages
-# alternative_japanische_lesungen  # Alternative Japanese Readings
-# schreibvarianten  # Spellings variations
-# deutsche_uebersetzung  # German Translations
-# lemma_art  # Dictionary Entry Type
-# jahreszahlen  # Date
-# uebersetzung  # Translation
-# quellen  # Sources
-# literatur  # Literature
-# eigene_ergaenzungen  # Own Additions
-# quellen_ergaenzungen  # Additions from sources
-# literatur_ergaenzungen  # Additions from literature
-# page_reference
-# freigeschaltet                   default: false # Published
-# romaji_order
-
 class Entry < ActiveRecord::Base
   require 'csv'
   has_paper_trail
@@ -41,7 +15,6 @@ class Entry < ActiveRecord::Base
   before_save :cleanup
 
   scope :published, -> { where( freigeschaltet: true ) }
-  scope :by_user, ->(user) { where(user_id: user.id) }
 
   def self.search(query)
     if query 
