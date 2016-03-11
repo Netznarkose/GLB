@@ -1,9 +1,13 @@
 <% content_for :content do %>
-  </br>
-  <h1>Eintrag Bearbeiten</h1>
-  </br>
-    <%= render 'entries/form' %>
-  </br>
-  <%= link_to 'Anzeigen', @entry %> |
-  <%= link_to 'Zurück', entries_path %>
+  <div class="row">
+    <div class="span7 offset0">
+      </br>
+      <h1>Eintrag Bearbeiten</h1>
+      </br>
+      <%= render 'entries/form' %>
+      </br>
+      <%= link_to 'Anzeigen', @entry %> |
+      <%= link_to 'Zurück', entries_path %>
+    </div>
+  </div>
 <% end %>

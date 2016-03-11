@@ -1,8 +1,12 @@
 <% content_for :content do %>
-  </br>
-  <h1>Neuer Eintrag</h1>
-  </br>
-    <%= render 'entries/form' %>
-  </br>
-  <%= link_to 'Zurück', entries_path %>
+  <div class="row">
+    <div class="span7 offset0">
+      </br>
+      <h1>Neuer Eintrag</h1>
+      </br>
+      <%= render 'entries/form' %>
+      </br>
+      <%= link_to 'Zurück', entries_path %>
+    </div>
+  </div>
 <% end %>
