@@ -10,11 +10,13 @@ class Entry < ActiveRecord::Base
   has_many :entry_htmls
 
   validates :kennzahl, presence: true
+  validate :group_lemma_schreibungen_und_aussprachen
   validate :user_is_allowed
 
   before_save :cleanup
 
   scope :published, -> { where( freigeschaltet: true ) }
+
 
   def self.search(query)
     if query 
@@ -30,6 +32,11 @@ class Entry < ActiveRecord::Base
   end
 
   private
+ def group_lemma_schreibungen_und_aussprachen
+   if self.japanische_umschrift.blank? && self.kanji.blank? && self.chinesisch.blank? && self.tibetisch.blank? && self.koreanisch.blank? && self.pali.blank? && self.sanskrit.blank? && self.weitere_sprachen.blank? && self.alternative_japanische_lesungen.blank? && self.schreibvarianten.blank? 
+      self.errors[:base] = "Lemma-Schreibungen und -Aussprachen"
+    end
+  end
 
   def user_is_allowed
     unless User.allowed_for_entries.where(id: self.user_id).any?
