@@ -29,15 +29,11 @@ FactoryGirl.define do
 
   factory :entry, class: Entry do
     user_id { FactoryGirl.create(:admin).id }
-    namenskuerzel "ES"
     kennzahl "981:1"
-    spaltenzahl "17"
     japanische_umschrift "chi {muchi}"
-    kanji "癡 (無癡)"
-    chinesisch "chi {wuchi}"
     deutsche_uebersetzung "Torheit, Dummheit {Nicht-Torheit}"
-    uebersetzung "Torheit, Dummheit {Nicht-Torheit}"
   end
+
 
   factory :published_entry, parent: :entry do
     freigeschaltet true
