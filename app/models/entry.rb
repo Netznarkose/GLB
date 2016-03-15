@@ -11,6 +11,7 @@ class Entry < ActiveRecord::Base
 
   validates :kennzahl, presence: true
   validate :group_lemma_schreibungen_und_aussprachen
+  validate :group_uebersetzungen_quellenangaben_literatur_und_ergaenzungen
   validate :user_is_allowed
 
   before_save :cleanup
@@ -37,6 +38,12 @@ class Entry < ActiveRecord::Base
       self.errors[:base] = "Lemma-Schreibungen und -Aussprachen"
     end
   end
+ def group_uebersetzungen_quellenangaben_literatur_und_ergaenzungen
+   if self.deutsche_uebersetzung.blank? && self.uebersetzung.blank? && self.quellen.blank? && self.literatur.blank? && self.eigene_ergaenzungen.blank? && self.quellen_ergaenzungen.blank? && self.literatur_ergaenzungen.blank? 
+      self.errors[:base] = "Uebersetzungen , Quellenangaben, Literatur und Ergaenzungen"
+    end
+  end
+
 
   def user_is_allowed
     unless User.allowed_for_entries.where(id: self.user_id).any?
