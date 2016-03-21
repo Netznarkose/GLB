@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :find_user, only: [:show, :update, :destroy]
-  before_filter :protect_from_non_admins, except: [:entries, :edit, :update]
+  before_filter :protect_from_non_admins, except: [:entries, :edit]
   before_filter :protect_from_non_currents, only: [:edit, :update]
 
   # GET /users
@@ -81,12 +81,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    #remove every attribute but role
-    if admin?
-      params.require(:user).permit(:name, :email, :password, :password_confirmation, :role)
-    else
-      params.require(:user).permit(:name, :email, :password, :password_confirmation)
-    end
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, :role)
   end
 
   def find_user
