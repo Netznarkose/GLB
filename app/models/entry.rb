@@ -35,12 +35,12 @@ class Entry < ActiveRecord::Base
   private
  def group_lemma_schreibungen_und_aussprachen
    if self.japanische_umschrift.blank? && self.kanji.blank? && self.chinesisch.blank? && self.tibetisch.blank? && self.koreanisch.blank? && self.pali.blank? && self.sanskrit.blank? && self.weitere_sprachen.blank? && self.alternative_japanische_lesungen.blank? && self.schreibvarianten.blank? 
-      self.errors[:base] = "Lemma-Schreibungen und -Aussprachen"
+      self.errors[:base] = "Mindestens ein Feld der Kategorie 'Lemma-Schreibungen und -Aussprachen' muss ausgefüllt sein!"
     end
   end
  def group_uebersetzungen_quellenangaben_literatur_und_ergaenzungen
    if self.deutsche_uebersetzung.blank? && self.uebersetzung.blank? && self.quellen.blank? && self.literatur.blank? && self.eigene_ergaenzungen.blank? && self.quellen_ergaenzungen.blank? && self.literatur_ergaenzungen.blank? 
-      self.errors[:base] = "Uebersetzungen , Quellenangaben, Literatur und Ergaenzungen"
+     self.errors[:base] = "Mindestens ein Feld der Kategorie 'Uebersetzungen , Quellenangaben, Literatur und Ergaenzungen' muss ausgefüllt sein!"
     end
   end
 

@@ -2,6 +2,7 @@
   <%= render 'shared/error_messages', object: f.object %>
   </br>
   </br>
+  <fieldset class="inputs well form-horizontal">
   <h4>Kerndaten</h4>
   </br>
   </br>
@@ -15,12 +16,10 @@
   <%= f.text_field :kennzahl %>
   <%= f.label :spaltenzahl %>
   <%= f.text_field :spaltenzahl %>
-  <%= f.label :lemma_art %>
-  <%= f.select :lemma_art, ["", "Person", "Tempel", "Werk", "Fachtermini", "Geographische Bezeichnung", "Ereignis"] %> 
-  <%= f.label :jahreszahlen %>
-  <%= f.text_field :jahreszahlen %>
+  </fieldset>
   </br>
   </br>
+  <fieldset class="inputs well form-horizontal">
   <h4>Lemma-Schreibungen und -Aussprachen</h4>
   </br>
   </br>
@@ -50,11 +49,17 @@
   <%= f.text_field :deutsche_uebersetzung %>
   <%= f.label :deutsche_uebersetzung, 'Lemma in Lateinbuchstaben' %>
   <%= f.text_field :deutsche_uebersetzung %>
+  </fieldset>
   </br>
   </br>
+  <fieldset class="inputs well form-horizontal">
   <h4>Übersetzungen, Quellenangaben, Literatur und Ergänzungen</h4>
   </br>
   </br>
+  <%= f.label :lemma_art %>
+  <%= f.select :lemma_art, ["", "Person", "Tempel", "Werk", "Fachtermini", "Geographische Bezeichnung", "Ereignis"] %> 
+  <%= f.label :jahreszahlen %>
+  <%= f.text_field :jahreszahlen %>
   <%= f.label :deutsche_uebersetzung %>
   <%= f.text_field :deutsche_uebersetzung %>
   <%= f.label :uebersetzung %>
@@ -70,4 +75,5 @@
   <%= f.label :literatur_ergaenzungen %>
   <%= f.cktext_area :literatur_ergaenzungen, :ckeditor => {:uiColor => "#AADC6E", :toolbar => "MyToolbar"} %>
   <%= f.submit("Speichern") %>
+  </fieldset>
 <% end %>
