@@ -4,7 +4,7 @@
       <li class="nav-header">Scan der Originalseite</li>
       <li>
         <% pages = to_scan_pages(@entry.kennzahl) %>
-        <%= link_to "Seite #{pages[0]} anzeigen", "/SBDJ-Original-JPGs/SBDJ_Seite_#{pages[0]}.jpg", :target => "_blank" %>
+        <%= link_to "Seite #{pages[0]} anzeigen", "http://buddhismus-lexikon.eu:2001/SBDJ-Original-JPGs/SBDJ_Seite_#{pages[0]}.jpg", :target => "_blank" %>
       </li>
       <li>
         <%= link_to "Seite #{pages[1]} anzeigen", "/SBDJ-Original-JPGs/SBDJ_Seite_#{pages[1]}.jpg", :target => "_blank" %>

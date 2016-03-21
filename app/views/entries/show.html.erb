@@ -1,7 +1,13 @@
 <%# <%= render 'entries/search_and_sort_box' %1> %>
+<% content_for :content do %>
+  <div class="relative_me">
+  <% pages = to_scan_pages(@entry.kennzahl) %>
+  <%= image_tag "http://buddhismus-lexikon.eu:2001/SBDJ-Original-JPGs/SBDJ_Seite_#{pages[0]}.jpg", size: '1000x1000', class: "img"  %>
+<% end %>
+</div>
 <%= render 'entries/scan_and_html_box' %>
 <% content_for :content do %>
-
+  <div class="down_under">
   <fieldset class="inputs well form-horizontal">
     <h4>Kerndaten</h4>
     <% unless @entry.user_id.blank? %>
@@ -170,5 +176,6 @@
         </div>
       </fieldset>
     <% end%>
+  </div>
   </div>
 <% end %>

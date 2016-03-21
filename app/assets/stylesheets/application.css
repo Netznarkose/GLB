@@ -15,6 +15,14 @@
  */
 @import "bootstrap-sprockets";
 @import "bootstrap";
+img {
+    position: absolute;
+    clip: rect(0px,1000px,400px,0px);
+    top: 0;
+}
+.down_under {
+  margin-top: 400px;
+}
 
 ul {
 	list-style: none;
