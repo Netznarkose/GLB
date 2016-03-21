@@ -78,22 +78,10 @@ class UsersController < ApplicationController
     end
   end
 
-  # TODO move this method to entries_controller.rb
-  def entries
-    @page = params[:page] || 0
-    params[:search] = nil if params[:search] and params[:search].strip == ""
-    all_entries = (params[:search] ? current_user.search_entries(params[:search]) : current_user.entries).order('romaji_order')
-    @count = all_entries.count
-    @entries = all_entries.page(@page)
-    respond_to do |format|
-      format.html # users_entries.html.erb
-      format.json { render json: @entries }
-    end
-  end
-
   private
 
   def user_params
+    #remove every attribute but role
     if admin?
       params.require(:user).permit(:name, :email, :password, :password_confirmation, :role)
     else
