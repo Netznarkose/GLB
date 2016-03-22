@@ -21,7 +21,7 @@ describe Entry do
   it "raises an error if no field of the group lemma_schreibungen_und_aussprachen is filled out" do
     @entry.japanische_umschrift = ""
     expect(@entry.valid?).to be(false)
-    expect(@entry.errors.messages[:base].first).to eq('Lemma-Schreibungen und -Aussprachen')
+    expect(@entry.errors.messages[:base].first).to eq('Mindestens ein Feld der Kategorie \'Lemma-Schreibungen und -Aussprachen\' muss ausgefüllt sein!')
   end
   it "passes the test if at least on field of the group lemma_schreibungen_und_aussprachen is filled out" do
     @entry.japanische_umschrift = ""
@@ -31,7 +31,7 @@ describe Entry do
   it "raises an error if no field of the group uebersetzungen_quellenangaben_literatur_und_ergaenzungen is filled out" do
     @entry.deutsche_uebersetzung = ""
     expect(@entry.valid?).to be(false)
-    expect(@entry.errors.messages[:base].first).to eq('Uebersetzungen , Quellenangaben, Literatur und Ergaenzungen')
+    expect(@entry.errors.messages[:base].first).to eq('Mindestens ein Feld der Kategorie \'Uebersetzungen , Quellenangaben, Literatur und Ergaenzungen\' muss ausgefüllt sein!')
   end
   it "passes the thes if at least one field of the group uebersetzungen_quellenangaben_literatur_und_ergaenzungen is filled out" do
     @entry.deutsche_uebersetzung = ""
