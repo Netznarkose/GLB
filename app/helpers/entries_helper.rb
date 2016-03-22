@@ -11,6 +11,8 @@ module EntriesHelper
   end
 
   private
+  # make digits that are smaller then four digit to for digit numbers 
+  # example 9 becomes 0009
   def to_scan_pages_helper page
     page = page.to_s
     if page.length < 4
