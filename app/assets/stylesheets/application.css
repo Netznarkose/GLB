@@ -15,13 +15,17 @@
  */
 @import "bootstrap-sprockets";
 @import "bootstrap";
-img {
+.clipped.active {
     position: absolute;
-    clip: rect(0px,1000px,400px,0px);
+    clip: rect(80px,1000px,500px,0px);
     top: 0;
 }
+.scan_container {
+  position: relative;
+  padding-bottom: 30px;
+}
 .down_under {
-  margin-top: 400px;
+  margin-top: 500px;
 }
 
 ul {

@@ -16,3 +16,9 @@
 //= require ckeditor/init
 //= require_tree .
 var CKEDITOR_BASEPATH = '/ckeditor/';
+
+$(document).ready(function() {
+  $(".clipped").click(function(){
+    $(this).toggleClass("active");
+  });
+});
