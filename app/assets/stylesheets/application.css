@@ -21,11 +21,17 @@
     top: 0;
 }
 .scan_container {
-  position: relative;
+  /* position: relative; */
   padding-bottom: 30px;
+  overflow: scroll;
+  width: 800px;
+  height: 400px;
 }
 .down_under {
   margin-top: 500px;
+  overflow: scroll;
+  width: 1000px;
+  height: 800px;
 }
 
 ul {
