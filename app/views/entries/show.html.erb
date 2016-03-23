@@ -1,10 +1,10 @@
 <%= render 'entries/scan_and_html_box' %>
 <% content_for :content do %>
-    <h4>Scan SBDJ </h4>
+  <h4>Scan SBDJ </h4>
   <% pages = to_scan_pages(@entry.kennzahl) %>
   <div class="scan_container">
-  <%= image_tag "http://buddhismus-lexikon.eu:2001/SBDJ-Original-JPGs/SBDJ_Seite_#{pages[0]}.jpg", size: '1000x1000', class: "clipped active"  %>
-</div>
+    <%= image_tag "http://buddhismus-lexikon.eu:2001/SBDJ-Original-JPGs/SBDJ_Seite_#{pages[0]}.jpg", size: '1000x1000'  %>
+  </div>
   <div class="down_under">
   <fieldset class="inputs well form-horizontal">
     <h4>Kerndaten</h4>
@@ -113,6 +113,7 @@
       <dd><%= raw(@entry.literatur_ergaenzungen) %></dd>
     <% end %>
      </fieldset>
+  </div>
 
 
    
@@ -174,6 +175,5 @@
         </div>
       </fieldset>
     <% end%>
-  </div>
   </div>
 <% end %>
