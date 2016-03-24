@@ -23,15 +23,22 @@
 .scan_container {
   /* position: relative; */
   padding-bottom: 30px;
-  overflow: scroll;
-  width: 1000px;
-  height: 400px;
+  overflow: auto;
+  width: 900px;
+  height: 250px;
+}
+.scan_container_form {
+  /* position: relative; */
+  padding-bottom: 30px;
+  overflow: auto;
+  width: 900px;
+  height: 3100px;
 }
 .down_under {
-  margin-top: 100px;
-  overflow: scroll;
+  margin-top: 55px;
+  overflow: auto;
   width: 1000px;
-  height: 600px;
+  height: 400px;
 }
 
 ul {

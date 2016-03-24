@@ -1,12 +1,16 @@
 <%= render 'entries/scan_and_html_box' %>
 <% content_for :content do %>
+  <fieldset class="inputs well form-horizontal">
   <h4>Scan SBDJ </h4>
-  <% pages = to_scan_pages(@entry.kennzahl) %>
   <div class="scan_container">
+    <% pages = to_scan_pages(@entry.kennzahl) %>
     <%= image_tag "http://buddhismus-lexikon.eu:2001/SBDJ-Original-JPGs/SBDJ_Seite_#{pages[0]}.jpg", size: '1000x1000'  %>
   </div>
+  </fieldset>
   <div class="down_under">
   <fieldset class="inputs well form-horizontal">
+    <span class="right-action"> <%= link_to 'Bearbeiten', edit_entry_path(@entry), class: 'btn' %></span>
+
     <h4>Kerndaten</h4>
     <% unless @entry.user_id.blank? %>
       <dt class="label">Verfasser</dt>
