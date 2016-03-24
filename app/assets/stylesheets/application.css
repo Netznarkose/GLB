@@ -42,6 +42,9 @@
   width: 1040px;
   height: 400px;
 }
+.down_comments {
+  margin-top: 55px;
+}
 .scan_container_form {
   /* position: relative; */
   padding-bottom: 30px;

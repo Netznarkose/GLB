@@ -123,59 +123,51 @@
     <dd><%= @entry.page_reference %></dd>
     
   </dl> 
-  <% if @entry.user == current_user || current_user.admin?%>
-    <%= link_to 'Bearbeiten', edit_entry_path(@entry) %> |
-  <% end %>
-  <%= link_to 'Zurück', entries_path %>
-  <a name="comments"></a>
-  <div class="span9">
-    <h1>Kommentare</h1>
-    <% if flash[:notice] && flash[:notice][0..6] == "Komment" %> 
-      <div class="alert alert-notice">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <strong><%= flash[:notice] %></strong>
-      </div>
-    <% end %>
-    <ul class="unstyled">
-      <% @entry.comments.order("updated_at DESC").each do |comment| %>
-        <li>
-        <div name="comment">
-          <strong><%= comment.user.name %> <label class="label label-info"><%= comment.user.role %></label></strong>
-          <br />
-          <%= comment.comment.to_s %>
-          <br />
-          <%= comment.updated_at.to_s %>
-        </div>
-        <% if comment.user == current_user || current_user.admin? %>
-          <div class="action">
-            <%= link_to "Löschen", comment_path(comment), method: :delete %>
-            <%= link_to "Bearbeiten", edit_comment_path(comment) %>
-          </div>
-        <% end %>
-        <hr>
-        </li>
-      <% end%>
-    </ul>
-    <%= form_for(Comment.new, :method => :post) do |f| %>
-      <%# <fieldset> %>
-        <% if @comment.errors.any? %>
-          <div id="error_explanation">
-            <h2><%= pluralize(@comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
+    <div class="down_comments">
+      <div class="funky_grey_seperator">
+      <%# <% if flash[:notice] && flash[:notice][0..6] == "Komment" %1> %> 
+      <%#   <div class="alert alert-notice"> %>
+      <%#     <button type="button" class="close" data-dismiss="alert">&times;</button> %>
+      <%#     <strong><%= flash[:notice] %1></strong> %>
+      <%#   </div> %>
+      <%# <% end %1> %>
+      <%# <ul class="unstyled"> %>
+      <%#   <% @entry.comments.order("updated_at DESC").each do |comment| %1> %>
+      <%#     <li> %>
+      <%#     <div name="comment"> %>
+      <%#       <strong><%= comment.user.name %1> <label class="label label-info"><%= comment.user.role %1></label></strong> %>
+      <%#       <br /> %>
+      <%#       <%= comment.comment.to_s %1> %>
+      <%#       <br /> %>
+      <%#       <%= comment.updated_at.to_s %1> %>
+      <%#     </div> %>
+      <%#     <% if comment.user == current_user || current_user.admin? %1> %>
+      <%#       <div class="action"> %>
+      <%#         <%= link_to "Löschen", comment_path(comment), method: :delete %1> %>
+      <%#         <%= link_to "Bearbeiten", edit_comment_path(comment) %1> %>
+      <%#       </div> %>
+      <%#     <% end %1> %>
+      <%#     <hr> %>
+      <%#     </li> %>
+        <%# <% end%> %>
+      <%# </ul> %>
+      <%= form_for @comment do |f| %>
+          <%# <% if @comment.errors.any? %1> %>
+          <%#   <div id="error_explanation"> %>
+          <%#     <h2><%= pluralize(@comment.errors.count, "error") %1> prohibited this comment from being saved:</h2> %>
 
-            <ul>
-              <% @comment.errors.full_messages.each do |msg| %>
-                <li><%= msg %></li>
-              <% end %>
-            </ul>
-          </div>
-        <% end %>
-        <%= f.hidden_field :entry_id, :value => @entry.id  %>
-        <%= f.hidden_field :user_id, :value => current_user.id  %>
-        <%= f.text_area :comment, :class => "comment_field" %>
-        <div class="actions">
-          <%= f.submit("Abschicken") %>
-        </div>
-      <%# </fieldset> %>
-    <% end%>
-  </div>
+          <%#     <ul> %>
+          <%#       <% @comment.errors.full_messages.each do |msg| %1> %>
+          <%#         <li><%= msg %1></li> %>
+          <%#       <% end %1> %>
+          <%#     </ul> %>
+          <%#   </div> %>
+          <%# <% end %1> %>
+          <h4>Kommentar<span class="right-action"><%= f.submit "Speichern", class: 'btn' %></span></h4></br>
+          <%= f.hidden_field :entry_id, :value => @entry.id  %>
+          <%= f.hidden_field :user_id, :value => current_user.id  %>
+          <%= f.text_area :comment, :class => "comment_field" %>
+      <% end%>
+      </div>
+    </div>
 <% end %>
