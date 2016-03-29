@@ -1,73 +1,81 @@
 <%= form_for @entry do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
-  </br>
-  </br>
-  <h4>Kerndaten</h4>
-  </br>
-  </br>
-  <%= f.label :verfasser %>
-  <%= select("entry", "user_id", User.all.collect {|user| [ user.name, user.id ] }, { :selected => current_user.id}) %>
-  <%= f.label :freigeschaltet %>
-  <%= f.check_box :freigeschaltet %>
-  <%= f.label :namenskuerzel %>
-  <%= f.text_field :namenskuerzel %>
-  <%= f.label :kennzahl %>
-  <%= f.text_field :kennzahl %>
-  <%= f.label :spaltenzahl %>
-  <%= f.text_field :spaltenzahl %>
-  </br>
-  </br>
-  <h4>Lemma-Schreibungen und -Aussprachen</h4>
-  </br>
-  </br>
-  <%= f.label :japanische_umschrift%>
-  <%= f.text_field :japanische_umschrift %>
-  <%= f.label :japanische_umschrift_din, 'Japanische Umschrift Din' %>
-  <%= f.text_field :japanische_umschrift_din %>
-  <%= f.label :kanji %>
-  <%= f.text_field :kanji %>
-  <%= f.label :chinesisch %>
-  <%= f.text_field :chinesisch %>
-  <%= f.label :tibetisch %>
-  <%= f.text_field :tibetisch %>
-  <%= f.label :koreanisch %>
-  <%= f.text_field :koreanisch %>
-  <%= f.label :pali %>
-  <%= f.text_field :pali %>
-  <%= f.label :sanskrit %>
-  <%= f.text_field :sanskrit %>
-  <%= f.label :weitere_sprachen %>
-  <%= f.text_field :weitere_sprachen %>
-  <%= f.label :alternative_japanische_lesungen %>
-  <%= f.text_field :alternative_japanische_lesungen %>
-  <%= f.label :schreibvarianten %>
-  <%= f.text_field :schreibvarianten %>
-  <%= f.label :deutsche_uebersetzung, 'Lemma in Katakana' %>
-  <%= f.text_field :deutsche_uebersetzung %>
-  <%= f.label :deutsche_uebersetzung, 'Lemma in Lateinbuchstaben' %>
-  <%= f.text_field :deutsche_uebersetzung %>
-  </br>
-  </br>
-  <h4>Übersetzungen, Quellenangaben, Literatur und Ergänzungen</h4>
-  </br>
-  </br>
-  <%= f.label :lemma_art %>
-  <%= f.select :lemma_art, ["", "Person", "Tempel", "Werk", "Fachtermini", "Geographische Bezeichnung", "Ereignis"] %> 
-  <%= f.label :jahreszahlen %>
-  <%= f.text_field :jahreszahlen %>
-  <%= f.label :deutsche_uebersetzung %>
-  <%= f.text_field :deutsche_uebersetzung %>
-  <%= f.label :uebersetzung %>
-  <%= f.cktext_area :uebersetzung, :ckeditor => {:uiColor => "#AADC6E", :toolbar => "MyToolbar"} %>
-  <%= f.label :quellen %>
-  <%= f.cktext_area :quellen, :ckeditor => {:uiColor => "#AADC6E", :toolbar => "MyToolbar"} %>
-  <%= f.label :literatur %>
-  <%= f.cktext_area :literatur, :ckeditor => {:uiColor => "#AADC6E", :toolbar => "MyToolbar"} %>
-  <%= f.label :eigene_ergaenzungen %>
-  <%= f.cktext_area :eigene_ergaenzungen, :ckeditor => {:uiColor => "#AADC6E", :toolbar => "MyToolbar"} %>
-  <%= f.label :quellen_ergaenzungen %>
-  <%= f.cktext_area :quellen_ergaenzungen, :ckeditor => {:uiColor => "#AADC6E", :toolbar => "MyToolbar"} %>
-  <%= f.label :literatur_ergaenzungen %>
-  <%= f.cktext_area :literatur_ergaenzungen, :ckeditor => {:uiColor => "#AADC6E", :toolbar => "MyToolbar"} %>
-  <%= f.submit("Speichern") %>
+  <div class="funky_grey_seperator">
+    </br>
+    </br>
+  <span class="right-action"><%= f.submit 'Speichern', class: 'btn' %></span>
+    <h4>Kerndaten</h4>
+  <span class="right-action"> <%= link_to 'Anzeigen', @entry, class: 'btn' %></span>
+    </br>
+    </br>
+    <%= f.label :verfasser %>
+    <%= select("entry", "user_id", User.all.collect {|user| [ user.name, user.id ] }, { :selected => current_user.id}) %>
+    <%= f.label :freigeschaltet %>
+    <%= f.check_box :freigeschaltet %>
+    <%= f.label :namenskuerzel %>
+    <%= f.text_field :namenskuerzel %>
+    <%= f.label :kennzahl %>
+    <%= f.text_field :kennzahl %>
+    <%= f.label :spaltenzahl %>
+    <%= f.text_field :spaltenzahl %>
+    </br>
+    </br>
+  </div>
+  <div class="funky_grey_seperator">
+    <h4>Lemma-Schreibungen und -Aussprachen</h4>
+    </br>
+    </br>
+    <%= f.label :japanische_umschrift%>
+    <%= f.text_field :japanische_umschrift %>
+    <%= f.label :japanische_umschrift_din, 'Japanische Umschrift Din' %>
+    <%= f.text_field :japanische_umschrift_din %>
+    <%= f.label :kanji %>
+    <%= f.text_field :kanji %>
+    <%= f.label :chinesisch %>
+    <%= f.text_field :chinesisch %>
+    <%= f.label :tibetisch %>
+    <%= f.text_field :tibetisch %>
+    <%= f.label :koreanisch %>
+    <%= f.text_field :koreanisch %>
+    <%= f.label :pali %>
+    <%= f.text_field :pali %>
+    <%= f.label :sanskrit %>
+    <%= f.text_field :sanskrit %>
+    <%= f.label :weitere_sprachen %>
+    <%= f.text_field :weitere_sprachen %>
+    <%= f.label :alternative_japanische_lesungen %>
+    <%= f.text_field :alternative_japanische_lesungen %>
+    <%= f.label :schreibvarianten %>
+    <%= f.text_field :schreibvarianten %>
+    <%= f.label :deutsche_uebersetzung, 'Lemma in Katakana' %>
+    <%= f.text_field :deutsche_uebersetzung %>
+    <%= f.label :deutsche_uebersetzung, 'Lemma in Lateinbuchstaben' %>
+    <%= f.text_field :deutsche_uebersetzung %>
+    </br>
+    </br>
+  </div>
+  <div class="funky_grey_seperator">
+    <h4>Übersetzungen, Quellenangaben, Literatur und Ergänzungen</h4>
+    </br>
+    </br>
+    <%= f.label :lemma_art %>
+    <%= f.select :lemma_art, ["", "Person", "Tempel", "Werk", "Fachtermini", "Geographische Bezeichnung", "Ereignis"] %> 
+    <%= f.label :jahreszahlen %>
+    <%= f.text_field :jahreszahlen %>
+    <%= f.label :deutsche_uebersetzung %>
+    <%= f.text_field :deutsche_uebersetzung %>
+    <%= f.label :uebersetzung %>
+    <%= f.cktext_area :uebersetzung, :ckeditor => {:uiColor => "#AADC6E", :toolbar => "MyToolbar"} %>
+    <%= f.label :quellen %>
+    <%= f.cktext_area :quellen, :ckeditor => {:uiColor => "#AADC6E", :toolbar => "MyToolbar"} %>
+    <%= f.label :literatur %>
+    <%= f.cktext_area :literatur, :ckeditor => {:uiColor => "#AADC6E", :toolbar => "MyToolbar"} %>
+    <%= f.label :eigene_ergaenzungen %>
+    <%= f.cktext_area :eigene_ergaenzungen, :ckeditor => {:uiColor => "#AADC6E", :toolbar => "MyToolbar"} %>
+    <%= f.label :quellen_ergaenzungen %>
+    <%= f.cktext_area :quellen_ergaenzungen, :ckeditor => {:uiColor => "#AADC6E", :toolbar => "MyToolbar"} %>
+    <%= f.label :literatur_ergaenzungen %>
+    <%= f.cktext_area :literatur_ergaenzungen, :ckeditor => {:uiColor => "#AADC6E", :toolbar => "MyToolbar"} %>
+  </div>
+  <%# <%= f.submit("Speichern") %1> %>
 <% end %>

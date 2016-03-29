@@ -1,24 +1,15 @@
 <% content_for :content do %>
-  </br>
-    <h1>Eintrag Bearbeiten</h1>
-  </br>
-  <fieldset class="inputs well form-horizontal">
+  <div class="scan_container">
+    <div class="funky_grey_seperator">
     <h4>Scan SBDJ </h4>
-    <div class="scan_container">
       <% pages = to_scan_pages(@entry.kennzahl) %>
       <%= image_tag "http://buddhismus-lexikon.eu:2001/SBDJ-Original-JPGs/SBDJ_Seite_#{pages[0]}.jpg", size: '1000x1000'  %>
     </div>
-  </fieldset>
-  <%= link_to 'Anzeigen', @entry %> |
-  <%= link_to 'Zurück', entries_path %>
-  <%# <div class="row"> %>
-    <%# <div class="span9 offset0"> %>
-      <div class="scan_container_form">
-      <%= render 'entries/form' %>
-      </br>
-      </div>
-      <%= link_to 'Anzeigen', @entry %> |
-      <%= link_to 'Zurück', entries_path %>
-    <%# </div> %>
-  <%# </div> %>
+  </div>
+  <hr>
+  <h3>Eintrag Bearbeiten</h3>
+  </br>
+  <div class="scan_container">
+    <%= render 'entries/form' %>
+  </div>
 <% end %>
