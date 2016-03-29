@@ -128,8 +128,7 @@
       <%= form_for(@comment) do |f| %>
         <%# error messages!!!! %>
         <h4>Kommentar<span class="right-action"><%= f.submit "Speichern", class: 'btn' %></span></h4></br>
-        <%= f.hidden_field :entry_id, :value => @entry.id  %>
-        <%= f.hidden_field :user_id, :value => current_user.id  %>
+        <%= f.hidden_field :entry_id, value: @entry.id  %>
         <%= f.text_area :comment %>
       <% end%>
       <ul class="unstyled">
