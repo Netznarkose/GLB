@@ -40,8 +40,8 @@ FactoryGirl.define do
   end
 
   factory :comment, class: Comment do
-    entry {create :entry}
-    user {create :editor}
+    user_id { FactoryGirl.create(:admin).id }
+    entry_id { FactoryGirl.create(:entry).id }
     comment "Test comment!"
   end
 end
