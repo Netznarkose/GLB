@@ -33,7 +33,7 @@ describe CommentsController, :type => :controller do
         expect {
           post :create, comment: attributes
         }.to change(Comment, :count).by(0)
-        # expect(response).to be_redirect 
+        expect(response).to render_template('entries/show')
       end
     end
   end

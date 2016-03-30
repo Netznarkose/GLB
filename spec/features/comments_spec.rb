@@ -26,7 +26,7 @@ describe "comments management api" do
       visit entry_path(entry)
       fill_in "comment_comment", with: "" 
       click_button("Speichern")
-      page.should have_content("Error Error")
+      page.should have_content("The form contains 1 error.")
     end
   end
 end
