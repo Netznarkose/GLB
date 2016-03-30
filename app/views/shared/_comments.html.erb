@@ -1,0 +1,26 @@
+<div class="down_comments">
+  <div class="funky_grey_seperator">
+    <%= form_for(@comment) do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+      <h4>Kommentar<span class="right-action"><%= f.submit "Speichern", class: 'btn' %></span></h4></br>
+      <%= f.hidden_field :entry_id, value: @entry.id  %>
+      <%= f.text_area :comment %>
+    <% end %>
+    <ul class="unstyled">
+      <% @entry.comments.order("updated_at DESC").each do |comment| %>
+      <li>
+        <strong><%= comment.user.name %></strong> 
+        <%= "(#{comment.updated_at.to_formatted_s(:short)})" %>
+        <% if comment.user == current_user || current_user.admin? %>
+          <span class="right-action"><%= link_to "Bearbeiten", edit_comment_path(comment) %> | <%= link_to "Löschen", comment_path(comment), method: :delete %></span>
+        <% end %>
+        </br>
+        <%= comment.comment %>
+        </br>
+        </br>
+      </li>
+    <% end%>
+  </ul>
+  </div>
+</div>
+
