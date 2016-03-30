@@ -44,12 +44,13 @@ class CommentsController < ApplicationController
   # POST /comments.json
   def create
     @comment = current_user.comments.build(comment_params)
+    @entry = @comment.entry # is necessary for the rendering of 'entries/show'
     respond_to do |format|
       if @comment.save
         format.html { redirect_to entry_path(@comment.entry) } 
         format.json { render json: @comment, status: :created, location: @comment }
       else
-        format.html { render action: "new" }
+        format.html { render 'entries/show' }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
     end
