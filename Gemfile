@@ -32,6 +32,7 @@ group :test do
   gem 'capybara'
   gem 'factory_girl_rails'
   gem 'guard-rspec'
+  gem 'launchy'
   gem 'database_cleaner'
   gem 'pry-byebug'
 end
