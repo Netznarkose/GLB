@@ -11,23 +11,23 @@ describe CommentsController, type: :controller do
   describe 'get edit' do
     context 'Admin is able to edit a comment' do
       it 'Edits a comment' do
-        sign_in admin 
+        sign_in admin
         get :edit, id: comment.id
-        expect(response).to redirect_to(entry_path(comment.entry))
+        expect(response).to render_template('entries/show')
       end
     end
   end
   describe 'get update' do
     context 'Admin is able to update a Comment' do
       it 'Admin is able to update a Comment' do
-        sign_in admin 
+        sign_in admin
         put :update, id: comment.id, comment: { comment: 'hey some changes in the content' }
         comment.reload
         expect(comment.comment).to eq('hey some changes in the content')
+        expect(flash[:notice]).not_to be_empty
       end
     end
   end
-
 
   describe 'POST create' do
     context 'Admin is able to create a comment' do
