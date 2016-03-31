@@ -6,7 +6,7 @@ DGLB::Application.routes.draw do
     resources :entries, controller: "user_entries" 
   end
   resource :profile, only: [:edit, :update]
-  resources :comments
+  resources :comments, only: [:edit, :update, :create, :destroy]
   # get 'user_entries/index'
 
 
