@@ -17,9 +17,9 @@ describe 'comments management api' do
     end
     it 'should be able to write and save a comment' do
       visit entry_path(entry)
-      fill_in 'comment_comment', with: comment
+      fill_in 'comment_comment', with: comment.comment
       click_button('Speichern')
-      expect(page).to have_content(comment)
+      expect(page).to have_content(comment.comment)
     end
     it 'should see an error message when tries
     to save a comment without text' do
@@ -31,10 +31,12 @@ describe 'comments management api' do
     it 'should be able to edit  a comment' do
       # writes a comment to be able to edit it
       visit entry_path(entry)
-      fill_in 'comment_comment', with: comment
+      fill_in 'comment_comment', with: comment.comment
       click_button('Speichern')
       # edits the comment
-      find('.right-action', match: :first).click # Clicks 'Bearbeiten' which is ambiguous
+      within('.down_comments') do
+        click_link('Bearbeiten')
+      end
       fill_in 'comment_comment', with: 'some changes in the comment'
       click_button('Speichern')
       expect(page).to have_content('some changes in the comment')
