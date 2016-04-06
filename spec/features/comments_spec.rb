@@ -41,5 +41,16 @@ describe 'comments management api' do
       click_button('Speichern')
       expect(page).to have_content('some changes in the comment')
     end
+    it 'should be able to delete a comment' do
+      # writes a comment to be able to delete it
+      visit entry_path(entry)
+      fill_in 'comment_comment', with: comment.comment
+      click_button('Speichern')
+      # deletes the comment
+      within('.down_comments') do
+        click_link('Löschen')
+      end
+      expect(page).not_to have_content(comment.comment)
+    end
   end
 end
