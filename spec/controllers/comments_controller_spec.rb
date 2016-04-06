@@ -6,37 +6,18 @@ describe CommentsController, type: :controller do
 
   before :each do
     admin
+    sign_in admin
   end
 
-  describe 'get edit' do
-    context 'Admin is able to edit a comment' do
-      it 'Edits a comment' do
-        sign_in admin
-        get :edit, { entry_id: comment.entry_id, id: comment.id }
-        expect(response).to render_template('entries/show')
-      end
+  describe 'GET edit' do
+    it 'edits a comment' do
+      get :edit, entry_id: comment.entry_id, id: comment.id
+      expect(response).to render_template('entries/show')
     end
   end
-  describe 'get update' do
-    context 'Admin is able to update a Comment' do
-      it 'Admin is able to update a Comment' do
-        sign_in admin
-        put :update, { entry_id: comment.entry_id, id: comment.id, 
-          comment: { comment: 'hey some changes in the content' } }
-        comment.reload
-        expect(comment.comment).to eq('hey some changes in the content')
-      end
-    end
-  end
-
   describe 'POST create' do
-    context 'Admin is able to create a comment' do
-      before :each do
-        sign_in admin
-      end
-
-      it 'creates a valid comment when entering
-      valid data' do
+    context 'with valid attributes' do
+      it 'creates a comment' do
         attributes = FactoryGirl.attributes_for(:comment)
         expect {
           post :create, entry_id: attributes[:entry_id], comment: attributes
@@ -45,8 +26,9 @@ describe CommentsController, type: :controller do
           expect(comment).to be_valid
         end
       end
-      it 'does not creates a comment when entering
-      invalid data' do
+    end
+    context 'with invalid attributes' do
+      it 'does not creates a comment' do
         attributes = FactoryGirl.attributes_for(:comment, comment: '')
         expect {
           post :create, entry_id: attributes[:entry_id], comment: attributes
@@ -58,20 +40,25 @@ describe CommentsController, type: :controller do
       end
     end
   end
+  describe 'GET update' do
+    it 'updates a comment' do
+      put :update, entry_id: comment.entry_id, id: comment.id,
+        comment: { comment: 'hey some changes in the content' }
+      comment.reload
+      expect(comment.comment).to eq('hey some changes in the content')
+    end
+  end
+
   describe 'DELETE destroy' do
     before do
-      admin
       comment
     end
-    context 'Admin is able to delete a comment' do
-      it 'I deletes a comment' do
-        sign_in admin
-        expect{
-          delete :destroy, { entry_id: comment.entry_id, id: comment.id } 
-        }.to change(Comment, :count).by(-1)
-        expect(response).to redirect_to(entry_path(comment.entry))
-        expect(flash[:notice]).not_to be_empty
-      end
+    it 'deletes a comment' do
+      expect{
+        delete :destroy, entry_id: comment.entry_id, id: comment.id
+      }.to change(Comment, :count).by(-1)
+      expect(response).to redirect_to(entry_path(comment.entry))
+      expect(flash[:notice]).not_to be_empty
     end
   end
 end
