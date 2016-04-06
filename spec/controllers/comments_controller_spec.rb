@@ -12,7 +12,7 @@ describe CommentsController, type: :controller do
     context 'Admin is able to edit a comment' do
       it 'Edits a comment' do
         sign_in admin
-        get :edit, id: comment.id
+        get :edit, { entry_id: comment.entry_id, id: comment.id }
         expect(response).to render_template('entries/show')
       end
     end
@@ -21,10 +21,10 @@ describe CommentsController, type: :controller do
     context 'Admin is able to update a Comment' do
       it 'Admin is able to update a Comment' do
         sign_in admin
-        put :update, id: comment.id, comment: { comment: 'hey some changes in the content' }
+        put :update, { entry_id: comment.entry_id, id: comment.id, 
+          comment: { comment: 'hey some changes in the content' } }
         comment.reload
         expect(comment.comment).to eq('hey some changes in the content')
-        expect(flash[:notice]).not_to be_empty
       end
     end
   end
@@ -39,7 +39,7 @@ describe CommentsController, type: :controller do
       valid data' do
         attributes = FactoryGirl.attributes_for(:comment)
         expect {
-          post :create, comment: attributes
+          post :create, entry_id: attributes[:entry_id], comment: attributes
         }.to change(Comment, :count).by(1)
         assigns(:comment).tap do |comment|
           expect(comment).to be_valid
@@ -49,8 +49,11 @@ describe CommentsController, type: :controller do
       invalid data' do
         attributes = FactoryGirl.attributes_for(:comment, comment: '')
         expect {
-          post :create, comment: attributes
+          post :create, entry_id: attributes[:entry_id], comment: attributes
         }.to change(Comment, :count).by(0)
+        assigns(:comment).tap do |comment|
+          expect(comment).not_to be_valid
+        end
         expect(response).to render_template('entries/show')
       end
     end
@@ -64,7 +67,7 @@ describe CommentsController, type: :controller do
       it 'I deletes a comment' do
         sign_in admin
         expect{
-          delete :destroy, id: comment.id
+          delete :destroy, { entry_id: comment.entry_id, id: comment.id } 
         }.to change(Comment, :count).by(-1)
         expect(response).to redirect_to(entry_path(comment.entry))
         expect(flash[:notice]).not_to be_empty
