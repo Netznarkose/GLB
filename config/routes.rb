@@ -3,11 +3,12 @@ DGLB::Application.routes.draw do
   devise_for :users, :skip => :registration
   resources :entries
   resources :users do
-    resources :entries, controller: "user_entries" 
+    resources :entries, controller: "user_entries", only: :index
+  end
+  resources :entries do
+    resources :comments, only: [:edit, :update, :create, :destroy]
   end
   resource :profile, only: [:edit, :update]
-  resources :comments, only: [:edit, :update, :create, :destroy]
-  # get 'user_entries/index'
 
 
 
