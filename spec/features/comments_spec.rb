@@ -11,24 +11,12 @@ describe 'comments management api' do
       fill_in 'user_password', with: admin.password
       click_button('Anmelden')
     end
-    it 'should display a certain Entry' do
+    it 'displays a certain entry' do
       visit entry_path(entry)
       expect(page).to have_content('Scan SBDJ')
     end
-    it 'should be able to write and save a comment' do
-      visit entry_path(entry)
-      fill_in 'comment_comment', with: comment.comment
-      click_button('Speichern')
-      expect(page).to have_content(comment.comment)
-    end
-    it 'should see an error message when tries
-    to save a comment without text' do
-      visit entry_path(entry)
-      fill_in 'comment_comment', with: ''
-      click_button('Speichern')
-      expect(page).to have_content('The form contains 1 error.')
-    end
-    it 'should be able to edit  a comment' do
+    #edit
+    it 'edits a comment' do
       # writes a comment to be able to edit it
       visit entry_path(entry)
       fill_in 'comment_comment', with: comment.comment
@@ -41,7 +29,22 @@ describe 'comments management api' do
       click_button('Speichern')
       expect(page).to have_content('some changes in the comment')
     end
-    it 'should be able to delete a comment' do
+    #create
+    it 'writes and saves a comment' do
+      visit entry_path(entry)
+      fill_in 'comment_comment', with: comment.comment
+      click_button('Speichern')
+      expect(page).to have_content(comment.comment)
+    end
+    it 'displays an error-message when user
+    enters invalid input' do
+      visit entry_path(entry)
+      fill_in 'comment_comment', with: ''
+      click_button('Speichern')
+      expect(page).to have_content('The form contains 1 error.')
+    end
+    #destroy
+    it 'deletes a comment' do
       # writes a comment to be able to delete it
       visit entry_path(entry)
       fill_in 'comment_comment', with: comment.comment
