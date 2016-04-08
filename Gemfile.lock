@@ -36,6 +36,7 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
+    addressable (2.4.0)
     arel (6.0.3)
     awesome_print (1.6.1)
     bcrypt (3.1.10)
@@ -115,6 +116,8 @@ GEM
     kaminari (0.16.3)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
+    launchy (2.4.3)
+      addressable (~> 2.3)
     listen (3.0.5)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
@@ -260,6 +263,7 @@ DEPENDENCIES
   guard-rspec
   jquery-rails
   kaminari
+  launchy
   nokogiri
   paper_trail
   pry
