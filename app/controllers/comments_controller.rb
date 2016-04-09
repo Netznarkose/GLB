@@ -12,23 +12,19 @@ class CommentsController < ApplicationController
   def create
     @comment = @entry.comments.build(comment_params)
     @comment.user_id = current_user.id
-    respond_to do |format|
-      if @comment.save
-        format.html { redirect_to entry_path(@comment.entry) } 
-        format.json { render json: @comment, status: :created, location: @comment }
-      else
-        format.html { render 'entries/show' }
-        format.json { render json: @comment.errors, status: :unprocessable_entity }
-      end
+    if @comment.save
+      redirect_to entry_path(@entry)
+    else
+      raise
     end
   end
 
   def update
       @comment = @entry.comments.find(params[:id])
       if @comment.update_attributes(comment_params)
-        redirect_to edit_entry_comment_path(@entry, @comment)
-        # format.json { render json: @comment, status: :created, location: @comment }
+        redirect_to entry_path(@entry)
       else
+        raise # bearbeiten
         format.html { render 'entries/show' }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
