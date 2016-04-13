@@ -3,7 +3,7 @@ class CommentsController < ApplicationController
   before_action :find_comment, only: [:edit, :destroy, :update]
 
   def edit
-    render 'entries/show'
+    # render 'entries/show'
   end
 
   def create

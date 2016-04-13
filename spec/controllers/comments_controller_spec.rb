@@ -12,7 +12,7 @@ describe CommentsController, type: :controller do
   describe 'GET edit' do
     it 'edits a comment' do
       get :edit, entry_id: comment.entry_id, id: comment.id
-      expect(response).to render_template('entries/show')
+      expect(response).to render_template('edit')
     end
   end
   describe 'POST create' do

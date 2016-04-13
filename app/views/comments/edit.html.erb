@@ -3,6 +3,7 @@
   <div class="scan_container">
     <div class="funky_grey_seperator">
     <h4>Scan SBDJ </h4>
+    <span class="right-action"> <%= link_to 'Bearbeiten', entry_path(@entry), class: 'btn' %></span>
       <% pages = to_scan_pages(@entry.kennzahl) %>
       <%= image_tag "http://buddhismus-lexikon.eu:2001/SBDJ-Original-JPGs/SBDJ_Seite_#{pages[0]}.jpg", size: '1000x1000'  %>
     </div>
@@ -127,21 +128,23 @@
   <div class="funky_grey_seperator">
     <%= form_for [@entry, @comment] do |f| %>
       <%= render 'shared/error_messages', object: f.object %>
-      <h4>Kommentar<span class="right-action"><%= f.submit "Speichern", class: 'btn' %></span></h4></br>
+      <h4>Kommentar Bearbeiten<span class="right-action"><%= f.submit "Speichern", class: 'btn' %></span></h4></br>
       <%= f.text_area :comment  %>
     <% end %>
     <ul class="unstyled">
       <% @entry.comments.order("updated_at DESC").each do |comment| %>
-      <li>
-        <strong><%= comment.user.name %></strong> 
-        <%= "(#{comment.updated_at.to_formatted_s(:short)})" %>
-        <span class="right-action"><%= link_to "Bearbeiten", edit_entry_comment_path(@entry, comment) %> 
-        | <%= link_to "Löschen", [@entry, comment], method: :delete %></span>
-        </br>
-        <%= comment.comment %>
-        </br>
-        </br>
-      </li>
+      <% unless comment == @comment %>
+        <li>
+          <strong><%= comment.user.name %></strong> 
+          <%= "(#{comment.updated_at.to_formatted_s(:short)})" %>
+          <span class="right-action"><%= link_to "Bearbeiten", edit_entry_comment_path(@entry, comment) %> 
+          | <%= link_to "Löschen", [@entry, comment], method: :delete %></span>
+          </br>
+          <%= comment.comment %>
+          </br>
+          </br>
+        </li>
+      <% end%>
     <% end%>
   </ul>
   </div>
