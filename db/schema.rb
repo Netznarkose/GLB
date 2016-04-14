@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160204180321) do
+ActiveRecord::Schema.define(version: 20160414081645) do
 
   create_table "ckeditor_assets", force: :cascade do |t|
     t.string   "data_file_name",    limit: 255, null: false
@@ -67,6 +67,8 @@ ActiveRecord::Schema.define(version: 20160204180321) do
     t.boolean  "freigeschaltet",                              default: false
     t.string   "romaji_order",                    limit: 255
     t.string   "japanische_umschrift_din"
+    t.string   "lemma_in_katakana"
+    t.string   "lemma_in_lateinbuchstaben"
   end
 
   create_table "entry_docs", force: :cascade do |t|
