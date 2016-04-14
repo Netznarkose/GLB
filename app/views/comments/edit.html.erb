@@ -28,6 +28,10 @@
       <dt class="label">Spaltenzahl</dt>
       <dd><%= @entry.spaltenzahl %></dd>
     <% end %>
+    <% unless @entry.page_reference.blank? %>
+      <dt class="label">Page Referenz</dt>
+      <dd><%= @entry.page_reference %></dd>
+    <% end %>
     <% unless @entry.lemma_art.blank? %>
       <dt class="label">Art des Lemmas</dt>
       <dd><%= @entry.lemma_art %></dd>
@@ -79,10 +83,14 @@
       <dt class="label">Schreibvarianten</dt>
       <dd><%= @entry.schreibvarianten %></dd>
     <% end %>
-    <%# <% unless @entry.lemma_in_katakana.blank? %1> %>
-    <%# <% end %1> %>
-    <%# <% unless @entry.lemma_in_lateinbuchstaben.blank? %1> %>
-    <%# <% end %1> %>
+    <% unless @entry.lemma_in_katakana.blank? %>
+      <dt class="label">Lemma in Katakana</dt>
+      <dd><%= @entry.lemma_in_katakana %></dd>
+    <% end %>
+    <% unless @entry.lemma_in_lateinbuchstaben.blank? %>
+      <dt class="label">Lemma in Lateinbuchstaben</dt>
+      <dd><%= @entry.lemma_in_lateinbuchstaben %></dd>
+    <% end %>
   </div>
 
   <div class="funky_grey_seperator">
@@ -120,9 +128,6 @@
 
 
    
-    <%# <dt class="label">Page Referenz</dt> %>
-    <%# <dd><%= @entry.page_reference %1></dd> %>
-  <%# </dl> %> 
 
 <div class="down_comments">
   <div class="funky_grey_seperator">
