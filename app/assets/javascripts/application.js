@@ -17,8 +17,18 @@
 //= require_tree .
 var CKEDITOR_BASEPATH = '/ckeditor/';
 
+// $(document).ready(function() {
+//   $(".clipped").click(function(){
+//     $(this).toggleClass("active");
+//   });
+// });
+
+
 $(document).ready(function() {
-  $(".clipped").click(function(){
-    $(this).toggleClass("active");
+    $("#switch_scan").click(function() {
+        $el1 = $("img.active_scan");
+        $el2 = $("img.inactive_scan");
+        $el1.removeClass("active_scan").addClass("inactive_scan");
+        $el2.removeClass("inactive_scan").addClass("active_scan");
   });
 });
