@@ -11,7 +11,7 @@
   <div class="down_under">
     <div class="funky_grey_seperator">
     <span class="right-action"> <%= link_to 'Bearbeiten', edit_entry_path(@entry), class: 'btn' %></span>
-    <h4>Kerndaten</h4>
+    <h4>Kennungsdaten</h4>
     <% unless @entry.user_id.blank? %>
       <dt class="label">Verfasser</dt>
       <dd><%= @entry.user.name %></dd>

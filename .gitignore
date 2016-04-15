@@ -11,3 +11,4 @@ index
 coverage
 config/database.yml
 public/assets
+public/compiled_assets

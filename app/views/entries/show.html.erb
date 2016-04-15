@@ -12,7 +12,7 @@
   <div class="down_under">
     <div class="funky_grey_seperator">
     <span class="right-action"> <%= link_to 'Bearbeiten', edit_entry_path(@entry), class: 'btn' %></span>
-    <h4>Kerndaten</h4>
+    <h4>Kennungsdaten</h4>
     <% unless @entry.user_id.blank? %>
       <dt class="label">Verfasser</dt>
       <dd><%= @entry.user.name %></dd>
@@ -49,10 +49,10 @@
       <dt class="label">Japanische Umschrift</dt>
       <dd><%= @entry.japanische_umschrift %></dd>
     <% end %>
-    <% unless @entry.japanische_umschrift_din.blank? %>
-      <dt class="label">Japanische Umschrift Din</dt>
-      <dd><%= @entry.japanische_umschrift_din %></dd>
-    <% end %>
+    <%# <% unless @entry.japanische_umschrift_din.blank? %1> %>
+    <%#   <dt class="label">Japanische Umschrift Din</dt> %>
+    <%#   <dd><%= @entry.japanische_umschrift_din %1></dd> %>
+    <%# <% end %1> %>
     <% unless @entry.kanji.blank? %>
       <dt class="label">Kanji</dt>
       <dd><%= @entry.kanji %></dd>
