@@ -4,7 +4,7 @@
     <div class="funky_grey_seperator">
     <span class="right-action"><button class="btn" id="switch_scan">Seite Wechseln</button></span>
     <h4>Scan SBDJ </h4>
-            <% pages = to_scan_pages(@entry.kennzahl) %>
+      <% pages = to_scan_pages(@entry.kennzahl) %>
       <%= image_tag "http://buddhismus-lexikon.eu:2001/SBDJ-Original-JPGs/SBDJ_Seite_#{pages[0]}.jpg", class: 'active_scan', size: '1000x1000'  %>
       <%= image_tag "http://buddhismus-lexikon.eu:2001/SBDJ-Original-JPGs/SBDJ_Seite_#{pages[1]}.jpg", class: 'inactive_scan', size: '1000x1000'  %>
     </div>
