@@ -49,6 +49,10 @@
       <dt class="label">Japanische Umschrift</dt>
       <dd><%= @entry.japanische_umschrift %></dd>
     <% end %>
+    <% unless @entry.japanische_umschrift_din.blank? %>
+      <dt class="label">Japanische Umschrift Din</dt>
+      <dd><%= @entry.japanische_umschrift_din %></dd>
+    <% end %>
     <% unless @entry.kanji.blank? %>
       <dt class="label">Kanji</dt>
       <dd><%= @entry.kanji %></dd>
