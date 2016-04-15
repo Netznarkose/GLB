@@ -2,7 +2,12 @@ class Entry < ActiveRecord::Base
   require 'csv'
   has_paper_trail
 
-  ALLOWED_PARAMS = [:namenskuerzel, :kennzahl, :spaltenzahl, :japanische_umschrift, :kanji, :pali, :sanskrit, :chinesisch, :tibetisch, :koreanisch, :weitere_sprachen, :alternative_japanische_lesungen, :schreibvarianten, :deutsche_uebersetzung, :lemma_art, :jahreszahlen, :uebersetzung, :quellen, :literatur, :eigene_ergaenzungen, :quellen_ergaenzungen, :literatur_ergaenzungen, :page_reference, :romaji_order, :user_id]
+  ALLOWED_PARAMS = [:namenskuerzel, :kennzahl, :spaltenzahl, :japanische_umschrift, :japanische_umschrift_din, 
+                    :kanji, :pali, :sanskrit, :chinesisch, :tibetisch, :koreanisch, :weitere_sprachen, 
+                    :alternative_japanische_lesungen, :schreibvarianten, :deutsche_uebersetzung, 
+                    :lemma_art, :jahreszahlen, :uebersetzung, :quellen, :literatur, :eigene_ergaenzungen, 
+                    :quellen_ergaenzungen, :literatur_ergaenzungen, :page_reference, :romaji_order, 
+                    :lemma_in_katakana, :lemma_in_lateinbuchstaben, :user_id]
 
   belongs_to :user
   has_many :comments
