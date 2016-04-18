@@ -1,4 +1,6 @@
 DGLB::Application.routes.draw do
+  get 'entry_versions/show'
+
   root :to => "entries#index"
   devise_for :users, :skip => :registration
   resources :entries
@@ -7,6 +9,9 @@ DGLB::Application.routes.draw do
   end
   resources :entries do
     resources :comments, only: [:edit, :update, :create, :destroy]
+  end
+  resources :entries do
+    resources :entry_versions, only: [:index, :show]
   end
   resource :profile, only: [:edit, :update]
 
