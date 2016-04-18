@@ -11,10 +11,18 @@ class EntryVersionsController < ApplicationController
     end
   end
   def show
-    @entry_version = Entry.find(params[:id])
+    find_current_entry_version
+    # @entry = Entry.find(params[:entry_id])
+    # @entry_version  = @entry.entry_versions.find(params[:id])
   end
 
   def find_current_entry
+    binding.pry
     @entry = Entry.find(params[:entry_id])
+  end
+  def find_current_entry_version
+    binding.pry
+    @entry = Entry.find(params[:entry_id][:id])
+    @entry_version  = @entry.entry.versions.find_by(params[:id])
   end
 end

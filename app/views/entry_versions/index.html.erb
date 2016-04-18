@@ -1,7 +1,8 @@
 <% content_for :content do %>
 <% @entry_versions_container.each_with_index do |item, index| %>
-	<p><%= "#{index}) "%><%= item.created_at %></p>
-	<%= link_to 'entry_version', entry_entry_version_path(item, index + 1) %></p>
+	<% index_from_one = index + 1 %>
+	<p><%= "#{index_from_one}) "%><%= item.created_at %></p>
+	<%= link_to 'entry_version', entry_entry_version_path(item, index_from_one) %></p>
 <% end %>
 <h1>EntryVersions#Index</h1>
 <p>Find me in app/views/entry_versions/show.html.erb</p>
