@@ -13,15 +13,12 @@ describe 'entries management api' do
       click_button('Anmelden')
     end
     it 'displays a certain entry' do
-    pending('todo')
       visit entry_path(entry)
       expect(page).to have_content('Scan SBDJ')
     end
     #edit
     it 'edits an entry' do
-    pending('todo')
-      visit entry_path(entry)
-      click_button('Bearbeiten')
+      visit edit_entry_path(entry)
       fill_in 'entry_lemma_in_katakana', with: 'some changes in the comment'
       click_button('Speichern')
       expect(page).to have_content('some changes in the comment')
