@@ -4,15 +4,18 @@ class EntryVersionsController < ApplicationController
     find_current_entry
     if @entry.versions.size > 1
       1.upto(@entry.versions.size) do |count_me|
-        @entry_versions_all << @entry.versions[- count_me]
+        if @entry.versions[- count_me].event == 'update'
+          @entry_versions_all << @entry.versions[- count_me]
+        end
       end
     end
   end
   def show
     @entry = Entry.find(params[:entry_id])
-    version_number = params[:id].to_i
-    @entry_version  = @entry.versions[- version_number]
-    binding.pry
+    @version_number = params[:id].to_i
+    @entry_version  = @entry.versions[- @version_number]
+    @entry_created_at = @entry_version.created_at
+    @entry = @entry_version.reify
   end
 
   def find_current_entry
