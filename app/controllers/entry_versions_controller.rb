@@ -1,7 +1,7 @@
 class EntryVersionsController < ApplicationController
+  before_action :find_current_entry, only: [:index, :show]
   def index
     @entry_versions_all = []
-    find_current_entry
     if @entry.versions.size > 1
       1.upto(@entry.versions.size) do |count_me|
         if @entry.versions[- count_me].event == 'update'
@@ -11,22 +11,15 @@ class EntryVersionsController < ApplicationController
     end
   end
   def show
-    @entry = Entry.find(params[:entry_id])
     @version_number = params[:id].to_i
     @entry_papertrail_version  = @entry.versions[- @version_number]
     @entry_created_at = @entry_papertrail_version.created_at
     @entry_papertrail_version_reified = @entry_papertrail_version.reify
   end
 
+  private
+
   def find_current_entry
     @entry = Entry.find(params[:entry_id])
-  end
-  def find_current_entry2
-    @entry = PaperTrail::Version.find(params[:item_id])
-  end
-  def find_current_entry_version
-    binding.pry
-    @entry = Entry.find(params[:entry_id])
-    @entry_version  = @entry.entry.versions.find_by(params[:id])
   end
 end
