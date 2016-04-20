@@ -1,6 +1,10 @@
 <% content_for :content do %>
+    <div class="funky_grey_seperator">
+    <span class="right-action"> <%= link_to 'Aktuelle Version', entry_path(@entry), class: 'btn' %></span>
+    <h4>Versions Index </h4>
 	<% @entry_versions_all.each_with_index do |item, index| %>
 		<% index_from_one = index + 1 %>
-		<h4><%= link_to "Version: #{index_from_one}) #{item.created_at.strftime('%b %d, %Y')}", entry_entry_version_path(item.item_id, index_from_one) %></h4></br>
+		<p><h6><%= link_to "Version: #{index_from_one}) #{item.created_at.strftime('%b %d, %Y')}", entry_entry_version_path(item.item_id, index_from_one) %></h6></p>
 	<% end %>
+    </div>
 <% end %>
