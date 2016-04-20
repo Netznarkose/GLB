@@ -13,9 +13,9 @@ class EntryVersionsController < ApplicationController
   def show
     @entry = Entry.find(params[:entry_id])
     @version_number = params[:id].to_i
-    @entry_version  = @entry.versions[- @version_number]
-    @entry_created_at = @entry_version.created_at
-    @entry = @entry_version.reify
+    @entry_papertrail_version  = @entry.versions[- @version_number]
+    @entry_created_at = @entry_papertrail_version.created_at
+    @entry_papertrail_version_reified = @entry_papertrail_version.reify
   end
 
   def find_current_entry
