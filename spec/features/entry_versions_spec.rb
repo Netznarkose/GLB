@@ -25,6 +25,8 @@ describe 'entry_versions management api' do
   it 'admin visits the version index' do
     visit entry_entry_versions_path(entry)
     expect(page).to have_content('Versions Index')
+    #proofs that two Versions are displayed
+    expect(page).to have_css('h6', :count => 2) 
   end
   it 'admin visits a version show template' do
     visit entry_entry_versions_path(entry)
