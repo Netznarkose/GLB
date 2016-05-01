@@ -1,5 +1,11 @@
 <%= render 'entries/scan_and_html_box' %>
 <% content_for :content do %>
+  <% if flash[:notice] %>
+    <div class="alert alert-notice">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <strong><%= raw(flash[:notice]) %></strong>
+    </div>
+  <% end %>
   <div class="scan_container">
     <div class="funky_grey_seperator">
     <span class="right-action"><button class="btn" id="switch_scan">Seite Wechseln</button></span>
