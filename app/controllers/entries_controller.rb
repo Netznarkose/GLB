@@ -81,7 +81,8 @@ class EntriesController < ApplicationController
   def update
     respond_to do |format|
       if @entry.update_attributes(entry_params)
-        format.html { redirect_to @entry, notice: "Eintrag erfolgreich gespeichert. #{undo_link}" }
+        # flash[:notice] = "Eintrag erfolgreich editiert. #{undo_link}"
+        format.html { redirect_to @entry, notice: "Eintrag erfolgreich editiert. #{undo_link}" }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
