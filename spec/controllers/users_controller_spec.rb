@@ -3,6 +3,7 @@ require 'spec_helper'
 describe UsersController, type: :controller do
   let(:superadmin) { FactoryGirl.create(:superadmin) }
   let(:admin) { FactoryGirl.create(:admin) }
+  let(:chiefeditor) { FactoryGirl.create(:chiefeditor) }
   let(:editor) { FactoryGirl.create(:editor) }
   let(:user) { FactoryGirl.create(:user) }
 
@@ -46,7 +47,7 @@ describe UsersController, type: :controller do
   describe 'POST create' do
     context 'as admin' do
       context 'with valid attributes' do
-        it 'creates a new contact, redirects to user-index
+        it 'creates a new user, redirects to index-template
         & shows a confirmation-message' do
           sign_in admin
           expect {
@@ -57,7 +58,7 @@ describe UsersController, type: :controller do
         end
       end
       context 'with invalid attributes' do
-        it 'does not create a new contact, redirects to #new-view
+        it 'does not create a new user, redirects to new-template
         & shows an error-message' do
           sign_in admin
           expect {
@@ -68,7 +69,7 @@ describe UsersController, type: :controller do
         end
       end
     end
-    context 'as editor' do
+    context 'as nonadmin' do
       it 'does not create a new contact, redirects to homepage
       and shows an error-message' do
         sign_in editor
