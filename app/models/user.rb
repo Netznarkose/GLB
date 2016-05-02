@@ -21,9 +21,18 @@ class User < ActiveRecord::Base
     role == "admin" || role == 'superadmin'
   end
 
+  def chief_editor?
+    role == "chiefeditor"
+  end
+
   def editor?
     role == "editor"
   end
+
+  def commentator?
+    role == "commentator"
+  end
+
 
   def search_entries(query)
     self.entries.where("japanische_umschrift LIKE ? OR kanji LIKE ? OR namenskuerzel = ? OR kennzahl = ? OR romaji_order LIKE ?", "%#{query}%", "%#{query}%", "#{query}", "#{query}", "%#{query}%")

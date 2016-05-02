@@ -12,7 +12,6 @@ class ApplicationController < ActionController::Base
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:account_update) << :email
   end
-  protected
 
   def record_not_found
     redirect_to root_path
@@ -24,11 +23,22 @@ class ApplicationController < ActionController::Base
     else
       "application"
     end
-
   end
 
   def admin?
-    current_user.role == 'admin'
+    current_user.admin?
+  end
+
+  def chief_editor?
+    current_user.chief_editor?
+  end
+  
+  def editor?
+    current_user.editor?
+  end
+
+  def commentator?
+    current_user.commentator?
   end
 
   def current_user?
