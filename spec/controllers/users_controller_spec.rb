@@ -8,20 +8,16 @@ describe UsersController, type: :controller do
   let(:user) { FactoryGirl.create(:user) }
 
   describe 'get index' do
-    context 'as admin' do
-      it 'shows user index' do
+    context 'when user is an admin' do
+      it 'returns success' do
         sign_in admin
         get :index
         expect(response).to be_success
       end
     end
-    context 'as editor' do
-      it 'does not show user index' do
-        sign_in editor
-        get :index
-        expect(response).to be_redirect
-      end
-    end
+    subject { get :index } 
+
+    it_behaves_like 'something that a non-admin can not access'
   end
 
   describe 'get new' do
@@ -69,17 +65,9 @@ describe UsersController, type: :controller do
         end
       end
     end
-    context 'as nonadmin' do
-      it 'does not create a new contact, redirects to homepage
-      and shows an error-message' do
-        sign_in editor
-        expect {
-          post :create, user: FactoryGirl.attributes_for(:user)
-        }.to_not change(User, :count)
-        expect(response).to redirect_to(root_path)
-        expect(flash[:notice]).not_to be_empty
-      end
-    end
+    subject { post :create, user: FactoryGirl.attributes_for(:user) } 
+
+    it_behaves_like 'something that a non-admin can not access'
   end
 
   describe 'get edit' do
@@ -102,22 +90,7 @@ describe UsersController, type: :controller do
   end
 
   describe 'get update' do
-    context 'as currently logged in editor' do
-      it 'I can not update my role' do
-        sign_in editor 
-        put :update, id: editor.id, user: { role: 'admin' }
-        editor.reload
-        expect(editor.role).not_to eq('admin')
-        expect(editor.role).to eq('editor')
-      end
-      it 'I can not update someone elses profile' do
-        sign_in editor 
-        put :update, id: user.id, user: { name: 'different_user name' }
-        user.reload
-        expect(user.name).not_to eq('different_user name')
-      end
-    end
-    context 'as currently logged in admin' do
+    context 'as admin' do
       it 'I can update someone elses role' do
         sign_in admin 
         put :update, id: editor.id, user: { role: 'admin' }
@@ -125,7 +98,11 @@ describe UsersController, type: :controller do
         expect(editor.role).to eq('admin')
       end
     end
+    subject { put :update, id: editor.id, user: { role: 'admin' } } 
+
+    it_behaves_like 'something that a non-admin can not access'
   end
+
 
   describe 'DELETE destroy' do
     before do
@@ -141,16 +118,8 @@ describe UsersController, type: :controller do
         expect(response).to redirect_to(users_path)
       end
     end
-    context 'as editor' do
-      it 'I can not delete users, get redirected to homepage
-      and get an error-message' do
-        sign_in editor
-        expect{
-          delete :destroy, id: user.id
-        }.to change(User, :count).by(0)
-        expect(response).to redirect_to root_path
-        expect(flash[:notice]).to eq('Access denied!')
-      end
-    end
+    subject { delete :destroy, id: user.id } 
+
+    it_behaves_like 'something that a non-admin can not access'
   end
 end
