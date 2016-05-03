@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :find_user, only: [:show, :update, :destroy]
-  before_filter :protect_from_non_admins, except: [:entries, :edit]
-  before_filter :protect_from_non_currents, only: [:edit, :update]
+  before_action :protect_from_non_admins, except: :edit
+  before_action :protect_from_non_currents, only: [:edit, :update]
 
   # GET /users
   # GET /users.json
