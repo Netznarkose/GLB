@@ -15,9 +15,23 @@ describe UsersController, type: :controller do
         expect(response).to be_success
       end
     end
+    context 'when user is a chiefeditor' do
+      it 'returns success' do
+        sign_in chiefeditor 
+        get :index
+        expect(response).to be_success
+      end
+    end
+    context 'when user is a editor' do
+      it 'returns success' do
+        sign_in editor 
+        get :index
+        expect(response).to be_success
+      end
+    end
     subject { get :index } 
 
-    it_behaves_like 'something that a non-admin can not access'
+    it_behaves_like 'something that only admin, chiefeditor & editor can access'
   end
 
   describe 'get new' do
@@ -26,18 +40,12 @@ describe UsersController, type: :controller do
         sign_in admin
         get :new
         expect(assigns(:user)).to be_a_new(User)
-        expect(response).to be_success
         expect(response).to render_template :new
       end
     end
-    context 'as editor' do
-      it 'redirects to homepage & shows an error-message' do
-        sign_in editor
-        get :new
-        expect(response).to redirect_to(root_path)
-        expect(flash[:notice]).to eq('Access denied!')
-      end
-    end
+    subject { get :new } 
+
+    it_behaves_like 'something that only admin can access'
   end
 
   describe 'POST create' do
@@ -67,26 +75,20 @@ describe UsersController, type: :controller do
     end
     subject { post :create, user: FactoryGirl.attributes_for(:user) } 
 
-    it_behaves_like 'something that a non-admin can not access'
+    it_behaves_like 'something that only admin can access'
   end
 
   describe 'get edit' do
-    context 'as currently logged in editor' do
-      it 'I can not render my #edit-view and get 
-      redirected to profile controller edit' do
-        sign_in editor
+    context 'as admin' do
+      it 'I can visit the edit template' do
+        sign_in admin 
         get :edit, id: editor.id
-        expect(response).not_to render_template(:edit)
-        expect(response).to redirect_to(edit_profile_path(editor))
-      end
-      it 'I get redirected to homepage when I try to render
-      someone elses #edit-view & get an error-message' do
-        sign_in editor 
-        get :edit, id: user.id
-        expect(response).to redirect_to(root_path)
-        expect(flash[:notice]).to eq('Access denied!')
+        expect(response).to render_template(:edit)
       end
     end
+    subject { post :edit, id: editor.id } 
+
+    it_behaves_like 'something that only admin can access'
   end
 
   describe 'get update' do
@@ -100,7 +102,7 @@ describe UsersController, type: :controller do
     end
     subject { put :update, id: editor.id, user: { role: 'admin' } } 
 
-    it_behaves_like 'something that a non-admin can not access'
+    it_behaves_like 'something that only admin can access'
   end
 
 
@@ -120,6 +122,6 @@ describe UsersController, type: :controller do
     end
     subject { delete :destroy, id: user.id } 
 
-    it_behaves_like 'something that a non-admin can not access'
+    it_behaves_like 'something that only admin can access'
   end
 end
