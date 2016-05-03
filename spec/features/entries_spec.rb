@@ -16,16 +16,15 @@ describe 'entries management api' do
   end
   describe 'user edits an entry' do
     #edit
-    it 'edits an entry' do
+    before do
       visit edit_entry_path(entry)
       fill_in 'entry_lemma_in_katakana', with: 'some changes in the entry'
       click_button('Speichern')
+    end
+    it 'edits an entry' do
       expect(page).to have_content('some changes in the entry')
     end
     it 'gets the right flash-message after editing' do #Bug #4
-      visit edit_entry_path(entry)
-      fill_in 'entry_lemma_in_katakana', with: 'some changes in the comment'
-      click_button('Speichern')
       expect(page).to have_content('Eintrag erfolgreich editiert')
     end
     it 'clicks the undo link after editing and gets redirected to previous version' do #Bug #5
