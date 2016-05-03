@@ -39,6 +39,12 @@ FactoryGirl.define do
     role "commentator"
   end
 
+  factory :guest, parent: :user do
+    role "guest"
+  end
+
+
+
 
   factory :entry, class: Entry do
     user_id { FactoryGirl.create(:admin).id }
