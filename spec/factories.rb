@@ -27,6 +27,19 @@ FactoryGirl.define do
     role "editor"
   end
 
+  factory :chiefeditor, parent: :user do
+    sequence(:email){|n| "chief_editor_#{n}@example.com"}
+    sequence(:name){|n| "chief_editor#{n}"}
+    role "chiefeditor"
+  end
+
+  factory :commentator, parent: :user do
+    sequence(:email){|n| "commentator_#{n}@example.com"}
+    sequence(:name){|n| "commentator#{n}"}
+    role "commentator"
+  end
+
+
   factory :entry, class: Entry do
     user_id { FactoryGirl.create(:admin).id }
     kennzahl "981:1"
