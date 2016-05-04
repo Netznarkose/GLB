@@ -7,10 +7,14 @@ class Ability
     user ||= User.new # guest user (not logged in)
     if user.admin?
       can :manage, :all
+    elsif user.chief_editor?
+      can :index, User 
+      can :create, Entry # create for herself and somebody else 
     elsif user.editor?
-      can :manage, Entry
+      can :index, User 
+      can :create, Entry 
+    elsif user.commentator?
     else
-      can :read, :all
     end
 
     # The first argument to `can` is the action you are giving the user

@@ -1,9 +1,9 @@
 #encoding: utf-8
 class EntriesController < ApplicationController
+  load_and_authorize_resource
   before_action :find_entry, only: [:show, :update, :destroy]
   helper_method :sort_column, :sort_direction
 
-  load_and_authorize_resource
   # uncomment sḱip_before_filter to make entries visible; (preferably in connection with published filter)
   #skip_before_filter :authenticate_user!, only: [:index, :show]
   # GET /entries
@@ -60,20 +60,26 @@ class EntriesController < ApplicationController
   # POST /entries
   # POST /entries.json
   def create
-    params[:entry].delete("freigeschaltet")
-    @entry = Entry.new(entry_params)
-    @entry.user = current_user unless @entry.user_id.present?
+    # ???
+    # params[:entry].delete("freigeschaltet")
+    # @entry.user = current_user unless @entry.user_id.present?
+    
 
+
+    @entry = Entry.new(entry_params)
     respond_to do |format|
-      if @entry.save
-        format.html { redirect_to @entry, notice: 'Eintrag erfolgreich erstellt.' }
-        format.json { render json: @entry, status: :created, location: @entry }
+      unless current_user.editor? && @entry.user_id != current_user.id
+          if @entry.save
+            format.html { redirect_to @entry, notice: 'Eintrag erfolgreich erstellt.' }
+            format.json { render json: @entry, status: :created, location: @entry }
+          else
+            format.html { render action: "new" }
+            format.json { render json: @entry.errors, status: :unprocessable_entity }
+          end
       else
-        format.html { render action: "new" }
-        format.json { render json: @entry.errors, status: :unprocessable_entity }
+          format.html { redirect_to @entry, notice: 'shit happend' }
       end
     end
-
   end
 
   # PUT /entries/1
