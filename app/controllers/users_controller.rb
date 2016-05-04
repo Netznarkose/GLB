@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
+  load_and_authorize_resource
   before_action :find_user, only: [:show, :update, :destroy]
-  before_action :protect_from_non_admins, except: :edit
-  before_action :protect_from_non_currents, only: [:edit, :update]
+  # before_action :protect_from_non_admins, except: :edit
+  # before_action :protect_from_non_currents, only: [:edit, :update]
 
   # GET /users
   # GET /users.json
