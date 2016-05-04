@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
 
   after_destroy :assign_remaining_entries_to_superadmin
 
-  scope :allowed_for_entries, ->{ where( role: ['superadmin', 'admin', 'editor']) }
+  scope :allowed_for_entries, ->{ where( role: ['superadmin', 'admin', 'editor', 'chiefeditor']) }
 
 
 
