@@ -2,6 +2,9 @@
 class EntriesController < ApplicationController
   load_and_authorize_resource
   before_action :find_entry, only: [:show, :update, :destroy]
+  before_action :protect_from_editors_who_try_to_update_an_entry_for_somebodyelse, only: :update
+  before_action :protect_from_editors_who_try_to_create_an_entry_for_somebodyelse, only: :create
+
   helper_method :sort_column, :sort_direction
 
   # uncomment sḱip_before_filter to make entries visible; (preferably in connection with published filter)
@@ -64,20 +67,15 @@ class EntriesController < ApplicationController
     # params[:entry].delete("freigeschaltet")
     # @entry.user = current_user unless @entry.user_id.present?
     
-
-
+    #TODO  move this logic to ability.rb
     @entry = Entry.new(entry_params)
     respond_to do |format|
-      unless current_user.editor? && @entry.user_id != current_user.id
-          if @entry.save
-            format.html { redirect_to @entry, notice: 'Eintrag erfolgreich erstellt.' }
-            format.json { render json: @entry, status: :created, location: @entry }
-          else
-            format.html { render action: "new" }
-            format.json { render json: @entry.errors, status: :unprocessable_entity }
-          end
+      if @entry.save
+        format.html { redirect_to @entry, notice: 'Eintrag erfolgreich erstellt.' }
+        format.json { render json: @entry, status: :created, location: @entry }
       else
-          format.html { redirect_to @entry, notice: 'shit happend' }
+        format.html { render action: "new" }
+        format.json { render json: @entry.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -87,7 +85,6 @@ class EntriesController < ApplicationController
   def update
     respond_to do |format|
       if @entry.update_attributes(entry_params)
-        # flash[:notice] = "Eintrag erfolgreich editiert. #{undo_link}"
         format.html { redirect_to @entry, notice: "Eintrag erfolgreich editiert. #{undo_link}" }
         format.json { head :no_content }
       else
@@ -112,6 +109,17 @@ class EntriesController < ApplicationController
 
   def find_entry
     @entry = Entry.find(params[:id])
+  end
+
+  def protect_from_editors_who_try_to_update_an_entry_for_somebodyelse
+    if current_user.editor? && params[:entry][:user_id].to_i != current_user.id 
+      redirect_to @entry, notice: 'as editor you are not allowed to edit somebody else\'s entry'
+    end
+  end
+  def protect_from_editors_who_try_to_create_an_entry_for_somebodyelse
+    if current_user.editor? && @entry.user_id != current_user.id #when user is an editor and creates an entry for somebody else
+      redirect_to @entry, notice: 'as editor you are not allowed to create an entry for somebody else'
+    end
   end
 
   def build_entry_comment
