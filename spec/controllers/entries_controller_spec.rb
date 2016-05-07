@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe EntriesController, :type => :controller do
 
+  let(:entry) { FactoryGirl.create(:entry) }
   let(:unpublished_entry) { FactoryGirl.create(:entry) }
   let(:published_entry) { FactoryGirl.create(:published_entry) }
   let(:admin) { FactoryGirl.create(:admin) }
@@ -194,6 +195,10 @@ describe EntriesController, :type => :controller do
           post :create, entry: FactoryGirl.attributes_for(:entry, user_id: chiefeditor.id)
           expect(response).to be_redirect
         end
+        it "and gets this error-message" do
+          post :create, entry: FactoryGirl.attributes_for(:entry, user_id: chiefeditor.id)
+          expect(flash[:notice]).to eq('as editor you are not allowed to create an entry for somebody else' )
+        end
       end
     subject { post :create, entry: FactoryGirl.attributes_for(:entry) } 
 
@@ -202,42 +207,107 @@ describe EntriesController, :type => :controller do
 
 
   describe 'get update' do
-    context 'as admin' do
-      it 'I can update my entry and get redirected to it' do
+    context 'admin' do
+      before do
         sign_in admin 
-        published_entry.user_id = admin.id
-        put :update, id: published_entry.id, entry: { japanische_umschrift: 'different_content' }
-        published_entry.reload
-        expect(published_entry.japanische_umschrift).to eq('different_content')
-        expect(response).to redirect_to(published_entry)
       end
-      it 'I can update someone elses entry and get redirected to it' do
-        sign_in admin 
-        published_entry.user_id = editor.id
-        put :update, id: published_entry.id, entry: { japanische_umschrift: 'different_content' }
-        published_entry.reload
-        expect(published_entry.japanische_umschrift).to eq('different_content')
-        expect(response).to redirect_to(published_entry)
+      context 'for himself' do
+        before do
+          modified_entry_user_id = admin.id
+          put :update, id: entry.id, entry: { japanische_umschrift: 'some editing on my own entry', user_id: modified_entry_user_id }
+          entry.reload
+        end
+        it 'updates an entry' do
+          expect(entry.japanische_umschrift).to eq('some editing on my own entry')
+        end
+        it 'and redirect to it' do
+          expect(response).to redirect_to(entry)
+        end
+      end
+      context 'for somebody else' do
+        before do
+          modified_entry_user_id = editor.id
+          put :update, id: entry.id, entry: { japanische_umschrift: 'some editing on somebody else\'s entry', user_id: modified_entry_user_id }
+          entry.reload
+        end
+        it 'updates an entry' do
+          expect(entry.japanische_umschrift).to eq('some editing on somebody else\'s entry')
+        end
+        it 'and redirects to it' do
+          expect(response).to redirect_to(entry)
+        end
       end
     end
-    context 'as editor' do
-      it 'I can not update entries and get redirected to ???' do
-        pending('tdd')
-        sign_in editor 
-        published_entry
-        put :update, id: published_entry.id, entry: { japanische_umschrift: 'different_content' }
-        published_entry.reload
-        expect(published_entry.japanische_umschrift).not_to eq('different_content')
-        # expect(response).to redirect_to(???)
+    context 'chiefeditor' do
+      before do
+        sign_in chiefeditor 
+      end
+      context 'for himself' do
+        before do
+          modified_entry_user_id = chiefeditor.id
+          put :update, id: entry.id, entry: { japanische_umschrift: 'some editing on my own entry', user_id: modified_entry_user_id }
+          entry.reload
+        end
+        it 'updates an entry' do
+          expect(entry.japanische_umschrift).to eq('some editing on my own entry')
+        end
+        it 'and redirect to it' do
+          expect(response).to redirect_to(entry)
+        end
+      end
+      context 'for somebody else' do
+        before do
+          modified_entry_user_id = admin.id
+          put :update, id: entry.id, entry: { japanische_umschrift: 'some editing on somebody else\'s entry', user_id: modified_entry_user_id }
+          entry.reload
+        end
+        it 'updates an entry' do
+          expect(entry.japanische_umschrift).to eq('some editing on somebody else\'s entry')
+        end
+        it 'and redirects to it' do
+          expect(response).to redirect_to(entry)
+        end
       end
     end
-    context "with valid params" do
-      pending('should this not be tested in the model')
+
+    context 'editor' do
+      before do
+        sign_in editor
+      end
+      context 'for himself' do
+        before do
+          modified_entry_user_id = editor.id
+          put :update, id: entry.id, entry: { japanische_umschrift: 'some editing on my own entry', user_id: modified_entry_user_id }
+          entry.reload
+        end
+        it 'updates an entry' do
+          expect(entry.japanische_umschrift).to eq('some editing on my own entry')
+        end
+        it 'and redirect to it' do
+          expect(response).to redirect_to(entry)
+        end
+      end
+      context 'for somebody else' do
+        before do
+          modified_entry_user_id = chiefeditor.id
+          put :update, id: entry.id, entry: { japanische_umschrift: 'some editing on somebody else\'s entry', user_id: modified_entry_user_id }
+          entry.reload
+        end
+        it 'does not updates an entry' do
+          expect(entry.japanische_umschrift).not_to eq('some editing on somebody else\'s entry')
+        end
+        it 'and gets redirected' do
+          expect(response).to be_redirect
+        end
+        it 'and gets this error-message' do
+          expect(flash[:notice]).to eq('as editor you are not allowed to edit somebody else\'s entry' )
+        end
+      end
     end
-    context "with invalid params" do
-      pending('should this not be tested in the model')
-    end
-  end
+    subject { put :update, id: entry.id, entry: { japanische_umschrift: 'different_content' } }
+
+    it_behaves_like 'something that only admin, chiefeditor & editor can access'
+ end
 
   describe "DELETE destroy" do
     before do
