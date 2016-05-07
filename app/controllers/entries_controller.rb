@@ -4,6 +4,7 @@ class EntriesController < ApplicationController
   before_action :find_entry, only: [:show, :update, :destroy]
   before_action :protect_from_editors_who_try_to_update_an_entry_for_somebodyelse, only: :update
   before_action :protect_from_editors_who_try_to_create_an_entry_for_somebodyelse, only: :create
+  before_action :protect_from_editors_who_try_to_delete_an_entry_of_somebodyelse, only: :destroy
 
   helper_method :sort_column, :sort_direction
 
@@ -119,6 +120,12 @@ class EntriesController < ApplicationController
   def protect_from_editors_who_try_to_create_an_entry_for_somebodyelse
     if current_user.editor? && @entry.user_id != current_user.id #when user is an editor and creates an entry for somebody else
       redirect_to @entry, notice: 'as editor you are not allowed to create an entry for somebody else'
+    end
+  end
+
+  def protect_from_editors_who_try_to_delete_an_entry_of_somebodyelse
+    if current_user.editor? && @entry.user_id != current_user.id #when user is an editor and creates an entry for somebody else
+      redirect_to @entry, notice: 'as editor you are not allowed to delete somebody else\'s entry'
     end
   end
 
