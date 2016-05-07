@@ -310,23 +310,117 @@ describe EntriesController, :type => :controller do
  end
 
   describe "DELETE destroy" do
-    before do
-      published_entry
+    context 'as admin' do
+      before do
+        sign_in admin
+      end
+      context 'for herself' do
+        before do
+          entry
+          entry.update(user_id: admin.id)
+        end
+        it "destroys own entry" do
+          expect {
+            delete :destroy, id: entry.id
+          }.to change(Entry, :count).by(-1)
+        end
+        it "redirects to the entries list" do
+          delete :destroy, id: entry.id
+          expect(response).to redirect_to(entries_path)
+        end
+      end
+      context 'for somebody else' do
+        before do
+          entry
+          entry.update(user_id: editor.id)
+        end
+        it "destroys somebodys entry" do
+          expect {
+            delete :destroy, id: entry.id
+          }.to change(Entry, :count).by(-1)
+        end
+        it "redirects to the entries list" do
+          delete :destroy, id: entry.id
+          expect(response).to redirect_to(entries_path)
+        end
+      end
     end
+    context 'as chiefeditor' do
+      before do
+        sign_in chiefeditor 
+      end
+      context 'for herself' do
+        before do
+          entry
+          entry.update(user_id: chiefeditor.id)
+        end
+        it "destroys own entry" do
+          expect {
+            delete :destroy, id: entry.id
+          }.to change(Entry, :count).by(-1)
+        end
+        it "redirects to the entries list" do
+          delete :destroy, id: entry.id
+          expect(response).to redirect_to(entries_path)
+        end
+      end
+      context 'for somebody else' do
+        before do
+          entry
+          entry.update(user_id: editor.id)
+        end
+        it "destroys somebodys entry" do
+          expect {
+            delete :destroy, id: entry.id
+          }.to change(Entry, :count).by(-1)
+        end
+        it "redirects to the entries list" do
+          delete :destroy, id: entry.id
+          expect(response).to redirect_to(entries_path)
+        end
+      end
+    end
+    context 'as editor' do
+      before do
+        sign_in editor 
+      end
+      context 'for herself' do
+        before do
+          entry
+          entry.update(user_id: editor.id)
+        end
+        it "destroys own entry" do
+          expect {
+            delete :destroy, id: entry.id
+          }.to change(Entry, :count).by(-1)
+        end
+        it "redirects to the entries list" do
+          delete :destroy, id: entry.id
+          expect(response).to redirect_to(entries_path)
+        end
+      end
+      context 'for somebody else' do
+        before do
+          entry
+          entry.update(user_id: chiefeditor.id)
+        end
+        it "destroys somebodys entry" do
+          expect {
+            delete :destroy, id: entry.id
+          }.to change(Entry, :count).by(0)
+        end
+        it "and gets redirected" do
+          delete :destroy, id: entry.id
+          expect(response).to be_redirect 
+        end
+        it "gets an error-message" do
+          delete :destroy, id: entry.id
+          expect(flash[:notice]).to eq('as editor you are not allowed to delete somebody else\'s entry' )
+        end
+      end
+    end
+    subject { put :destroy, id: entry.id }
 
-    it "destroys the requested entry" do
-      sign_in admin
-      expect {
-        delete :destroy, id: published_entry.id
-      }.to change(Entry, :count).by(-1)
-      sign_out admin
-    end
-
-    it "redirects to the entries list" do
-      sign_in admin
-      delete :destroy, id: published_entry.id
-      expect(response).to redirect_to(entries_path)
-      sign_out admin
-    end
+    it_behaves_like 'something that only admin, chiefeditor & editor can access'
   end
 end
