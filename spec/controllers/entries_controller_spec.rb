@@ -5,9 +5,11 @@ describe EntriesController, :type => :controller do
   let(:entry) { FactoryGirl.create(:entry) }
   let(:unpublished_entry) { FactoryGirl.create(:entry) }
   let(:published_entry) { FactoryGirl.create(:published_entry) }
+
   let(:admin) { FactoryGirl.create(:admin) }
   let(:chiefeditor) { FactoryGirl.create(:chiefeditor) }
   let(:editor) { FactoryGirl.create(:editor) }
+  let(:commentator) { FactoryGirl.create(:commentator) }
   let(:user) { FactoryGirl.create(:user) }
 
   before :each do
@@ -33,6 +35,8 @@ describe EntriesController, :type => :controller do
   describe 'get index' do
     context 'as admin' do
       it 'shows user index' do
+        pending('todo')
+        raise
         sign_in admin
         get :index
         expect(response).to be_success
@@ -49,27 +53,44 @@ describe EntriesController, :type => :controller do
   end
 
   describe "GET show" do
-    before :each do
+    before do
       unpublished_entry 
       published_entry
     end
-
-    it "shows published entries" do
-      sign_in editor
-      get :show, id: published_entry.id
-      expect(assigns(:entry)).to eq(published_entry)
-      expect(response).to be_success
-      expect(response).to render_template :show
+    context 'as admin, chiefeditor and editor' do
+      context 'published entries' do
+        subject { put :show, id: published_entry.id }
+        it_behaves_like 'something that admin, chiefeditor & editor can access'
+      end
+      context 'unpublished entries' do
+        subject { put :show, id: unpublished_entry.id }
+        it_behaves_like 'something that admin, chiefeditor & editor can access'
+      end
     end
-
-    it "does not show an unpublished entry" do
-      pending("tdd? there is no redirect case in the controller")
-      sign_in editor
-      get :show, id: unpublished_entry.id
-      expect(response).to redirect_to(entries_url)
-      # expect(response).to redirect_to(entries_path)
+    context 'as commentator' do
+      before do
+        sign_in commentator 
+      end
+      context 'published entries' do
+        it 'is accessible' do
+          get :show, id: published_entry.id
+          expect(response).to render_template :show
+        end
+      end
+      context 'unpublished entries' do
+        it 'is not accessible' do
+          get :show, id: unpublished_entry.id
+          expect(response).to redirect_to(entries_path)
+          expect(flash[:notice]).to eq('as commentator you are not allowed to read unpublished entries')
+        end
+      end
+      context 'as guests' do
+        it '' do
+          pending('todo')
+          raise
+        end
+      end
     end
-
   end
 
   describe "GET new" do
@@ -202,7 +223,7 @@ describe EntriesController, :type => :controller do
       end
     subject { post :create, entry: FactoryGirl.attributes_for(:entry) } 
 
-    it_behaves_like 'something that only admin, chiefeditor & editor can access'
+    it_behaves_like 'something that commentator and guest can not access'
   end
 
 
@@ -306,7 +327,7 @@ describe EntriesController, :type => :controller do
     end
     subject { put :update, id: entry.id, entry: { japanische_umschrift: 'different_content' } }
 
-    it_behaves_like 'something that only admin, chiefeditor & editor can access'
+    it_behaves_like 'something that commentator and guest can not access'
  end
 
   describe "DELETE destroy" do
@@ -314,32 +335,32 @@ describe EntriesController, :type => :controller do
       before do
         sign_in admin
       end
-      context 'for herself' do
+      context 'own entries' do
         before do
           entry
           entry.update(user_id: admin.id)
         end
-        it "destroys own entry" do
+        it "can be deleted" do
           expect {
             delete :destroy, id: entry.id
           }.to change(Entry, :count).by(-1)
         end
-        it "redirects to the entries list" do
+        it "gets redirected to entries-index" do
           delete :destroy, id: entry.id
           expect(response).to redirect_to(entries_path)
         end
       end
-      context 'for somebody else' do
+      context 'other users entries' do
         before do
           entry
           entry.update(user_id: editor.id)
         end
-        it "destroys somebodys entry" do
+        it "can be deleted" do
           expect {
             delete :destroy, id: entry.id
           }.to change(Entry, :count).by(-1)
         end
-        it "redirects to the entries list" do
+        it "gets redirected to entries-index" do
           delete :destroy, id: entry.id
           expect(response).to redirect_to(entries_path)
         end
@@ -349,32 +370,32 @@ describe EntriesController, :type => :controller do
       before do
         sign_in chiefeditor 
       end
-      context 'for herself' do
+      context 'own entries' do
         before do
           entry
           entry.update(user_id: chiefeditor.id)
         end
-        it "destroys own entry" do
+        it "can be deleted" do
           expect {
             delete :destroy, id: entry.id
           }.to change(Entry, :count).by(-1)
         end
-        it "redirects to the entries list" do
+        it "gets redirected to entries-index" do
           delete :destroy, id: entry.id
           expect(response).to redirect_to(entries_path)
         end
       end
-      context 'for somebody else' do
+      context 'other users entries' do
         before do
           entry
           entry.update(user_id: editor.id)
         end
-        it "destroys somebodys entry" do
+        it "can be deleted" do
           expect {
             delete :destroy, id: entry.id
           }.to change(Entry, :count).by(-1)
         end
-        it "redirects to the entries list" do
+        it "gets redirected to entries-index" do
           delete :destroy, id: entry.id
           expect(response).to redirect_to(entries_path)
         end
@@ -384,27 +405,27 @@ describe EntriesController, :type => :controller do
       before do
         sign_in editor 
       end
-      context 'for herself' do
+      context 'own entries' do
         before do
           entry
           entry.update(user_id: editor.id)
         end
-        it "destroys own entry" do
+        it "can be deleted" do
           expect {
             delete :destroy, id: entry.id
           }.to change(Entry, :count).by(-1)
         end
-        it "redirects to the entries list" do
+        it "gets redirected to entries-index" do
           delete :destroy, id: entry.id
           expect(response).to redirect_to(entries_path)
         end
       end
-      context 'for somebody else' do
+      context 'other users entries' do
         before do
           entry
           entry.update(user_id: chiefeditor.id)
         end
-        it "destroys somebodys entry" do
+        it "can not be deleted" do
           expect {
             delete :destroy, id: entry.id
           }.to change(Entry, :count).by(0)
@@ -421,6 +442,6 @@ describe EntriesController, :type => :controller do
     end
     subject { put :destroy, id: entry.id }
 
-    it_behaves_like 'something that only admin, chiefeditor & editor can access'
+    it_behaves_like 'something that commentator and guest can not access'
   end
 end
