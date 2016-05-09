@@ -17,7 +17,6 @@ class Entry < ActiveRecord::Base
   validates :kennzahl, presence: true
   validate :group_lemma_schreibungen_und_aussprachen
   validate :group_uebersetzungen_quellenangaben_literatur_und_ergaenzungen
-  validate :user_is_allowed
 
   before_save :cleanup
 
@@ -50,11 +49,6 @@ class Entry < ActiveRecord::Base
   end
 
 
-  def user_is_allowed
-    unless User.allowed_for_entries.where(id: self.user_id).any?
-      errors.add( :user_id ,  "User is not allowed to create entry")
-    end
-  end
   def self.to_csv
     CSV.generate(:col_sep=>"\t", :quote_char => '"') do |csv|
       csv << column_names
