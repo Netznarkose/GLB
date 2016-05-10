@@ -40,6 +40,13 @@
           <li><%= link_to "Tutorial", tutorial_path, :method => :get, :target => "_self" %></li>
       </ul>
 
+      <% if current_or_guest_user.guest? %>
+      <ul class="nav pull-right">
+          <li class="dropdown">
+            <%= link_to "Login", new_user_session_path %>
+          </li>
+      </ul>
+      <% else %>
       <ul class="nav pull-right">
         <%# <li><%= link_to "#{current_or_guest_user.email} abmelden.", destroy_user_session_path, :method => :delete %1></li> %>
           <li class="dropdown">
@@ -50,6 +57,7 @@
             </ul>
           </li>
       </ul>
+    <% end%>
     </div>
   </div>
 </div>  
