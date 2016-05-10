@@ -40,10 +40,6 @@ shared_examples_for 'every user can access' do
     end
   end
   context 'as guest' do
-    let(:editor) { FactoryGirl.create(:editor) }
-    before do
-      sign_in guest 
-    end
     it 'is accessible' do
       subject
       expect(response).to be_success 
@@ -119,10 +115,10 @@ shared_examples_for 'something that only admin can access' do
     end
   end
   context 'when user is a guest' do
-    let(:guest) { FactoryGirl.create(:guest) }
     it 'redirects' do
       subject
-      expect(response).to redirect_to(user_session_path)
+      expect(response).to redirect_to(root_path)
+      expect(flash[:notice]).to eq('Access denied!')
     end
   end
 end
@@ -140,10 +136,10 @@ shared_examples_for 'something that commentator and guest can not access' do
     end
   end
   context 'when user is a guest' do
-    let(:guest) { FactoryGirl.create(:guest) }
     it 'redirects' do
       subject
-      expect(response).to redirect_to(user_session_path)
+      expect(response).to redirect_to(root_path)
+      expect(flash[:notice]).to eq('Access denied!')
     end
   end
 end

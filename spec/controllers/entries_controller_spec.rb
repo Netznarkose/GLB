@@ -58,14 +58,25 @@ describe EntriesController, :type => :controller do
       context 'unpublished entries' do
         it 'is not accessible' do
           get :show, id: unpublished_entry.id
+          expect(response).not_to render_template :show
           expect(response).to redirect_to(entries_path)
-          expect(flash[:notice]).to eq('as commentator you are not allowed to read unpublished entries')
+          expect(flash[:notice]).to eq('commentators and guests are not allowed to read unpublished entries')
         end
       end
-      context 'as guests' do
-        it '' do
-          pending('todo')
-          raise
+    end
+    context 'as guest' do
+      context 'published entries' do
+        it 'is accessible' do
+          get :show, id: published_entry.id
+          expect(response).to render_template :show
+        end
+      end
+      context 'unpublished entries' do
+        it 'is not accessible' do
+          get :show, id: unpublished_entry.id
+          expect(response).not_to render_template :show
+          expect(response).to redirect_to(entries_path)
+          expect(flash[:notice]).to eq('commentators and guests are not allowed to read unpublished entries')
         end
       end
     end
