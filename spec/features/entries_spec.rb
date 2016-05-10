@@ -4,6 +4,12 @@ describe 'entries management api' do
   let(:admin) { FactoryGirl.create(:admin) }
   let(:editor) { FactoryGirl.create(:editor) }
   let(:entry) { FactoryGirl.create(:entry) }
+  context 'guest visits page' do
+    it 'and gets to entries-index' do
+      visit root_path
+      expect(page).to have_content('Das Große Lexikon des Buddhismus')
+    end
+  end
   context 'admin logs in' do
     before do
       visit new_user_session_path
