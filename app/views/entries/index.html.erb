@@ -38,7 +38,7 @@
           <% end %>
 
           <span class="right-action"> <%= link_to 'Anzeigen', entry %>
-            <% if entry.user == current_user || current_user.admin? %>
+            <% if entry.user == current_or_guest_user || current_or_guest_user.admin? %>
             | <%= link_to 'Bearbeiten', edit_entry_path(entry) %>
             <% end %>
             </span>
