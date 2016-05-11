@@ -14,7 +14,7 @@
       <%# <%= link_to "GLB", entries_path, :class => 'brand' %1> %>
       <%= link_to "GLB", root_path, :class => 'brand' %>
       <ul class="nav">
-        <% if current_or_guest_user.admin? %>
+        <% if current_or_guest_user.admin? || current_or_guest_user.chief_editor? || current_or_guest_user.editor? %>
           <li class="dropdown">
             <a class='dropdown-toggle' data-toggle='dropdown' href='#'>Mitarbeiter</a>
             <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
@@ -23,19 +23,18 @@
             </ul>
           </li>
         <% end %>
-        <%# <li><%= link_to "Profil Ändern", edit_profile_path %1></li> %>
+        <% if current_or_guest_user.admin? || current_or_guest_user.chief_editor? || current_or_guest_user.editor? %>
           <li class="dropdown">
             <a class='dropdown-toggle' data-toggle='dropdown' href='#'>Einträge</a>
             <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
               <li><%= link_to "Alle Einträge", entries_path, :method => :get, :target => "_self" %></li>
               <li><%= link_to "Meine Einträge", user_entries_path(current_or_guest_user), :method => :get, :target => "_self" %></li>
-              <% if current_or_guest_user.admin? %>
-                <li><%= link_to "Neuer Eintrag", new_entry_path, :method => :get, :target => "_self" %></li>
-                <li><%= link_to "Alle Einträge exportieren (csv)", entries_path(format: :csv), :method => :get %></li>
-                <li><%= link_to "Alle Einträge exportieren (xml)", entries_path(format: :xml), :method => :get %></li>
-              <% end %>
+              <li><%= link_to "Neuer Eintrag", new_entry_path, :method => :get, :target => "_self" %></li>
+              <li><%= link_to "Alle Einträge exportieren (csv)", entries_path(format: :csv), :method => :get %></li>
+              <li><%= link_to "Alle Einträge exportieren (xml)", entries_path(format: :xml), :method => :get %></li>
             </ul>
           </li>
+          <% end %>
           <li><%= link_to "Basislemmata", hundredlemma_path, :method => :get, :target => "_self" %></li>
           <li><%= link_to "Tutorial", tutorial_path, :method => :get, :target => "_self" %></li>
       </ul>
