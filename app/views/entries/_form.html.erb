@@ -8,8 +8,10 @@
   <span class="right-action"> <%= link_to 'Anzeigen', @entry, class: 'btn' %></span>
     </br>
     </br>
-    <%= f.label :verfasser %>
-    <%= select("entry", "user_id", User.all.collect {|user| [ user.name, user.id ] }, { :selected => current_user.id}) %>
+    <% if current_or_guest_user.admin?|| current_or_guest_user.chief_editor? %>
+      <%= f.label :verfasser %>
+      <%= select("entry", "user_id", User.all.collect {|user| [ user.name, user.id ] }, { :selected => current_user.id}) %>
+    <% end %>
     <%= f.label :freigeschaltet %>
     <%= f.check_box :freigeschaltet %>
     <%= f.label :namenskuerzel %>
