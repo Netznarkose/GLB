@@ -44,7 +44,7 @@
             </span>
           </td>
         </tr>
-        <% if entry.uebersetzung.blank? %>
+        <% if entry.uebersetzung.blank? || current_or_guest_user.guest? %>
           <tr></tr>
         <% else %>
           <tr class="index-text-container_truncate" >
