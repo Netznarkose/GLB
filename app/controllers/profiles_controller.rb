@@ -6,10 +6,14 @@ class ProfilesController < ApplicationController
   end
 
   def update
-    if current_user.update(user_params)
-      redirect_to edit_profile_path, notice: "profile updated"
+    if current_user
+      if current_user.update(user_params)
+        redirect_to edit_profile_path, notice: "profile updated"
+      else
+        redirect_to edit_profile_path, notice: "error"
+      end
     else
-      redirect_to edit_profile_path, notice: "error"
+      redirect_to root_path, notice: 'Access denied!' 
     end
   end
 
