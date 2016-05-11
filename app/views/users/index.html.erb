@@ -1,4 +1,10 @@
 <% content_for :content do %>
+  <% if flash[:notice] %>
+    <div class="alert alert-notice">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <strong><%= raw(flash[:notice]) %></strong>
+    </div>
+  <% end %>
   <h1>Alle Mitarbeiter</h1>
 
   <table class="table">
@@ -18,8 +24,10 @@
         <td><%= user.role.capitalize %></td>
         <td><%= user.entries.count %></td>
         <td><%= link_to 'Anzeigen', user_entries_path(user) %>
+        <% if current_or_guest_user.admin? %>
          | <%= link_to "Status Ändern", edit_user_path(user) %>
          | <%= link_to 'Löschen', user, method: :delete, data: { confirm: 'Wollen Sie diesen Mitarbeiter wirklich löschen?' } %>
+       <% end %>
       </tr>
     <% end %>
   </table>
