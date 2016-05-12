@@ -8,30 +8,10 @@ describe UsersController, type: :controller do
   let(:user) { FactoryGirl.create(:user) }
 
   describe 'get index' do
-    context 'when user is an admin' do
-      it 'returns success' do
-        sign_in admin
-        get :index
-        expect(response).to be_success
-      end
-    end
-    context 'when user is a chiefeditor' do
-      it 'returns success' do
-        sign_in chiefeditor 
-        get :index
-        expect(response).to be_success
-      end
-    end
-    context 'when user is a editor' do
-      it 'returns success' do
-        sign_in editor 
-        get :index
-        expect(response).to be_success
-      end
-    end
     subject { get :index } 
 
-    it_behaves_like 'something that only admin, chiefeditor & editor can access'
+    it_behaves_like 'something that admin, chiefeditor & editor can access'
+    it_behaves_like 'something that commentator and guest can not access'
   end
 
   describe 'get new' do
@@ -62,7 +42,7 @@ describe UsersController, type: :controller do
         end
       end
       context 'with invalid attributes' do
-        it 'does not create a new user, redirects to new-template
+        it 'does not create a new user, redirects to the new-template
         & shows an error-message' do
           sign_in admin
           expect {
