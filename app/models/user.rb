@@ -10,9 +10,9 @@ class User < ActiveRecord::Base
   validates :name, presence: true
   validates :email, presence: true
 
-  after_destroy :assign_remaining_entries_to_superadmin
+  # after_destroy :assign_remaining_entries_to_superadmin
 
-  scope :allowed_for_entries, ->{ where( role: ['superadmin', 'admin', 'editor', 'chiefeditor']) }
+  scope :allowed_for_entries, ->{ where( role: ['superadmin', 'admin', 'editor', 'chiefeditor', 'commentator']) }
 
 
 
@@ -31,6 +31,10 @@ class User < ActiveRecord::Base
 
   def commentator?
     role == "commentator"
+  end
+
+  def guest?
+    name == "guest"
   end
 
 
