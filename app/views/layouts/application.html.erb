@@ -1,77 +1,79 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Das Große Lexikon des Buddhismus</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
+  <head>
+    <title>Das Große Lexikon des Buddhismus</title>
+    <%= stylesheet_link_tag    "application", :media => "all" %>
+    <%= javascript_include_tag "application" %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
 
-<div class="navbar navbar-inverse navbar-fixed-top">
-  <div class="navbar-inner">
-    <div class="container navbar-container">
-      <%# <%= link_to "GLB", entries_path, :class => 'brand' %1> %>
-      <%= link_to "GLB", root_path, :class => 'brand' %>
-      <ul class="nav">
-        <% if current_or_guest_user.admin? || current_or_guest_user.chief_editor? || current_or_guest_user.editor? %>
-          <li class="dropdown">
-            <a class='dropdown-toggle' data-toggle='dropdown' href='#'>Mitarbeiter</a>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-              <li><%= link_to "Alle Mitarbeiter", users_path, :method => :get, :target => "_self" %></li>
-              <li><%= link_to "Neuer Mitarbeiter", new_user_path, :method => :get, :target => "_self" %></li>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container navbar-container">
+          <%# <%= link_to "GLB", entries_path, :class => 'brand' %1> %>
+          <%= link_to "GLB", root_path, :class => 'brand' %>
+          <ul class="nav">
+            <% if current_or_guest_user.admin? || current_or_guest_user.chief_editor? || current_or_guest_user.editor? %>
+              <li class="dropdown">
+                <a class='dropdown-toggle' data-toggle='dropdown' href='#'>Mitarbeiter</a>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+                  <li><%= link_to "Alle Mitarbeiter", users_path, :method => :get, :target => "_self" %></li>
+                  <% if current_or_guest_user.admin?  %>
+                    <li><%= link_to "Neuer Mitarbeiter", new_user_path, :method => :get, :target => "_self" %></li>
+                  <% end %>
+                </ul>
+              </li>
+            <% end %>
+            <% if current_or_guest_user.admin? || current_or_guest_user.chief_editor? || current_or_guest_user.editor? %>
+              <li class="dropdown">
+                <a class='dropdown-toggle' data-toggle='dropdown' href='#'>Einträge</a>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+                  <li><%= link_to "Alle Einträge", entries_path, :method => :get, :target => "_self" %></li>
+                  <li><%= link_to "Meine Einträge", user_entries_path(current_or_guest_user), :method => :get, :target => "_self" %></li>
+                  <li><%= link_to "Neuer Eintrag", new_entry_path, :method => :get, :target => "_self" %></li>
+                  <li><%= link_to "Alle Einträge exportieren (csv)", entries_path(format: :csv), :method => :get %></li>
+                  <li><%= link_to "Alle Einträge exportieren (xml)", entries_path(format: :xml), :method => :get %></li>
+                </ul>
+              </li>
+            <% end %>
+            <li><%= link_to "Basislemmata", hundredlemma_path, :method => :get, :target => "_self" %></li>
+            <li><%= link_to "Tutorial", tutorial_path, :method => :get, :target => "_self" %></li>
+          </ul>
+
+          <% if current_or_guest_user.guest? %>
+            <ul class="nav pull-right">
+              <li class="dropdown">
+                <%= link_to "Login", new_user_session_path %>
+              </li>
             </ul>
-          </li>
-        <% end %>
-        <% if current_or_guest_user.admin? || current_or_guest_user.chief_editor? || current_or_guest_user.editor? %>
-          <li class="dropdown">
-            <a class='dropdown-toggle' data-toggle='dropdown' href='#'>Einträge</a>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-              <li><%= link_to "Alle Einträge", entries_path, :method => :get, :target => "_self" %></li>
-              <li><%= link_to "Meine Einträge", user_entries_path(current_or_guest_user), :method => :get, :target => "_self" %></li>
-              <li><%= link_to "Neuer Eintrag", new_entry_path, :method => :get, :target => "_self" %></li>
-              <li><%= link_to "Alle Einträge exportieren (csv)", entries_path(format: :csv), :method => :get %></li>
-              <li><%= link_to "Alle Einträge exportieren (xml)", entries_path(format: :xml), :method => :get %></li>
+          <% else %>
+            <ul class="nav pull-right">
+              <%# <li><%= link_to "#{current_or_guest_user.email} abmelden.", destroy_user_session_path, :method => :delete %1></li> %>
+              <li class="dropdown">
+                <a class='dropdown-toggle' data-toggle='dropdown' href='#'><%= current_or_guest_user.name %></a>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+                  <li><%= link_to "Profil Bearbeiten", edit_profile_path %></li>
+                  <li><%= link_to "Abmelden", destroy_user_session_path, :method => :delete %></li>
+                </ul>
+              </li>
             </ul>
-          </li>
-          <% end %>
-          <li><%= link_to "Basislemmata", hundredlemma_path, :method => :get, :target => "_self" %></li>
-          <li><%= link_to "Tutorial", tutorial_path, :method => :get, :target => "_self" %></li>
-      </ul>
+          <% end%>
+        </div>
+      </div>
+    </div>  
 
-      <% if current_or_guest_user.guest? %>
-      <ul class="nav pull-right">
-          <li class="dropdown">
-            <%= link_to "Login", new_user_session_path %>
-          </li>
-      </ul>
-      <% else %>
-      <ul class="nav pull-right">
-        <%# <li><%= link_to "#{current_or_guest_user.email} abmelden.", destroy_user_session_path, :method => :delete %1></li> %>
-          <li class="dropdown">
-          <a class='dropdown-toggle' data-toggle='dropdown' href='#'><%= current_or_guest_user.name %></a>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-              <li><%= link_to "Profil Bearbeiten", edit_profile_path %></li>
-              <li><%= link_to "Abmelden", destroy_user_session_path, :method => :delete %></li>
-            </ul>
-          </li>
-      </ul>
-    <% end%>
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span3 sidebar-nav-fixed">
+          <%= yield :sidebar%>
+        </div>
+        <div class="span8 offset3">
+          <%= yield :content%>
+        </div>
+      </div>
     </div>
-  </div>
-</div>  
-
-<div class="container-fluid">
-  <div class="row-fluid">
-    <div class="span3 sidebar-nav-fixed">
-      <%= yield :sidebar%>
-    </div>
-    <div class="span8 offset3">
-      <%= yield :content%>
-    </div>
-  </div>
-</div>
 
 
-</body>
+  </body>
 </html>
