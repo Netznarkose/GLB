@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+  load_and_authorize_resource
   before_action :find_current_entry, only: [:create, :edit, :destroy, :update]
   before_action :find_comment, only: [:edit, :destroy, :update]
 
