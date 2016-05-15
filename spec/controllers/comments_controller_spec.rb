@@ -3,11 +3,11 @@ require 'spec_helper'
 describe CommentsController, type: :controller do
   let(:comment) { FactoryGirl.create(:comment) }
   let(:admin) { FactoryGirl.create(:admin) }
+  let(:chiefeditor) { FactoryGirl.create(:chiefeditor) }
+  let(:editor) { FactoryGirl.create(:editor) }
+  let(:commentator) { FactoryGirl.create(:commentator) }
+  let(:user) { FactoryGirl.create(:user) }
 
-  before :each do
-    admin
-    sign_in admin
-  end
 
   describe 'GET edit' do
     it 'edits a comment' do
@@ -15,28 +15,46 @@ describe CommentsController, type: :controller do
       expect(response).to render_template('edit')
     end
   end
+
   describe 'POST create' do
-    context 'with valid attributes' do
-      it 'creates a comment' do
-        attributes = FactoryGirl.attributes_for(:comment)
-        expect {
-          post :create, entry_id: attributes[:entry_id], comment: attributes
-        }.to change(Comment, :count).by(1)
-        assigns(:comment).tap do |comment|
-          expect(comment).to be_valid
+    context 'as admin' do
+      before do
+        sign_in admin
+      end
+      context 'with valid attributes' do
+        it 'creates a comment' do
+          attributes = FactoryGirl.attributes_for(:comment)
+          expect {
+            post :create, entry_id: attributes[:entry_id], comment: attributes
+          }.to change(Comment, :count).by(1)
+          assigns(:comment).tap do |comment|
+            expect(comment).to be_valid
+          end
+        end
+      end
+      context 'with invalid attributes' do
+        it 'does not creates a comment' do
+          attributes = FactoryGirl.attributes_for(:comment, comment: '')
+          expect {
+            post :create, entry_id: attributes[:entry_id], comment: attributes
+          }.to change(Comment, :count).by(0)
+          assigns(:comment).tap do |comment|
+            expect(comment).not_to be_valid
+          end
+          expect(response).to render_template('entries/show')
         end
       end
     end
-    context 'with invalid attributes' do
+    context 'as non-logged-in user' do
       it 'does not creates a comment' do
         attributes = FactoryGirl.attributes_for(:comment, comment: '')
         expect {
           post :create, entry_id: attributes[:entry_id], comment: attributes
         }.to change(Comment, :count).by(0)
-        assigns(:comment).tap do |comment|
-          expect(comment).not_to be_valid
-        end
-        expect(response).to render_template('entries/show')
+      end
+      it 'and gets redirected' do
+        expect(response).to redirect_to(root_path)
+        expect(flash[:notice]).to eq('Access denied!')
       end
     end
   end
@@ -62,3 +80,4 @@ describe CommentsController, type: :controller do
     end
   end
 end
+
