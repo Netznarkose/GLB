@@ -16,6 +16,10 @@ class Ability
       can :new, Entry 
       can :edit, Entry 
       can :index, Entry 
+      can :create, Comment
+      can :update, Comment
+      can :destroy, Comment 
+      can :edit, Comment 
     elsif user.editor?
       can :index, User 
       can :create, Entry 
@@ -25,9 +29,17 @@ class Ability
       can :new, Entry 
       can :edit, Entry 
       can :index, Entry 
+      can :create, Comment
+      can :update, Comment
+      can :destroy, Comment 
+      can :edit, Comment 
     elsif user.commentator?
       can :show, Entry 
       can :index, Entry 
+      can :create, Comment
+      can :update, Comment
+      can :destroy, Comment 
+      can :edit, Comment 
     elsif user 
       can :show, Entry 
       can :index, Entry 
