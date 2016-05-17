@@ -40,10 +40,11 @@ class Ability
       can :update, Comment
       can :destroy, Comment 
       can :edit, Comment 
-    elsif user 
+    else
       can :show, Entry 
       can :index, Entry 
-    else
+      # binding.pry
+      # @current_user = user # https://stackoverflow.com/questions/5924435/how-do-i-set-current-user-even-though-a-user-is-not-logged-in-rails-3
     end
 
     # The first argument to `can` is the action you are giving the user
