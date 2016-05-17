@@ -1,18 +1,44 @@
 require 'spec_helper'
 
-describe "users management api" do
-  describe "login, logout and sign up" do
-    let(:user) { FactoryGirl.create(:user) }
-    it "should sign in user before displaying dashboard and sign out user" do
-      visit new_user_session_path 
-      page.should have_content("Anmelden")
-      fill_in "user_email", with: user.email
-      fill_in "user_password", with: user.password
+describe "users management" do
+  describe 'authentication' do
+    it 'successfull login' do
+      FactoryGirl.create(:user, email: 'user@example.com', password: 'password') #test setup (place test-data in the test to have all information in place) 
+      visit root_path # action
+      click_link('Login')
+      fill_in "user_email", with: 'user@example.com' 
+      fill_in "user_password", with: 'password' 
       click_button('Anmelden')
-      page.should have_content("Erfolgreich angemeldet.")
-      click_link "Abmelden" 
-      page.should have_content("Anmelden")
+      expect(page).to have_content("Erfolgreich angemeldet.") # expectation
     end
+    it 'unsuccessfull login' do
+      visit root_path 
+      click_link('Login')
+      fill_in "user_email", with: 'user@example.com' 
+      fill_in "user_password", with: 'password' 
+      click_button('Anmelden')
+      expect(page).to have_content("E-Mail-Adresse oder Passwort ist ungültig.")
+    end
+    it 'logout' do
+      #
+        FactoryGirl.create(:user, email: 'user@example.com', password: 'password', name: 'user_name') 
+        visit root_path
+        click_link('Login')
+        fill_in "user_email", with: 'user@example.com' 
+        fill_in "user_password", with: 'password' 
+        click_button('Anmelden')
+      # do I use a login helper here?
+      click_link('user_name')
+      click_link "Abmelden" 
+      expect(page).to have_content("Erfolgreich abgemeldet.")
+    end
+    context 'unloggedin users' do
+      it 'can visit the entries-index' do
+        visit root_path
+        expect(page).to have_content("Das Große Lexikon des Buddhismus")
+      end
+    end
+    # legacy code
     it "should sign up user" do
       pending('there is no sign up functionality')
       visit root_path
@@ -25,6 +51,8 @@ describe "users management api" do
       click_button "Sign up"
       page.should have_content("Welcome! You have signed up successfully.")
     end
+  end
+  describe 'authorization' do
     it "should not show users list to common user" do
       pending('there is no user sign up functionality')
       click_link "abmelden"
