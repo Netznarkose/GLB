@@ -38,13 +38,13 @@
           <% end %>
 
           <span class="right-action"> <%= link_to 'Anzeigen', entry %>
-            <% if entry.user == current_or_guest_user || current_or_guest_user.admin? %>
+            <% if entry.user == current_user || current_user.admin? %>
             | <%= link_to 'Bearbeiten', edit_entry_path(entry) %>
             <% end %>
             </span>
           </td>
         </tr>
-        <% if entry.uebersetzung.blank? || current_or_guest_user.guest? %>
+        <% if entry.uebersetzung.blank? || current_user.guest? %>
           <tr></tr>
         <% else %>
           <tr class="index-text-container_truncate" >
