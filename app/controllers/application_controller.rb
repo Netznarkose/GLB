@@ -12,6 +12,10 @@ class ApplicationController < ActionController::Base
     redirect_to root_path
   end
 
+  def current_user
+    super || User.new(role: 'guest') #methoden auftruf der superklasse
+  end
+
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:account_update) << :email
   end
@@ -44,12 +48,13 @@ class ApplicationController < ActionController::Base
     current_user.commentator?
   end
 
+  def guest?
+    current_user.guest?
+  end
+
   def current_user?
     @user = User.find(params[:id])
     current_user.id == @user.id
-  end
-  def current_user
-    super || User.new #methoden auftruf der superklasse
   end
 
 end

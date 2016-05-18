@@ -34,7 +34,7 @@ class User < ActiveRecord::Base
   end
 
   def guest?
-    name == "guest"
+    role == "guest"
   end
 
 
