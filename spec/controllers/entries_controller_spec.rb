@@ -242,8 +242,11 @@ describe EntriesController, :type => :controller do
         it 'gets updated' do
           expect(entry.japanische_umschrift).to eq('some editing on my own entry')
         end
-        it 'and gets redirect to it' do
+        it 'gets redirect to it' do
           expect(response).to redirect_to(entry)
+        end
+        it 'and gets a notification' do
+          expect(flash[:notice]).not_to be_empty
         end
       end
       context 'other users entry' do
@@ -255,8 +258,11 @@ describe EntriesController, :type => :controller do
         it 'gets updated' do
           expect(entry.japanische_umschrift).to eq('some editing on somebody else\'s entry')
         end
-        it 'and gets redirect to it' do
+        it 'gets redirect to it' do
           expect(response).to redirect_to(entry)
+        end
+        it 'and gets a notification' do
+          expect(flash[:notice]).not_to be_empty
         end
       end
     end
@@ -273,8 +279,11 @@ describe EntriesController, :type => :controller do
         it 'gets updated' do
           expect(entry.japanische_umschrift).to eq('some editing on my own entry')
         end
-        it 'and gets redirect to it' do
+        it 'gets redirect to it' do
           expect(response).to redirect_to(entry)
+        end
+        it 'and gets a notification' do
+          expect(flash[:notice]).not_to be_empty
         end
       end
       context 'other users entry' do
@@ -286,8 +295,11 @@ describe EntriesController, :type => :controller do
         it 'gets updated' do
           expect(entry.japanische_umschrift).to eq('some editing on somebody else\'s entry')
         end
-        it 'and gets redirect to it' do
+        it 'gets redirect to it' do
           expect(response).to redirect_to(entry)
+        end
+        it 'and gets a notification' do
+          expect(flash[:notice]).not_to be_empty
         end
       end
     end
@@ -305,8 +317,11 @@ describe EntriesController, :type => :controller do
         it 'gets updated' do
           expect(entry.japanische_umschrift).to eq('some editing on my own entry')
         end
-        it 'and gets redirect to it' do
+        it 'gets redirect to it' do
           expect(response).to redirect_to(entry)
+        end
+        it 'and gets a notification' do
+          expect(flash[:notice]).not_to be_empty
         end
       end
       context 'other users entry' do
