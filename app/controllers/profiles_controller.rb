@@ -1,6 +1,6 @@
 class ProfilesController < ApplicationController
   def edit
-    unless current_user
+    if current_user.guest?
       redirect_to root_path, notice: 'Access denied!' 
     end
   end

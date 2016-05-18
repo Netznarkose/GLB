@@ -113,33 +113,33 @@ class EntriesController < ApplicationController
   end
 
   def protect_from_editors_who_try_to_update_an_entry_for_somebodyelse
-    if current_or_guest_user.editor? && params[:entry][:user_id].to_i != current_or_guest_user.id 
+    if current_user.editor? && params[:entry][:user_id].to_i != current_user.id 
       redirect_to @entry, notice: 'as editor you are not allowed to edit somebody else\'s entry'
     end
   end
   def protect_from_editors_who_try_to_create_an_entry_for_somebodyelse
-    if current_or_guest_user.editor? && @entry.user_id != current_or_guest_user.id #when user is an editor and creates an entry for somebody else
+    if current_user.editor? && @entry.user_id != current_user.id #when user is an editor and creates an entry for somebody else
       redirect_to new_entry_path, notice: 'as editor you are not allowed to create an entry for somebody else'
     end
   end
 
   def protect_from_editors_who_try_to_delete_an_entry_of_somebodyelse
-    if current_or_guest_user.editor? && @entry.user_id != current_or_guest_user.id #when user is an editor and creates an entry for somebody else
+    if current_user.editor? && @entry.user_id != current_user.id #when user is an editor and creates an entry for somebody else
       redirect_to @entry, notice: 'as editor you are not allowed to delete somebody else\'s entry'
     end
   end
 
   def protect_from_commentators_and_guests_who_try_to_read_unpublished_entries
-    if current_or_guest_user.commentator? && @entry.freigeschaltet == false || current_or_guest_user.guest? && @entry.freigeschaltet == false
+    if current_user.commentator? && @entry.freigeschaltet == false || current_user.guest? && @entry.freigeschaltet == false
       redirect_to entries_path, notice: 'commentators and guests are not allowed to read unpublished entries'
     end
   end
 
   def build_entry_comment
-    if current_or_guest_user
+    if current_user
       @comment = Comment.new
       @comment.entry = @entry
-      @comment.user = current_or_guest_user
+      @comment.user = current_user
     end
   end
 

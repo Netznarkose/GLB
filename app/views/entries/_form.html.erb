@@ -8,7 +8,7 @@
   <span class="right-action"> <%= link_to 'Anzeigen', @entry, class: 'btn' %></span>
     </br>
     </br>
-    <% if current_or_guest_user.admin?|| current_or_guest_user.chief_editor? %>
+    <% if current_user.admin?|| current_user.chief_editor? %>
       <%= f.label :verfasser %>
       <%= select("entry", "user_id", User.all.collect {|user| [ user.name, user.id ] }, { :selected => current_user.id}) %>
     <% end %>

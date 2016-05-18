@@ -58,14 +58,14 @@ class CommentsController < ApplicationController
   end
 
   def protect_from_users_who_try_to_update_somebody_elses_comment
-    if @comment.user_id != current_or_guest_user.id
+    if @comment.user_id != current_user.id
       redirect_to @entry, notice: 'you are not allowed to update somebody else\s comment'
     end
   end
   def protect_from_editors_commentators_and_guests_who_try_to_delete_somebody_elses_comment
-    if current_or_guest_user.editor? && @comment.user_id != current_or_guest_user.id
+    if current_user.editor? && @comment.user_id != current_user.id
       redirect_to @entry, notice: 'editors are not allowed to update somebody else\s comment'
-    elsif current_or_guest_user.commentator? && @comment.user_id != current_or_guest_user.id
+    elsif current_user.commentator? && @comment.user_id != current_user.id
       redirect_to @entry, notice: 'commentators are not allowed to update somebody else\s comment'
     end
   end
