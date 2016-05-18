@@ -33,9 +33,17 @@ describe "users management" do
       expect(page).to have_content("Erfolgreich abgemeldet.")
     end
     context 'unloggedin users' do
-      it 'can visit the entries-index' do
-        visit root_path
-        expect(page).to have_content("Das Große Lexikon des Buddhismus")
+      context 'visit the root-path' do
+        before do
+          visit root_path
+        end
+        it 'get the entries-index displayed' do
+          expect(page).to have_content("Das Große Lexikon des Buddhismus")
+        end
+        it 'entries without  uebersetzungsfeld field' do
+          FactoryGirl.create(:entry, uebersetzung: 'funky translation') 
+          expect(page).not_to have_content('funky translation')
+        end
       end
     end
     # legacy code
