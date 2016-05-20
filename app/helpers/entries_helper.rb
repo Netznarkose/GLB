@@ -3,7 +3,7 @@ module EntriesHelper
   #I am not paid enough for preventing error triggered by non-existing 2. page!
   def to_scan_pages kennzahl
     page = kennzahl.split(":")[0].to_i #avoid error for kennzahl with 0 at the beginning
-    [to_scan_pages_helper(page), to_scan_pages_helper(page + 1)]
+    [to_scan_pages_helper(page), to_scan_pages_helper(page + 1), to_scan_pages_helper(page + 2), to_scan_pages_helper(page + 3), to_scan_pages_helper(page + 4)]
   end
 
   def sanskrit_special_chars

@@ -17,18 +17,42 @@
 //= require_tree .
 var CKEDITOR_BASEPATH = '/ckeditor/';
 
-// $(document).ready(function() {
-//   $(".clipped").click(function(){
-//     $(this).toggleClass("active");
-//   });
-// });
+var count = 0;
+var pages = ["page0", "page1", "page2", "page3", "page4"];
 
+function back_first_switch() {
+  count = 0;
+  write_page_count();
+}
 
-$(document).ready(function() {
-    $("#switch_scan").click(function() {
-        $el1 = $("img.active_scan");
-        $el2 = $("img.inactive_scan");
-        $el1.removeClass("active_scan").addClass("inactive_scan");
-        $el2.removeClass("inactive_scan").addClass("active_scan");
-  });
-});
+function back_switch() {
+  if (count <= 0) {
+    count = 0;
+  } else {
+    count--;
+  }
+  write_page_count();
+}
+
+function forward_switch() {
+  if (count >= 4) {
+    count = 4;
+  } else {
+    count++;
+  }
+  write_page_count();
+}
+
+function write_page_count() {
+  document.getElementById("page_count").innerHTML = "Seite " + (count + 1);
+
+  for (var i = 0; i < 5; i++) {
+    if (count == i) {
+      document.getElementById(pages[i]).style.display = "block";
+    } else {
+      document.getElementById(pages[i]).style.display = "none";
+    }
+  }
+
+}
+
