@@ -13,7 +13,7 @@ describe 'comments management api' do
     end
     it 'displays a certain entry' do
       visit entry_path(entry)
-      expect(page).to have_content('Scan SBDJ')
+      expect(page).to have_content('Kennungsdaten')
     end
     #edit
     it 'edits a comment' do
