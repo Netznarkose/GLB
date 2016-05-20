@@ -41,12 +41,27 @@ describe 'entries management' do
         end
       end
     end
+    context 'unpublished entries' do
+      before do
+        user = FactoryGirl.create(:user, role: 'admin') 
+        visit new_user_session_path 
+        fill_in "user_email", with: user.email 
+        fill_in "user_password", with: user.password 
+        click_button('Anmelden')
+        unpublished_entry = FactoryGirl.create(:entry, freigeschaltet: false)
+        visit entry_path(unpublished_entry)
+      end
+      it 'show the scans' do
+        expect(page).to have_content("Scan")
+      end
+    end
     context 'published entries' do
       before do
-        published_entry = FactoryGirl.create(:published_entry)
-        visit edit_entry_path(published_entry)
+        published_entry = FactoryGirl.create(:entry, freigeschaltet: true)
+        visit entry_path(published_entry)
       end
       it 'do not show the scans' do
+        expect(page).not_to have_content("Scan")
       end
     end
   end

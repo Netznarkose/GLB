@@ -6,11 +6,8 @@
       <strong><%= raw(flash[:notice]) %></strong>
     </div>
   <% end %>
-  <%# <button id ="back_first" type="button" onclick="back_first_switch()">home</button> %>
-  <%# <button id ="back" type="button" onclick="back_switch()">backward</button> %>
-  <%# <button id="forward" type="button" onclick="forward_switch()">forward</button> %>
 
-  <%# <% unless @entry.freigeschaltet == false %1> %>
+  <% unless @entry.freigeschaltet %>
     <div class="scan_container">
       <div class="funky_grey_seperator">
       <span class="right-action"><button class= "btn" id="forward" type="button" onclick="forward_switch()">Vor</button></span>
@@ -26,7 +23,7 @@
         <p id="page_count">Seite 1</p>
       </div>
     </div>
-  <%# <% end %1> %>
+  <% end %>
   <div class="down_under">
     <div class="funky_grey_seperator">
     <span class="right-action"> <%= link_to 'Bearbeiten', edit_entry_path(@entry), class: 'btn' %></span>
