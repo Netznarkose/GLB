@@ -20,44 +20,14 @@ describe "users management" do
       expect(page).to have_content("E-Mail-Adresse oder Passwort ist ungültig.")
     end
     it 'logout' do
-      #
-        FactoryGirl.create(:user, email: 'user@example.com', password: 'password', name: 'user_name') 
-        visit root_path
-        click_link('Login')
-        fill_in "user_email", with: 'user@example.com' 
-        fill_in "user_password", with: 'password' 
-        click_button('Anmelden')
-      # do I use a login helper here?
+      FactoryGirl.create(:user, email: 'user@example.com', password: 'password', name: 'user_name') 
+      visit new_user_session_path 
+      fill_in "user_email", with: 'user@example.com' 
+      fill_in "user_password", with: 'password' 
+      click_button('Anmelden')
       click_link('user_name')
       click_link "Abmelden" 
       expect(page).to have_content("Erfolgreich abgemeldet.")
-    end
-    context 'unloggedin users' do
-      context 'visit the root-path' do
-        before do
-          visit root_path
-        end
-        it 'get the entries-index displayed' do
-          expect(page).to have_content("Das Große Lexikon des Buddhismus")
-        end
-        it 'entries without  uebersetzungsfeld field' do
-          FactoryGirl.create(:entry, uebersetzung: 'funky translation') 
-          expect(page).not_to have_content('funky translation')
-        end
-      end
-    end
-    # legacy code
-    it "should sign up user" do
-      pending('there is no sign up functionality')
-      visit root_path
-      page.should have_content("Sign up")
-      click_link "Sign up"
-      fill_in "Name", :with => "admin"
-      fill_in "Email", :with => "admin@admin.de"
-      find("#user_password").set("password")
-      find("#user_password_confirmation").set("password")
-      click_button "Sign up"
-      page.should have_content("Welcome! You have signed up successfully.")
     end
   end
   describe 'authorization' do

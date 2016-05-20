@@ -1,8 +1,6 @@
 class ProfilesController < ApplicationController
+  before_action :protect_from_non_currents_and_guests, only: :edit
   def edit
-    if current_user.guest?
-      redirect_to root_path, notice: 'Access denied!' 
-    end
   end
 
   def update
@@ -21,5 +19,11 @@ class ProfilesController < ApplicationController
 
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
+  end
+
+  def protect_from_non_currents_and_guests
+    if !current_user || current_user.guest?
+      redirect_to root_path, notice: 'Access denied!' 
+    end
   end
 end

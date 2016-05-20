@@ -1,63 +1,53 @@
 require 'spec_helper'
 
-describe 'entries management api' do
+describe 'entries management' do
   let(:admin) { FactoryGirl.create(:admin) }
   let(:editor) { FactoryGirl.create(:editor) }
   let(:entry) { FactoryGirl.create(:entry) }
-  context 'guest visits page' do
-    it 'and gets to entries-index' do
-      visit root_path
-      expect(page).to have_content('Das Große Lexikon des Buddhismus')
+
+  describe 'entries authorization' do
+    context 'authenticated user' do
+        before do
+          FactoryGirl.create(:user, email: 'user@example.com', password: 'password', name: 'user_name') 
+          visit new_user_session_path 
+          fill_in "user_email", with: 'user@example.com' 
+          fill_in "user_password", with: 'password' 
+          click_button('Anmelden')
+        end
+      context 'visits the entries index with a valid entry' do
+        before do
+          FactoryGirl.create(:entry, uebersetzung: 'funky translation') 
+          visit entries_path
+        end
+        it 'gets the template title' do
+          expect(page).to have_content("Das Große Lexikon des Buddhismus")
+        end
+        it "and sees the field 'uebersetzungsfeld' of the entry" do
+          expect(page).to have_content('funky translation')
+        end
+      end
     end
-  end
-  context 'admin logs in' do
-    before do
-      visit new_user_session_path
-      fill_in 'user_email', with: admin.email
-      fill_in 'user_password', with: admin.password
-      click_button('Anmelden')
+    context 'non-logged in user' do
+      context 'visits the entries index with a valid entry' do
+        before do
+          FactoryGirl.create(:entry, uebersetzung: 'funky translation') 
+          visit entries_path
+        end
+        it 'gets the template title' do
+          expect(page).to have_content("Das Große Lexikon des Buddhismus")
+        end
+        it "but does not sees the field 'uebersetzungsfeld'" do
+          expect(page).not_to have_content('funky translation')
+        end
+      end
     end
-    it 'displays the entry-show template' do
-      visit entry_path(entry)
-      expect(page).to have_content('Scan SBDJ')
-    end
-    describe 'user edits an entry' do
-      #edit
+    context 'published entries' do
       before do
-        visit edit_entry_path(entry)
-        fill_in 'entry_lemma_in_katakana', with: 'some changes in the entry'
-        click_button('Speichern')
+        published_entry = FactoryGirl.create(:published_entry)
+        visit edit_entry_path(published_entry)
       end
-      it 'edits an entry' do
-        expect(page).to have_content('some changes in the entry')
-      end
-      it 'gets the right flash-message after editing' do #Bug #4
-        expect(page).to have_content('Eintrag erfolgreich editiert')
-      end
-      it 'clicks the undo link after editing and gets redirected to previous version' do #Bug #5
-        pending('Todo')
-        raise
+      it 'do not show the scans' do
       end
     end
   end
-  # context 'editor logs in' do
-  #   before do
-  #     visit new_user_session_path
-  #     fill_in 'user_email', with: editor.email
-  #     fill_in 'user_password', with: editor.password
-  #     click_button('Anmelden')
-  #   end
-  #   describe 'editor creates an entry' do
-  #     before do
-  #       visit new_entry_path
-  #       fill_in 'kennzahl', with: '666'
-  #       click_button('Speichern')
-  #     end
-  #     it 'shows the right error-message' do #Bug #4
-  #       pending('I do not get an editor logged in')
-  #       expect(page).to have_content('as editor you are not allowed to create entries for other users')
-  #       save_and_open_page
-  #     end
-  #   end
-  # end
 end

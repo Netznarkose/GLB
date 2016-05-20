@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 describe "user profile functionality" do
-  context "none logged in user" do
-    it "should not be able to edit profile and get redirected to root path" do
+  context "non-logged in user" do
+    it "can not visit edit-template and get redirected to root path" do
       visit edit_profile_path
-      expect(current_path).to eq(new_user_session_path)
+      expect(current_path).to eq(root_path)
     end
   end
   context "logged in users" do
