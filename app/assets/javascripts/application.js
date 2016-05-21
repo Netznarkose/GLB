@@ -18,7 +18,8 @@
 var CKEDITOR_BASEPATH = '/ckeditor/';
 
 var count = 0;
-var pages = ["page0", "page1", "page2", "page3", "page4"];
+var pages = ["page0", "page1", "page2", "page3", "page4", "page5"];
+var page_titles = ["Seite 1 (oben)", "Seite 1 (mitte)", "Seite 1 (unten)", "Seite 2 (oben)", "Seite 2 (mitte)", "Seite 2 (unten)",];
 
 function back_first_switch() {
   count = 0;
@@ -35,8 +36,8 @@ function back_switch() {
 }
 
 function forward_switch() {
-  if (count >= 4) {
-    count = 4;
+  if (count >= 5) {
+    count = 5;
   } else {
     count++;
   }
@@ -44,9 +45,9 @@ function forward_switch() {
 }
 
 function write_page_count() {
-  document.getElementById("page_count").innerHTML = "Seite " + (count + 1);
+  document.getElementById("page_count").innerHTML = page_titles[count];
 
-  for (var i = 0; i < 5; i++) {
+  for (var i = 0; i < 6; i++) {
     if (count == i) {
       document.getElementById(pages[i]).style.display = "block";
     } else {
