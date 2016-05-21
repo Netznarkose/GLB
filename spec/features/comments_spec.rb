@@ -1,33 +1,31 @@
 require 'spec_helper'
 
-describe 'comments management api' do
+describe 'comments management' do
   describe 'admin write a comment' do
-    let(:admin) { FactoryGirl.create(:admin) }
     let(:entry) { FactoryGirl.create(:entry) }
     let(:comment) { FactoryGirl.create(:comment) }
-    before(:each) do
+    before do
+      admin = FactoryGirl.create(:admin)
       visit new_user_session_path
       fill_in 'user_email', with: admin.email
       fill_in 'user_password', with: admin.password
       click_button('Anmelden')
     end
-    it 'displays a certain entry' do
-      visit entry_path(entry)
-      expect(page).to have_content('Kennungsdaten')
-    end
-    #edit
     it 'edits a comment' do
-      # writes a comment to be able to edit it
+      entry = FactoryGirl.create(:entry)
+      comment = FactoryGirl.create(:comment, comment: 'previous comment-content', entry_id: entry.id)
       visit entry_path(entry)
-      fill_in 'comment_comment', with: comment.comment
-      click_button('Speichern')
       # edits the comment
       within('.down_comments') do
         click_link('Bearbeiten')
       end
-      fill_in 'comment_comment', with: 'some changes in the comment'
+      within('.down_comments') do
+      end
+      # fill_in 'comment_comment', with: 'new comment-content'
+      fill_in '#comment_comment', with: 'fucking do it'
+      save_and_open_page
       click_button('Speichern')
-      expect(page).to have_content('some changes in the comment')
+      expect(page).to have_content('new comment-content')
     end
     #create
     it 'writes and saves a comment' do

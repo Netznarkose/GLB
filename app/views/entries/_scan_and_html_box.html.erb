@@ -1,13 +1,15 @@
 <% content_for :sidebar do %>
   <div class="well sidebar-nav">
     <ul class="nav nav-list">
-      <li class="nav-header">Scan der Originalseite</li>
+      <li class="nav-header">Kennungsdaten</li>
+    <% unless @entry.user_id.blank? %>
+      <span> Verfasser: <%= @entry.user.name %></span></br>
+    <% end %>
+    <% unless @entry.kennzahl.blank? %>
+      <span> Kennzahl: <%= @entry.kennzahl %></span></br>
+    <% end %>
+      <span> Freigeschaltet: <%= @entry.freigeschaltet %></span>
       <li>
-        <% pages = to_scan_pages(@entry.kennzahl) %>
-        <%= link_to "Seite #{pages[0]} anzeigen", "http://buddhismus-lexikon.eu:2001/SBDJ-Original-JPGs/SBDJ_Seite_#{pages[0]}.jpg", :target => "_blank" %>
-      </li>
-      <li>
-        <%= link_to "Seite #{pages[1]} anzeigen", "/SBDJ-Original-JPGs/SBDJ_Seite_#{pages[1]}.jpg", :target => "_blank" %>
       </li>
       <li class="nav-header">Frühere Eintragsversionen</li>
       <% if @entry.entry_docs.present? %>
