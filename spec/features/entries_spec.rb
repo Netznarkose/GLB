@@ -52,7 +52,7 @@ describe 'entries management' do
         visit entry_path(unpublished_entry)
       end
       it 'show the scans' do
-        expect(page).to have_content("Scan")
+        expect(page).to have_selector('#page0')
       end
     end
     context 'published entries' do
