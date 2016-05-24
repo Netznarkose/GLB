@@ -30,7 +30,6 @@ class EntriesController < ApplicationController
   # GET /entries/1
   # GET /entries/1.json
   def show
-    # binding.pry
     build_entry_comment
     respond_to do |format|
       format.html # show.html.erb
