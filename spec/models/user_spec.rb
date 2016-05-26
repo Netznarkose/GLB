@@ -29,21 +29,21 @@ describe User do
 
   context 'if we delete a user' do
     let(:admin) { FactoryGirl.create(:admin) }
-    let(:superadmin) { FactoryGirl.create(:superadmin) }
+    let(:ulrich_appel) { FactoryGirl.create(:admin, email: 'ulrich.apel@uni-tuebingen.de')}
 
     it "does not delete the corresponding entries" do
-      superadmin
+      ulrich_appel 
       admin.entries << FactoryGirl.create(:entry)
       admin.destroy # model level
       expect(Entry.count).to eq(1)
     end
-    it "should assign all corresponding entries to superadmin" do
-      superadmin
+    it "should assign all corresponding entries to ulrich appel" do
+      ulrich_appel 
       admin.entries << FactoryGirl.create(:entry)
       entry = admin.entries.first
       admin.destroy 
       entry.reload
-      expect(entry.user).to eq(superadmin)
+      expect(entry.user).to eq(ulrich_appel)
     end
   end
 end

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe UsersController, type: :controller do
-  let(:superadmin) { FactoryGirl.create(:superadmin) }
+  let(:ulrich_appel) { FactoryGirl.create(:admin, email: 'ulrich.apel@uni-tuebingen.de')}
   let(:admin) { FactoryGirl.create(:admin) }
   let(:chiefeditor) { FactoryGirl.create(:chiefeditor) }
   let(:editor) { FactoryGirl.create(:editor) }
@@ -89,7 +89,7 @@ describe UsersController, type: :controller do
   describe 'DELETE destroy' do
     before do
       user
-      superadmin
+      ulrich_appel 
     end
     context 'as admin' do
       it 'I can delete users and get redirected to users index' do
