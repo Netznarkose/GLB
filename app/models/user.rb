@@ -10,17 +10,16 @@ class User < ActiveRecord::Base
   validates :name, presence: true
   validates :email, presence: true
 
-  # after_destroy :assign_remaining_entries_to_superadmin
+  after_destroy :assign_remaining_entries_to_ulrich_appel
 
-  scope :allowed_for_entries, ->{ where( role: ['superadmin', 'admin', 'editor', 'chiefeditor', 'commentator']) }
+  scope :allowed_for_entries, ->{ where( role: ['admin', 'editor', 'chiefeditor', 'commentator']) }
 
 
 
 
   def admin?
-    role == "admin" || role == 'superadmin'
-  end
-
+    role == "admin" 
+  end 
   def chief_editor?
     role == "chiefeditor"
   end
@@ -42,8 +41,8 @@ class User < ActiveRecord::Base
     self.entries.where("japanische_umschrift LIKE ? OR kanji LIKE ? OR namenskuerzel = ? OR kennzahl = ? OR romaji_order LIKE ?", "%#{query}%", "%#{query}%", "#{query}", "#{query}", "%#{query}%")
   end
 
-  def assign_remaining_entries_to_superadmin 
-    super_admin = User.find_by_role('superadmin')
+  def assign_remaining_entries_to_ulrich_appel 
+    super_admin = User.find_by_email('ulrich.apel@uni-tuebingen.de')
     super_admin.entries << self.entries
   end
 end
