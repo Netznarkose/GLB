@@ -15,7 +15,6 @@
 //= require turbolinks
 //= require ckeditor/init
 //= require_tree .
-var x = y;
 
 var count = 0;
 var pages = ["page0", "page1", "page2", "page3", "page4", "page5"];
