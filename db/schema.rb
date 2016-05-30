@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160526091454) do
+ActiveRecord::Schema.define(version: 20160530143650) do
 
   create_table "ckeditor_assets", force: :cascade do |t|
     t.string   "data_file_name",    limit: 255, null: false
@@ -38,37 +38,40 @@ ActiveRecord::Schema.define(version: 20160526091454) do
   end
 
   create_table "entries", force: :cascade do |t|
-    t.string   "namenskuerzel",                   limit: 255
-    t.string   "kennzahl",                        limit: 255
-    t.string   "spaltenzahl",                     limit: 255
-    t.string   "japanische_umschrift",            limit: 255
-    t.string   "kanji",                           limit: 255
-    t.string   "pali",                            limit: 255
-    t.string   "sanskrit",                        limit: 255
-    t.string   "chinesisch",                      limit: 255
-    t.string   "tibetisch",                       limit: 255
-    t.string   "koreanisch",                      limit: 255
-    t.string   "weitere_sprachen",                limit: 255
-    t.string   "alternative_japanische_lesungen", limit: 255
-    t.string   "schreibvarianten",                limit: 255
-    t.string   "deutsche_uebersetzung",           limit: 255
-    t.string   "lemma_art",                       limit: 255
-    t.string   "jahreszahlen",                    limit: 255
+    t.string   "namenskuerzel",                           limit: 255
+    t.string   "kennzahl",                                limit: 255
+    t.string   "spaltenzahl",                             limit: 255
+    t.string   "japanische_umschrift",                    limit: 255
+    t.string   "kanji",                                   limit: 255
+    t.string   "pali",                                    limit: 255
+    t.string   "sanskrit",                                limit: 255
+    t.string   "chinesisch",                              limit: 255
+    t.string   "tibetisch",                               limit: 255
+    t.string   "koreanisch",                              limit: 255
+    t.string   "weitere_sprachen",                        limit: 255
+    t.string   "alternative_japanische_lesungen",         limit: 255
+    t.string   "schreibvarianten",                        limit: 255
+    t.string   "deutsche_uebersetzung",                   limit: 255
+    t.string   "lemma_art",                               limit: 255
+    t.string   "jahreszahlen",                            limit: 255
     t.text     "uebersetzung"
     t.text     "quellen"
     t.text     "literatur"
     t.text     "eigene_ergaenzungen"
     t.text     "quellen_ergaenzungen"
     t.text     "literatur_ergaenzungen"
-    t.datetime "created_at",                                                  null: false
-    t.datetime "updated_at",                                                  null: false
+    t.datetime "created_at",                                                          null: false
+    t.datetime "updated_at",                                                          null: false
     t.integer  "user_id"
-    t.string   "page_reference",                  limit: 255
-    t.boolean  "freigeschaltet",                              default: false
-    t.string   "romaji_order",                    limit: 255
+    t.string   "page_reference",                          limit: 255
+    t.boolean  "freigeschaltet",                                      default: false
+    t.string   "romaji_order",                            limit: 255
     t.string   "japanische_umschrift_din"
     t.string   "lemma_in_katakana"
     t.string   "lemma_in_lateinbuchstaben"
+    t.string   "abweichende_kennzahl"
+    t.string   "japanischer_quelltext"
+    t.string   "japanischer_quelltext_bearbeitungsstand"
   end
 
   create_table "entry_docs", force: :cascade do |t|

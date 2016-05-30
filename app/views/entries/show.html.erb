@@ -82,6 +82,10 @@
       <dt class="label">Jahreszahlen</dt>
       <dd><%= @entry.jahreszahlen %></dd>
     <% end %>
+    <% unless @entry.abweichende_kennzahl.blank? %>
+      <dt class="label">Abweichende Kennzahl</dt>
+      <dd><%= @entry.abweichende_kennzahl %></dd>
+    <% end %>
   </div>
   <div class="funky_grey_seperator">
     <h4>Lemma-Schreibungen und -Aussprache</h4>
@@ -168,6 +172,14 @@
     <% unless @entry.literatur_ergaenzungen.blank? %>
       <dt class="label">Literatur Ergänzungen</dt>
       <dd><%= raw(@entry.literatur_ergaenzungen) %></dd>
+    <% end %>
+    <% unless @entry.japanischer_quelltext.blank? %>
+      <dt class="label">Japanischer Quelltext</dt>
+      <dd><%= @entry.japanischer_quelltext %></dd>
+    <% end %>
+    <% unless @entry.japanischer_quelltext_bearbeitungsstand.blank? %>
+      <dt class="label">Japanischer Quelltext Bearbeitungsstand</dt>
+      <dd><%= @entry.japanischer_quelltext_bearbeitungsstand %></dd>
     <% end %>
     </div>
   </div>

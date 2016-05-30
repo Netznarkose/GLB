@@ -7,7 +7,8 @@ class Entry < ActiveRecord::Base
                     :alternative_japanische_lesungen, :schreibvarianten, :deutsche_uebersetzung, 
                     :lemma_art, :jahreszahlen, :uebersetzung, :quellen, :literatur, :eigene_ergaenzungen, 
                     :quellen_ergaenzungen, :literatur_ergaenzungen, :page_reference, :romaji_order, 
-                    :lemma_in_katakana, :lemma_in_lateinbuchstaben, :user_id, :freigeschaltet]
+                    :lemma_in_katakana, :lemma_in_lateinbuchstaben, :user_id, :freigeschaltet, :abweichende_kennzahl, 
+                    :japanischer_quelltext, :japanischer_quelltext_bearbeitungsstand]
 
   belongs_to :user
   has_many :comments
