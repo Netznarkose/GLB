@@ -1,11 +1,8 @@
 require 'spec_helper'
 
 describe User do
-  let(:editor) { FactoryGirl.create(:editor) }
+  let!(:editor) { FactoryGirl.create(:editor) }
 
-  before do
-    editor
-  end
   it "should create a new instance of a user
   given valid attributes" do
     expect(editor).to be_valid
@@ -22,10 +19,15 @@ describe User do
     expect(editor).not_to be_valid
   end
 
-  # it "is invalid without password" do
-  #   editor.password = nil
-  #   expect(editor).not_to be_valid
-  # end
+  it "is invalid without password" do
+    editor.password = nil
+    expect(editor).not_to be_valid
+  end
+
+  it "is invalid without role" do
+    editor.role = nil
+    expect(editor).not_to be_valid
+  end
 
   context 'if we delete a user' do
     let(:admin) { FactoryGirl.create(:admin) }

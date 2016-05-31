@@ -7,8 +7,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable,
          :recoverable, :rememberable, :trackable
 
-  validates :name, presence: true
-  validates :email, presence: true
+  validates :name, :email, :password, :role, presence: true
 
   after_destroy :assign_remaining_entries_to_ulrich_appel
 
