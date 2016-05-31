@@ -7,6 +7,8 @@
     </div>
   <% end %>
 
+          <%= content_tag :div, id: 'kennzahl', data: {kennzahl: @entry.kennzahl.to_i } do %>
+          <% end %>
   <% unless @entry.freigeschaltet %>
     <div class="scan_container">
       <div class="funky_grey_seperator">

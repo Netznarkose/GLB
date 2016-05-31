@@ -16,6 +16,12 @@
 //= require ckeditor/init
 //= require_tree .
 
+$(document).ready(function () {
+  var whatever = document.getElementById("kennzahl").dataset.kennzahl;
+console.log("something", whatever);
+});
+// var whatever = document.getElementById("kennzahl").dataset.kennzahl;
+// console.log("something", whatever);
 var count = 0;
 var pages = ["page0", "page1", "page2", "page3", "page4", "page5"];
 var page_titles = ["Seite 1 (oben)", "Seite 1 (mitte)", "Seite 1 (unten)", "Seite 2 (oben)", "Seite 2 (mitte)", "Seite 2 (unten)",];
