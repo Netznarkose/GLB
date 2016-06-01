@@ -5,9 +5,11 @@ class User < ActiveRecord::Base
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable,
-         :recoverable, :rememberable, :trackable
-
-  validates :name, :email, :password, :role, presence: true
+         :recoverable, :rememberable, :trackable, :validatable 
+          
+  # validates :email, :password, presence: true 
+  # divise-validatable validates presence of email and password
+  validates :name, :role, presence: true
 
   after_destroy :assign_remaining_entries_to_ulrich_appel
 
