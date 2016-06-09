@@ -1,49 +1,38 @@
 class User < ActiveRecord::Base
   has_many :entries
   has_many :comments
-  # Include default devise modules. Others available are:
-  # :token_authenticatable, :confirmable,
-  # :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable,
-         :recoverable, :rememberable, :trackable, :validatable 
-          
-  # validates :email, :password, presence: true 
+         :recoverable, :rememberable, :trackable, :validatable
+
   # divise-validatable validates presence of email and password
   validates :name, :role, presence: true
 
   after_destroy :assign_remaining_entries_to_ulrich_appel
 
-  scope :allowed_for_entries, ->{ where( role: ['admin', 'editor', 'chiefeditor', 'commentator']) }
-
-
-
+  scope :allowed_for_entries, -> { where(role: ['admin', 'editor', 'chiefeditor', 'commentator']) }
 
   def admin?
-    role == "admin" 
-  end 
+    role == 'admin'
+  end
+
   def chief_editor?
-    role == "chiefeditor"
+    role == 'chiefeditor'
   end
 
   def editor?
-    role == "editor"
+    role == 'editor'
   end
 
   def commentator?
-    role == "commentator"
+    role == 'commentator'
   end
 
   def guest?
-    role == "guest"
+    role == 'guest'
   end
 
-
-  def search_entries(query)
-    self.entries.where("japanische_umschrift LIKE ? OR kanji LIKE ? OR namenskuerzel = ? OR kennzahl = ? OR romaji_order LIKE ?", "%#{query}%", "%#{query}%", "#{query}", "#{query}", "%#{query}%")
-  end
-
-  def assign_remaining_entries_to_ulrich_appel 
+  def assign_remaining_entries_to_ulrich_appel
     super_admin = User.find_by_email('ulrich.apel@uni-tuebingen.de')
-    super_admin.entries << self.entries
+    super_admin.entries << entries
   end
 end
