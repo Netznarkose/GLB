@@ -4,6 +4,7 @@ describe ProfilesController, type: :controller do
   let(:admin) { FactoryGirl.create(:admin) }
   let(:editor) { FactoryGirl.create(:editor) }
   let(:user) { FactoryGirl.create(:user) }
+  let(:guest) { FactoryGirl.create(:guest) }
 
   describe 'get edit' do
     context 'as logged-in user' do
@@ -29,7 +30,7 @@ describe ProfilesController, type: :controller do
       context 'with valid attributes' do
         before do
           put :update, id: admin.id, user: { name: 'different_editor name',
-                                              email: 'different_editor@user.com' }
+                                             email: 'different_editor@user.com' }
           admin.reload
         end
         it 'I can update my name & email' do
@@ -61,6 +62,17 @@ describe ProfilesController, type: :controller do
       end
     end
     context 'as not logged-in user' do
+      it 'I can not update somebody else\'s profile' do
+        put :update, id: editor.id, user: { name: 'different_editor name' }
+        editor.reload
+        expect(editor.name).not_to eq('different_editor name')
+        expect(editor.name).to eq(editor.name)
+      end
+    end
+    context 'as guest' do
+      before do
+        sign_in guest
+      end
       it 'I can not update somebody else\'s profile' do
         put :update, id: editor.id, user: { name: 'different_editor name' }
         editor.reload
