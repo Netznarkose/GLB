@@ -1,5 +1,6 @@
 class EntryVersionsController < ApplicationController
   before_action :find_current_entry, only: [:index, :show]
+
   def index
     @entry_versions_all = []
     if @entry.versions.size > 1
@@ -10,11 +11,12 @@ class EntryVersionsController < ApplicationController
       end
     end
   end
+
   def show
     @version_number = params[:id].to_i
-    @entry_papertrail_version  = @entry.versions[- @version_number]
-    @entry_created_at = @entry_papertrail_version.created_at
-    @entry_papertrail_version_reified = @entry_papertrail_version.reify
+    entry_papertrail_version = @entry.versions[- @version_number]
+    @entry_created_at = entry_papertrail_version.created_at
+    @entry_papertrail_version_reified = entry_papertrail_version.reify
   end
 
   private

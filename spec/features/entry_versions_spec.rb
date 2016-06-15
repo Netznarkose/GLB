@@ -13,7 +13,7 @@ describe 'entry_versions management api' do
   end
 
   before(:each) do
-  # edits an entry two times' do
+    # edits an entry two times' do
     visit edit_entry_path(entry)
     fill_in 'entry_lemma_in_katakana', with: 'edit for the first time'
     click_button('Speichern')
@@ -21,12 +21,12 @@ describe 'entry_versions management api' do
     fill_in 'entry_lemma_in_katakana', with: 'edit for the second time'
     click_button('Speichern')
   end
-    #edit
+  # edit
   it 'admin visits the version index' do
     visit entry_entry_versions_path(entry)
     expect(page).to have_content('Versions Index')
-    #proofs that two Versions are displayed
-    expect(page).to have_css('h6', :count => 2) 
+    # proofs that two Versions are displayed
+    expect(page).to have_css('h6', count: 2)
   end
   it 'admin visits a version show template' do
     visit entry_entry_versions_path(entry)
