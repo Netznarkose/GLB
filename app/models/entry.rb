@@ -2,13 +2,23 @@ class Entry < ActiveRecord::Base
   require 'csv'
   has_paper_trail
 
-  ALLOWED_PARAMS = [:namenskuerzel, :kennzahl, :spaltenzahl, :japanische_umschrift, :japanische_umschrift_din, 
-                    :kanji, :pali, :sanskrit, :chinesisch, :tibetisch, :koreanisch, :weitere_sprachen, 
-                    :alternative_japanische_lesungen, :schreibvarianten, :deutsche_uebersetzung, 
-                    :lemma_art, :jahreszahlen, :uebersetzung, :quellen, :literatur, :eigene_ergaenzungen, 
-                    :quellen_ergaenzungen, :literatur_ergaenzungen, :page_reference, :romaji_order, 
-                    :lemma_in_katakana, :lemma_in_lateinbuchstaben, :user_id, :freigeschaltet, :abweichende_kennzahl, 
-                    :japanischer_quelltext, :japanischer_quelltext_bearbeitungsstand]
+  ALLOWED_PARAMS = [:namenskuerzel, :kennzahl,
+                    :spaltenzahl, :japanische_umschrift,
+                    :japanische_umschrift_din,
+                    :kanji, :pali, :sanskrit,
+                    :chinesisch, :tibetisch,
+                    :koreanisch, :weitere_sprachen,
+                    :alternative_japanische_lesungen,
+                    :schreibvarianten, :deutsche_uebersetzung,
+                    :lemma_art, :jahreszahlen,
+                    :uebersetzung, :quellen, :literatur,
+                    :eigene_ergaenzungen, :quellen_ergaenzungen,
+                    :literatur_ergaenzungen, :page_reference,
+                    :romaji_order, :lemma_in_katakana,
+                    :lemma_in_lateinbuchstaben, :user_id,
+                    :freigeschaltet, :abweichende_kennzahl,
+                    :japanischer_quelltext,
+                    :japanischer_quelltext_bearbeitungsstand]
 
   belongs_to :user
   has_many :comments
@@ -21,12 +31,17 @@ class Entry < ActiveRecord::Base
 
   before_save :cleanup
 
-  scope :published, -> { where( freigeschaltet: true ) }
-
+  scope :published, -> { where(freigeschaltet: true) }
 
   def self.search(query)
-    if query 
-      Entry.where("japanische_umschrift LIKE ? OR kanji LIKE ? OR namenskuerzel = ? OR kennzahl = ? OR romaji_order LIKE ? OR uebersetzung LIKE ?", "%#{query}%", "%#{query}%", "#{query}", "#{query}", "%#{query}%", "%#{query}%")
+    if query
+      Entry.where("japanische_umschrift LIKE ? OR
+        kanji LIKE ? OR
+        namenskuerzel = ? OR
+        kennzahl = ? OR
+        romaji_order LIKE ? OR
+        uebersetzung LIKE ?",
+        "%#{query}%", "%#{query}%", "#{query}", "#{query}", "%#{query}%", "%#{query}%")
     end
   end
 
@@ -37,18 +52,37 @@ class Entry < ActiveRecord::Base
     end
   end
 
-  private
- def group_lemma_schreibungen_und_aussprachen
-   if self.japanische_umschrift.blank? && self.kanji.blank? && self.chinesisch.blank? && self.tibetisch.blank? && self.koreanisch.blank? && self.pali.blank? && self.sanskrit.blank? && self.weitere_sprachen.blank? && self.alternative_japanische_lesungen.blank? && self.schreibvarianten.blank? 
-      self.errors[:base] = "Mindestens ein Feld der Kategorie 'Lemma-Schreibungen und -Aussprachen' muss ausgefüllt sein!"
-    end
-  end
- def group_uebersetzungen_quellenangaben_literatur_und_ergaenzungen
-   if self.deutsche_uebersetzung.blank? && self.uebersetzung.blank? && self.quellen.blank? && self.literatur.blank? && self.eigene_ergaenzungen.blank? && self.quellen_ergaenzungen.blank? && self.literatur_ergaenzungen.blank? 
-     self.errors[:base] = "Mindestens ein Feld der Kategorie 'Uebersetzungen , Quellenangaben, Literatur und Ergaenzungen' muss ausgefüllt sein!"
+  def group_lemma_schreibungen_und_aussprachen
+    if japanische_umschrift.blank? &&
+        kanji.blank? &&
+        chinesisch.blank? &&
+        tibetisch.blank? &&
+        koreanisch.blank? &&
+        pali.blank? &&
+        sanskrit.blank? &&
+        weitere_sprachen.blank? &&
+        alternative_japanische_lesungen.blank? &&
+        schreibvarianten.blank?
+      errors[:base] = 'Mindestens ein Feld der Gruppe '\
+        "'Lemma-Schreibungen und -Aussprachen' muss ausgefüllt sein!"
     end
   end
 
+  def group_uebersetzungen_quellenangaben_literatur_und_ergaenzungen
+    if deutsche_uebersetzung.blank? &&
+        uebersetzung.blank? &&
+        quellen.blank? &&
+        literatur.blank? &&
+        eigene_ergaenzungen.blank? &&
+        quellen_ergaenzungen.blank? &&
+        literatur_ergaenzungen.blank?
+      errors[:base] = 'Mindestens ein Feld der Gruppe '\
+      "'Uebersetzungen , Quellenangaben, Literatur und Ergaenzungen' "\
+      "muss ausgefüllt sein!"
+    end
+  end
+
+  private
 
   def self.to_csv
     CSV.generate(:col_sep=>"\t", :quote_char => '"') do |csv|

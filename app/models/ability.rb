@@ -8,41 +8,41 @@ class Ability
     if user.admin?
       can :manage, :all
     elsif user.chief_editor?
-      can :index, User 
-      can :create, Entry # create for herself and somebody else 
-      can :update, Entry 
-      can :destroy, Entry 
-      can :show, Entry 
-      can :new, Entry 
-      can :edit, Entry 
-      can :index, Entry 
+      can :index, User
+      can :create, Entry # create for herself and somebody else
+      can :update, Entry
+      can :destroy, Entry
+      can :show, Entry
+      can :new, Entry
+      can :edit, Entry
+      can :index, Entry
       can :create, Comment
       can :update, Comment
-      can :destroy, Comment 
-      can :edit, Comment 
+      can :destroy, Comment
+      can :edit, Comment
     elsif user.editor?
-      can :index, User 
-      can :create, Entry 
-      can :update, Entry 
-      can :destroy, Entry 
-      can :show, Entry 
-      can :new, Entry 
-      can :edit, Entry 
-      can :index, Entry 
+      can :index, User
+      can :create, Entry
+      can :update, Entry
+      can :destroy, Entry
+      can :show, Entry
+      can :new, Entry
+      can :edit, Entry
+      can :index, Entry
       can :create, Comment
       can :update, Comment
-      can :destroy, Comment 
-      can :edit, Comment 
+      can :destroy, Comment
+      can :edit, Comment
     elsif user.commentator?
-      can :show, Entry 
-      can :index, Entry 
+      can :show, Entry
+      can :index, Entry
       can :create, Comment
       can :update, Comment
-      can :destroy, Comment 
-      can :edit, Comment 
+      can :destroy, Comment
+      can :edit, Comment
     else
-      can :show, Entry 
-      can :index, Entry 
+      can :show, Entry
+      can :index, Entry
     end
 
     # The first argument to `can` is the action you are giving the user
