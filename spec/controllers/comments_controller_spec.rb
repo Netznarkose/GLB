@@ -8,7 +8,6 @@ describe CommentsController, type: :controller do
   let(:commentator) { FactoryGirl.create(:commentator) }
   let(:user) { FactoryGirl.create(:user) }
 
-
   describe 'GET edit' do
     subject { get :edit, entry_id: comment.entry_id, id: comment.id }
     it_behaves_like 'something that admin, chiefeditor, editor and commentator can access'
@@ -45,7 +44,7 @@ describe CommentsController, type: :controller do
     end
     context 'as chiefeditor' do
       before do
-        sign_in chiefeditor 
+        sign_in chiefeditor
       end
       context 'with valid attributes' do
         it 'creates a comment' do
@@ -73,7 +72,7 @@ describe CommentsController, type: :controller do
     end
     context 'as editor' do
       before do
-        sign_in editor 
+        sign_in editor
       end
       context 'with valid attributes' do
         it 'creates a comment' do
@@ -101,7 +100,7 @@ describe CommentsController, type: :controller do
     end
     context 'as commentator' do
       before do
-        sign_in commentator 
+        sign_in commentator
       end
       context 'with valid attributes' do
         it 'creates a comment' do
@@ -141,7 +140,7 @@ describe CommentsController, type: :controller do
   describe 'GET update' do
     context 'as admin' do
       before do
-        sign_in admin 
+        sign_in admin
       end
       context 'own comments' do
         before do
@@ -158,7 +157,7 @@ describe CommentsController, type: :controller do
     end
     context 'as chiefeditor' do
       before do
-        sign_in chiefeditor 
+        sign_in chiefeditor
       end
       context 'own comments' do
         before do
@@ -175,7 +174,7 @@ describe CommentsController, type: :controller do
     end
     context 'as editor' do
       before do
-        sign_in editor 
+        sign_in editor
       end
       context 'own comments' do
         before do
@@ -192,7 +191,7 @@ describe CommentsController, type: :controller do
     end
     context 'as commentator' do
       before do
-        sign_in commentator 
+        sign_in commentator
       end
       context 'own comments' do
         before do
@@ -208,8 +207,8 @@ describe CommentsController, type: :controller do
       end
     end
     context 'as guest' do
-    before do
-    end
+      before do
+      end
       it 'does not updates a comment' do
         put :update, entry_id: comment.entry_id, id: comment.id,
           comment: { comment: 'hey some changes in the content' }
@@ -254,7 +253,7 @@ describe CommentsController, type: :controller do
     end
     context 'as chiefeditor' do
       before do
-        sign_in chiefeditor 
+        sign_in chiefeditor
       end
       context 'own comments' do
         before do
@@ -285,7 +284,7 @@ describe CommentsController, type: :controller do
     end
     context 'as editor' do
       before do
-        sign_in editor 
+        sign_in editor
       end
       context 'own comments' do
         before do
@@ -316,7 +315,7 @@ describe CommentsController, type: :controller do
     end
     context 'as commentator' do
       before do
-        sign_in commentator 
+        sign_in commentator
       end
       context 'own comments' do
         before do
@@ -359,4 +358,3 @@ describe CommentsController, type: :controller do
     end
   end
 end
-
