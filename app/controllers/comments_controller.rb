@@ -6,7 +6,8 @@ class CommentsController < ApplicationController
   before_action :protect_from_editors_commentators_and_guests_who_try_to_delete_somebody_elses_comment, only: :destroy
 
   def edit
-    # render 'entries/show'
+    @renders_edit_comment_partial = true
+    render 'entries/show'
   end
 
   def create
