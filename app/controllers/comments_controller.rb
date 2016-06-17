@@ -15,9 +15,10 @@ class CommentsController < ApplicationController
     @comment.user_id = current_user.id
     respond_to do |format|
       if @comment.save
-        format.html { redirect_to entry_path(@entry) }
-        format.json { render :show, status: :created, location: @comment }
+        format.html { redirect_to entry_path(@entry), notice: 'Kommentar erfolgreich erstellt.' }
+        format.json { render :show, status: :created, location: @comment } # ????
       else
+        flash[:notice] = 'Kommentar konnte nicht erstellt werden.'
         format.html { render 'entries/show' }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
@@ -27,8 +28,8 @@ class CommentsController < ApplicationController
   def update
     respond_to do |format|
       if @comment.update_attributes(comment_params)
-        format.html { redirect_to entry_path(@entry) }
-        format.json { render :show, status: :created, location: @comment }
+        format.html { redirect_to entry_path(@entry), notice: 'Kommentar erfolgreich bearbeitet.' }
+        format.json { head :no_content }      
       else
         format.html { render 'entries/show' }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
