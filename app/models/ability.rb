@@ -17,7 +17,9 @@ class Ability
       can :edit, Entry
       can :index, Entry
       can :create, Comment
-      can :update, Comment
+      can :update, Comment do |comment|
+        comment.try(:user) == user
+      end
       can :destroy, Comment
       can :edit, Comment
     elsif user.editor?
@@ -30,15 +32,23 @@ class Ability
       can :edit, Entry
       can :index, Entry
       can :create, Comment
-      can :update, Comment
-      can :destroy, Comment
+      can :update, Comment do |comment|
+        comment.try(:user) == user
+      end
+      can :destroy, Comment do |comment|
+        comment.try(:user) == user
+      end
       can :edit, Comment
     elsif user.commentator?
       can :show, Entry
       can :index, Entry
       can :create, Comment
-      can :update, Comment
-      can :destroy, Comment
+      can :update, Comment do |comment|
+        comment.try(:user) == user
+      end
+      can :destroy, Comment do |comment|
+        comment.try(:user) == user
+      end
       can :edit, Comment
     else
       can :show, Entry

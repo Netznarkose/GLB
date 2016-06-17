@@ -171,6 +171,18 @@ describe CommentsController, type: :controller do
           expect(comment.comment).to eq('hey some changes in the content')
         end
       end
+      context 'other users comments' do
+        before do
+          comment
+          comment.update(user_id: editor.id)
+        end
+        it 'can not be updated' do
+          put :update, entry_id: comment.entry_id, id: comment.id,
+            comment: { comment: 'hey some changes in the content' }
+          comment.reload
+          expect(comment.comment).not_to eq('hey some changes in the content')
+        end
+      end
     end
     context 'as editor' do
       before do
@@ -308,8 +320,8 @@ describe CommentsController, type: :controller do
           expect{
             delete :destroy, entry_id: comment.entry_id, id: comment.id
           }.to change(Comment, :count).by(0)
-          expect(response).to redirect_to(entry_path(comment.entry))
-          expect(flash[:notice]).to eq('editors are not allowed to update somebody else\s comment')
+          expect(response).to redirect_to(root_path)
+          expect(flash[:notice]).to eq('Access denied!')
         end
       end
     end
@@ -339,8 +351,8 @@ describe CommentsController, type: :controller do
           expect{
             delete :destroy, entry_id: comment.entry_id, id: comment.id
           }.to change(Comment, :count).by(0)
-          expect(response).to redirect_to(entry_path(comment.entry))
-          expect(flash[:notice]).to eq('commentators are not allowed to update somebody else\s comment')
+          expect(response).to redirect_to(root_path)
+          expect(flash[:notice]).to eq('Access denied!')
         end
       end
     end
