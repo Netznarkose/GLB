@@ -8,7 +8,7 @@ class ProfilesController < ApplicationController
     if current_user.update(user_params)
       redirect_to edit_profile_path, notice: 'profile updated'
     else
-      redirect_to edit_profile_path, notice: 'error'
+      redirect_to edit_profile_path, notice: 'Access denied!'
     end
   end
 

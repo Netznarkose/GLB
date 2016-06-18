@@ -8,14 +8,16 @@ describe ProfilesController, type: :controller do
 
   describe 'get edit' do
     context 'as logged-in user' do
-      it 'I can render the edit-template' do
+      before do
         sign_in editor
+      end
+      it 'renders the view' do
         get :edit, id: editor.id
         expect(response).to render_template(:edit)
       end
     end
     context 'as non-logged-in user' do
-      it 'I can not render the edit-template' do
+      it 'does not render the view' do
         get :edit, id: editor.id
         expect(response).not_to render_template(:edit)
       end
@@ -33,11 +35,11 @@ describe ProfilesController, type: :controller do
                                              email: 'different_editor@user.com' }
           admin.reload
         end
-        it 'I can update my name & email' do
+        it 'updates name & email' do
           expect(admin.name).to eq('different_editor name')
           expect(admin.email).to eq('different_editor@user.com')
         end
-        it 'I get a confirmation-message' do
+        it 'returns a confirmation-message' do
           expect(flash[:notice]).to eq('profile updated')
         end
       end
@@ -46,15 +48,19 @@ describe ProfilesController, type: :controller do
           put :update, id: editor.id, user: { email: '' }
           editor.reload
         end
-        it 'I get redirected to edit-template' do
-          expect(response).to be_redirect
+        it 'redirects to the edit-view' do
+          expect(response).not_to render_template(:edit)
         end
-        it 'I get an error-message' do
-          expect(flash[:notice]).to eq('error')
+        it 'returns an error-message' do
+          expect(flash[:notice]).to eq('Access denied!')
         end
       end
+    end
+    context 'as logged-in user' do
+      before do
+        sign_in admin
+      end
       it 'I can not update update somebody else\'s profile' do
-        editor
         put :update, id: editor.id, user: { name: 'different_editor name' }
         editor.reload
         expect(editor.name).not_to eq('different_editor name')
