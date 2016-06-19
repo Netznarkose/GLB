@@ -7,20 +7,20 @@ describe 'entries management' do
 
   describe 'entries authorization' do
     context 'authenticated user' do
-        before do
-          FactoryGirl.create(:user, email: 'user@example.com', password: 'password', name: 'user_name') 
-          visit new_user_session_path 
-          fill_in "user_email", with: 'user@example.com' 
-          fill_in "user_password", with: 'password' 
-          click_button('Anmelden')
-        end
+      before do
+        user = FactoryGirl.create(:user)
+        visit new_user_session_path
+        fill_in 'user_email', with: user.email
+        fill_in 'user_password', with: user.password
+        click_button('Anmelden')
+      end
       context 'visits the entries index with a valid entry' do
         before do
-          FactoryGirl.create(:entry, uebersetzung: 'funky translation') 
+          FactoryGirl.create(:entry, uebersetzung: 'funky translation')
           visit entries_path
         end
         it 'gets the template title' do
-          expect(page).to have_content("Das Große Lexikon des Buddhismus")
+          expect(page).to have_content('Das Große Lexikon des Buddhismus')
         end
         it "and sees the field 'uebersetzungsfeld' of the entry" do
           expect(page).to have_content('funky translation')
@@ -30,11 +30,11 @@ describe 'entries management' do
     context 'non-logged in user' do
       context 'visits the entries index with a valid entry' do
         before do
-          FactoryGirl.create(:entry, uebersetzung: 'funky translation') 
+          FactoryGirl.create(:entry, uebersetzung: 'funky translation')
           visit entries_path
         end
         it 'gets the template title' do
-          expect(page).to have_content("Das Große Lexikon des Buddhismus")
+          expect(page).to have_content('Das Große Lexikon des Buddhismus')
         end
         it "but does not sees the field 'uebersetzungsfeld'" do
           expect(page).not_to have_content('funky translation')
@@ -43,10 +43,10 @@ describe 'entries management' do
     end
     context 'unpublished entries' do
       before do
-        user = FactoryGirl.create(:user, role: 'admin') 
-        visit new_user_session_path 
-        fill_in "user_email", with: user.email 
-        fill_in "user_password", with: user.password 
+        user = FactoryGirl.create(:user, role: 'admin')
+        visit new_user_session_path
+        fill_in 'user_email', with: user.email
+        fill_in 'user_password', with: user.password
         click_button('Anmelden')
         unpublished_entry = FactoryGirl.create(:entry, freigeschaltet: false)
         visit entry_path(unpublished_entry)
@@ -61,7 +61,7 @@ describe 'entries management' do
         visit entry_path(published_entry)
       end
       it 'do not show the scans' do
-        expect(page).not_to have_content("Scan")
+        expect(page).not_to have_content('Scan')
       end
     end
   end

@@ -12,6 +12,7 @@ describe 'comments management' do
       click_button('Anmelden')
     end
     it 'edits a comment' do
+      pending('todo')
       entry = FactoryGirl.create(:entry)
       comment = FactoryGirl.create(:comment, comment: 'previous comment-content', entry_id: entry.id)
       visit entry_path(entry)

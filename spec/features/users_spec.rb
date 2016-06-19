@@ -3,13 +3,13 @@ require 'spec_helper'
 describe "users management" do
   describe 'authentication' do
     it 'successfull login' do
-      FactoryGirl.create(:user, email: 'user@example.com', password: 'password') #test setup (place test-data in the test to have all information in place) 
-      visit root_path # action
+      user = FactoryGirl.create(:user) 
+      visit root_path 
       click_link('Login')
-      fill_in "user_email", with: 'user@example.com' 
-      fill_in "user_password", with: 'password' 
+      fill_in "user_email", with: user.email 
+      fill_in "user_password", with: user.password 
       click_button('Anmelden')
-      expect(page).to have_content("Erfolgreich angemeldet.") # expectation
+      expect(page).to have_content("Erfolgreich angemeldet.") 
     end
     it 'unsuccessfull login' do
       visit root_path 
@@ -20,12 +20,13 @@ describe "users management" do
       expect(page).to have_content("E-Mail-Adresse oder Passwort ist ungültig.")
     end
     it 'logout' do
-      FactoryGirl.create(:user, email: 'user@example.com', password: 'password', name: 'user_name') 
-      visit new_user_session_path 
-      fill_in "user_email", with: 'user@example.com' 
-      fill_in "user_password", with: 'password' 
+      user = FactoryGirl.create(:user) 
+      visit root_path 
+      click_link('Login')
+      fill_in "user_email", with: user.email 
+      fill_in "user_password", with: user.password 
       click_button('Anmelden')
-      click_link('user_name')
+      click_link(user.name)
       click_link "Abmelden" 
       expect(page).to have_content("Erfolgreich abgemeldet.")
     end

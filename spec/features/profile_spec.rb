@@ -29,12 +29,12 @@ describe "user profile functionality" do
       expect(page).to have_field('user_name', :with => 'Michael Jackson')
       expect(page).to have_field('user_email', :with => 'michael_jackson@gmail.com')
     end
-    it "should get an error-message when input is faulty" do
+    it "should get an error-message when input is not valid" do
       visit edit_profile_path
       fill_in "user_name", with: "Michael Jackson" 
       fill_in "user_email", with: ""
       click_button('Speichern')
-      expect(page).to have_content('error')
+      expect(page).to have_content('Access denied!')
     end
   end
   context "not logged in users" do
