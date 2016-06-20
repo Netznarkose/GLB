@@ -1,9 +1,6 @@
 class EntriesController < ApplicationController
   load_and_authorize_resource
   before_action :build_entry_comment, only: :show
-  # before_action :protect_from_editors_who_try_to_update_an_entry_for_somebodyelse, only: :update
-  before_action :protect_from_editors_who_try_to_delete_an_entry_of_somebodyelse, only: :destroy
-
   helper_method :sort_column, :sort_direction
 
   # uncomment sḱip_before_filter to make entries visible; (preferably in connection with published filter)
@@ -55,7 +52,6 @@ class EntriesController < ApplicationController
   end
 
   def update
-    binding.pry
     respond_to do |format|
       if @entry.update_attributes(entry_params)
         format.html { redirect_to @entry, notice: "Eintrag erfolgreich editiert. #{undo_link}" }
@@ -67,11 +63,8 @@ class EntriesController < ApplicationController
     end
   end
 
-  # DELETE /entries/1
-  # DELETE /entries/1.json
   def destroy
     @entry.destroy
-
     respond_to do |format|
       format.html { redirect_to entries_url, notice: "Eintrag erfolgreich gelöscht. #{undo_link}" }
       format.json { head :no_content }
@@ -79,18 +72,6 @@ class EntriesController < ApplicationController
   end
 
   private
-
-  def protect_from_editors_who_try_to_update_an_entry_for_somebodyelse
-    if current_user.editor? && params[:entry][:user_id].to_i != current_user.id 
-      redirect_to @entry, notice: 'as editor you are not allowed to edit somebody else\'s entry'
-    end
-  end
-
-  def protect_from_editors_who_try_to_delete_an_entry_of_somebodyelse
-    if current_user.editor? && @entry.user_id != current_user.id #when user is an editor and creates an entry for somebody else
-      redirect_to @entry, notice: 'as editor you are not allowed to delete somebody else\'s entry'
-    end
-  end
 
   def build_entry_comment
     if current_user
@@ -122,5 +103,4 @@ class EntriesController < ApplicationController
   def sort_direction
     %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
   end
-
 end

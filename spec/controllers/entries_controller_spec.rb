@@ -224,11 +224,13 @@ describe EntriesController, type: :controller do
       end
       context 'own entry' do
         before do
-          put :update, id: entry.id, entry: { japanische_umschrift: 'some editing on my own entry', user_id: admin.id }
+          entry
+          entry.update(user_id: admin.id)
+          put :update, id: entry.id, entry: { japanische_umschrift: 'some editing on my entry' }
           entry.reload
         end
         it 'gets updated' do
-          expect(entry.japanische_umschrift).to eq('some editing on my own entry')
+          expect(entry.japanische_umschrift).to eq('some editing on my entry')
         end
         it 'gets redirect to it' do
           expect(response).to redirect_to(entry)
@@ -239,7 +241,9 @@ describe EntriesController, type: :controller do
       end
       context 'other users entry' do
         before do
-          put :update, id: entry.id, entry: { japanische_umschrift: 'some editing on somebody else\'s entry', user_id: editor.id }
+          entry
+          entry.update(user_id: editor.id)
+          put :update, id: entry.id, entry: { japanische_umschrift: 'some editing on somebody else\'s entry' }
           entry.reload
         end
         it 'gets updated' do
@@ -259,11 +263,13 @@ describe EntriesController, type: :controller do
       end
       context 'own entry' do
         before do
-          put :update, id: entry.id, entry: { japanische_umschrift: 'some editing on my own entry', user_id: chiefeditor.id }
+          entry
+          entry.update(user_id: chiefeditor.id)
+          put :update, id: entry.id, entry: { japanische_umschrift: 'some editing on my entry' }
           entry.reload
         end
         it 'gets updated' do
-          expect(entry.japanische_umschrift).to eq('some editing on my own entry')
+          expect(entry.japanische_umschrift).to eq('some editing on my entry')
         end
         it 'gets redirect to it' do
           expect(response).to redirect_to(entry)
@@ -274,8 +280,9 @@ describe EntriesController, type: :controller do
       end
       context 'other users entry' do
         before do
-          somebody_elses__user_id = admin.id
-          put :update, id: entry.id, entry: { japanische_umschrift: 'some editing on somebody else\'s entry', user_id: somebody_elses__user_id }
+          entry
+          entry.update(user_id: editor.id)
+          put :update, id: entry.id, entry: { japanische_umschrift: 'some editing on somebody else\'s entry' }
           entry.reload
         end
         it 'gets updated' do
@@ -295,11 +302,13 @@ describe EntriesController, type: :controller do
       end
       context 'own entry' do
         before do
-          put :update, id: entry.id, entry: { japanische_umschrift: 'some editing on my own entry', user_id: editor.id }
+          entry
+          entry.update(user_id: editor.id)
+          put :update, id: entry.id, entry: { japanische_umschrift: 'some editing on my entry' }
           entry.reload
         end
         it 'gets updated' do
-          expect(entry.japanische_umschrift).to eq('some editing on my own entry')
+          expect(entry.japanische_umschrift).to eq('some editing on my entry')
         end
         it 'gets redirect to it' do
           expect(response).to redirect_to(entry)
@@ -310,8 +319,9 @@ describe EntriesController, type: :controller do
       end
       context 'other users entry' do
         before do
-          somebody_elses_user_id = chiefeditor.id
-          put :update, id: entry.id, entry: { japanische_umschrift: 'some editing on somebody else\'s entry', user_id: somebody_elses_user_id }
+          entry
+          entry.update(user_id: admin.id)
+          put :update, id: entry.id, entry: { japanische_umschrift: 'some editing on somebody else\'s entry' }
           entry.reload
         end
         it 'does not get updated' do
@@ -432,11 +442,11 @@ describe EntriesController, type: :controller do
         end
         it 'and gets redirected' do
           delete :destroy, id: entry.id
-          expect(response).to be_redirect
+          expect(response).to redirect_to(root_path)
         end
         it 'gets an error-message' do
           delete :destroy, id: entry.id
-          expect(flash[:notice]).to eq('as editor you are not allowed to delete somebody else\'s entry')
+          expect(flash[:notice]).to eq('Access denied!')
         end
       end
     end

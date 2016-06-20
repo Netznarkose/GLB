@@ -2,83 +2,59 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-    # Define abilities for the passed in user here. For example:
-
-    user ||= User.new # guest user (not logged in)
+    user ||= User.new
     if user.admin?
       can :manage, :all
     elsif user.chief_editor?
       can :index, User
-      can :create, Entry # create for herself and somebody else
-      can :update, Entry
-      can :destroy, Entry
-      can :show, Entry
-      can :new, Entry
-      can :edit, Entry
-      can :index, Entry
+      can :manage, Entry 
+      can :edit, Comment
       can :create, Comment
-      can :update, Comment do |comment|
+      can :update, Comment do |comment| # Chiefeditor updates only own comments 
         comment.try(:user) == user
       end
       can :destroy, Comment
-      can :edit, Comment
     elsif user.editor?
       can :index, User
-      can :create, Entry do |entry| # Editor creates an entry only for herself
-        entry.user_id == user.id
-      end
-      can :update, Entry do |entry| # Editor update only own entries
-        entry.user_id == user.id
-      end
-      can :destroy, Entry
+      can :index, Entry
       can :show, Entry
       can :new, Entry
       can :edit, Entry
-      can :index, Entry
-      can :create, Comment
-      can :update, Comment do |comment|
-        comment.try(:user) == user
+      can :create, Entry do |entry| # Editor creates an entry only for herself
+        entry.user_id == user.id
       end
-      can :destroy, Comment do |comment|
-        comment.try(:user) == user
+      can :update, Entry do |entry| # Editor updates only own entries
+        entry.user_id == user.id
+      end
+      can :destroy, Entry do |entry| # Editor deletes only own entries
+        entry.user_id == user.id
       end
       can :edit, Comment
-    elsif user.commentator?
-      can :show, Entry do |entry|
-        entry.freigeschaltet
-      end
-      can :index, Entry
       can :create, Comment
-      can :update, Comment do |comment|
+      can :update, Comment do |comment| # Editor updates only own comments
         comment.try(:user) == user
       end
-      can :destroy, Comment do |comment|
+      can :destroy, Comment do |comment| # Editor deletes only own comments
+        comment.try(:user) == user
+      end
+    elsif user.commentator?
+      can :index, Entry
+      can :show, Entry do |entry| # Commentator sees only pubished entries
+        entry.freigeschaltet
+      end
+      can :create, Comment
+      can :update, Comment do |comment| # Commentator updates only own entries
+        comment.try(:user) == user
+      end
+      can :destroy, Comment do |comment| # Commentator deletes only own entries
         comment.try(:user) == user
       end
       can :edit, Comment
     else
-      can :show, Entry do |entry|
+      can :index, Entry
+      can :show, Entry do |entry| # Guests sees only pubished entries
         entry.freigeschaltet
       end
-      can :index, Entry
     end
-
-    # The first argument to `can` is the action you are giving the user
-    # permission to do.
-    # If you pass :manage it will apply to every action. Other common actions
-    # here are :read, :create, :update and :destroy.
-    #
-    # The second argument is the resource the user can perform the action on.
-    # If you pass :all it will apply to every resource. Otherwise pass a Ruby
-    # class of the resource.
-    #
-    # The third argument is an optional hash of conditions to further filter the
-    # objects.
-    # For example, here the user can only update published articles.
-    #
-    #   can :update, Article, :published => true
-    #
-    # See the wiki for details:
-    # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
   end
 end
