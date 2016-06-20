@@ -24,8 +24,12 @@ class Ability
       can :edit, Comment
     elsif user.editor?
       can :index, User
-      can :create, Entry
-      can :update, Entry
+      can :create, Entry do |entry| # Editor creates an entry only for herself
+        entry.user_id == user.id
+      end
+      can :update, Entry do |entry| # Editor update only own entries
+        entry.user_id == user.id
+      end
       can :destroy, Entry
       can :show, Entry
       can :new, Entry
@@ -40,7 +44,9 @@ class Ability
       end
       can :edit, Comment
     elsif user.commentator?
-      can :show, Entry
+      can :show, Entry do |entry|
+        entry.freigeschaltet
+      end
       can :index, Entry
       can :create, Comment
       can :update, Comment do |comment|
@@ -51,7 +57,9 @@ class Ability
       end
       can :edit, Comment
     else
-      can :show, Entry
+      can :show, Entry do |entry|
+        entry.freigeschaltet
+      end
       can :index, Entry
     end
 

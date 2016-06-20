@@ -1,17 +1,13 @@
 class EntriesController < ApplicationController
   load_and_authorize_resource
-  before_action :find_entry, only: [:show, :update, :destroy]
-  before_action :protect_from_editors_who_try_to_update_an_entry_for_somebodyelse, only: :update
-  before_action :protect_from_editors_who_try_to_create_an_entry_for_somebodyelse, only: :create
+  before_action :build_entry_comment, only: :show
+  # before_action :protect_from_editors_who_try_to_update_an_entry_for_somebodyelse, only: :update
   before_action :protect_from_editors_who_try_to_delete_an_entry_of_somebodyelse, only: :destroy
-  before_action :protect_from_commentators_and_guests_who_try_to_read_unpublished_entries, only: :show
 
   helper_method :sort_column, :sort_direction
 
   # uncomment sḱip_before_filter to make entries visible; (preferably in connection with published filter)
   #skip_before_filter :authenticate_user!, only: [:index, :show]
-  # GET /entries
-  # GET /entries.json
   def index
     if params[:search]
       @entries = Entry.search(params[:search]).page(params[:page])
@@ -27,47 +23,25 @@ class EntriesController < ApplicationController
     end
   end
 
-  # GET /entries/1
-  # GET /entries/1.json
   def show
-    @switch_it = 'comment_show'
-    build_entry_comment
     respond_to do |format|
-      format.html # show.html.erb
+      format.html 
       format.json { render json: @entry }
     end
   end
 
-  # GET /entries/new
-  # GET /entries/new.json
   def new
     @entry = Entry.new
-    # if current_user.role == "admin"
-      respond_to do |format|
-        format.html # new.html.erb
-        format.json { render json: @entry }
-      end
-    # else
-    #   flash[:notice] = 'Sie dürfen keine neuen Einträge erstellen.'
-    #   redirect_to :action => 'index'
-    # end
+    respond_to do |format|
+      format.html 
+      format.json { render json: @entry }
+    end
   end
 
-  # GET /entries/1/edit
   def edit
-    # if @entry.user != current_user && current_user.role != "admin"
-    #   flash[:notice] = "Sie dürfen die Einträge von anderen Mitarbeitern nicht bearbeiten. Hinterlassen Sie stattdessen einen Kommentar."
-    #   redirect_to :action => 'show'
-    # end
   end
 
-  # POST /entries
-  # POST /entries.json
   def create
-    # ???
-    # params[:entry].delete("freigeschaltet")
-    # @entry.user = current_user unless @entry.user_id.present?
-    
     @entry = Entry.new(entry_params)
     respond_to do |format|
       if @entry.save
@@ -80,9 +54,8 @@ class EntriesController < ApplicationController
     end
   end
 
-  # PUT /entries/1
-  # PUT /entries/1.json
   def update
+    binding.pry
     respond_to do |format|
       if @entry.update_attributes(entry_params)
         format.html { redirect_to @entry, notice: "Eintrag erfolgreich editiert. #{undo_link}" }
@@ -107,31 +80,15 @@ class EntriesController < ApplicationController
 
   private
 
-
-  def find_entry
-    @entry = Entry.find(params[:id])
-  end
-
   def protect_from_editors_who_try_to_update_an_entry_for_somebodyelse
     if current_user.editor? && params[:entry][:user_id].to_i != current_user.id 
       redirect_to @entry, notice: 'as editor you are not allowed to edit somebody else\'s entry'
-    end
-  end
-  def protect_from_editors_who_try_to_create_an_entry_for_somebodyelse
-    if current_user.editor? && @entry.user_id != current_user.id #when user is an editor and creates an entry for somebody else
-      redirect_to new_entry_path, notice: 'as editor you are not allowed to create an entry for somebody else'
     end
   end
 
   def protect_from_editors_who_try_to_delete_an_entry_of_somebodyelse
     if current_user.editor? && @entry.user_id != current_user.id #when user is an editor and creates an entry for somebody else
       redirect_to @entry, notice: 'as editor you are not allowed to delete somebody else\'s entry'
-    end
-  end
-
-  def protect_from_commentators_and_guests_who_try_to_read_unpublished_entries
-    if current_user.commentator? && @entry.freigeschaltet == false || current_user.guest? && @entry.freigeschaltet == false
-      redirect_to entries_path, notice: 'commentators and guests are not allowed to read unpublished entries'
     end
   end
 
