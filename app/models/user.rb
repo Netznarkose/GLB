@@ -9,14 +9,14 @@ class User < ActiveRecord::Base
 
   after_destroy :assign_remaining_entries_to_ulrich_appel
 
-  scope :allowed_for_entries, -> { where(role: ['admin', 'editor', 'chiefeditor', 'commentator']) }
+  scope :allowed_for_entries, -> { where(role: ['admin', 'editor', 'author', 'commentator']) }
 
   def admin?
     role == 'admin'
   end
 
-  def chief_editor?
-    role == 'chiefeditor'
+  def editor?
+    role == 'editor'
   end
 
   def author?

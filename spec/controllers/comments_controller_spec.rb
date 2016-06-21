@@ -3,14 +3,14 @@ require 'spec_helper'
 describe CommentsController, type: :controller do
   let(:comment) { FactoryGirl.create(:comment) }
   let(:admin) { FactoryGirl.create(:admin) }
-  let(:chiefeditor) { FactoryGirl.create(:chiefeditor) }
+  let(:editor) { FactoryGirl.create(:editor) }
   let(:author) { FactoryGirl.create(:author) }
   let(:commentator) { FactoryGirl.create(:commentator) }
   let(:user) { FactoryGirl.create(:user) }
 
   describe 'GET edit' do
     subject { get :edit, entry_id: comment.entry_id, id: comment.id }
-    it_behaves_like 'something that admin, chiefeditor, author and commentator can access'
+    it_behaves_like 'something that admin, editor, author and commentator can access'
   end
 
   describe 'POST create' do
@@ -41,9 +41,9 @@ describe CommentsController, type: :controller do
         end
       end
     end
-    context 'as chiefeditor' do
+    context 'as editor' do
       before do
-        sign_in chiefeditor
+        sign_in editor
       end
       context 'with valid attributes' do
         it 'creates a comment' do
@@ -155,14 +155,14 @@ describe CommentsController, type: :controller do
         end
       end
     end
-    context 'as chiefeditor' do
+    context 'as editor' do
       before do
-        sign_in chiefeditor
+        sign_in editor
       end
       context 'own comments' do
         before do
           comment
-          comment.update(user_id: chiefeditor.id)
+          comment.update(user_id: editor.id)
         end
         it 'can be updated' do
           put :update, entry_id: comment.entry_id, id: comment.id,
@@ -263,14 +263,14 @@ describe CommentsController, type: :controller do
         end
       end
     end
-    context 'as chiefeditor' do
+    context 'as editor' do
       before do
-        sign_in chiefeditor
+        sign_in editor
       end
       context 'own comments' do
         before do
           comment
-          comment.update(user_id: chiefeditor.id)
+          comment.update(user_id: editor.id)
         end
         it 'can be deleted' do
           expect{

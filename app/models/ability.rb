@@ -5,7 +5,7 @@ class Ability
     user ||= User.new
     if user.admin?
       can :manage, :all
-    elsif user.chief_editor?
+    elsif user.editor?
       can :index, User
       can :manage, Entry 
       can :edit, Comment

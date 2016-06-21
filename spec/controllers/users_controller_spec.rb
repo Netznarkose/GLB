@@ -3,14 +3,15 @@ require 'spec_helper'
 describe UsersController, type: :controller do
   let(:ulrich_appel) { FactoryGirl.create(:admin, email: 'ulrich.apel@uni-tuebingen.de') }
   let(:admin) { FactoryGirl.create(:admin) }
-  let(:chiefeditor) { FactoryGirl.create(:chiefeditor) }
+  let(:editor) { FactoryGirl.create(:editor) }
   let(:author) { FactoryGirl.create(:author) }
+  let(:commentator) { FactoryGirl.create(:commentator) }
   let(:user) { FactoryGirl.create(:user) }
 
   describe 'get index' do
     subject { get :index }
 
-    it_behaves_like 'something that admin, chiefeditor & author can access'
+    it_behaves_like 'something that admin, editor & author can access'
     it_behaves_like 'something that commentator and guest can not access'
   end
 

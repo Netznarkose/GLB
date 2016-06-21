@@ -15,10 +15,10 @@ FactoryGirl.define do
     sequence(:name){|n| "admin#{n}"}
   end
 
-  factory :chiefeditor, parent: :user do
-    sequence(:email){|n| "chief_editor_#{n}@example.com"}
-    sequence(:name){|n| "chief_editor#{n}"}
-    role "chiefeditor"
+  factory :editor, parent: :user do
+    sequence(:email){|n| "editor_#{n}@example.com"}
+    sequence(:name){|n| "editor#{n}"}
+    role "editor"
   end
 
   factory :author, parent: :user do

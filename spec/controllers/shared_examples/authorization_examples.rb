@@ -1,6 +1,5 @@
 shared_examples_for 'every user can access' do
   context 'as admin' do
-    let(:admin) { FactoryGirl.create(:admin) }
     before do
       sign_in admin
     end
@@ -9,10 +8,9 @@ shared_examples_for 'every user can access' do
       expect(response).to be_success
     end
   end
-  context 'as chiefeditor' do
-    let(:chiefeditor) { FactoryGirl.create(:chiefeditor) }
+  context 'as editor' do
     before do
-      sign_in chiefeditor
+      sign_in editor
     end
     it 'is accessible' do
       subject
@@ -20,7 +18,6 @@ shared_examples_for 'every user can access' do
     end
   end
   context 'as author' do
-    let(:author) { FactoryGirl.create(:author) }
     before do
       sign_in author
     end
@@ -30,7 +27,6 @@ shared_examples_for 'every user can access' do
     end
   end
   context 'as commentator' do # ?
-    let(:editor) { FactoryGirl.create(:editor) }
     before do
       sign_in commentator
     end
@@ -47,9 +43,8 @@ shared_examples_for 'every user can access' do
   end
 end
 
-shared_examples_for 'something that admin, chiefeditor, author and commentator can access' do
+shared_examples_for 'something that admin, editor, author and commentator can access' do
   context 'as admin' do
-    let(:admin) { FactoryGirl.create(:admin) }
     before do
       sign_in admin
     end
@@ -58,10 +53,9 @@ shared_examples_for 'something that admin, chiefeditor, author and commentator c
       expect(response).to be_success
     end
   end
-  context 'as chiefeditor' do
-    let(:chiefeditor) { FactoryGirl.create(:chiefeditor) }
+  context 'as editor' do
     before do
-      sign_in chiefeditor
+      sign_in editor
     end
     it 'is accessible' do
       subject
@@ -69,7 +63,6 @@ shared_examples_for 'something that admin, chiefeditor, author and commentator c
     end
   end
   context 'as author' do
-    let(:author) { FactoryGirl.create(:author) }
     before do
       sign_in author
     end
@@ -79,7 +72,6 @@ shared_examples_for 'something that admin, chiefeditor, author and commentator c
     end
   end
   context 'as commentator' do
-    let(:commentator) { FactoryGirl.create(:commentator) }
     before do
       sign_in commentator
     end
@@ -97,9 +89,8 @@ shared_examples_for 'something that admin, chiefeditor, author and commentator c
   end
 end
 
-shared_examples_for 'something that admin, chiefeditor & author can access' do
+shared_examples_for 'something that admin, editor & author can access' do
   context 'as admin' do
-    let(:admin) { FactoryGirl.create(:admin) }
     before do
       sign_in admin
     end
@@ -108,10 +99,9 @@ shared_examples_for 'something that admin, chiefeditor & author can access' do
       expect(response).to be_success
     end
   end
-  context 'as chiefeditor' do
-    let(:chiefeditor) { FactoryGirl.create(:chiefeditor) }
+  context 'as editor' do
     before do
-      sign_in chiefeditor
+      sign_in editor
     end
     it 'is accessible' do
       subject
@@ -119,7 +109,6 @@ shared_examples_for 'something that admin, chiefeditor & author can access' do
     end
   end
   context 'as author' do
-    let(:author) { FactoryGirl.create(:author) }
     before do
       sign_in author
     end
@@ -131,10 +120,9 @@ shared_examples_for 'something that admin, chiefeditor & author can access' do
 end
 
 shared_examples_for 'something that only admin can access' do
-  context 'when user is a chiefeditor' do
-    let(:chiefeditor) { FactoryGirl.create(:chiefeditor) }
+  context 'when user is a editor' do
     before do
-      sign_in chiefeditor
+      sign_in editor
     end
     it 'redirects' do
       subject
@@ -143,7 +131,6 @@ shared_examples_for 'something that only admin can access' do
     end
   end
   context 'when user is a author' do
-    let(:author) { FactoryGirl.create(:author) }
     before do
       sign_in author
     end
@@ -154,7 +141,6 @@ shared_examples_for 'something that only admin can access' do
     end
   end
   context 'when user is a commentator' do
-    let(:commentator) { FactoryGirl.create(:commentator) }
     before do
       sign_in commentator
     end
@@ -175,7 +161,6 @@ end
 
 shared_examples_for 'something that commentator and guest can not access' do
   context 'when user is a commentator' do
-    let(:commentator) { FactoryGirl.create(:commentator) }
     before do
       sign_in commentator
     end
