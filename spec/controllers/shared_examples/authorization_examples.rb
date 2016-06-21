@@ -19,17 +19,17 @@ shared_examples_for 'every user can access' do
       expect(response).to be_success
     end
   end
-  context 'as editor' do
-    let(:editor) { FactoryGirl.create(:editor) }
+  context 'as author' do
+    let(:author) { FactoryGirl.create(:author) }
     before do
-      sign_in editor
+      sign_in author
     end
     it 'is accessible' do
       subject
       expect(response).to be_success
     end
   end
-  context 'as commentator' do
+  context 'as commentator' do # ?
     let(:editor) { FactoryGirl.create(:editor) }
     before do
       sign_in commentator
@@ -47,7 +47,7 @@ shared_examples_for 'every user can access' do
   end
 end
 
-shared_examples_for 'something that admin, chiefeditor, editor and commentator can access' do
+shared_examples_for 'something that admin, chiefeditor, author and commentator can access' do
   context 'as admin' do
     let(:admin) { FactoryGirl.create(:admin) }
     before do
@@ -68,10 +68,10 @@ shared_examples_for 'something that admin, chiefeditor, editor and commentator c
       expect(response).to be_success
     end
   end
-  context 'as editor' do
-    let(:editor) { FactoryGirl.create(:editor) }
+  context 'as author' do
+    let(:author) { FactoryGirl.create(:author) }
     before do
-      sign_in editor
+      sign_in author
     end
     it 'is accessible' do
       subject
@@ -97,7 +97,7 @@ shared_examples_for 'something that admin, chiefeditor, editor and commentator c
   end
 end
 
-shared_examples_for 'something that admin, chiefeditor & editor can access' do
+shared_examples_for 'something that admin, chiefeditor & author can access' do
   context 'as admin' do
     let(:admin) { FactoryGirl.create(:admin) }
     before do
@@ -118,10 +118,10 @@ shared_examples_for 'something that admin, chiefeditor & editor can access' do
       expect(response).to be_success
     end
   end
-  context 'as editor' do
-    let(:editor) { FactoryGirl.create(:editor) }
+  context 'as author' do
+    let(:author) { FactoryGirl.create(:author) }
     before do
-      sign_in editor
+      sign_in author
     end
     it 'is accessible' do
       subject
@@ -142,10 +142,10 @@ shared_examples_for 'something that only admin can access' do
       expect(flash[:notice]).to eq('Access denied!')
     end
   end
-  context 'when user is a editor' do
-    let(:editor) { FactoryGirl.create(:editor) }
+  context 'when user is a author' do
+    let(:author) { FactoryGirl.create(:author) }
     before do
-      sign_in editor
+      sign_in author
     end
     it 'redirects' do
       subject

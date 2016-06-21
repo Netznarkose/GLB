@@ -6,13 +6,13 @@ describe EntriesController, type: :controller do
   let(:published_entry) { FactoryGirl.create(:published_entry) }
   let(:admin) { FactoryGirl.create(:admin) }
   let(:chiefeditor) { FactoryGirl.create(:chiefeditor) }
-  let(:editor) { FactoryGirl.create(:editor) }
+  let(:author) { FactoryGirl.create(:author) }
   let(:commentator) { FactoryGirl.create(:commentator) }
   let(:user) { FactoryGirl.create(:user) }
 
   before do
     admin
-    editor
+    author
   end
 
   describe 'Get index' do
@@ -25,14 +25,14 @@ describe EntriesController, type: :controller do
       unpublished_entry
       published_entry
     end
-    context 'as admin, chiefeditor and editor' do
+    context 'as admin, chiefeditor and author' do
       context 'published entries' do
         subject { put :show, id: published_entry.id }
-        it_behaves_like 'something that admin, chiefeditor & editor can access'
+        it_behaves_like 'something that admin, chiefeditor & author can access'
       end
       context 'unpublished entries' do
         subject { put :show, id: unpublished_entry.id }
-        it_behaves_like 'something that admin, chiefeditor & editor can access'
+        it_behaves_like 'something that admin, chiefeditor & author can access'
       end
     end
     context 'as commentator' do
@@ -78,10 +78,10 @@ describe EntriesController, type: :controller do
       get :new
       expect(assigns(:entry)).to be_a_new(Entry)
     end
-    context 'as admin, chiefeditor and editor' do
+    context 'as admin, chiefeditor and author' do
       subject { get :new }
 
-      it_behaves_like 'something that admin, chiefeditor & editor can access'
+      it_behaves_like 'something that admin, chiefeditor & author can access'
     end
     context 'as commentator and guest' do
       subject { get :new }
@@ -99,10 +99,10 @@ describe EntriesController, type: :controller do
       get :edit, id: entry.id
       expect(assigns(:entry)).to eq(entry)
     end
-    context 'as admin, chiefeditor and editor' do
+    context 'as admin, chiefeditor and author' do
       subject { get :edit, id: entry.id }
 
-      it_behaves_like 'something that admin, chiefeditor & editor can access'
+      it_behaves_like 'something that admin, chiefeditor & author can access'
     end
     context 'as commentator and guest' do
       subject { get :edit, id: entry.id }
@@ -133,14 +133,14 @@ describe EntriesController, type: :controller do
       context 'for somebody else' do
         it 'creates an entry' do
           expect {
-            post :create, entry: FactoryGirl.attributes_for(:entry, user_id: editor.id)
+            post :create, entry: FactoryGirl.attributes_for(:entry, user_id: author.id)
           }.to change(Entry, :count).by(1)
           assigns(:entry).tap do |entry|
-            expect(entry.user).to eq(editor)
+            expect(entry.user).to eq(author)
           end
         end
         it 'and gets redirects to the it' do
-          post :create, entry: FactoryGirl.attributes_for(:entry, user_id: editor.id)
+          post :create, entry: FactoryGirl.attributes_for(:entry, user_id: author.id)
           expect(response).to redirect_to(Entry.last)
         end
       end
@@ -166,33 +166,33 @@ describe EntriesController, type: :controller do
       context 'for somebody else' do
         it 'creates an entry' do
           expect {
-            post :create, entry: FactoryGirl.attributes_for(:entry, user_id: editor.id)
+            post :create, entry: FactoryGirl.attributes_for(:entry, user_id: author.id)
           }.to change(Entry, :count).by(1)
           assigns(:entry).tap do |entry|
-            expect(entry.user).to eq(editor)
+            expect(entry.user).to eq(author)
           end
         end
         it 'and gets redirects to the it' do
-          post :create, entry: FactoryGirl.attributes_for(:entry, user_id: editor.id)
+          post :create, entry: FactoryGirl.attributes_for(:entry, user_id: author.id)
           expect(response).to redirect_to(Entry.last)
         end
       end
     end
-    context 'editor' do
+    context 'author' do
       before do
-        sign_in editor
+        sign_in author
       end
       context 'for herself' do
         it 'creates an entry' do
           expect {
-            post :create, entry: FactoryGirl.attributes_for(:entry, user_id: editor.id)
+            post :create, entry: FactoryGirl.attributes_for(:entry, user_id: author.id)
           }.to change(Entry, :count).by(1)
           assigns(:entry).tap do |entry|
-            expect(entry.user).to eq(editor)
+            expect(entry.user).to eq(author)
           end
         end
         it 'and gets redirects to the it' do
-          post :create, entry: FactoryGirl.attributes_for(:entry, user_id: editor.id)
+          post :create, entry: FactoryGirl.attributes_for(:entry, user_id: author.id)
           expect(response).to redirect_to(Entry.last)
         end
       end
@@ -242,7 +242,7 @@ describe EntriesController, type: :controller do
       context 'other users entry' do
         before do
           entry
-          entry.update(user_id: editor.id)
+          entry.update(user_id: author.id)
           put :update, id: entry.id, entry: { japanische_umschrift: 'some editing on somebody else\'s entry' }
           entry.reload
         end
@@ -281,7 +281,7 @@ describe EntriesController, type: :controller do
       context 'other users entry' do
         before do
           entry
-          entry.update(user_id: editor.id)
+          entry.update(user_id: author.id)
           put :update, id: entry.id, entry: { japanische_umschrift: 'some editing on somebody else\'s entry' }
           entry.reload
         end
@@ -296,14 +296,14 @@ describe EntriesController, type: :controller do
         end
       end
     end
-    context 'editor' do
+    context 'author' do
       before do
-        sign_in editor
+        sign_in author
       end
       context 'own entry' do
         before do
           entry
-          entry.update(user_id: editor.id)
+          entry.update(user_id: author.id)
           put :update, id: entry.id, entry: { japanische_umschrift: 'some editing on my entry' }
           entry.reload
         end
@@ -363,7 +363,7 @@ describe EntriesController, type: :controller do
       context 'other users entries' do
         before do
           entry
-          entry.update(user_id: editor.id)
+          entry.update(user_id: author.id)
         end
         it 'can be deleted' do
           expect {
@@ -398,7 +398,7 @@ describe EntriesController, type: :controller do
       context 'other users entries' do
         before do
           entry
-          entry.update(user_id: editor.id)
+          entry.update(user_id: author.id)
         end
         it 'can be deleted' do
           expect {
@@ -411,14 +411,14 @@ describe EntriesController, type: :controller do
         end
       end
     end
-    context 'as editor' do
+    context 'as author' do
       before do
-        sign_in editor
+        sign_in author
       end
       context 'own entries' do
         before do
           entry
-          entry.update(user_id: editor.id)
+          entry.update(user_id: author.id)
         end
         it 'can be deleted' do
           expect {

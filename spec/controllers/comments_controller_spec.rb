@@ -4,13 +4,13 @@ describe CommentsController, type: :controller do
   let(:comment) { FactoryGirl.create(:comment) }
   let(:admin) { FactoryGirl.create(:admin) }
   let(:chiefeditor) { FactoryGirl.create(:chiefeditor) }
-  let(:editor) { FactoryGirl.create(:editor) }
+  let(:author) { FactoryGirl.create(:author) }
   let(:commentator) { FactoryGirl.create(:commentator) }
   let(:user) { FactoryGirl.create(:user) }
 
   describe 'GET edit' do
     subject { get :edit, entry_id: comment.entry_id, id: comment.id }
-    it_behaves_like 'something that admin, chiefeditor, editor and commentator can access'
+    it_behaves_like 'something that admin, chiefeditor, author and commentator can access'
   end
 
   describe 'POST create' do
@@ -69,9 +69,9 @@ describe CommentsController, type: :controller do
         end
       end
     end
-    context 'as editor' do
+    context 'as author' do
       before do
-        sign_in editor
+        sign_in author
       end
       context 'with valid attributes' do
         it 'creates a comment' do
@@ -174,7 +174,7 @@ describe CommentsController, type: :controller do
       context 'other users comments' do
         before do
           comment
-          comment.update(user_id: editor.id)
+          comment.update(user_id: author.id)
         end
         it 'can not be updated' do
           put :update, entry_id: comment.entry_id, id: comment.id,
@@ -184,14 +184,14 @@ describe CommentsController, type: :controller do
         end
       end
     end
-    context 'as editor' do
+    context 'as author' do
       before do
-        sign_in editor
+        sign_in author
       end
       context 'own comments' do
         before do
           comment
-          comment.update(user_id: editor.id)
+          comment.update(user_id: author.id)
         end
         it 'can be updated' do
           put :update, entry_id: comment.entry_id, id: comment.id,
@@ -252,7 +252,7 @@ describe CommentsController, type: :controller do
       context 'other users comments' do
         before do
           comment
-          comment.update(user_id: editor.id)
+          comment.update(user_id: author.id)
         end
         it 'can be deleted' do
           expect{
@@ -283,7 +283,7 @@ describe CommentsController, type: :controller do
       context 'other users comments' do
         before do
           comment
-          comment.update(user_id: editor.id)
+          comment.update(user_id: author.id)
         end
         it 'can be deleted' do
           expect{
@@ -294,14 +294,14 @@ describe CommentsController, type: :controller do
         end
       end
     end
-    context 'as editor' do
+    context 'as author' do
       before do
-        sign_in editor
+        sign_in author
       end
       context 'own comments' do
         before do
           comment
-          comment.update(user_id: editor.id)
+          comment.update(user_id: author.id)
         end
         it 'can be deleted' do
           expect{

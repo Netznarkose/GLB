@@ -1,36 +1,35 @@
 require 'spec_helper'
 
 describe User do
-  let!(:editor) { FactoryGirl.create(:editor) }
+  let!(:user) { FactoryGirl.create(:user) }
 
   it 'should create a new instance of a user
   given valid attributes' do
-    expect(editor).to be_valid
-    expect(editor.role).to eq('editor')
+    expect(user).to be_valid
+    expect(user.role).to eq('user')
   end
 
   it 'is invalid without name' do
-    editor.name = nil
-    expect(editor).not_to be_valid
+    user.name = nil
+    expect(user).not_to be_valid
   end
 
   it 'is invalid without email' do
-    editor.email = nil
-    expect(editor).not_to be_valid
+    user.email = nil
+    expect(user).not_to be_valid
   end
 
   it 'is invalid without password' do
-    editor.password = nil
-    expect(editor).not_to be_valid
+    user.password = nil
+    expect(user).not_to be_valid
   end
 
   it 'is invalid without role' do
-    editor.role = nil
-    expect(editor).not_to be_valid
+    user.role = nil
+    expect(user).not_to be_valid
   end
 
   context 'if we delete a user' do
-    let(:user) { FactoryGirl.create(:user) }
     let(:ulrich_appel) do
       FactoryGirl.create(:admin, email: 'ulrich.apel@uni-tuebingen.de')
     end

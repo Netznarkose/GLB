@@ -19,8 +19,8 @@ class User < ActiveRecord::Base
     role == 'chiefeditor'
   end
 
-  def editor?
-    role == 'editor'
+  def author?
+    role == 'author'
   end
 
   def commentator?

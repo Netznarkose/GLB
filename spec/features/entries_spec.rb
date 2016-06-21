@@ -2,7 +2,6 @@ require 'spec_helper'
 
 describe 'entries management' do
   let(:admin) { FactoryGirl.create(:admin) }
-  let(:editor) { FactoryGirl.create(:editor) }
   let(:entry) { FactoryGirl.create(:entry) }
 
   describe 'entries authorization' do

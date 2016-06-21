@@ -14,7 +14,7 @@ class Ability
         comment.try(:user) == user
       end
       can :destroy, Comment
-    elsif user.editor?
+    elsif user.author?
       can :index, User
       can :index, Entry
       can :show, Entry

@@ -22,7 +22,7 @@
         <%= f.label :password_confirmation %>
         <%= f.password_field :password_confirmation %>
         <%= f.label :status %>
-        <%= f.select(:role, options_for_select([['Admin', 'admin'],['Chiefeditor','chiefeditor'], ['Editor','editor'],['Commentator', 'commentator']], "editor")) %>
+        <%= f.select(:role, options_for_select([['Admin', 'admin'],['Editor','editor'], ['Author','author'],['Commentator', 'commentator']], "editor")) %>
         </br>
         </br>
         <%= f.submit "Speichern", class: "btn" %>

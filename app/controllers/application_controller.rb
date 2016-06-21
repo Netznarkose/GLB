@@ -38,10 +38,11 @@ class ApplicationController < ActionController::Base
   def chief_editor?
     current_user.chief_editor?
   end
-  
-  def editor?
-    current_user.editor?
+
+  def author?
+    current_user.author?
   end
+  
 
   def commentator?
     current_user.commentator?

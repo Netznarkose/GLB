@@ -4,13 +4,13 @@ describe UsersController, type: :controller do
   let(:ulrich_appel) { FactoryGirl.create(:admin, email: 'ulrich.apel@uni-tuebingen.de') }
   let(:admin) { FactoryGirl.create(:admin) }
   let(:chiefeditor) { FactoryGirl.create(:chiefeditor) }
-  let(:editor) { FactoryGirl.create(:editor) }
+  let(:author) { FactoryGirl.create(:author) }
   let(:user) { FactoryGirl.create(:user) }
 
   describe 'get index' do
     subject { get :index }
 
-    it_behaves_like 'something that admin, chiefeditor & editor can access'
+    it_behaves_like 'something that admin, chiefeditor & author can access'
     it_behaves_like 'something that commentator and guest can not access'
   end
 
@@ -60,7 +60,7 @@ describe UsersController, type: :controller do
         end
         it 'does not create a new user' do
           expect {
-            post :create, user: FactoryGirl.attributes_for(:editor, name: '')
+            post :create, user: FactoryGirl.attributes_for(:author, name: '')
           }.to_not change(User, :count)
         end
         it 'redirects to the new-template' do
@@ -82,12 +82,12 @@ describe UsersController, type: :controller do
     context 'as admin' do
       it 'renders the view' do
         sign_in admin
-        get :edit, id: editor.id
+        get :edit, id: author.id
         expect(response).to render_template(:edit)
       end
     end
     context 'as non-admin' do
-      subject { post :edit, id: editor.id }
+      subject { post :edit, id: author.id }
 
       it_behaves_like 'something that only admin can access'
     end
@@ -99,13 +99,13 @@ describe UsersController, type: :controller do
         sign_in admin
       end
       it 'I can update someone elses role' do
-        put :update, id: editor.id, user: { role: 'admin' }
-        editor.reload
-        expect(editor.role).to eq('admin')
+        put :update, id: author.id, user: { role: 'admin' }
+        author.reload
+        expect(author.role).to eq('admin')
       end
     end
     context 'as non-admin' do
-      subject { put :update, id: editor.id, user: { role: 'admin' } }
+      subject { put :update, id: author.id, user: { role: 'admin' } }
 
       it_behaves_like 'something that only admin can access'
     end
