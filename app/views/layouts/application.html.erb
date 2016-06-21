@@ -14,7 +14,7 @@
           <%# <%= link_to "GLB", entries_path, :class => 'brand' %1> %>
           <%= link_to "GLB", root_path, :class => 'brand' %>
           <ul class="nav">
-            <% if current_user.admin? || current_user.chief_editor? || current_user.editor? %>
+            <% if current_user.admin? || current_user.editor? || current_user.author? %>
               <li class="dropdown">
                 <a class='dropdown-toggle' data-toggle='dropdown' href='#'>Mitarbeiter</a>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
@@ -25,7 +25,7 @@
                 </ul>
               </li>
             <% end %>
-            <% if current_user.admin? || current_user.chief_editor? || current_user.editor? %>
+            <% if current_user.admin? || current_user.editor? || current_user.author? %>
               <li class="dropdown">
                 <a class='dropdown-toggle' data-toggle='dropdown' href='#'>Einträge</a>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
