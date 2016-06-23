@@ -18,7 +18,7 @@
       <h3>Email: <%= @user.email%></h3>
       <%= form_for @user do |f| %>
         <%= f.label :status %>
-        <%= f.select :role, ['Admin', 'Editor'] %>
+        <%= f.select :role, ['Admin', 'Editor', 'Author', 'Commentator'] %>
         </br>
         </br>
         <%= f.submit "Speichern", class: "btn" %>
