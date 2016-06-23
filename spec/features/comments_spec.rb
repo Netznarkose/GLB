@@ -4,31 +4,23 @@ describe 'comments management' do
   describe 'admin write a comment' do
     let(:entry) { FactoryGirl.create(:entry) }
     let(:comment) { FactoryGirl.create(:comment) }
+    let(:admin) { FactoryGirl.create(:admin) }
     before do
-      admin = FactoryGirl.create(:admin)
       visit new_user_session_path
       fill_in 'user_email', with: admin.email
       fill_in 'user_password', with: admin.password
       click_button('Anmelden')
     end
     it 'edits a comment' do
-      pending('todo')
-      entry = FactoryGirl.create(:entry)
-      comment = FactoryGirl.create(:comment, comment: 'previous comment-content', entry_id: entry.id)
+      comment.update(comment: 'previous comment content', entry_id: entry.id)
       visit entry_path(entry)
-      # edits the comment
       within('.down_comments') do
         click_link('Bearbeiten')
       end
-      within('.down_comments') do
-      end
-      # fill_in 'comment_comment', with: 'new comment-content'
-      fill_in '#comment_comment', with: 'fucking do it'
-      save_and_open_page
+      fill_in 'comment_comment', with: 'new comment-content'
       click_button('Speichern')
       expect(page).to have_content('new comment-content')
     end
-    #create
     it 'writes and saves a comment' do
       visit entry_path(entry)
       fill_in 'comment_comment', with: comment.comment
@@ -42,13 +34,9 @@ describe 'comments management' do
       click_button('Speichern')
       expect(page).to have_content('The form contains 1 error.')
     end
-    #destroy
     it 'deletes a comment' do
-      # writes a comment to be able to delete it
+      comment.update(entry_id: entry.id)
       visit entry_path(entry)
-      fill_in 'comment_comment', with: comment.comment
-      click_button('Speichern')
-      # deletes the comment
       within('.down_comments') do
         click_link('Löschen')
       end
