@@ -3,7 +3,7 @@
   <div class="down_under">
     <div class="funky_grey_seperator">
       <span class="right-action"> <%= link_to 'Aktuelle Version', entry_path(@entry), class: 'btn' %></span>
-      <span class="right-action"> <%= link_to 'Versionsindex', entry_entry_versions_path(@entry), class: 'btn' %></span>
+      <span class="right-action"> <%= link_to 'Versionsindex', entry_versions_path(@entry), class: 'btn' %></span>
       <h4>Kennungsdaten</h4>
       <% unless @entry_papertrail_version_reified.user_id.blank? %>
 	<dt class="label">Verfasser</dt>

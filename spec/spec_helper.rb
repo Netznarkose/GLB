@@ -9,6 +9,7 @@ require 'capybara/rspec'
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
 RSpec.configure do |config|
+  config.fail_fast = true
   Dir[Rails.root.join("spec/controllers/shared_examples/**/*.rb")].each {|f| require f}
   # ## Mock Framework
   #
