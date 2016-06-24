@@ -53,7 +53,7 @@
   <div class="down_under">
     <div class="funky_grey_seperator">
       <span class="right-action"> <%= link_to 'Bearbeiten', edit_entry_path(@entry), class: 'btn' %></span>
-      <span class="right-action"> <%= link_to "#{@entry.versions.size - 1 } Versionen", entry_entry_versions_path(@entry), class: 'btn' %></span>
+      <span class="right-action"> <%= link_to "#{@entry.versions.size - 1 } Versionen", entry_versions_path(@entry), class: 'btn' %></span>
       <h4>Kennungsdaten</h4>
       <% unless @entry.user_id.blank? %>
         <dt class="label">Verfasser</dt>
