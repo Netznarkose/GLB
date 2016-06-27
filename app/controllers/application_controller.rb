@@ -2,8 +2,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   protect_from_forgery :except => :receive_guest
   layout :layout_by_resource
-  # before_filter :authenticate_user!
-  # before_action :configure_permitted_parameters, if: :devise_controller?
 
   rescue_from ActiveRecord::RecordNotFound, :with => :record_not_found
   rescue_from CanCan::AccessDenied do |exception|
@@ -13,10 +11,6 @@ class ApplicationController < ActionController::Base
 
   def current_user
     super || User.new(role: 'guest') #methoden auftruf der superklasse
-  end
-
-  def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:account_update) << :email
   end
 
   def record_not_found
