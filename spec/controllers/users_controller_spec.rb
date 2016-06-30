@@ -122,17 +122,35 @@ describe UsersController, type: :controller do
       before do
         sign_in admin
       end
-      it 'I can delete users and get redirected to users index' do
-        expect{
-          delete :destroy, id: user.id
-        }.to change(User, :count).by(-1)
-        expect(response).to redirect_to(users_path)
+      context 'users that does not hold entries' do
+        before do
+          user
+        end
+        it 'I can delete and get redirected to users index' do
+          expect{
+            delete :destroy, id: user.id
+          }.to change(User, :count).by(-1)
+          expect(response).to redirect_to(users_path)
+          expect(flash[:notice]).to eq("User #{user.name} was successfully deleted.")
+        end
+      end
+      context 'users that holds entries' do
+        before do
+          user.entries << FactoryGirl.create(:entry)
+        end
+        it 'I can delete entries are getting reassigned to superadim' do
+          expect{
+            delete :destroy, id: user.id
+          }.to change(User, :count).by(-1)
+          expect(response).to redirect_to(users_path)
+          expect(flash[:notice]).to eq("User #{user.name} was successfully deleted. Entries have been moved to Superadmin")
+        end
       end
     end
-    context 'as non-admin' do
-      subject { delete :destroy, id: user.id }
+  end
+  context 'as non-admin' do
+    subject { delete :destroy, id: user.id }
 
-      it_behaves_like 'something that only admin can access'
-    end
+    it_behaves_like 'something that only admin can access'
   end
 end

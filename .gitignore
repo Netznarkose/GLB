@@ -13,3 +13,4 @@ config/database.yml
 public/assets
 public/compiled_assets
 *.DS_Store
+.pryrc

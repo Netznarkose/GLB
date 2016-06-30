@@ -54,9 +54,16 @@ class UsersController < ApplicationController
 
   def destroy
     respond_to do |format|
-      @user.destroy
-      format.html { redirect_to users_url, notice: "User #{@user.name} was successfully deleted." }
-      format.json { head :no_content }
+      if @user.entries.any?
+        @user.assign_remaining_entries_to_ulrich_appel
+        @user.destroy
+        format.html { redirect_to users_url, notice: "User #{@user.name} was successfully deleted. Entries have been moved to Superadmin" }
+        format.json { head :no_content }
+      else
+        @user.destroy
+        format.html { redirect_to users_url, notice: "User #{@user.name} was successfully deleted." }
+        format.json { head :no_content }
+      end
     end
   end
 

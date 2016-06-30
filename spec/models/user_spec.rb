@@ -34,19 +34,23 @@ describe User do
       FactoryGirl.create(:admin, email: 'ulrich.apel@uni-tuebingen.de')
     end
 
-    it 'does not delete the corresponding entries' do
-      ulrich_appel
+    it 'does not delete a user that holds entries' do
       user.entries << FactoryGirl.create(:entry)
-      user.destroy # model level
-      expect(Entry.count).to eq(1)
+      expect { user.destroy }.to raise_error("User still holds entries")
     end
-    it 'should assign all corresponding entries to ulrich appel' do
-      ulrich_appel
-      user.entries << FactoryGirl.create(:entry)
-      entry = user.entries.first
-      user.destroy
-      entry.reload
-      expect(entry.user).to eq(ulrich_appel)
-    end
+    # it 'does not delete the corresponding entries' do
+    #   ulrich_appel
+    #   user.entries << FactoryGirl.create(:entry)
+    #   user.destroy # model level
+    #   expect(Entry.count).to eq(1)
+    # end
+    # it 'should assign all corresponding entries to ulrich appel' do
+    #   ulrich_appel
+    #   user.entries << FactoryGirl.create(:entry)
+    #   entry = user.entries.first
+    #   user.destroy
+    #   entry.reload
+    #   expect(entry.user).to eq(ulrich_appel)
+    # end
   end
 end
