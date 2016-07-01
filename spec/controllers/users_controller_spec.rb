@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe UsersController, type: :controller do
-  let(:ulrich_appel) { FactoryGirl.create(:admin, email: 'ulrich.apel@uni-tuebingen.de') }
+  let(:super_admin) { FactoryGirl.create(:admin, email: 'ulrich.apel@uni-tuebingen.de') }
   let(:admin) { FactoryGirl.create(:admin) }
   let(:editor) { FactoryGirl.create(:editor) }
   let(:author) { FactoryGirl.create(:author) }
@@ -114,34 +114,42 @@ describe UsersController, type: :controller do
 
 
   describe 'DELETE destroy' do
-    before do
-      user
-      ulrich_appel
-    end
     context 'as admin' do
       before do
         sign_in admin
       end
-      context 'users that does not hold entries' do
+      context 'users without entries' do
         before do
           user
         end
-        it 'I can delete and get redirected to users index' do
+        it 'get deleted' do
           expect{
             delete :destroy, id: user.id
           }.to change(User, :count).by(-1)
+        end
+        it 'admin gets redirected to user-index and a notification' do
+          delete :destroy, id: user.id
           expect(response).to redirect_to(users_path)
           expect(flash[:notice]).to eq("User #{user.name} was successfully deleted.")
         end
       end
-      context 'users that holds entries' do
+      context 'users that hold entries' do
         before do
           user.entries << FactoryGirl.create(:entry)
+          super_admin
         end
-        it 'I can delete entries are getting reassigned to superadim' do
+        it 'get deleted' do
           expect{
             delete :destroy, id: user.id
           }.to change(User, :count).by(-1)
+        end
+        it 'remaining entries get reassigned to superadmin' do
+          expect{
+            delete :destroy, id: user.id
+          }.to change(super_admin.entries, :count).by(+1)
+        end
+        it 'admin gets redirected to user-index and a notification' do
+          delete :destroy, id: user.id
           expect(response).to redirect_to(users_path)
           expect(flash[:notice]).to eq("User #{user.name} was successfully deleted. Entries have been moved to Superadmin")
         end

@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe User do
   let!(:user) { FactoryGirl.create(:user) }
+  let!(:super_admin) { FactoryGirl.create(:user, email: 'ulrich.apel@uni-tuebingen.de') }
 
   it 'should create a new instance of a user
   given valid attributes' do
@@ -29,28 +30,22 @@ describe User do
     expect(user).not_to be_valid
   end
 
-  context 'if we delete a user' do
-    let(:ulrich_appel) do
-      FactoryGirl.create(:admin, email: 'ulrich.apel@uni-tuebingen.de')
-    end
-
+  context 'deletion' do
     it 'does not delete a user that holds entries' do
       user.entries << FactoryGirl.create(:entry)
-      expect { user.destroy }.to raise_error("User still holds entries")
+      expect { user.destroy }.to raise_error('User still holds entries')
     end
-    # it 'does not delete the corresponding entries' do
-    #   ulrich_appel
-    #   user.entries << FactoryGirl.create(:entry)
-    #   user.destroy # model level
-    #   expect(Entry.count).to eq(1)
-    # end
-    # it 'should assign all corresponding entries to ulrich appel' do
-    #   ulrich_appel
-    #   user.entries << FactoryGirl.create(:entry)
-    #   entry = user.entries.first
-    #   user.destroy
-    #   entry.reload
-    #   expect(entry.user).to eq(ulrich_appel)
-    # end
+
+    it 'assigns remaining entries to super admin' do
+      user.entries << FactoryGirl.create(:entry)
+      entry = user.entries.first
+      user.assign_remaining_entries_to_super_admin
+      entry.reload
+      expect(entry.user).to eq(super_admin)
+    end
+    it 'deletes user entries when transfer of entries was successfull' do
+      pending('todo')
+      raise
+    end
   end
 end
