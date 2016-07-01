@@ -22,8 +22,8 @@ FactoryGirl.define do
   end
 
   factory :author, parent: :user do
-    sequence(:email){|n| "editor_#{n}@example.com"}
-    sequence(:name){|n| "editor#{n}"}
+    sequence(:email){|n| "author#{n}@example.com"}
+    sequence(:name){|n| "author#{n}"}
     role "author"
   end
 
