@@ -185,9 +185,5 @@
       <% end %>
     </div>
   </div>
-  <% if @renders_comment_edit_partial %> 
-    <%= render 'comments/edit_comment' %>
-  <% else %> 
-    <%= render 'comments/show_comment' %>
-  <% end %>
+  <%= render 'comments/show_comment' %>
 <% end %>

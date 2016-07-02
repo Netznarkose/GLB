@@ -4,7 +4,6 @@ class CommentsController < ApplicationController
   before_action :find_comment, only: [:edit, :destroy, :update]
 
   def edit
-    @renders_edit_comment_partial = true
     render 'entries/show'
   end
 

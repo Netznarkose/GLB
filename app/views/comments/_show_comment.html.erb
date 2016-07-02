@@ -7,17 +7,19 @@
     <% end %>
     <ul class="unstyled">
       <% @entry.comments.order("updated_at DESC").each do |comment| %>
-      <li>
-        <strong><%= comment.user.name %></strong> 
-        <%= "(#{comment.updated_at.to_formatted_s(:short)})" %>
-        <span class="right-action"><%= link_to "Bearbeiten", edit_entry_comment_path(@entry, comment) %> 
-        | <%= link_to "Löschen", [@entry, comment], method: :delete %></span>
-        </br>
-        <%= comment.comment %>
-        </br>
-        </br>
-      </li>
-    <% end%>
-  </ul>
+        <li>
+          <strong><%= comment.user.name %></strong> 
+          <%= "(#{comment.updated_at.to_formatted_s(:short)})" %>
+          <% if current_user.admin? || current_user.editor? || (current_user.author? && comment.user_id == current_user.id) || (current_user.commentator? && comment.user_id == current_user.id) %>
+             <span class="right-action"><%= link_to "Bearbeiten", edit_entry_comment_path(@entry, comment) %> 
+             | <%= link_to "Löschen", [@entry, comment], method: :delete %></span>
+           <% end %>
+           </br>
+           <%= comment.comment %>
+           </br>
+           </br>
+        </li>
+      <% end%>
+    </ul>
   </div>
 </div>
