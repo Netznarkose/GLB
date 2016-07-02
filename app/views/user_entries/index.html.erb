@@ -69,7 +69,7 @@
         <td><%= entry.japanische_umschrift %></td>
         <td><%= entry.kanji %></td>
         <td><%= link_to 'Anzeigen', entry %>
-        <% if current_user.admin? || current_user.editor? || current_user.author? %>
+        <% if current_user.admin? || current_user.editor? || (current_user.author? && entry.user_id == current_user.id) %>
           <br/>
           <%= link_to 'Bearbeiten', edit_entry_path(entry) %>
           <br/>
