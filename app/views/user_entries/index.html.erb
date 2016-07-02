@@ -14,21 +14,21 @@
       <li class="nav-header">Sortieren</li>
       <br>
       <div class="btn-group">
-      <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-      Felder Auswahl 
-        <span class="caret"></span>
-      </a>
-      <ul class="dropdown-menu">
-        <li><%= sortable 'kennzahl', 'Kennzahl', 'asc' %></li>
-        <li><%= sortable 'kennzahl', 'Kennzahl (reversed)', 'desc' %></li>
-        <li><%= sortable 'japanische_umschrift', 'Japanische Umschrift', 'asc' %></li>
-        <li><%= sortable 'japanische_umschrift', 'Japanische Umschrift (reversed)', 'desc' %></li>
-        <li><%= sortable 'id', 'Id', 'asc' %></li>
-        <li><%= sortable 'id', 'Id (reversed)', 'desc' %></li>
-        <li><%= sortable 'kanji', 'Kanji', 'asc' %></li>
-        <li><%= sortable 'kanji', 'Kanji (reversed)', 'desc' %></li>
-      </ul>
-    </div>
+        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+          Felder Auswahl 
+          <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+          <li><%= sortable 'kennzahl', 'Kennzahl', 'asc' %></li>
+          <li><%= sortable 'kennzahl', 'Kennzahl (reversed)', 'desc' %></li>
+          <li><%= sortable 'japanische_umschrift', 'Japanische Umschrift', 'asc' %></li>
+          <li><%= sortable 'japanische_umschrift', 'Japanische Umschrift (reversed)', 'desc' %></li>
+          <li><%= sortable 'id', 'Id', 'asc' %></li>
+          <li><%= sortable 'id', 'Id (reversed)', 'desc' %></li>
+          <li><%= sortable 'kanji', 'Kanji', 'asc' %></li>
+          <li><%= sortable 'kanji', 'Kanji (reversed)', 'desc' %></li>
+        </ul>
+      </div>
     </ul>
   </div>
 <% end %>
@@ -46,7 +46,7 @@
     <h1><%= "#{@user.name}'s Einträge" %></h1>
   <% end %>
   <span class="label"><%= @user.entries.count %>
-    <%= @user.entries.count > 1 ? "Einträge" : "Eintrag" %>
+  <%= @user.entries.count > 1 ? "Einträge" : "Eintrag" %>
   </span>
 
   <%# <%= @user.entries.paginate %1> %>
@@ -69,11 +69,9 @@
         <td><%= entry.japanische_umschrift %></td>
         <td><%= entry.kanji %></td>
         <td><%= link_to 'Anzeigen', entry %>
-        <% if entry.user == current_user || current_user.admin? %>
+        <% if current_user.admin? || current_user.editor? || current_user.author? %>
           <br/>
           <%= link_to 'Bearbeiten', edit_entry_path(entry) %>
-        <% end %>
-        <% if current_user.admin? %>
           <br/>
           <%= link_to 'Löschen', entry, method: :delete, data: { confirm: 'Wollen Sie diesen Eintrag wirklich löschen?' }%>
         <% end %>
