@@ -11,7 +11,7 @@ class EntriesController < ApplicationController
     else
       @entries = Entry.order(sort_column + " " + sort_direction).page(params[:page])
     end
-    @count = @entries.count
+    @count = Entry.all.count
     respond_to do |format|
       format.html # index.html.erb
       format.csv {send_data @entries.to_csv, :type => 'text/csv', :disposition => "attachment; filename=glb.csv"}

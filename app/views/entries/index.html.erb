@@ -1,6 +1,6 @@
 <%= render 'entries/search_and_sort_box' %>
 <% content_for :content do %>
-</br>
+  </br>
   <% if flash[:notice] %>
     <div class="alert alert-notice">
       <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -9,55 +9,50 @@
   <% end %>
   <h1>Das Große Lexikon des Buddhismus</h1>
   <span class="label"><%= @count %>
-    <%= @count > 1 ? "Einträge" : "Eintrag" %>
+  <%= @count > 1 ? "Einträge" : "Eintrag" %>
   </span>
 
   <%= paginate @entries %>
   <table class="table table-striped">
 
     <% @entries.each do |entry| %>
-        <tr class="index-text-container" >
-          <td>
+      <tr class="index-text-container" >
+        <td>
           <% unless entry.japanische_umschrift.blank? %>
-            <strong> <%= entry.japanische_umschrift %></strong>
-          <% end %>
+          <strong> <%= entry.japanische_umschrift %></strong>
+        <% end %>
 
-          <% unless entry.kanji.blank? %>
-            <strong> | <%= entry.kanji %></strong>
-          <% end %>
+        <% unless entry.kanji.blank? %>
+          <strong> | <%= entry.kanji %></strong>
+        <% end %>
 
-          <% unless entry.kennzahl.blank? %>
-            <strong> | <%= entry.kennzahl%></strong>
-          <% end %>
+        <% unless entry.kennzahl.blank? %>
+          <strong> | <%= entry.kennzahl%></strong>
+        <% end %>
 
-          <% unless entry.comments.blank? %>
-            <% @count_me = entry.comments.count %>
-            <% @comment_me = entry.comments.count > 1 ? "Kommentare" : "Kommentar" %>
-            <span class="right-action"><%= link_to "#{@count_me} #{@comment_me}", entry %> |
 
-          <% end %>
 
-          <span class="right-action"> <%= link_to 'Anzeigen', entry %>
-            <% if entry.user == current_user || current_user.admin? %>
-            | <%= link_to 'Bearbeiten', edit_entry_path(entry) %>
+        <span class="right-action">             
+          <% if (current_user.commentator? && entry.freigeschaltet == true) || (current_user.guest? && entry.freigeschaltet == true) %>
+            <% unless entry.comments.blank? %>
+              <% @count_me = entry.comments.count %>
+              <% @comment_me = entry.comments.count > 1 ? "Kommentare" : "Kommentar" %>
+              <%= link_to "#{@count_me} #{@comment_me}", entry %>
             <% end %>
-            </span>
+            | <%= link_to 'Anzeigen', entry %>
+        <% end %>
+        </span>
+        </td>
+      </tr>
+      <% if entry.uebersetzung.blank? || (current_user.guest? && entry.freigeschaltet == false) %>
+        <tr></tr>
+      <% else %>
+        <tr class="index-text-container_truncate" >
+          <td>
+            <%= raw(entry.uebersetzung.truncate(2000)) %>
           </td>
         </tr>
-        <% if entry.uebersetzung.blank? || current_user.guest? %>
-          <tr></tr>
-        <% else %>
-          <tr class="index-text-container_truncate" >
-            <td>
-              <%# <%= raw(entry.uebersetzung.slice(0,300)) %1> %> 
-              <%# <%= raw(entry.uebersetzung) %1> %> 
-              <%= raw(entry.uebersetzung.truncate(2000)) %>
-              <%# <%= raw(entry.uebersetzung) %1> %>
-              <%# <%= "(...)" if entry.uebersetzung.length > 300 %1> %>
-              <%# <%=  entry.uebersetzung.length  %1> %>
-            </td>
-          </tr>
-        <% end %>
+      <% end %>
     <% end %>
   </table>
   <%= paginate @entries %>
