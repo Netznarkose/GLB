@@ -2,7 +2,7 @@ class UserEntriesController < ApplicationController
   before_action :find_user, only: :index
   def index
     if search_item = params[:search]
-      @user_entries = @user.entries.search(search_item)
+      @user_entries = @user.entries.search(search_item).page(params[:page])
     else
       @user_entries = @user.entries.order(sort_column + ' ' + sort_direction).page(params[:page])
     end
