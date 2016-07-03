@@ -9,13 +9,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def show
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @user }
-    end
-  end
-
   def new
     @user = User.new
     respond_to do |format|
@@ -43,7 +36,7 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to user_path, notice: 'User was successfully updated.' }
+        format.html { redirect_to users_path, notice: 'User was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { redirect_to edit_user_path(@user), notice: @user.errors.messages.values.flatten.uniq.join('<br />') } # ?

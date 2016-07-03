@@ -15,6 +15,7 @@ gem "kaminari"
 gem 'bcrypt'
 gem 'cancancan'
 gem 'bootstrap-sass'
+gem 'traceroute'
 
 group :assets do
   gem 'sass-rails', '~> 5.0'
@@ -25,8 +26,8 @@ group :development do
   gem 'pry-rails'
   gem 'pry'
   gem 'awesome_print'
-  gem 'capistrano'
   gem 'rvm-capistrano'
+  gem 'capistrano'
 end
 
 group :test do

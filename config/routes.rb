@@ -2,7 +2,7 @@ DGLB::Application.routes.draw do
   root to: 'entries#index'
   devise_for :users, skip: :registration
   resources :entries
-  resources :users do
+  resources :users, except: :show do
     resources :entries, controller: 'user_entries', only: :index
   end
   resources :entries do
