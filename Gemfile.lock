@@ -272,7 +272,6 @@ DEPENDENCIES
   launchy
   nokogiri
   paper_trail
-  pry
   pry-byebug
   pry-rails
   rails (= 4.2.4)

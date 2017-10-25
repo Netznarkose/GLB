@@ -21,7 +21,7 @@ end
 
 group :development do
   gem 'pry-rails'
-  gem 'pry'
+  gem 'pry-byebug'
   gem 'awesome_print'
   gem 'rvm-capistrano'
   gem 'capistrano'
