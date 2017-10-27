@@ -13,25 +13,27 @@
         <span class="left-action" id="page_count" style="display: block; font-size: .83em; margin-top: 1.67em; margin-bottom: 1.67em; font-weight: bold"></span>
         <% pages = to_scan_pages(@entry.kennzahl) %>
 
-        <%= image_tag "http://buddhismus-lexikon.eu:/SBDJ-Original-JPGs/Lex_#{pages[0]}_oben.jpg", style: "display: block;", id: "page0", size: '720x880'  %>
+        <%= image_tag "http://buddhismus-lexikon.eu:/SBDJ-Original-JPGs/Lex_#{pages[0]}_oben.jpg", style: "display: block;", id: "page0", size: '780x880'  %>
         <%= image_tag "http://buddhismus-lexikon.eu:/SBDJ-Original-JPGs/Lex_#{pages[0]}_mitten.jpg", style: "display: none;", id: "page1", size: '780x880'  %>
         <%= image_tag "http://buddhismus-lexikon.eu:/SBDJ-Original-JPGs/Lex_#{pages[0]}_unten.jpg", style: "display: none;", id: "page2", size: '780x880'  %>
 
-        <%= image_tag "http://buddhismus-lexikon.eu:/SBDJ-Original-JPGs/Lex_#{pages[1]}_oben.jpg", style: "display: none;", id: "page3", size: '880x880'  %>
-        <%= image_tag "http://buddhismus-lexikon.eu:/SBDJ-Original-JPGs/Lex_#{pages[1]}_mitten.jpg", style: "display: none;", id: "page4", size: '880x880'  %>
-        <%= image_tag "http://buddhismus-lexikon.eu:/SBDJ-Original-JPGs/Lex_#{pages[1]}_unten.jpg", style: "display: none;", id: "page5", size: '880x880'  %>
+        <%= image_tag "http://buddhismus-lexikon.eu:/SBDJ-Original-JPGs/Lex_#{pages[1]}_oben.jpg", style: "display: none;", id: "page3", size: '780x880'  %>
+        <%= image_tag "http://buddhismus-lexikon.eu:/SBDJ-Original-JPGs/Lex_#{pages[1]}_mitten.jpg", style: "display: none;", id: "page4", size: '780x880'  %>
+        <%= image_tag "http://buddhismus-lexikon.eu:/SBDJ-Original-JPGs/Lex_#{pages[1]}_unten.jpg", style: "display: none;", id: "page5", size: '780x880'  %>
 
-        <%= image_tag "http://buddhismus-lexikon.eu:/SBDJ-Original-JPGs/Lex_#{pages[2]}_oben.jpg", style: "display: none;", id: "page6", size: '880x880'  %>
-        <%= image_tag "http://buddhismus-lexikon.eu:/SBDJ-Original-JPGs/Lex_#{pages[2]}_mitten.jpg", style: "display: none;", id: "page7", size: '880x880'  %>
-        <%= image_tag "http://buddhismus-lexikon.eu:/SBDJ-Original-JPGs/Lex_#{pages[2]}_unten.jpg", style: "display: none;", id: "page8", size: '880x880'  %>
+        <%= image_tag "http://buddhismus-lexikon.eu:/SBDJ-Original-JPGs/Lex_#{pages[2]}_oben.jpg", style: "display: none;", id: "page6", size: '780x880'  %>
+        <%= image_tag "http://buddhismus-lexikon.eu:/SBDJ-Original-JPGs/Lex_#{pages[2]}_mitten.jpg", style: "display: none;", id: "page7", size: '780x880'  %>
+        <%= image_tag "http://buddhismus-lexikon.eu:/SBDJ-Original-JPGs/Lex_#{pages[2]}_unten.jpg", style: "display: none;", id: "page8", size: '780x880'  %>
         </br>
-        <%= f.label :japanischer_quelltext %>
-        <%= f.text_area :japanischer_quelltext, rows: "4" %>
-        <%= f.label :japanischer_quelltext_bearbeitungsstand %>
-        <%= f.text_field :japanischer_quelltext_bearbeitungsstand %>
+        <div class="just_playing">
+          <%= f.label :japanischer_quelltext %>
+          <%= f.text_area :japanischer_quelltext, rows: 4 %>
+          <%= f.label :japanischer_quelltext_bearbeitungsstand %>
+          <%= f.text_field :japanischer_quelltext_bearbeitungsstand %>
+        </div>
       </div>
     </div>
-    <div style="margin-left: 950px;"> 
+    <div style="margin-left: 820px;"> 
       <%= render 'shared/error_messages', object: f.object %>
       <div class="funky_grey_seperator">
         <h4>Kennungsdaten</h4>
