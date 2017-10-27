@@ -3,10 +3,8 @@
   <% end %>
   <%= form_for @entry do |f| %>
     <div style="width: 800px; position: fixed">
-      <span class="right-action"><%= f.submit 'Bearbeitung speichern', class: 'btn' %></span><span class="right-action"> <%= link_to 'Anzeigen', @entry, class: 'btn' %></span>
-
       <div class="funky_grey_seperator">
-        <h1>Eintrag Bearbeiten</h1>
+        <span class="left-action"><%= f.submit 'Bearbeitung speichern', class: 'btn' %></span><span class="left-action"> <%= link_to 'Anzeigen', @entry, class: 'btn' %></span>
         <span class="right-action"><button class= "btn" id="forward" type="button" onclick="forward_switch()">Vor</button></span>
         <span class="right-action"><button class= "btn" id ="back" type="button" onclick="back_switch()">Zurück</button></span>
         <span class="right-action"><button class= "btn" id ="back_first" type="button" onclick="back_first_switch()">Erste Seite</button></span>
@@ -25,7 +23,7 @@
         <%= image_tag "http://buddhismus-lexikon.eu:/SBDJ-Original-JPGs/Lex_#{pages[2]}_mitten.jpg", style: "display: none;", id: "page7", size: '780x880'  %>
         <%= image_tag "http://buddhismus-lexikon.eu:/SBDJ-Original-JPGs/Lex_#{pages[2]}_unten.jpg", style: "display: none;", id: "page8", size: '780x880'  %>
         </br>
-        <div class="just_playing">
+        <div class="resize_input_fields">
           <%= f.label :japanischer_quelltext %>
           <%= f.text_area :japanischer_quelltext, rows: 4 %>
           <%= f.label :japanischer_quelltext_bearbeitungsstand %>
@@ -39,55 +37,55 @@
         <h4>Kennungsdaten</h4>
         <% if can?(:manage, @entry) %>
           <%= f.label :user_id, 'Verfasser' %>
-          <%= select("entry", "user_id", User.all.collect {|user| [ user.name, user.id ] }, { :selected => @entry.user_id }) %>
+          <%= select("entry", "user_id", User.all.collect {|user| [ user.name, user.id ] }, { :selected => @entry.user_id }, style: "width:550px") %>
         <% else %>
           <%= f.hidden_field :user_id, value: current_user.id  %>
         <% end %>
         <%= f.label :freigeschaltet %>
         <%= f.check_box :freigeschaltet %>
         <%= f.label :namenskuerzel %>
-        <%= f.text_field :namenskuerzel %>
+        <%= f.text_field :namenskuerzel, style: "width:530px"%>
         <%= f.label :kennzahl %>
-        <%= f.text_field :kennzahl, required: true %>
+        <%= f.text_field :kennzahl, required: true, style: "width:530px"%>
         <%= f.label :spaltenzahl %>
-        <%= f.text_field :spaltenzahl %>
+        <%= f.text_field :spaltenzahl, style: "width:530px" %>
         <%= f.label :abweichende_kennzahl%>
-        <%= f.text_field :abweichende_kennzahl%>
+        <%= f.text_field :abweichende_kennzahl, style: "width:530px"%>
         <%= f.label :seite_textblock2005, 'Seite Textblock 2005' %>
-        <%= f.text_field :seite_textblock2005 %>
+        <%= f.text_field :seite_textblock2005, style: "width:530px" %>
       </div>
       <div class="funky_grey_seperator">
         <h4>Lemma-Schreibungen und -Aussprachen</h4>
         <button type="button" class="btn1" id="funk">Mehr Felder</button>
         <%= f.label :japanische_umschrift%>
-        <%= f.text_field :japanische_umschrift %>
+        <%= f.text_field :japanische_umschrift, style: "width:530px" %>
         <%= f.label :japanische_umschrift_din, 'Japanische Umschrift Din' %>
-        <%= f.text_field :japanische_umschrift_din %>
+        <%= f.text_field :japanische_umschrift_din, style: "width:530px" %>
         <%= f.label :kanji %>
-        <%= f.text_field :kanji %>
+        <%= f.text_field :kanji, style: "width:530px" %>
         <%= f.label :chinesisch %>
-        <%= f.text_field :chinesisch %>
+        <%= f.text_field :chinesisch, style: "width:530px" %>
         <div class="toggle_lemma_schreibungen_visibility" style="display:none">
           <%= f.label :tibetisch %>
-          <%= f.text_field :tibetisch %>
+          <%= f.text_field :tibetisch, style: "width:530px" %>
         </div>
         <%= f.label :koreanisch %>
-        <%= f.text_field :koreanisch %>
+        <%= f.text_field :koreanisch, style: "width:530px" %>
         <%= f.label :pali %>
-        <%= f.text_field :pali %>
+        <%= f.text_field :pali, style: "width:530px" %>
         <%= f.label :sanskrit %>
-        <%= f.text_field :sanskrit %>
+        <%= f.text_field :sanskrit, style: "width:530px" %>
         <div class="toggle_lemma_schreibungen_visibility" style="display:none">
           <%= f.label :weitere_sprachen %>
-          <%= f.text_field :weitere_sprachen %>
+          <%= f.text_field :weitere_sprachen, style: "width:530px" %>
           <%= f.label :alternative_japanische_lesungen %>
-          <%= f.text_field :alternative_japanische_lesungen %>
+          <%= f.text_field :alternative_japanische_lesungen, style: "width:530px" %>
           <%= f.label :schreibvarianten %>
-          <%= f.text_field :schreibvarianten %>
+          <%= f.text_field :schreibvarianten, style: "width:530px" %>
           <%= f.label :lemma_in_katakana, 'Lemma in Katakana' %>
-          <%= f.text_field :lemma_in_katakana %>
+          <%= f.text_field :lemma_in_katakana, style: "width:530px" %>
           <%= f.label :lemma_in_lateinbuchstaben, 'Lemma in Lateinbuchstaben' %>
-          <%= f.text_field :lemma_in_lateinbuchstaben %>
+          <%= f.text_field :lemma_in_lateinbuchstaben, style: "width:530px" %>
         </div>
       </div>
       <div class="funky_grey_seperator">
