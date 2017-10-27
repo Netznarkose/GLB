@@ -4,7 +4,6 @@ gem 'rails', '4.2.4'
 gem 'sqlite3'
 gem 'jquery-rails'
 gem "ckeditor"
-gem 'turbolinks'
 gem 'nokogiri'
 
 gem 'devise'

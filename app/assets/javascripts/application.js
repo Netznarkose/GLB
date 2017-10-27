@@ -13,7 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap
-//= require turbolinks
 //= require ckeditor/init
 //= require_tree .
 $(document).ready(function(){
