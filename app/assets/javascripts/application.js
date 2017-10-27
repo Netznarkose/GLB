@@ -30,7 +30,7 @@ $(document).ready(function(){
 $(function(){
   $(".btn1").click(function () {
     $(this).text(function(i, text){
-      return text === "Mehr Felder" ? "Weniger Felder" : "Mehr Felder";
+      return text === "Weniger Felder" ? "Weniger Felder" : "Weniger Felder";
     })
   });
 })

@@ -56,7 +56,6 @@
       </div>
       <div class="funky_grey_seperator">
         <h4>Lemma-Schreibungen und -Aussprachen</h4>
-        <button type="button" class="btn1" id="funk">Mehr Felder</button>
         <%= f.label :japanische_umschrift%>
         <%= f.text_field :japanische_umschrift, style: "width:530px" %>
         <%= f.label :japanische_umschrift_din, 'Japanische Umschrift Din' %>
@@ -87,10 +86,10 @@
           <%= f.label :lemma_in_lateinbuchstaben, 'Lemma in Lateinbuchstaben' %>
           <%= f.text_field :lemma_in_lateinbuchstaben, style: "width:530px" %>
         </div>
+        <button type="button" class="btn1" id="funk">Weitere Felder</button>
       </div>
       <div class="funky_grey_seperator">
         <h4>Übersetzungen, Quellenangaben, Literatur und Ergänzungen</h4>
-        <button type="button" class="btn2">Mehr Felder</button>
         <%= f.label :lemma_art %>
         <%= f.select :lemma_art, ["", "Person", "Tempel", "Werk", "Fachtermini", "Geographische Bezeichnung", "Ereignis"] %> 
         <%= f.label :jahreszahlen %>
@@ -115,6 +114,7 @@
           <%= f.label :japanischer_quelltext_bearbeitungsstand %>
           <%= f.text_field :japanischer_quelltext_bearbeitungsstand %>
         </div>
+        <button type="button" class="btn2">Weitere Felder</button>
       </div>
     </div>
   <% end %>
