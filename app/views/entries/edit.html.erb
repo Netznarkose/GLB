@@ -31,13 +31,13 @@
         </div>
       </div>
     </div>
-    <div style="margin-left: 820px; width: 570px"> 
+    <div style="margin-left: 820px; width: 572px"> 
       <%= render 'shared/error_messages', object: f.object %>
       <div class="funky_grey_seperator">
         <h4>Kennungsdaten</h4>
         <% if can?(:manage, @entry) %>
           <%= f.label :user_id, 'Verfasser' %>
-          <%= select("entry", "user_id", User.all.collect {|user| [ user.name, user.id ] }, { :selected => @entry.user_id }, style: "width:550px") %>
+          <%= select("entry", "user_id", User.all.collect {|user| [ user.name, user.id ] }, { :selected => @entry.user_id }, style: "width:540px") %>
         <% else %>
           <%= f.hidden_field :user_id, value: current_user.id  %>
         <% end %>
@@ -91,11 +91,11 @@
       <div class="funky_grey_seperator">
         <h4>Übersetzungen, Quellenangaben, Literatur und Ergänzungen</h4>
         <%= f.label :lemma_art %>
-        <%= f.select :lemma_art, ["", "Person", "Tempel", "Werk", "Fachtermini", "Geographische Bezeichnung", "Ereignis"] %> 
+        <%= f.select(:lemma_art, ["", "Person", "Tempel", "Werk", "Fachtermini", "Geographische Bezeichnung", "Ereignis"], {}, style: "width: 540px;") %>
         <%= f.label :jahreszahlen %>
-        <%= f.text_field :jahreszahlen %>
+        <%= f.text_field :jahreszahlen, style: "width:530px" %>
         <%= f.label :deutsche_uebersetzung %>
-        <%= f.text_field :deutsche_uebersetzung %>
+        <%= f.text_field :deutsche_uebersetzung, style: "width:530px" %>
         <%= f.label :uebersetzung %>
         <%= f.cktext_area :uebersetzung, :ckeditor => {:uiColor => "#AADC6E", :toolbar => "MyToolbar"} %>
         <%= f.label :quellen %>
@@ -110,9 +110,9 @@
           <%= f.label :literatur_ergaenzungen %>
           <%= f.cktext_area :literatur_ergaenzungen, :ckeditor => {:uiColor => "#AADC6E", :toolbar => "MyToolbar"} %>
           <%= f.label :japanischer_quelltext %>
-          <%= f.text_field :japanischer_quelltext %>
+          <%= f.text_field :japanischer_quelltext, style: "width:530px" %>
           <%= f.label :japanischer_quelltext_bearbeitungsstand %>
-          <%= f.text_field :japanischer_quelltext_bearbeitungsstand %>
+          <%= f.text_field :japanischer_quelltext_bearbeitungsstand, style: "width:530px" %>
         </div>
         <button type="button" class="btn2">Weitere Felder</button>
       </div>
