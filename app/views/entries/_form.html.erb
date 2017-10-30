@@ -20,7 +20,7 @@
     <%= f.text_field :kennzahl %>
     <%= f.label :spaltenzahl %>
     <%= f.text_field :spaltenzahl %>
-    <%= f.label :abweichende_kennzahl%>
+    <%= f.label :abweichende_kennzahl, 'Abweichende Kennzahl' %>
     <%= f.text_field :abweichende_kennzahl%>
     <%= f.label :seite_textblock2005, 'Seite Textblock 2005' %>
     <%= f.text_field :seite_textblock2005 %>
@@ -29,7 +29,7 @@
     <h4>Lemma-Schreibungen und -Aussprachen</h4>
     <%= f.label :japanische_umschrift%>
     <%= f.text_field :japanische_umschrift %>
-    <%= f.label :japanische_umschrift_din, 'Japanische Umschrift Din' %>
+    <%= f.label :japanische_umschrift_din, 'Japanische Umschrift nach DIN 32708' %>
     <%= f.text_field :japanische_umschrift_din %>
     <%= f.label :kanji %>
     <%= f.text_field :kanji %>
@@ -74,10 +74,9 @@
     <%= f.cktext_area :quellen_ergaenzungen, :ckeditor => {:uiColor => "#AADC6E", :toolbar => "MyToolbar"} %>
     <%= f.label :literatur_ergaenzungen %>
     <%= f.cktext_area :literatur_ergaenzungen, :ckeditor => {:uiColor => "#AADC6E", :toolbar => "MyToolbar"} %>
-    <%= f.label :japanischer_quelltext %>
+    <%= f.label :japanischer_quelltext, 'Japanischer Quelltext' %>
     <%= f.text_field :japanischer_quelltext %>
-    <%= f.label :japanischer_quelltext_bearbeitungsstand %>
+    <%= f.label :japanischer_quelltext_bearbeitungsstand, 'Bearbeitungsstand des Quelltextes' %>
     <%= f.text_field :japanischer_quelltext_bearbeitungsstand %>
   </div>
-  <%# <%= f.submit("Speichern") %1> %>
 <% end %>

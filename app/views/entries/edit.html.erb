@@ -24,9 +24,9 @@
         <%= image_tag "http://buddhismus-lexikon.eu:/SBDJ-Original-JPGs/Lex_#{pages[2]}_unten.jpg", style: "display: none;", id: "page8", size: '780x880'  %>
         </br>
         <div class="resize_input_fields">
-          <%= f.label :japanischer_quelltext %>
+          <%= f.label :japanischer_quelltext, 'Japanischer Quelltext' %>
           <%= f.text_area :japanischer_quelltext, rows: 4 %>
-          <%= f.label :japanischer_quelltext_bearbeitungsstand %>
+          <%= f.label :japanischer_quelltext_bearbeitungsstand, 'Bearbeitungsstand des Quelltextes' %>
           <%= f.text_field :japanischer_quelltext_bearbeitungsstand %>
         </div>
       </div>
@@ -49,7 +49,7 @@
         <%= f.text_field :kennzahl, required: true, style: "width:530px"%>
         <%= f.label :spaltenzahl %>
         <%= f.text_field :spaltenzahl, style: "width:530px" %>
-        <%= f.label :abweichende_kennzahl%>
+        <%= f.label :abweichende_kennzahl, 'Abweichende Kennzahl' %>
         <%= f.text_field :abweichende_kennzahl, style: "width:530px"%>
         <%= f.label :seite_textblock2005, 'Seite Textblock 2005' %>
         <%= f.text_field :seite_textblock2005, style: "width:530px" %>
@@ -58,7 +58,7 @@
         <h4>Lemma-Schreibungen und -Aussprachen</h4>
         <%= f.label :japanische_umschrift%>
         <%= f.text_field :japanische_umschrift, style: "width:530px" %>
-        <%= f.label :japanische_umschrift_din, 'Japanische Umschrift Din' %>
+        <%= f.label :japanische_umschrift_din, 'Japanische Umschrift nach DIN 32708' %>
         <%= f.text_field :japanische_umschrift_din, style: "width:530px" %>
         <%= f.label :kanji %>
         <%= f.text_field :kanji, style: "width:530px" %>
