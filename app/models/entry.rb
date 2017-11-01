@@ -47,6 +47,24 @@ class Entry < ActiveRecord::Base
     end
   end
 
+  def parse_ck_editor_tags
+    doc = Nokogiri::HTML::DocumentFragment.parse(self.uebersetzung)
+    doc.children.first.children.map do |child|
+      tag_name = fetch_tagname(child)
+      tag_value = fetch_tagvalue(child)
+      unless tag_name.nil? || tag_value.nil?
+        puts "#{tag_name}: #{tag_value}"
+      end
+    end
+  end
+
+  def fetch_tagname(child)
+    child.attributes["class"].value rescue nil
+  end
+  def fetch_tagvalue(child)
+    child.children.text rescue nil
+  end
+
   def cleanup
     substituter = Substituter.new
     if self.japanische_umschrift
@@ -79,10 +97,11 @@ class Entry < ActiveRecord::Base
         quellen_ergaenzungen.blank? &&
         literatur_ergaenzungen.blank?
       errors[:base] = 'Mindestens ein Feld der Gruppe '\
-      "'Uebersetzungen , Quellenangaben, Literatur und Ergaenzungen' "\
-      "muss ausgefüllt sein!"
+        "'Uebersetzungen , Quellenangaben, Literatur und Ergaenzungen' "\
+        "muss ausgefüllt sein!"
     end
   end
+
 
   private
 
@@ -94,4 +113,16 @@ class Entry < ActiveRecord::Base
       end
     end
   end
+
 end
+
+
+
+
+
+
+
+
+
+
+
