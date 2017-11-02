@@ -12,16 +12,19 @@ class EntriesController < ApplicationController
       @count = Entry.order(sort_column + " " + sort_direction).count # refactoring needed
     end
     respond_to do |format|
-      format.html # index.html.erb
-      format.csv {send_data @entries.to_csv, :type => 'text/csv', :disposition => "attachment; filename=glb.csv"}
-      format.xml {send_data @entries.to_xml, :type => 'text/xml', :disposition => "attachment; filename=glb.xml"}
+      format.html
       format.json { render json: @entries }
+      format.xml { render 'index.xml.builder' }
+      format.csv {send_data @entries.to_csv, :type => 'text/csv', :disposition => "attachment; filename=glb.csv"}
     end
+  end
+
+  def export_xml
   end
 
   def show
     respond_to do |format|
-      format.html 
+      format.html
       format.json { render json: @entry }
     end
   end
@@ -94,7 +97,7 @@ class EntriesController < ApplicationController
   def sort_column
     Entry.column_names.include?(params[:sort]) ? params[:sort] : "japanische_umschrift"
   end
-  
+
   def sort_direction
     %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
   end
