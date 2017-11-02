@@ -1,4 +1,5 @@
-xml.instruct!
+file = File.new("my_xml_data_file.xml", "wb")
+xml = Builder::XmlMarkup.new target: file
 xml.entries do
   @entries.each do |entry|
     xml.entry do
@@ -9,3 +10,4 @@ xml.entries do
   end
 
 end
+file.close
