@@ -1,4 +1,5 @@
 class Entry < ActiveRecord::Base
+  require 'builder'
   require 'csv'
   has_paper_trail
 
@@ -105,6 +106,18 @@ class Entry < ActiveRecord::Base
     end
   end
 
+  def self.to_customized_xml
+    xml = ::Builder::XmlMarkup.new( :indent => 2 )
+    xml.entries do
+      Entry.all.each do |entry|
+        xml.entry do
+          xml.Id entry.id
+          xml.kennzahl entry.kennzahl
+          xml.uebersetzung entry.modify_ck_editor_tags
+        end
+      end
+    end
+  end
 end
 
 

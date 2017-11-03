@@ -15,28 +15,10 @@ class EntriesController < ApplicationController
     respond_to do |format|
       format.html
       format.json { render json: @entries }
-      format.xml do
-        file = File.new("my_xml_data_file.xml", "wb")
-        xml = Builder::XmlMarkup.new target: file
-        xml.entries do
-          @entries.each do |entry|
-            xml.entry do
-              xml.Id entry.id
-              xml.kennzahl entry.kennzahl
-              xml.uebersetzung entry.modify_ck_editor_tags
-            end
-          end
-
-        end
-        file.close
-        redirect_to entries_url
-      end
-
+      format.xml {send_data @entries.to_xml, :type => 'text/xml', :disposition => "attachment; filename=glb.xml"}
+      format.text {send_data @entries.to_customized_xml, :type => 'text/xml', :disposition => "attachment; filename=customized_glb.xml"}
       format.csv {send_data @entries.to_csv, :type => 'text/csv', :disposition => "attachment; filename=glb.csv"}
     end
-  end
-
-  def export_xml
   end
 
   def show
