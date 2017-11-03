@@ -112,10 +112,8 @@ class Entry < ActiveRecord::Base
       Entry.all.each do |entry|
         xml.entry do
           entry.attributes.each do |attr_name, attr_value|
-            if attr_name == "uebersetzung"
-              xml.tag!(attr_name, entry.modify_ck_editor_tags)
-            else
-              xml.tag!(attr_name, attr_value)
+            xml.tag!(attr_name) do
+              xml << attr_value.to_s
             end
           end
         end
