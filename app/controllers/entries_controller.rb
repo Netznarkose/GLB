@@ -1,24 +1,24 @@
-require 'builder'
 class EntriesController < ApplicationController
+  require './app/modules/export.rb'
+  include Export
   load_and_authorize_resource
   before_action :build_entry_comment, only: :show
   helper_method :sort_column, :sort_direction
 
   def index
-    # if params[:search]
-    #   @entries = Entry.search(params[:search]).page(params[:page])
-    #   @count = Entry.search(params[:search]).count # refactoring needed
-    # else
-    #   @entries = Entry.order(sort_column + " " + sort_direction).page(params[:page])
-    #   @count = Entry.order(sort_column + " " + sort_direction).count # refactoring needed
-    # end
-    @entries = Entry.all
+    if params[:search]
+      @entries = Entry.search(params[:search]).page(params[:page])
+      @count = Entry.search(params[:search]).count # refactoring needed
+    else
+      @entries = Entry.order(sort_column + " " + sort_direction).page(params[:page])
+      @count = Entry.order(sort_column + " " + sort_direction).count # refactoring needed
+    end
     respond_to do |format|
       format.html
-      format.json { render json: @entries }
-      format.xml {send_data @entries.to_xml, :type => 'text/xml', :disposition => "attachment; filename=glb.xml"}
-      format.text {send_data @entries.to_customized_xml, :type => 'text/xml', :disposition => "attachment; filename=customized_glb.xml"}
-      format.csv {send_data @entries.to_csv, :type => 'text/csv', :disposition => "attachment; filename=glb.csv"}
+      format.json { render json: all_entries }
+      format.xml  { send_data all_entries.to_xml, :type => 'text/xml', :disposition => "attachment; filename=glb.xml" }
+      format.text { send_data customized_xml, :type => 'text/xml', :disposition => "attachment; filename=customized_glb.xml" }
+      format.csv  { send_data customized_csv, :type => 'text/csv', :disposition => "attachment; filename=glb.csv" }
     end
   end
 

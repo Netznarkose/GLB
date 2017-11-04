@@ -1,6 +1,4 @@
 class Entry < ActiveRecord::Base
-  require 'builder'
-  require 'csv'
   has_paper_trail
 
   ALLOWED_PARAMS = [:namenskuerzel, :kennzahl,
@@ -48,15 +46,6 @@ class Entry < ActiveRecord::Base
     end
   end
 
-  def modify_ck_editor_tags
-    doc = Nokogiri::HTML.fragment(self.uebersetzung)
-    doc.css("span").map do |span|
-      span.name = span.attributes['class'].value # gibt dem span tag den namen des values
-      span.attributes['class'].remove # löscht den value
-    end
-    doc.to_xml
-  end
-
   def cleanup
     substituter = Substituter.new
     if self.japanische_umschrift
@@ -91,37 +80,6 @@ class Entry < ActiveRecord::Base
       errors[:base] = 'Mindestens ein Feld der Gruppe '\
         "'Uebersetzungen , Quellenangaben, Literatur und Ergaenzungen' "\
         "muss ausgefüllt sein!"
-    end
-  end
-
-
-  private
-
-  def self.to_csv
-    CSV.generate(:col_sep=>"\t", :quote_char => '"') do |csv|
-      csv << column_names
-      Entry.find_each(batch_size: 500) do |entry|
-        csv << entry.attributes.values_at(*column_names)
-      end
-    end
-  end
-
-  def self.to_customized_xml
-    xml = ::Builder::XmlMarkup.new( :indent => 2 )
-    xml.entries do
-      Entry.all.each do |entry|
-        xml.entry do
-          entry.attributes.each do |attr_name, attr_value|
-            if attr_name == 'uebersetzung'
-              xml.uebersetzung do
-                xml << entry.modify_ck_editor_tags
-              end
-            else
-              xml.tag!(attr_name, attr_value)
-            end
-          end
-        end
-      end
     end
   end
 end
