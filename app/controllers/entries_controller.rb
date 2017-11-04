@@ -5,13 +5,14 @@ class EntriesController < ApplicationController
   helper_method :sort_column, :sort_direction
 
   def index
-    if params[:search]
-      @entries = Entry.search(params[:search]).page(params[:page])
-      @count = Entry.search(params[:search]).count # refactoring needed
-    else
-      @entries = Entry.order(sort_column + " " + sort_direction).page(params[:page])
-      @count = Entry.order(sort_column + " " + sort_direction).count # refactoring needed
-    end
+    # if params[:search]
+    #   @entries = Entry.search(params[:search]).page(params[:page])
+    #   @count = Entry.search(params[:search]).count # refactoring needed
+    # else
+    #   @entries = Entry.order(sort_column + " " + sort_direction).page(params[:page])
+    #   @count = Entry.order(sort_column + " " + sort_direction).count # refactoring needed
+    # end
+    @entries = Entry.all
     respond_to do |format|
       format.html
       format.json { render json: @entries }

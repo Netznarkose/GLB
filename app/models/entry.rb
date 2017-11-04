@@ -111,11 +111,41 @@ class Entry < ActiveRecord::Base
     xml.entries do
       Entry.all.each do |entry|
         xml.entry do
-          entry.attributes.each do |attr_name, attr_value|
-            xml.tag!(attr_name) do
-              xml << attr_value.to_s
-            end
+          xml.namenskuerzel entry.namenskuerzel
+          xml.kennzahl entry.kennzahl
+          xml.spaltenzahl entry.spaltenzahl
+          xml.japanische_umschrift entry.japanische_umschrift
+          xml.kanji entry.kanji
+          xml.pali entry. pali
+          xml.sanskrit entry.sanskrit
+          xml.chinesisch entry.chinesisch
+          xml.tibetisch entry.tibetisch
+          xml.koreanisch entry.koreanisch
+          xml.weitere_sprachen entry.weitere_sprachen
+          xml.alternative_japanische_lesungen entry.alternative_japanische_lesungen
+          xml.schreibvarianten entry.schreibvarianten
+          xml.deutsche_uebersetzung entry.deutsche_uebersetzung
+          xml.lemma_art entry.lemma_art
+          xml.jahreszahlen entry.jahreszahlen
+          xml.uebersetzung do
+            xml << entry.modify_ck_editor_tags
           end
+          xml.quellen entry.quellen
+          xml.literatur entry.literatur
+          xml.eigene_ergaenzungen entry.eigene_ergaenzungen
+          xml.quellen_ergaenzungen entry.quellen_ergaenzungen
+          xml.literatur_ergaenzungen entry.literatur_ergaenzungen
+          xml.user_id entry.user_id
+          xml.page_reference entry.page_reference
+          xml.freigeschaltet entry.freigeschaltet
+          xml.romaji_order entry.romaji_order
+          xml.japanische_umschrift_din entry.japanische_umschrift_din
+          xml.lemma_in_katakana entry.lemma_in_katakana
+          xml.lemma_in_lateinbuchstaben entry.lemma_in_lateinbuchstaben
+          xml.abweichende_kennzahl entry.abweichende_kennzahl
+          xml.japanischer_quelltext entry.japanischer_quelltext
+          xml.japanischer_quelltext_bearbeitungsstand entry.japanischer_quelltext_bearbeitungsstand
+          xml.seite_textblock2005 entry.seite_textblock2005
         end
       end
     end
