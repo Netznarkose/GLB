@@ -17,8 +17,8 @@ class EntriesController < ApplicationController
       format.html
       format.json { render json: all_entries }
       format.xml  { send_data all_entries.to_xml, :type => 'text/xml', :disposition => "attachment; filename=glb.xml" }
-      format.text { send_data customized_xml, :type => 'text/xml', :disposition => "attachment; filename=customized_glb.xml" }
-      format.csv  { send_data customized_csv, :type => 'text/csv', :disposition => "attachment; filename=glb.csv" }
+      format.text { send_data customized_xml(all_entries), :type => 'text/xml', :disposition => "attachment; filename=customized_glb.xml" }
+      format.csv  { send_data customized_csv(all_entries), :type => 'text/csv', :disposition => "attachment; filename=glb.csv" }
     end
   end
 
@@ -77,6 +77,10 @@ class EntriesController < ApplicationController
       @comment.entry = @entry
       @comment.user = current_user
     end
+  end
+
+  def all_entries
+    @all_entries ||= Entry.all
   end
 
   def page

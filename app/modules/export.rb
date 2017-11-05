@@ -2,20 +2,14 @@ module Export
 require 'builder'
 require 'csv'
 
-  def all_entries
-    all_entries ||= Entry.all
-  end
-
-  def customized_xml
+  def customized_xml(all_entries)
     xml = ::Builder::XmlMarkup.new( :indent => 2 )
     xml.entries do
       all_entries.each do |entry|
         xml.entry do
           entry.attributes.each do |attr_name, attr_value|
             if attr_name == 'uebersetzung'
-              xml.uebersetzung do
-                xml << modify_ck_editor_tags(entry)
-              end
+              xml.uebersetzung { xml << modify_ck_editor_tags(entry) }
             else
               xml.tag!(attr_name, attr_value)
             end
@@ -34,7 +28,7 @@ require 'csv'
     doc.to_xml
   end
 
-  def customized_csv
+  def customized_csv(all_entries)
     column_names = all_entries.first.attributes.keys
     CSV.generate(:col_sep=>"\t", :quote_char => '"') do |csv|
       csv << column_names
