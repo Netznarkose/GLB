@@ -100,13 +100,4 @@ class EntriesController < ApplicationController
   def sort_entries
     Entry.order(sort_column + ' ' + sort_direction).page
   end
-
-  def sort_column
-    Entry.column_names.include?(params[:sort]) ? params[:sort] : 'japanische_umschrift'
-  end
-
-  def sort_direction
-    ['asc', 'desc'].include?(params[:direction]) ? params[:direction] : 'asc'
-  end
-
 end

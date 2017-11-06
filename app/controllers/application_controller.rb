@@ -22,8 +22,11 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def current_user?
-    @user = User.find(params[:id])
-    current_user.id == @user.id
+  def sort_column
+    Entry.column_names.include?(params[:sort]) ? params[:sort] : 'japanische_umschrift'
+  end
+
+  def sort_direction
+    ['asc', 'desc'].include?(params[:direction]) ? params[:direction] : 'asc'
   end
 end
