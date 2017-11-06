@@ -2,7 +2,6 @@ class EntriesController < ApplicationController
   include Export
   load_and_authorize_resource
   before_action :build_entry_comment, only: :show
-  helper_method :sort_column, :sort_direction
 
   def index
     @entries = params[:search] ? search_entries : sort_entries

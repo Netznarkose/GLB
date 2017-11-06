@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  helper_method :sort_column, :sort_direction
   protect_from_forgery with: :exception
   protect_from_forgery except: :receive_guest
   layout :layout_by_resource
