@@ -77,10 +77,6 @@ class EntriesController < ApplicationController
     @all_entries ||= Entry.all
   end
 
-  def page
-    params[:page] || 1
-  end
-
   def entry_params
     params.require(:entry).permit(Entry::ALLOWED_PARAMS)
   end
