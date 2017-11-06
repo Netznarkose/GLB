@@ -1,5 +1,4 @@
 class EntriesController < ApplicationController
-  require './app/modules/export.rb'
   include Export
   load_and_authorize_resource
   before_action :build_entry_comment, only: :show
