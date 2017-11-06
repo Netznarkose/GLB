@@ -1,11 +1,7 @@
 <% content_for :sidebar do %>
   <div class="well sidebar-nav">
     <ul class="nav nav-list">
-      <% if @user.id == current_user.id %>
-      <li class="nav-header"><%= "Meine Einträge Durchsuchen" %>
-    <% else %>
-      <li class="nav-header"><%= "#{@user.name}'s Einträge Durchsuchen" %>
-    <% end %>
+      <li class="nav-header"><%= entry_owner? ? "Meine" : "#{@user.name}'s" %> Einträge Durchsuchen
         <div style="margin-top: 20px">
           <%= form_tag user_entries_path(@user), method: "get" do %>
             <%= text_field_tag :search, params[:search] %>
@@ -39,19 +35,9 @@
 <% end %>
 
 <% content_for :content do %>
-  <% if flash[:notice] %>
-    <div class="alert alert-notice">
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-      <strong><%= raw(flash[:notice]) %></strong>
-    </div>
-  <% end %>
-  <% if @user == current_user %>
-    <h1><%= "Meine Einträge" %></h1>
-  <% else %>
-    <h1><%= "#{@user.name}'s Einträge" %></h1>
-  <% end %>
-  <span class="label"><%= @user.entries.count %>
-  <%= @user.entries.count > 1 ? "Einträge" : "Eintrag" %>
+  <h1><%= entry_owner? ? "Meine" : "#{@user.name}'s"%> Einträge</h1>
+  <span class="label"><%= @count %>
+  <%= @count == 1 ? "Eintrag" : "Einträge" %>
   </span>
 
   <%= paginate @user_entries %>

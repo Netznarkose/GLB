@@ -1,24 +1,27 @@
 class UserEntriesController < ApplicationController
+  helper_method :entry_owner?
   before_action :find_user, only: :index
+
   def index
-    if search_item = params[:search]
-      @user_entries = @user.entries.search(search_item).page(params[:page])
-    else
-      @user_entries = @user.entries.order(sort_column + ' ' + sort_direction).page(params[:page])
-    end
+    @user_entries = params[:search] ? search_user_entries : sort_user_entries
+    @count = @user_entries.count
   end
 
   private
+
+  def search_user_entries
+    @user.entries.search(params[:search]).page
+  end
+
+  def sort_user_entries
+    @user.entries.order(sort_column + ' ' + sort_direction).page
+  end
 
   def find_user
     @user = User.find(params[:user_id])
   end
 
-  def sort_column
-    Entry.column_names.include?(params[:sort]) ? params[:sort] : 'kennzahl'
-  end
-
-  def sort_direction
-    %w[asc desc].include?(params[:direction]) ? params[:direction] : 'desc'
+  def entry_owner?
+    current_user.id == @user.id
   end
 end
