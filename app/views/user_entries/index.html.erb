@@ -73,7 +73,7 @@
         <td><%= entry.kennzahl %></td>
         <td><%= entry.japanische_umschrift %></td>
         <td><%= entry.kanji %></td>
-        <td><%= link_to 'Anzeigen', entry %>
+        <td><%= link_to 'Als formatierten Eintrag anzeigen', entry %>
         <% if current_user.admin? || current_user.editor? || (current_user.author? && entry.user_id == current_user.id) %>
           <%= link_to 'Bearbeiten', edit_entry_path(entry) %>
           <%= link_to 'Löschen', entry, method: :delete, data: { confirm: 'Wollen Sie diesen Eintrag wirklich löschen?' }%>
