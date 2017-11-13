@@ -5,7 +5,7 @@ class EntriesController < ApplicationController
 
   def index
     @entries = params[:search] ? search_entries : sort_entries
-    @count = all_entries.count
+    @count = @entries.count
     respond_to do |format|
       format.html
       format.json { render json: all_entries }
