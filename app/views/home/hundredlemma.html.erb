@@ -1,22 +1,17 @@
-<% content_for :content do %>
-  <h1>Basislemmata</h1>
+<h1>Basislemmata</h1>
 
-  <% @lemmata.each do |title, list| %>
-    <h2><%= title %></h2>
-    <div>
-      <% list.each do |lemma| %>
-        <div class="lemma-row">
-          <% if lemma[1].blank? %>
-            <span><%= lemma[2] %></span>
-            <span><%= lemma[3] %></span>
-          <% else %>
-            <%= link_to raw("<span>#{lemma[2]}</span> <span>#{lemma[3]}</span>"), "/entries/" + lemma[1].to_s, :target => "_blank" %>
-          <% end %>
-        </div>
-      <% end %>
-    </div>
-
-  <% end %>
-
-
+<% @lemmata.each do |title, list| %>
+  <h2><%= title %></h2>
+  <div>
+    <% list.each do |lemma| %>
+      <div class="lemma-row">
+        <% if lemma[1].blank? %>
+          <span><%= lemma[2] %></span>
+          <span><%= lemma[3] %></span>
+        <% else %>
+          <%= link_to raw("<span>#{lemma[2]}</span> <span>#{lemma[3]}</span>"), "/entries/" + lemma[1].to_s, :target => "_blank" %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
 <% end %>
