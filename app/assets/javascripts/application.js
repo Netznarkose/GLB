@@ -11,9 +11,8 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
-//= require bootstrap-sprockets
 //= require jquery_ujs
-//= require bootstrap
+//= require bootstrap-sprockets
 //= require ckeditor/init
 //= require_tree .
 $(document).ready(function(){
