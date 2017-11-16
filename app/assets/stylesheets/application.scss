@@ -1,7 +1,17 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
-body { padding-top: 70px; }
+body { padding-top: 10px; }
+
+.sidebar {
+  position:fixed; 
+  left:0; 
+  width: 240px; 
+  margin-top: 22px; 
+  padding-left: 10px
+}
+
+
 
 .scroll_container {
   overflow: auto;
