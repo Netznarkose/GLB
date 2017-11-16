@@ -5,30 +5,31 @@
       <%= form_tag entries_path, method: :get, :class => "form-inline" do %>
         <%= text_field_tag :search, params[:search], { placeholder: 'Alle Einträge' } %>
         <div style="margin-top: 5px">
-        <%= submit_tag "Los!", name: nil, class: "btn btn-default" %>   
+          <%= submit_tag "Los!", name: nil, class: "btn btn-default" %>   
         </div>
       <% end %>
-  </ul>
     </div>
+  </ul>
+</div>
 
-    <div class="well sidebar-nav">
-      <ul class="nav nav-pills nav-stacked">
-        <li class="disabled"><a>Index Sortieren</a></li>
-        <div class="dropdown">
-          <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-            Felder Auswahl
-            <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-            <li><%= sortable 'japanische_umschrift' %></li>
-            <li><%= sortable 'japanische_umschrift', 'Japanische Umschrift (reversed)', 'desc' %></li>
-            <li><%= sortable 'id' %></li>
-            <li><%= sortable 'id', 'Id (reversed)', 'desc' %></li>
-            <li><%= sortable 'kanji' %></li>
-            <li><%= sortable 'kanji', 'Kanji (reversed)', 'desc' %></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-          </ul>
-        </div>
+<div class="well sidebar-nav">
+  <ul class="nav nav-pills nav-stacked">
+    <li class="disabled"><a>Index Sortieren</a></li>
+    <div class="dropdown">
+      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        Felder Auswahl
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        <li><%= sortable 'japanische_umschrift' %></li>
+        <li><%= sortable 'japanische_umschrift', 'Japanische Umschrift (reversed)', 'desc' %></li>
+        <li><%= sortable 'id' %></li>
+        <li><%= sortable 'id', 'Id (reversed)', 'desc' %></li>
+        <li><%= sortable 'kanji' %></li>
+        <li><%= sortable 'kanji', 'Kanji (reversed)', 'desc' %></li>
+        <li role="separator" class="divider"></li>
+        <li><a href="#">Separated link</a></li>
       </ul>
     </div>
+  </ul>
+</div>
