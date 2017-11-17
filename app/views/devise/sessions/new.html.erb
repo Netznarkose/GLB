@@ -1,22 +1,19 @@
 <% content_for :content do %>
-  <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {:class => "well"}) do |f| %>
-    <fieldset>
-      <legend><%= t('.sign_in', :default => "Sign in") %></legend>
-      <%= f.label :email %>
-      <%= f.email_field :email, :autofocus => true, :class => "input-large" %>
+  <div class="row">
+    <div class="col-md-4 col-md-offset-3">
+      <%= bootstrap_form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {:class => "well"}) do |f| %>
+        <legend><%= t('.sign_in', :default => "Sign in") %></legend>
+        <%= f.email_field :email, :autofocus => true, :class => "input-large" %>
 
-      <%= f.label :password %>
-      <%= f.password_field :password, :class => "input-large"%>
+        <%= f.password_field :password, :class => "input-large"%>
 
-      <% if devise_mapping.rememberable? %>
-        <label class="checkbox">
-          <%= f.check_box :remember_me %> 
-          <%= t('.remember_me') %>
-        </label>
+        <% if devise_mapping.rememberable? %>
+          <%= f.check_box :remember_me, label: t('.remember_me') %> 
+        <% end %>
+
+        <%= f.submit t('.sign_in', :default => "Sign in") %>
       <% end %>
-
-      <div><%= f.submit t('.sign_in', :default => "Sign in") %></div>
-    </fieldset>
-  <% end %>
-  <%= render "devise/shared/links" %>
+      <%= render "devise/shared/links" %>
+    </div>
+  </div>
 <% end %>
