@@ -17,6 +17,7 @@ gem 'cancancan'
 group :assets do
   gem 'sass-rails', '~> 5.0'
   gem 'bootstrap-sass', '~> 3.3.7'
+  gem 'bootstrap_form'
   gem 'uglifier', '>= 1.3.0'
 end
 
