@@ -1,20 +1,15 @@
 <div class="row">
-  <div class="span5 offset1">
-    <%= form_for @user do |f| %>
+  <div class="col-md-4"> 
+    <%= bootstrap_form_for(@user) do |f| %>
       <%= render 'shared/error_messages', object: f.object %>
       <h1>Mitarbeiter anlegen</h1>
-      <%= f.label :name %>
       <%= f.text_field :name %>
-      <%= f.label :email %>
       <%= f.text_field :email %>
-      <%= f.label :password %>
       <%= f.password_field :password %>
-      <%= f.label :password_confirmation %>
       <%= f.password_field :password_confirmation %>
-      <%= f.label :role, 'Status' %>
       <%= f.select(:role, options_for_select([['Admin', 'admin'],['Editor','editor'], ['Author','author'],['Commentator', 'commentator']], "editor")) %>
-      <%= f.submit "Speichern", class: "btn" %>
-      <%= link_to 'Zurück', users_path, class: "btn"  %>
+      <%= f.submit "Speichern" %>
+      <%= link_to 'Zurück', users_path %>
     <% end %>
   </div>
 </div>
