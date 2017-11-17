@@ -1,22 +1,18 @@
-<% content_for :content do %>
-  <div class="row">
-    <div class="span5 offset1">
-      <%= form_for current_user, url: profile_path do |f| %>
-        <%= render 'shared/error_messages', object: f.object %>
-        <h1>Profil bearbeiten</h1>
-        <%= f.label :name %>
-        <%= f.text_field :name %>
-        <%= f.label :email %>
-        <%= f.text_field :email %>
-        <%# <%= f.label :password %1> %>
-        <%# <%= f.password_field :password %1> %>
-        <%# <%= f.label :password_confirmation %1> %>
-        <%# <%= f.password_field :password_confirmation %1> %>
-        <%# <%= f.label :status %1> %>
-        <%# <%= f.select :role, ['Admin', 'Editor'] %1> %>
-        <%= f.submit "Speichern", class: "btn" %>
-        <%= link_to 'Zurück', users_path, class: "btn"  %>
-      <% end %>
-    </div>
+<div class="row">
+  <div class="col-md-4"> 
+    <%= bootstrap_form_for current_user, url: profile_path do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+      <h1>Profil bearbeiten</h1>
+      <%= f.text_field :name %>
+      <%= f.text_field :email %>
+      <%# <%= f.label :password %1> %>
+      <%# <%= f.password_field :password %1> %>
+      <%# <%= f.label :password_confirmation %1> %>
+      <%# <%= f.password_field :password_confirmation %1> %>
+      <%# <%= f.label :status %1> %>
+      <%# <%= f.select :role, ['Admin', 'Editor'] %1> %>
+      <%= f.submit "Speichern" %>
+      <%= link_to 'Zurück', users_path  %>
+    <% end %>
   </div>
-<% end %>
+</div>
