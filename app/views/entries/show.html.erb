@@ -26,8 +26,8 @@
 <div class="scroll_container">
   <div class="funky_grey_seperator">
     <div class="btn-group" role="group" aria-label="..."style="float: right;">
-      <button type="button" <%= link_to 'Bearbeiten', edit_entry_path(@entry), class: 'btn btn-default' %></button>
-      <button type="button" <%= link_to "#{@entry.versions.size - 1 } Versionen", entry_versions_path(@entry), class: 'btn btn-default' %></button>
+      <%= link_to 'Bearbeiten', edit_entry_path(@entry), class: 'btn btn-default' %>
+      <%= link_to "#{@entry.versions.size - 1 } Versionen", entry_versions_path(@entry), class: 'btn btn-default' %>
     </div>
     <h4>Kennungsdaten</h4>
     <dl>

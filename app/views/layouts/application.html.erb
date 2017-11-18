@@ -70,14 +70,20 @@
     </nav>  
     <div class="container-fluid">
       <div class="row">
-        <div class="col-md-2"> 
-          <div class="sidebar">
-            <%= render "shared/sidebar" %>
+        <% if content_for?(:edit) %>
+          <div class="col-md-12"> 
+            <%= yield(:edit) %>
           </div>
-        </div>
-        <div class="col-md-10">
-          <%= yield %>
-        </div>
+        <% else %>
+          <div class="col-md-2"> 
+            <div class="sidebar">
+              <%= render "shared/sidebar" %>
+            </div>
+          </div>
+          <div class="col-md-10">
+            <%= yield %>
+          </div>
+        <% end %>
       </div>
     </div>
     </div>

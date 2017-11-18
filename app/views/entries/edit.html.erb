@@ -1,37 +1,33 @@
-<% content_for :content_2 do %>
+<% content_for :edit do %>
   <%= content_tag :div, id: 'kennzahl', data: {kennzahl: @entry.kennzahl.to_i } do %>
   <% end %>
-  <%= form_for @entry do |f| %>
+  <%= bootstrap_form_for @entry do |f| %>
     <div style="width: 800px; position: fixed">
-      <div class="funky_grey_seperator">
-        <div style="margin-bottom: 15px">
-          <span class="left-action" id="page_count"></span>
-          <span class="right-action"><%= f.submit 'Bearbeitung speichern', class: 'btn' %></span>
-          <span class="right-action"> <%= link_to 'Als formatierten Eintrag anzeigen', @entry, class: 'btn' %></span>
-          <span class="left-action"><button class= "btn" id ="back" type="button" onclick="back_switch()">Zurück</button></span>
-          <span class="left-action"><button class= "btn" id="forward" type="button" onclick="forward_switch()">Vor</button></span>
-          <span class="left-action"><button class= "btn" id ="back_first" type="button" onclick="back_first_switch()">1. Textblock</button></span>
+      <div class="funky_grey_seperator" style="margin-top: 21px;">
+        <span class="left-action" id="page_count"></span>
+        <div class="btn-group" role="group" aria-label="..."style="float: right;">
+          <button type="button" onclick="forward_switch()" id="forward" class="btn btn-default">Vor</button>
+          <button type="button" onclick="back_switch()" id="back"class="btn btn-default">Zurück</button>
+          <button type="button" onclick="back_first_switch()" id="back_first" class="btn btn-default">Erste Seite</button>
+          <%= link_to 'Als formatierten Eintrag anzeigen', @entry, class: 'btn btn-default' %>
+          <%= f.submit 'Bearbeitung speichern', class: 'btn btn-default' %>
         </div>
         <% pages = to_scan_pages(@entry.kennzahl) %>
         <div style="margin-bottom: 15px">
-          <%= image_tag "http://buddhismus-lexikon.eu:/SBDJ-Original-JPGs/Lex_#{pages[0]}_oben.jpg", style: "display: block;", id: "page0", size: '780x880'  %>
-          <%= image_tag "http://buddhismus-lexikon.eu:/SBDJ-Original-JPGs/Lex_#{pages[0]}_mitten.jpg", style: "display: none;", id: "page1", size: '780x880'  %>
-          <%= image_tag "http://buddhismus-lexikon.eu:/SBDJ-Original-JPGs/Lex_#{pages[0]}_unten.jpg", style: "display: none;", id: "page2", size: '780x880'  %>
+          <%= image_tag "http://buddhismus-lexikon.eu:/SBDJ-Original-JPGs/Lex_#{pages[0]}_oben.jpg", style: "display: block;", id: "page0", size: '760x400'  %>
+          <%= image_tag "http://buddhismus-lexikon.eu:/SBDJ-Original-JPGs/Lex_#{pages[0]}_mitten.jpg", style: "display: none;", id: "page1", size: '760x400'  %>
+          <%= image_tag "http://buddhismus-lexikon.eu:/SBDJ-Original-JPGs/Lex_#{pages[0]}_unten.jpg", style: "display: none;", id: "page2", size: '760x400'  %>
 
-          <%= image_tag "http://buddhismus-lexikon.eu:/SBDJ-Original-JPGs/Lex_#{pages[1]}_oben.jpg", style: "display: none;", id: "page3", size: '780x880'  %>
-          <%= image_tag "http://buddhismus-lexikon.eu:/SBDJ-Original-JPGs/Lex_#{pages[1]}_mitten.jpg", style: "display: none;", id: "page4", size: '780x880'  %>
-          <%= image_tag "http://buddhismus-lexikon.eu:/SBDJ-Original-JPGs/Lex_#{pages[1]}_unten.jpg", style: "display: none;", id: "page5", size: '780x880'  %>
+          <%= image_tag "http://buddhismus-lexikon.eu:/SBDJ-Original-JPGs/Lex_#{pages[1]}_oben.jpg", style: "display: none;", id: "page3", size: '760x400'  %>
+          <%= image_tag "http://buddhismus-lexikon.eu:/SBDJ-Original-JPGs/Lex_#{pages[1]}_mitten.jpg", style: "display: none;", id: "page4", size: '760x400'  %>
+          <%= image_tag "http://buddhismus-lexikon.eu:/SBDJ-Original-JPGs/Lex_#{pages[1]}_unten.jpg", style: "display: none;", id: "page5", size: '760x400'  %>
 
-          <%= image_tag "http://buddhismus-lexikon.eu:/SBDJ-Original-JPGs/Lex_#{pages[2]}_oben.jpg", style: "display: none;", id: "page6", size: '780x880'  %>
-          <%= image_tag "http://buddhismus-lexikon.eu:/SBDJ-Original-JPGs/Lex_#{pages[2]}_mitten.jpg", style: "display: none;", id: "page7", size: '780x880'  %>
-          <%= image_tag "http://buddhismus-lexikon.eu:/SBDJ-Original-JPGs/Lex_#{pages[2]}_unten.jpg", style: "display: none;", id: "page8", size: '780x880'  %>
+          <%= image_tag "http://buddhismus-lexikon.eu:/SBDJ-Original-JPGs/Lex_#{pages[2]}_oben.jpg", style: "display: none;", id: "page6", size: '760x400'  %>
+          <%= image_tag "http://buddhismus-lexikon.eu:/SBDJ-Original-JPGs/Lex_#{pages[2]}_mitten.jpg", style: "display: none;", id: "page7", size: '760x400'  %>
+          <%= image_tag "http://buddhismus-lexikon.eu:/SBDJ-Original-JPGs/Lex_#{pages[2]}_unten.jpg", style: "display: none;", id: "page8", size: '760x400'  %>
         </div>
-        <div class="resize_input_fields">
-          <%= f.label :japanischer_quelltext, 'Japanischer Quelltext' %>
-          <%= f.text_area :japanischer_quelltext, rows: 6 %>
-          <%= f.label :japanischer_quelltext_bearbeitungsstand, 'Bearbeitungsstand des Quelltextes' %>
-          <%= f.text_field :japanischer_quelltext_bearbeitungsstand %>
-        </div>
+        <%= f.text_area :japanischer_quelltext, rows: 4, label: 'Japanischer Quelltext' %>
+        <%= f.text_field :japanischer_quelltext_bearbeitungsstand, label: 'Bearbeitungsstand des Quelltextes' %>
       </div>
     </div>
     <div style="margin-left: 820px; width: 575px"> 
