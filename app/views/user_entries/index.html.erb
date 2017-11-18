@@ -1,78 +1,44 @@
-<%# <% content_for :sidebar do %1> %>
-<%#   <div class="well sidebar-nav"> %>
-  <%#     <ul class="nav nav-list"> %>
-    <%#       <li class="nav-header"><%= entry_owner? ? "Meine" : "#{@user.name}'s" %1> Einträge Durchsuchen %>
-      <%#         <div style="margin-top: 20px"> %>
-        <%#           <%= form_tag user_entries_path(@user), method: "get" do %1> %>
-        <%#             <%= text_field_tag :search, params[:search] %1> %>
-        <%#             <%= submit_tag "Suche", name: nil, class: "btn"  %1> %>
-        <%#           <% end %1> %>
-      <%#         </div> %>
-    <%#       </li> %>
-  <%#     </ul> %>
-<%#   </div> %>
-<%#   <div class="well sidebar-nav"> %>
-  <%#     <ul class="nav nav-list"> %>
-    <%#       <li class="nav-header">Sortieren</li> %>
-    <%#     </ul> %>
-  <%#     <div style="margin-top: 20px"> %>
-    <%#       <div class="btn-group"> %>
-      <%#         <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"> %>
-        <%#           Felder Auswahl %> 
-        <%#           <span class="caret"></span> %>
-        <%#         </a> %>
-      <%#         <ul class="dropdown-menu"> %>
-        <%#           <li><%= sortable 'japanische_umschrift' %1></li> %>
-        <%#           <li><%= sortable 'japanische_umschrift', 'Japanische Umschrift (reversed)', 'desc' %1></li> %>
-        <%#           <li><%= sortable 'id' %1></li> %>
-        <%#           <li><%= sortable 'id', 'Id (reversed)', 'desc' %1></li> %>
-        <%#           <li><%= sortable 'kanji' %1></li> %>
-        <%#           <li><%= sortable 'kanji', 'Kanji (reversed)', 'desc' %1></li> %>
-        <%#         </ul> %>
-      <%#       </div> %>
-    <%#     </div> %>
-  <%#   </div> %>
-<%# <% end %1> %>
+<% content_for :user_entries_index do %>
+   <h1><%= entry_owner? ? "Meine" : "#{@user.name}'s"%> Einträge</h1>
+   <span class="label"><%= @count %>
+   <%= @count == 1 ? "Eintrag" : "Einträge" %>
+   </span>
 
-<h1><%= entry_owner? ? "Meine" : "#{@user.name}'s"%> Einträge</h1>
-<span class="label"><%= @count %>
-<%= @count == 1 ? "Eintrag" : "Einträge" %>
-</span>
+   <%= paginate @user_entries %>
+   <table class="table table-striped">
+      <tr>
+         <th>Verfasser</th>
+         <th>Namenskürzel</th>
+         <th>Kennzahl</th>
+         <th>Japanische umschrift</th>
+         <th>Kanji</th>
+         <th>Aktionen</th>
+         <th>Kommentar</th>
+      </tr>
 
-<%= paginate @user_entries %>
-<table class="table table-striped">
- <tr>
-   <th>Verfasser</th>
-   <th>Namenskürzel</th>
-   <th>Kennzahl</th>
-   <th>Japanische umschrift</th>
-   <th>Kanji</th>
-   <th>Aktionen</th>
-   <th>Kommentar</th>
- </tr>
-
- <% @user_entries.each do |entry| %>
-   <tr>
-     <td><%= entry.user.name %></td>
-     <td><%= entry.namenskuerzel %></td>
-     <td><%= entry.kennzahl %></td>
-     <td><%= entry.japanische_umschrift %></td>
-     <td><%= entry.kanji %></td>
-     <td><%= link_to 'Als formatierten Eintrag anzeigen', entry %>
-     <% if current_user.admin? || current_user.editor? || (current_user.author? && entry.user_id == current_user.id) %>
-       <%= link_to 'Bearbeiten', edit_entry_path(entry) %>
-       <%= link_to 'Löschen', entry, method: :delete, data: { confirm: 'Wollen Sie diesen Eintrag wirklich löschen?' }%>
-     <% end %>
-     </td>
-     <td>
-       <% if entry.comments.length != 0 %>
-         <%= link_to entry.comments.length, entry_path(entry) + "#comments", :class => "badge badge-important comments" %>
-       <% end %>
-       <% if entry.freigeschaltet %>
-         <span class="label label-success">Freigeschaltet</span>
-       <% end %>
-     </td>
-   </tr>
- <% end %>
-</table>
-<%= paginate @user_entries %>
+      <% @user_entries.each do |entry| %>
+         <tr>
+            <td><%= entry.user.name %></td>
+            <td><%= entry.namenskuerzel %></td>
+            <td><%= entry.kennzahl %></td>
+            <td><%= entry.japanische_umschrift %></td>
+            <td><%= entry.kanji %></td>
+            <td><%= link_to 'Als formatierten Eintrag anzeigen', entry %>
+            <% if current_user.admin? || current_user.editor? || (current_user.author? && entry.user_id == current_user.id) %>
+               <%= link_to 'Bearbeiten', edit_entry_path(entry) %>
+               <%= link_to 'Löschen', entry, method: :delete, data: { confirm: 'Wollen Sie diesen Eintrag wirklich löschen?' }%>
+            <% end %>
+            </td>
+            <td>
+               <% if entry.comments.length != 0 %>
+                  <%= link_to entry.comments.length, entry_path(entry) + "#comments", :class => "badge badge-important comments" %>
+               <% end %>
+               <% if entry.freigeschaltet %>
+                  <span class="label label-success">Freigeschaltet</span>
+               <% end %>
+            </td>
+         </tr>
+      <% end %>
+   </table>
+   <%= paginate @user_entries %>
+<% end %>

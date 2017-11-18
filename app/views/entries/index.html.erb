@@ -1,44 +1,46 @@
-<h1>Das Große Lexikon des Buddhismus</h1>
-<h3><%= @count %>
-<%= @count > 1 ? "Einträge" : "Eintrag" %>
-</h3>
-<%= paginate @entries %>
-<table class="table table-striped">
-  <% @entries.each do |entry| %>
-    <tr>
-      <td>
-        <% unless entry.japanische_umschrift.blank? %>
-          <strong> <%= entry.japanische_umschrift %></strong>
-        <% end %>
-
-        <% unless entry.kanji.blank? %>
-          <strong> | <%= entry.kanji %></strong>
-        <% end %>
-
-        <% unless entry.kennzahl.blank? %>
-          <strong> | <%= entry.kennzahl%></strong>
-        <% end %>
-        <div style="float:right;">
-          <% if can?(:show, entry) && entry.comments.present? && current_user %>
-            <% @count_me = entry.comments.count %>
-            <% @comment_me = entry.comments.count > 1 ? "Kommentare" : "Kommentar" %>
-            <%= link_to "#{@count_me} #{@comment_me}", entry %> |
-          <% end %>
-          <% if can?(:show, entry) %>
-            <%= link_to 'Als formatierten Eintrag anzeigen', entry %>
-          <% end %>
-        </div>
-      </td>
-    </tr>
-    <% if entry.uebersetzung.present? && can?(:show, entry) %>
+<% content_for :index do %>
+  <h1>Das Große Lexikon des Buddhismus</h1>
+  <h3><%= @count %>
+  <%= @count > 1 ? "Einträge" : "Eintrag" %>
+  </h3>
+  <%= paginate @entries %>
+  <table class="table table-striped">
+    <% @entries.each do |entry| %>
       <tr>
         <td>
-          <%= raw(entry.uebersetzung.truncate(800)) %>
+          <% unless entry.japanische_umschrift.blank? %>
+            <strong> <%= entry.japanische_umschrift %></strong>
+          <% end %>
+
+          <% unless entry.kanji.blank? %>
+            <strong> | <%= entry.kanji %></strong>
+          <% end %>
+
+          <% unless entry.kennzahl.blank? %>
+            <strong> | <%= entry.kennzahl%></strong>
+          <% end %>
+          <div style="float:right;">
+            <% if can?(:show, entry) && entry.comments.present? && current_user %>
+              <% @count_me = entry.comments.count %>
+              <% @comment_me = entry.comments.count > 1 ? "Kommentare" : "Kommentar" %>
+              <%= link_to "#{@count_me} #{@comment_me}", entry %> |
+            <% end %>
+            <% if can?(:show, entry) %>
+              <%= link_to 'Als formatierten Eintrag anzeigen', entry %>
+            <% end %>
+          </div>
         </td>
       </tr>
-    <% else %>
-      <tr></tr>
+      <% if entry.uebersetzung.present? && can?(:show, entry) %>
+        <tr>
+          <td>
+            <%= raw(entry.uebersetzung.truncate(800)) %>
+          </td>
+        </tr>
+      <% else %>
+        <tr></tr>
+      <% end %>
     <% end %>
-  <% end %>
-</table>
-<%= paginate @entries %>
+  </table>
+  <%= paginate @entries %>
+<% end %>

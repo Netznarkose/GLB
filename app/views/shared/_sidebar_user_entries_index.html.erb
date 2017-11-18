@@ -1,0 +1,33 @@
+<div class="well sidebar-nav">
+  <ul class="nav nav-pills nav-stacked">
+    <li class="disabled"><a><%= entry_owner? ? "Meine" : "#{@user.name}'s" %> Einträge Durchsuchen</a></li>
+    <div style="margin-top: 20px">
+      <%= form_tag user_entries_path(@user), method: "get" do %>
+        <%= text_field_tag :search, params[:search] %>
+        <%= submit_tag "Suche", name: nil, class: "btn"  %>
+      <% end %>
+    </div>
+    </li>
+  </ul>
+</div>
+<div class="well sidebar-nav">
+  <ul class="nav nav-list">
+    <li class="nav-header">Sortieren</li>
+  </ul>
+  <div style="margin-top: 20px">
+    <div class="btn-group">
+      <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+        Felder Auswahl 
+        <span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu">
+        <li><%= sortable 'japanische_umschrift' %></li>
+        <li><%= sortable 'japanische_umschrift', 'Japanische Umschrift (reversed)', 'desc' %></li>
+        <li><%= sortable 'id' %></li>
+        <li><%= sortable 'id', 'Id (reversed)', 'desc' %></li>
+        <li><%= sortable 'kanji' %></li>
+        <li><%= sortable 'kanji', 'Kanji (reversed)', 'desc' %></li>
+      </ul>
+    </div>
+  </div>
+</div>
