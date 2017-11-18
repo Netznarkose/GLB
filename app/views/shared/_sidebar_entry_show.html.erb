@@ -1,0 +1,29 @@
+<div class="well sidebar-nav">
+  <ul class="nav nav-pills nav-stacked">
+    <li class="disabled"><a>Scan der Ausgabe von 1987</a></li>
+    <li>
+      <% pages = to_scan_pages(@entry.kennzahl) %>
+      <%= link_to "Seite #{pages[0]} anzeigen", "http://buddhismus-lexikon.eu:2001/SBDJ-Original-JPGs/SBDJ_Seite_#{pages[0]}.jpg" %>
+    </li>
+    <li>
+      <%= link_to "Seite #{pages[1]} anzeigen", "http://buddhismus-lexikon.eu:2001/SBDJ-Original-JPGs/SBDJ_Seite_#{pages[1]}.jpg" %>
+    </li>
+    <li class="disabled"><a>Frühere Eintragsversionen</a></li>
+    <% if @entry.entry_docs.present? %>
+      <% @entry.entry_docs.each do |doc| %>
+        <li>
+          <%= link_to "Word-Datei (" + doc.page_reference + ")", entry_doc_path(doc), :target => "_blank" %>
+        </li>
+      <% end %>
+    <% end %>
+    <% if @entry.entry_htmls.present? %>
+      <% @entry.entry_htmls.each do |html| %>
+        <% if html.page_reference.present? %>
+          <li>
+            <%= link_to "HTML-Datei (" + html.page_reference + ")", entry_html_path(html), :target => "_blank" %>
+          </li>
+        <% end %>
+      <% end %>
+    <% end %>
+  </ul>
+</div>

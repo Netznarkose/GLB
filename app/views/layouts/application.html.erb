@@ -74,10 +74,19 @@
           <div class="col-md-12"> 
             <%= yield(:edit) %>
           </div>
-        <% else %>
+        <% elsif content_for(:show) %>
           <div class="col-md-2"> 
             <div class="sidebar">
-              <%= render "shared/sidebar" %>
+              <%= render "shared/sidebar_entry_show" %>
+            </div>
+          </div>
+          <div class="col-md-10">
+            <%= yield(:show) %>
+          </div>
+        <% else%>
+          <div class="col-md-2"> 
+            <div class="sidebar">
+              <%= render "shared/sidebar_entry_index" %>
             </div>
           </div>
           <div class="col-md-10">
