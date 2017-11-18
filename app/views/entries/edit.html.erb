@@ -1,19 +1,23 @@
 <% content_for :edit do %>
-  <%= content_tag :div, id: 'kennzahl', data: {kennzahl: @entry.kennzahl.to_i } do %>
+  <%= content_tag :div, id: 'kennzahl', data: { kennzahl: @entry.kennzahl.to_i } do %>
   <% end %>
   <%= bootstrap_form_for @entry do |f| %>
     <div style="width: 800px; position: fixed">
-      <div class="funky_grey_seperator" style="margin-top: 21px;">
-        <span class="left-action" id="page_count"></span>
-        <div class="btn-group" role="group" aria-label="..."style="float: right;">
-          <button type="button" onclick="forward_switch()" id="forward" class="btn btn-default">Vor</button>
+      <div class="funky_grey_seperator">
+        <div style="float: left;">
+        <a href="#">Seite <span class="badge"><span id="page_count"></span></span></a>
+        <div class="btn-group" role="group" aria-label="...">
           <button type="button" onclick="back_switch()" id="back"class="btn btn-default">Zurück</button>
-          <button type="button" onclick="back_first_switch()" id="back_first" class="btn btn-default">Erste Seite</button>
-          <%= link_to 'Als formatierten Eintrag anzeigen', @entry, class: 'btn btn-default' %>
-          <%= f.submit 'Bearbeitung speichern', class: 'btn btn-default' %>
+          <button type="button" onclick="forward_switch()" id="forward" class="btn btn-default">Vor</button>
+          <button type="button" onclick="back_first_switch()" id="back_first" class="btn btn-default">1. Textblock</button>
+        </div>
+        </div>
+        <div class="btn-group" role="group" aria-label="..."style="float: right;">
+          <%= link_to 'Anzeigen', @entry, class: 'btn btn-default' %>
+          <%= f.submit 'Speichern', class: 'btn btn-default' %>
         </div>
         <% pages = to_scan_pages(@entry.kennzahl) %>
-        <div style="margin-bottom: 15px">
+        <div style="margin-top: 50px; margin-bottom: 15px;">
           <%= image_tag "http://buddhismus-lexikon.eu:/SBDJ-Original-JPGs/Lex_#{pages[0]}_oben.jpg", style: "display: block;", id: "page0", size: '760x400'  %>
           <%= image_tag "http://buddhismus-lexikon.eu:/SBDJ-Original-JPGs/Lex_#{pages[0]}_mitten.jpg", style: "display: none;", id: "page1", size: '760x400'  %>
           <%= image_tag "http://buddhismus-lexikon.eu:/SBDJ-Original-JPGs/Lex_#{pages[0]}_unten.jpg", style: "display: none;", id: "page2", size: '760x400'  %>
@@ -30,71 +34,48 @@
         <%= f.text_field :japanischer_quelltext_bearbeitungsstand, label: 'Bearbeitungsstand des Quelltextes' %>
       </div>
     </div>
-    <div style="margin-left: 820px; width: 575px"> 
+    <div style="margin-left: 820px; width: 575px; margin-top: 21px;"> 
       <%= render 'shared/error_messages', object: f.object %>
       <div class="funky_grey_seperator">
         <h4>Kennungsdaten</h4>
         <% if can?(:manage, @entry) %>
-          <%= f.label :user_id, 'Verfasser' %>
-          <%= select("entry", "user_id", User.all.collect {|user| [ user.name, user.id ] }, { :selected => @entry.user_id }, style: "width:540px") %>
+          <%= f.select(:user_id, options_for_select(User.all.collect {|user| [ user.name, user.id ] }, { selected: @entry.user_id}), label: 'Verfasser') %>
         <% else %>
           <%= f.hidden_field :user_id, value: current_user.id  %>
         <% end %>
-        <%= f.label :freigeschaltet %>
         <%= f.check_box :freigeschaltet %>
-        <%= f.label :namenskuerzel %>
-        <%= f.text_field :namenskuerzel, style: "width:530px"%>
-        <%= f.label :kennzahl %>
-        <%= f.text_field :kennzahl, required: true, style: "width:530px"%>
-        <%= f.label :spaltenzahl %>
-        <%= f.text_field :spaltenzahl, style: "width:530px" %>
-        <%= f.label :abweichende_kennzahl, 'Abweichende Kennzahl' %>
-        <%= f.text_field :abweichende_kennzahl, style: "width:530px"%>
-        <%= f.label :seite_textblock2005, 'Seite Textblock 2005' %>
-        <%= f.text_field :seite_textblock2005, style: "width:530px" %>
+        <%= f.text_field :namenskuerzel %>
+        <%= f.text_field :kennzahl, required: true %>
+        <%= f.text_field :spaltenzahl %>
+        <%= f.text_field :abweichende_kennzahl, label: 'Abweichende Kennzahl' %>
+        <%= f.text_field :seite_textblock2005, label: 'Seite Textblock 2005' %>
       </div>
       <div class="funky_grey_seperator">
         <h4>Lemma-Schreibungen und -Aussprachen</h4>
-        <%= f.label :japanische_umschrift%>
-        <%= f.text_field :japanische_umschrift, style: "width:530px" %>
-        <%= f.label :japanische_umschrift_din, 'Japanische Umschrift nach DIN 32708' %>
-        <%= f.text_field :japanische_umschrift_din, style: "width:530px" %>
-        <%= f.label :kanji %>
-        <%= f.text_field :kanji, style: "width:530px" %>
-        <%= f.label :chinesisch %>
-        <%= f.text_field :chinesisch, style: "width:530px" %>
+        <%= f.text_field :japanische_umschrift %>
+        <%= f.text_field :japanische_umschrift_din, label: 'Japanische Umschrift nach DIN 32708' %>
+        <%= f.text_field :kanji %>
+        <%= f.text_field :chinesisch %>
         <div class="toggle_lemma_schreibungen_visibility" style="display:none">
-          <%= f.label :tibetisch %>
-          <%= f.text_field :tibetisch, style: "width:530px" %>
+          <%= f.text_field :tibetisch %>
         </div>
-        <%= f.label :koreanisch %>
-        <%= f.text_field :koreanisch, style: "width:530px" %>
-        <%= f.label :pali %>
-        <%= f.text_field :pali, style: "width:530px" %>
-        <%= f.label :sanskrit %>
-        <%= f.text_field :sanskrit, style: "width:530px" %>
+        <%= f.text_field :koreanisch %>
+        <%= f.text_field :pali %>
+        <%= f.text_field :sanskrit %>
         <div class="toggle_lemma_schreibungen_visibility" style="display:none">
-          <%= f.label :weitere_sprachen %>
-          <%= f.text_field :weitere_sprachen, style: "width:530px" %>
-          <%= f.label :alternative_japanische_lesungen %>
-          <%= f.text_field :alternative_japanische_lesungen, style: "width:530px" %>
-          <%= f.label :schreibvarianten %>
-          <%= f.text_field :schreibvarianten, style: "width:530px" %>
-          <%= f.label :lemma_in_katakana, 'Lemma in Katakana' %>
-          <%= f.text_field :lemma_in_katakana, style: "width:530px" %>
-          <%= f.label :lemma_in_lateinbuchstaben, 'Lemma in lateinischen Buchstaben bei entspr. Originalschreibung' %>
-          <%= f.text_field :lemma_in_lateinbuchstaben, style: "width:530px" %>
+          <%= f.text_field :weitere_sprachen %>
+          <%= f.text_field :alternative_japanische_lesungen %>
+          <%= f.text_field :schreibvarianten %>
+          <%= f.text_field :lemma_in_katakana, label: 'Lemma in Katakana' %>
+          <%= f.text_field :lemma_in_lateinbuchstaben, label: 'Lemma in lateinischen Buchstaben bei entspr. Originalschreibung' %>
         </div>
         <button type="button" class="btn1" id="funk">Weitere Felder</button>
       </div>
       <div class="funky_grey_seperator">
         <h4>Übersetzungen, Quellenangaben, Literatur und Ergänzungen</h4>
-        <%= f.label :lemma_art %>
-        <%= f.select(:lemma_art, ["", "Person", "Tempel", "Werk", "Fachtermini", "Geographische Bezeichnung", "Ereignis"], {}, style: "width: 540px;") %>
-        <%= f.label :jahreszahlen %>
-        <%= f.text_field :jahreszahlen, style: "width:530px" %>
-        <%= f.label :deutsche_uebersetzung %>
-        <%= f.text_field :deutsche_uebersetzung, style: "width:530px" %>
+        <%= f.select(:lemma_art, ["", "Person", "Tempel", "Werk", "Fachtermini", "Geographische Bezeichnung", "Ereignis"]) %>
+        <%= f.text_field :jahreszahlen %>
+        <%= f.text_field :deutsche_uebersetzung %>
         <%= f.label :uebersetzung %>
         <%= f.cktext_area :uebersetzung, :ckeditor => {:uiColor => "#AADC6E", :toolbar => "MyToolbar"} %>
         <%= f.label :quellen %>

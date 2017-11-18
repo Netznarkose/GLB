@@ -56,7 +56,7 @@ $(document).on("page:load", function() {
 function set_page_number() {
   count = 0;
   var default_page_number = document.getElementById("kennzahl").dataset.kennzahl;
-  document.getElementById("page_count").innerHTML = 'Seite ' + default_page_number + ', oben';
+  document.getElementById("page_count").innerHTML = ' ' + default_page_number + ', oben';
 }
 
 function back_first_switch() {
@@ -94,7 +94,7 @@ function write_page_count() {
     console.log('else 2')
     page_number_as_integer += 1;
   } 
-  document.getElementById("page_count").innerHTML = 'Seite ' + page_number_as_integer.toString() + ", " + page_titles[count];
+  document.getElementById("page_count").innerHTML = ' ' + page_number_as_integer.toString() + ", " + page_titles[count];
 
 
   for (var i = 0; i < 9; i++) {
