@@ -2,10 +2,10 @@
   <ul class="nav nav-pills nav-stacked">
     <li class="disabled"><a>Index Durchsuchen</a></li>
     <div class="form-group">
-      <%= form_tag entries_path, method: :get, :class => "form-inline" do %>
+      <%= form_tag entries_path, method: :get, class: 'form-inline' do %>
         <%= text_field_tag :search, params[:search], { placeholder: 'Alle Einträge' } %>
         <div style="margin-top: 5px">
-          <%= submit_tag "Los!", name: nil, class: "btn btn-default" %>   
+          <%= submit_tag "Los!", class: 'btn btn-default' %>   
         </div>
       <% end %>
     </div>

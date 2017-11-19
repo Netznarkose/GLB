@@ -1,33 +1,36 @@
 <div class="well sidebar-nav">
   <ul class="nav nav-pills nav-stacked">
-    <li class="disabled"><a><%= entry_owner? ? "Meine" : "#{@user.name}'s" %> Einträge Durchsuchen</a></li>
-    <div style="margin-top: 20px">
-      <%= form_tag user_entries_path(@user), method: "get" do %>
-        <%= text_field_tag :search, params[:search] %>
-        <%= submit_tag "Suche", name: nil, class: "btn"  %>
+    <li class="disabled"><a>Einträge Durchsuchen</a></li>
+    <% keep_the_views_stupid = entry_owner? ? "Meine" : "#{@user.name}'s" %>
+    <div class="form-group">
+      <%= form_tag user_entries_path(@user), method: "get", class: 'form-inline' do %>
+        <%= text_field_tag :search, params[:search], { placeholder: "#{keep_the_views_stupid} Einträge" } %>
+        <div style="margin-top: 5px">
+          <%= submit_tag "Los!", class: 'btn btn-default' %>
+        </div>
       <% end %>
     </div>
     </li>
   </ul>
 </div>
 <div class="well sidebar-nav">
-  <ul class="nav nav-list">
-    <li class="nav-header">Sortieren</li>
-  </ul>
-  <div style="margin-top: 20px">
-    <div class="btn-group">
-      <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-        Felder Auswahl 
+  <ul class="nav nav-pills nav-stacked">
+    <li class="disabled"><a>Einträge Sortieren</a></li>
+    <div class="dropdown">
+      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        Felder Auswahl
         <span class="caret"></span>
-      </a>
-      <ul class="dropdown-menu">
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
         <li><%= sortable 'japanische_umschrift' %></li>
         <li><%= sortable 'japanische_umschrift', 'Japanische Umschrift (reversed)', 'desc' %></li>
         <li><%= sortable 'id' %></li>
         <li><%= sortable 'id', 'Id (reversed)', 'desc' %></li>
         <li><%= sortable 'kanji' %></li>
         <li><%= sortable 'kanji', 'Kanji (reversed)', 'desc' %></li>
+        <li role="separator" class="divider"></li>
+        <li><a href="#">Separated link</a></li>
       </ul>
     </div>
-  </div>
+  </ul>
 </div>
