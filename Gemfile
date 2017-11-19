@@ -11,6 +11,7 @@ gem 'devise-i18n-views'
 gem "rspec-rails", :group => [:test, :development]
 gem "paper_trail"
 gem "kaminari"
+gem 'bootstrap-kaminari-views'
 gem 'bcrypt'
 gem 'cancancan'
 gem 'bootstrap_form'

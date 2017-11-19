@@ -3,7 +3,8 @@
   <h3><%= @count %>
   <%= @count > 1 ? "Einträge" : "Eintrag" %>
   </h3>
-  <%= paginate @entries %>
+  <%= paginate @entries, theme: 'twitter-bootstrap-3', 
+                         pagination_class: 'pagination-sm' %>
   <table class="table table-striped">
     <% @entries.each do |entry| %>
       <tr>
@@ -42,5 +43,6 @@
       <% end %>
     <% end %>
   </table>
-  <%= paginate @entries %>
+  <%= paginate @entries, theme: 'twitter-bootstrap-3', 
+                         pagination_class: 'pagination-sm' %>
 <% end %>
