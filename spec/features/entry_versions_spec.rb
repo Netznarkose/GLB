@@ -12,10 +12,10 @@ describe 'entry_versions management' do
       before do
         visit edit_entry_path(entry)
         fill_in 'entry_kennzahl', with: '1:2'
-        click_button('Bearbeitung speichern')
+        click_button('Speichern')
         visit edit_entry_path(entry)
         fill_in 'entry_kennzahl', with: '1:3'
-        click_button('Bearbeitung speichern')
+        click_button('Speichern')
       end
       it 'visits version index and sees two versions of entry' do
         visit entry_versions_path(entry)
