@@ -1,5 +1,6 @@
 <div class="well sidebar-nav">
   <ul class="nav nav-pills nav-stacked">
+    <li class="disabled"><a><%= @count == 1 ? 'Eintrag' : 'Einträge' %><span class="badge"><%= @count %></a></li>
     <li class="disabled"><a>Index Durchsuchen</a></li>
     <div class="form-group">
       <%= form_tag entries_path, method: :get, class: 'form-inline' do %>
