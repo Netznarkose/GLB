@@ -1,15 +1,12 @@
-<% content_for :content do %>
-  <div class="row">
-    <div class="span5 offset1">
-      <h1>Status Ändern</h1>
-      <h3>Name: <%= @user.name %></h3>
-      <h3>Email: <%= @user.email%></h3>
-      <%= form_for @user do |f| %>
-        <%= f.label :role, 'Status' %>
-        <%= f.select :role, ['Admin', 'Editor', 'Author', 'Commentator'] %>
-        <%= f.submit "Speichern", class: "btn" %>
-        <%= link_to 'Zurück', users_path, class: "btn"  %>
-      <% end %>
-    </div>
+<div class="row">
+  <div class="col-md-4"> 
+    <h1>Status Ändern</h1>
+    <h3>Name: <%= @user.name %></h3>
+    <h3>Email: <%= @user.email%></h3>
+    <%= bootstrap_form_for(@user) do |f| %>
+      <%= f.select :role, ['Admin', 'Editor', 'Author', 'Commentator'], label: 'Status' %>
+      <%= f.submit "Speichern" %>
+      <%= link_to 'Zurück', users_path %>
+    <% end %>
   </div>
-<% end %>
+</div>
