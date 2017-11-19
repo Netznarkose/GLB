@@ -11,7 +11,7 @@ describe 'versions management' do
         entry = FactoryGirl.create(:entry, sanskrit: 'previous content')
         visit edit_entry_path(entry)
         fill_in 'entry_sanskrit', with: 'some editing in the field entry_lemma_in_katakana'
-        click_button('Bearbeitung speichern')
+        click_button('Speichern')
       end
       it 'sees the changed entry' do
         expect(page).to have_text('some editing in the field entry_lemma_in_katakana')
