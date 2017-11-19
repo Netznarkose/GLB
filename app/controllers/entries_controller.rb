@@ -4,8 +4,8 @@ class EntriesController < ApplicationController
   before_action :build_entry_comment, only: :show
 
   def index
-    @entries = params[:search] ? search_entries : sort_entries
-    @count = @entries.count
+    @count = (params[:search] ? search_entries : sort_entries).count
+    @entries = (params[:search] ? search_entries : sort_entries).page
     respond_to do |format|
       format.html
       format.json { render json: all_entries }
@@ -89,10 +89,10 @@ class EntriesController < ApplicationController
   end
 
   def search_entries
-    Entry.search(params[:search]).page
+    Entry.search(params[:search])
   end
 
   def sort_entries
-    Entry.order(sort_column + ' ' + sort_direction).page
+    Entry.order(sort_column + ' ' + sort_direction)
   end
 end
