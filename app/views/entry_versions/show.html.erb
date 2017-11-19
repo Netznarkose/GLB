@@ -1,146 +1,144 @@
-<% content_for :content do %>
-  <h1>Version: <%= @version_number %> <span style="font-size: 0.5em">Erstellt am: <%= @entry_created_at.strftime('%b %d, %Y')%></span></h1>
-  <div class="funky_grey_seperator">
-    <span class="right-action"> <%= link_to 'Aktuelle Version', entry_path(@entry), class: 'btn' %></span>
-    <span class="right-action"> <%= link_to 'Versionsindex', entry_versions_path(@entry), class: 'btn' %></span>
-    <h4>Kennungsdaten</h4>
-    <dl class="dl">
-      <% unless @entry_papertrail_version_reified.user_id.blank? %>
-	<dt class="label">Verfasser</dt>
-	<dd><%= @entry_papertrail_version_reified.user.name %></dd>
-      <% end %>
-      <% unless @entry_papertrail_version_reified.namenskuerzel.blank? %>
-	<dt class="label">Namenskürzel</dt>
-	<dd><%= @entry_papertrail_version_reified.namenskuerzel %></dd>
-      <% end %>
-      <% unless @entry_papertrail_version_reified.kennzahl.blank? %>
-	<dt class="label">Kennzahl</dt>
-	<dd><%= @entry_papertrail_version_reified.kennzahl %></dd>
-      <% end %>
-      <% unless @entry_papertrail_version_reified.spaltenzahl.blank? %>
-	<dt class="label">Spaltenzahl</dt>
-	<dd><%= @entry_papertrail_version_reified.spaltenzahl %></dd>
-      <% end %>
-      <% unless @entry_papertrail_version_reified.page_reference.blank? %>
-	<dt class="label">Page Referenz</dt>
-	<dd><%= @entry_papertrail_version_reified.page_reference %></dd>
-      <% end %>
+<h1>Version: <%= @version_number %> <span style="font-size: 0.5em">Erstellt am: <%= @entry_created_at.strftime('%b %d, %Y')%></span></h1>
+<div class="funky_grey_seperator">
+  <span class="right-action"> <%= link_to 'Aktuelle Version', entry_path(@entry), class: 'btn' %></span>
+  <span class="right-action"> <%= link_to 'Versionsindex', entry_versions_path(@entry), class: 'btn' %></span>
+  <h4>Kennungsdaten</h4>
+  <dl class="dl">
+    <% unless @entry_papertrail_version_reified.user_id.blank? %>
+      <dt class="label">Verfasser</dt>
+      <dd><%= @entry_papertrail_version_reified.user.name %></dd>
+    <% end %>
+    <% unless @entry_papertrail_version_reified.namenskuerzel.blank? %>
+      <dt class="label">Namenskürzel</dt>
+      <dd><%= @entry_papertrail_version_reified.namenskuerzel %></dd>
+    <% end %>
+    <% unless @entry_papertrail_version_reified.kennzahl.blank? %>
+      <dt class="label">Kennzahl</dt>
+      <dd><%= @entry_papertrail_version_reified.kennzahl %></dd>
+    <% end %>
+    <% unless @entry_papertrail_version_reified.spaltenzahl.blank? %>
+      <dt class="label">Spaltenzahl</dt>
+      <dd><%= @entry_papertrail_version_reified.spaltenzahl %></dd>
+    <% end %>
+    <% unless @entry_papertrail_version_reified.page_reference.blank? %>
+      <dt class="label">Page Referenz</dt>
+      <dd><%= @entry_papertrail_version_reified.page_reference %></dd>
+    <% end %>
 
-      <% unless @entry_papertrail_version_reified.lemma_art.blank? %>
-	<dt class="label">Art des Lemmas</dt>
-	<dd><%= @entry_papertrail_version_reified.lemma_art %></dd>
-      <% end %>
-      <% unless @entry_papertrail_version_reified.jahreszahlen.blank? %>
-	<dt class="label">Jahreszahlen</dt>
-	<dd><%= @entry_papertrail_version_reified.jahreszahlen %></dd>
-      <% end %>
-      <% unless @entry_papertrail_version_reified.abweichende_kennzahl.blank? %>
-	<dt class="label">Abweichende Kennzahl</dt>
-	<dd><%= @entry_papertrail_version_reified.abweichende_kennzahl %></dd>
-      <% end %>
-      <% unless @entry_papertrail_version_reified.seite_textblock2005.blank? %>
-	<dt class="label">Seite Textblock 2005</dt>
-	<dd><%= @entry_papertrail_version_reified.seite_textblock2005 %></dd>
-      <% end %>
-    </dl>
-  </div>
-  <div class="funky_grey_seperator">
-    <h4>Lemma-Schreibungen und -Aussprache</h4>
-    <dl class="dl">
-      <% unless @entry_papertrail_version_reified.japanische_umschrift.blank? %>
-	<dt class="label">Japanische Umschrift</dt>
-	<dd><%= @entry_papertrail_version_reified.japanische_umschrift %></dd>
-      <% end %>
-      <% unless @entry_papertrail_version_reified.japanische_umschrift_din.blank? %>
-	<dt class="label">Japanische Umschrift Din</dt>
-	<dd><%= @entry_papertrail_version_reified.japanische_umschrift_din %></dd>
-      <% end %>
-      <% unless @entry_papertrail_version_reified.kanji.blank? %>
-	<dt class="label">Kanji</dt>
-	<dd><%= @entry_papertrail_version_reified.kanji %></dd>
-      <% end %>
-      <% unless @entry_papertrail_version_reified.chinesisch.blank? %>
-	<dt class="label">Chinesisch</dt>
-	<dd><%= @entry_papertrail_version_reified.chinesisch %></dd>
-      <% end %>
-      <% unless @entry_papertrail_version_reified.tibetisch.blank? %>
-	<dt class="label">Tibetisch</dt>
-	<dd><%= @entry_papertrail_version_reified.tibetisch %></dd>
-      <% end %>
-      <% unless @entry_papertrail_version_reified.koreanisch.blank? %>
-	<dt class="label">Koreanisch</dt>
-	<dd><%= @entry_papertrail_version_reified.koreanisch %></dd>
-      <% end %>
-      <% unless @entry_papertrail_version_reified.pali.blank? %>
-	<dt class="label">Pali</dt>
-	<dd><%= @entry_papertrail_version_reified.pali %></dd>
-      <% end %>
-      <% unless @entry_papertrail_version_reified.sanskrit.blank? %>
-	<dt class="label">Sanskrit</dt>
-	<dd><%= @entry_papertrail_version_reified.sanskrit %></dd>
-      <% end %>
-      <% unless @entry_papertrail_version_reified.weitere_sprachen.blank? %>
-	<dt class="label">Weitere Sprachen</dt>
-	<dd><%= @entry_papertrail_version_reified.weitere_sprachen %></dd>
-      <% end %>
-      <% unless @entry_papertrail_version_reified.alternative_japanische_lesungen.blank? %>
-	<dt class="label">Alternative japanische Lesungen</dt>
-	<dd><%= @entry_papertrail_version_reified.alternative_japanische_lesungen %></dd>
-      <% end %>
-      <% unless @entry_papertrail_version_reified.schreibvarianten.blank? %>
-	<dt class="label">Schreibvarianten</dt>
-	<dd><%= @entry_papertrail_version_reified.schreibvarianten %></dd>
-      <% end %>
-      <% unless @entry_papertrail_version_reified.lemma_in_katakana.blank? %>
-	<dt class="label">Lemma in Katakana</dt>
-	<dd><%= @entry_papertrail_version_reified.lemma_in_katakana %></dd>
-      <% end %>
-      <% unless @entry_papertrail_version_reified.lemma_in_lateinbuchstaben.blank? %>
-	<dt class="label">Lemma in Lateinbuchstaben</dt>
-	<dd><%= @entry_papertrail_version_reified.lemma_in_lateinbuchstaben %></dd>
-      <% end %>
-    </dl>
-  </div>
+    <% unless @entry_papertrail_version_reified.lemma_art.blank? %>
+      <dt class="label">Art des Lemmas</dt>
+      <dd><%= @entry_papertrail_version_reified.lemma_art %></dd>
+    <% end %>
+    <% unless @entry_papertrail_version_reified.jahreszahlen.blank? %>
+      <dt class="label">Jahreszahlen</dt>
+      <dd><%= @entry_papertrail_version_reified.jahreszahlen %></dd>
+    <% end %>
+    <% unless @entry_papertrail_version_reified.abweichende_kennzahl.blank? %>
+      <dt class="label">Abweichende Kennzahl</dt>
+      <dd><%= @entry_papertrail_version_reified.abweichende_kennzahl %></dd>
+    <% end %>
+    <% unless @entry_papertrail_version_reified.seite_textblock2005.blank? %>
+      <dt class="label">Seite Textblock 2005</dt>
+      <dd><%= @entry_papertrail_version_reified.seite_textblock2005 %></dd>
+    <% end %>
+  </dl>
+</div>
+<div class="funky_grey_seperator">
+  <h4>Lemma-Schreibungen und -Aussprache</h4>
+  <dl class="dl">
+    <% unless @entry_papertrail_version_reified.japanische_umschrift.blank? %>
+      <dt class="label">Japanische Umschrift</dt>
+      <dd><%= @entry_papertrail_version_reified.japanische_umschrift %></dd>
+    <% end %>
+    <% unless @entry_papertrail_version_reified.japanische_umschrift_din.blank? %>
+      <dt class="label">Japanische Umschrift Din</dt>
+      <dd><%= @entry_papertrail_version_reified.japanische_umschrift_din %></dd>
+    <% end %>
+    <% unless @entry_papertrail_version_reified.kanji.blank? %>
+      <dt class="label">Kanji</dt>
+      <dd><%= @entry_papertrail_version_reified.kanji %></dd>
+    <% end %>
+    <% unless @entry_papertrail_version_reified.chinesisch.blank? %>
+      <dt class="label">Chinesisch</dt>
+      <dd><%= @entry_papertrail_version_reified.chinesisch %></dd>
+    <% end %>
+    <% unless @entry_papertrail_version_reified.tibetisch.blank? %>
+      <dt class="label">Tibetisch</dt>
+      <dd><%= @entry_papertrail_version_reified.tibetisch %></dd>
+    <% end %>
+    <% unless @entry_papertrail_version_reified.koreanisch.blank? %>
+      <dt class="label">Koreanisch</dt>
+      <dd><%= @entry_papertrail_version_reified.koreanisch %></dd>
+    <% end %>
+    <% unless @entry_papertrail_version_reified.pali.blank? %>
+      <dt class="label">Pali</dt>
+      <dd><%= @entry_papertrail_version_reified.pali %></dd>
+    <% end %>
+    <% unless @entry_papertrail_version_reified.sanskrit.blank? %>
+      <dt class="label">Sanskrit</dt>
+      <dd><%= @entry_papertrail_version_reified.sanskrit %></dd>
+    <% end %>
+    <% unless @entry_papertrail_version_reified.weitere_sprachen.blank? %>
+      <dt class="label">Weitere Sprachen</dt>
+      <dd><%= @entry_papertrail_version_reified.weitere_sprachen %></dd>
+    <% end %>
+    <% unless @entry_papertrail_version_reified.alternative_japanische_lesungen.blank? %>
+      <dt class="label">Alternative japanische Lesungen</dt>
+      <dd><%= @entry_papertrail_version_reified.alternative_japanische_lesungen %></dd>
+    <% end %>
+    <% unless @entry_papertrail_version_reified.schreibvarianten.blank? %>
+      <dt class="label">Schreibvarianten</dt>
+      <dd><%= @entry_papertrail_version_reified.schreibvarianten %></dd>
+    <% end %>
+    <% unless @entry_papertrail_version_reified.lemma_in_katakana.blank? %>
+      <dt class="label">Lemma in Katakana</dt>
+      <dd><%= @entry_papertrail_version_reified.lemma_in_katakana %></dd>
+    <% end %>
+    <% unless @entry_papertrail_version_reified.lemma_in_lateinbuchstaben.blank? %>
+      <dt class="label">Lemma in Lateinbuchstaben</dt>
+      <dd><%= @entry_papertrail_version_reified.lemma_in_lateinbuchstaben %></dd>
+    <% end %>
+  </dl>
+</div>
 
-  <div class="funky_grey_seperator">
-    <h4>Übersetzungen, Quellenangaben, Literatur und Ergänzungen</h4>
-    <dl class="dl">
-      <% unless @entry_papertrail_version_reified.uebersetzung.blank? %>
-	<dt class="label">Übersetzung</dt>
-	<dd><%= raw(@entry_papertrail_version_reified.uebersetzung) %></dd>
-      <% end %>
-      <% unless @entry_papertrail_version_reified.deutsche_uebersetzung.blank? %>
-	<dt class="label">Deutsche Übersetzung</dt>
-	<dd><%= @entry_papertrail_version_reified.deutsche_uebersetzung %></dd>
-      <% end %>
-      <% unless @entry_papertrail_version_reified.quellen.blank? %>
-	<dt class="label">Quellen</dt>
-	<dd><%= raw(@entry_papertrail_version_reified.quellen) %></dd>
-      <% end %>
-      <% unless @entry_papertrail_version_reified.literatur.blank? %>
-	<dt class="label">Literatur</dt>
-	<dd><%= raw(@entry_papertrail_version_reified.literatur) %></dd>
-      <% end %>
-      <% unless @entry_papertrail_version_reified.eigene_ergaenzungen.blank? %>
-	<dt class="label">Eigene Ergänzungen</dt>
-	<dd><%= raw(@entry_papertrail_version_reified.eigene_ergaenzungen) %></dd>
-      <% end %>
-      <% unless @entry_papertrail_version_reified.quellen_ergaenzungen.blank? %>
-	<dt class="label">Quellen Ergänzungen</dt>
-	<dd><%= raw(@entry_papertrail_version_reified.quellen_ergaenzungen) %></dd>
-      <% end %>
-      <% unless @entry_papertrail_version_reified.literatur_ergaenzungen.blank? %>
-	<dt class="label">Literatur Ergänzungen</dt>
-	<dd><%= raw(@entry_papertrail_version_reified.literatur_ergaenzungen) %></dd>
-      <% end %>
-      <% unless @entry_papertrail_version_reified.japanischer_quelltext.blank? %>
-	<dt class="label">Japanischer Quelltext</dt>
-	<dd><%= @entry_papertrail_version_reified.japanischer_quelltext %></dd>
-      <% end %>
-      <% unless @entry_papertrail_version_reified.japanischer_quelltext_bearbeitungsstand.blank? %>
-	<dt class="label">Japanischer Quelltext Bearbeitungsstand</dt>
-	<dd><%= @entry_papertrail_version_reified.japanischer_quelltext_bearbeitungsstand %></dd>
-      <% end %>
-    </dl>
-  </div>
-<% end %>
+<div class="funky_grey_seperator">
+  <h4>Übersetzungen, Quellenangaben, Literatur und Ergänzungen</h4>
+  <dl class="dl">
+    <% unless @entry_papertrail_version_reified.uebersetzung.blank? %>
+      <dt class="label">Übersetzung</dt>
+      <dd><%= raw(@entry_papertrail_version_reified.uebersetzung) %></dd>
+    <% end %>
+    <% unless @entry_papertrail_version_reified.deutsche_uebersetzung.blank? %>
+      <dt class="label">Deutsche Übersetzung</dt>
+      <dd><%= @entry_papertrail_version_reified.deutsche_uebersetzung %></dd>
+    <% end %>
+    <% unless @entry_papertrail_version_reified.quellen.blank? %>
+      <dt class="label">Quellen</dt>
+      <dd><%= raw(@entry_papertrail_version_reified.quellen) %></dd>
+    <% end %>
+    <% unless @entry_papertrail_version_reified.literatur.blank? %>
+      <dt class="label">Literatur</dt>
+      <dd><%= raw(@entry_papertrail_version_reified.literatur) %></dd>
+    <% end %>
+    <% unless @entry_papertrail_version_reified.eigene_ergaenzungen.blank? %>
+      <dt class="label">Eigene Ergänzungen</dt>
+      <dd><%= raw(@entry_papertrail_version_reified.eigene_ergaenzungen) %></dd>
+    <% end %>
+    <% unless @entry_papertrail_version_reified.quellen_ergaenzungen.blank? %>
+      <dt class="label">Quellen Ergänzungen</dt>
+      <dd><%= raw(@entry_papertrail_version_reified.quellen_ergaenzungen) %></dd>
+    <% end %>
+    <% unless @entry_papertrail_version_reified.literatur_ergaenzungen.blank? %>
+      <dt class="label">Literatur Ergänzungen</dt>
+      <dd><%= raw(@entry_papertrail_version_reified.literatur_ergaenzungen) %></dd>
+    <% end %>
+    <% unless @entry_papertrail_version_reified.japanischer_quelltext.blank? %>
+      <dt class="label">Japanischer Quelltext</dt>
+      <dd><%= @entry_papertrail_version_reified.japanischer_quelltext %></dd>
+    <% end %>
+    <% unless @entry_papertrail_version_reified.japanischer_quelltext_bearbeitungsstand.blank? %>
+      <dt class="label">Japanischer Quelltext Bearbeitungsstand</dt>
+      <dd><%= @entry_papertrail_version_reified.japanischer_quelltext_bearbeitungsstand %></dd>
+    <% end %>
+  </dl>
+</div>

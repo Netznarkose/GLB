@@ -1,9 +1,7 @@
-<% content_for :content do %>
-    <h1>Versions Index </h1>
-    <div class="funky_grey_seperator">
-	<span class="right-action"> <%= link_to 'Aktuelle Version', entry_path(@entry), class: 'btn' %></span>
-	<% @entry_versions_all.to_enum.with_index(1) do |item, index| %>
-	    <p><h6><%= link_to "Version: #{index}) #{item.created_at.strftime('%b %d, %Y')}", entry_version_path(item.item_id, index) %></h6></p>
-	<% end %>
-    </div>
-<% end %>
+<h1>Versions Index </h1>
+<div class="funky_grey_seperator">
+    <span class="right-action"> <%= link_to 'Aktuelle Version', entry_path(@entry), class: 'btn' %></span>
+    <% @entry_versions_all.to_enum.with_index(1) do |item, index| %>
+	<p><h6><%= link_to "Version: #{index}) #{item.created_at.strftime('%b %d, %Y')}", entry_version_path(item.item_id, index) %></h6></p>
+    <% end %>
+</div>
