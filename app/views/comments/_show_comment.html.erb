@@ -11,8 +11,8 @@
         <%= "(#{comment.updated_at.to_formatted_s(:short)})" %>
         <% if can?(:destroy, comment)%>
           <div class="btn-group" role="group" aria-label="..."style="float: right;">
-            <button type="button" <%= link_to 'Bearbeiten', edit_entry_comment_path(@entry, comment), class: 'btn btn-default' %></button>
-            <button type="button" <%= link_to "Löschen", [@entry, comment], method: :delete, class: 'btn btn-default' %></button>
+            <%= link_to 'Bearbeiten', edit_entry_comment_path(@entry, comment), class: 'btn btn-default' %>
+            <%= link_to "Löschen", [@entry, comment], method: :delete, class: 'btn btn-default' %>
           </div>       
         <% end %>
         <div style="margin-bottom: 1em"><%= comment.comment %></div>
