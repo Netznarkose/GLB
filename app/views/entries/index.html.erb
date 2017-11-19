@@ -1,48 +1,47 @@
 <% content_for :index do %>
   <h1>Das Große Lexikon des Buddhismus</h1>
   <%# <h3><%= @count %1> %>
-  <%# <%= @count > 1 ? "Einträge" : "Eintrag" %1> %>
-  <%# </h3> %>
+    <%# <%= @count > 1 ? "Einträge" : "Eintrag" %1> %>
+    <%# </h3> %>
   <%= paginate @entries, theme: 'twitter-bootstrap-3', 
-                         pagination_class: 'pagination-sm' %>
-  <table class="table table-striped">
-    <% @entries.each do |entry| %>
+  pagination_class: 'pagination-sm' %>
+<table class="table table-striped">
+  <% @entries.each do |entry| %>
+    <tr>
+      <td>
+        <% unless entry.japanische_umschrift.blank? %>
+          <strong> <%= entry.japanische_umschrift %></strong>
+        <% end %>
+
+        <% unless entry.kanji.blank? %>
+          <strong> | <%= entry.kanji %></strong>
+        <% end %>
+
+        <% unless entry.kennzahl.blank? %>
+          <strong> | <%= entry.kennzahl%> |</strong>
+        <% end %>
+        <% if can?(:show, entry) && entry.comments.present? && current_user %>
+          <a href="#"><%= entry.comments.count == 1 ? "Kommentar " : "Kommentare " %><span class="badge"><%= entry.comments.count %></span></a>
+        <% end %>
+        <% if can?(:show, entry) %>
+          <div class="btn-group btn-group-sm" role="group" aria-label="..." style="float:right;">
+            <%= link_to 'Anzeigen', entry, class: 'btn btn-default' %>
+            <%= link_to 'Bearbeiten', edit_entry_path(entry), class: 'btn btn-default' %>
+          </div>
+        <% end %>
+      </td>
+    </tr>
+    <% if entry.uebersetzung.present? && can?(:show, entry) %>
       <tr>
         <td>
-          <% unless entry.japanische_umschrift.blank? %>
-            <strong> <%= entry.japanische_umschrift %></strong>
-          <% end %>
-
-          <% unless entry.kanji.blank? %>
-            <strong> | <%= entry.kanji %></strong>
-          <% end %>
-
-          <% unless entry.kennzahl.blank? %>
-            <strong> | <%= entry.kennzahl%></strong>
-          <% end %>
-          <div style="float:right;">
-            <% if can?(:show, entry) && entry.comments.present? && current_user %>
-              <% @count_me = entry.comments.count %>
-              <% @comment_me = entry.comments.count > 1 ? "Kommentare" : "Kommentar" %>
-              <%= link_to "#{@count_me} #{@comment_me}", entry %> |
-            <% end %>
-            <% if can?(:show, entry) %>
-              <%= link_to 'Als formatierten Eintrag anzeigen', entry %>
-            <% end %>
-          </div>
+          <%= raw(entry.uebersetzung.truncate(800)) %>
         </td>
       </tr>
-      <% if entry.uebersetzung.present? && can?(:show, entry) %>
-        <tr>
-          <td>
-            <%= raw(entry.uebersetzung.truncate(800)) %>
-          </td>
-        </tr>
-      <% else %>
-        <tr></tr>
-      <% end %>
+    <% else %>
+      <tr></tr>
     <% end %>
-  </table>
-  <%= paginate @entries, theme: 'twitter-bootstrap-3', 
-                         pagination_class: 'pagination-sm' %>
+  <% end %>
+</table>
+<%= paginate @entries, theme: 'twitter-bootstrap-3', 
+  pagination_class: 'pagination-sm' %>
 <% end %>
