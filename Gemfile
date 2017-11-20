@@ -8,7 +8,6 @@ gem 'nokogiri'
 
 gem 'devise'
 gem 'devise-i18n-views'
-gem "rspec-rails", :group => [:test, :development]
 gem "paper_trail"
 gem "kaminari"
 gem 'bootstrap-kaminari-views'
@@ -16,6 +15,10 @@ gem 'bcrypt'
 gem 'cancancan'
 gem 'bootstrap_form'
 
+group :test, :development do
+  gem "rspec-rails"
+  gem 'pry-byebug'
+end
 group :assets do
   gem 'sass-rails', '~> 5.0'
   gem 'bootstrap-sass', '~> 3.3.7'
@@ -24,7 +27,6 @@ end
 
 group :development do
   gem 'pry-rails'
-  gem 'pry-byebug'
   gem 'awesome_print'
   gem 'rvm-capistrano'
   gem 'capistrano'
@@ -38,6 +40,4 @@ group :test do
   gem 'guard-rspec'
   gem 'launchy'
   gem 'database_cleaner'
-  gem 'pry-byebug'
 end
-
