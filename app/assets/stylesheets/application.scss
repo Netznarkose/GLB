@@ -4,6 +4,17 @@
 
 body { padding-top: 10px; }
 
+.fill-width.dropdown {
+    position: static;
+}
+.fill-width.dropdown > .dropdown-menu {
+    left: auto;
+    margin-top: -33px;
+}
+.fill-width.dropdown > .dropdown-menu > li > a {
+   white-space: normal;
+}
+
 .sidebar {
   position:fixed; 
   left:0; 
