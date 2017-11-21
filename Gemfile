@@ -25,6 +25,12 @@ group :assets do
   gem 'uglifier', '>= 1.3.0'
 end
 
+group :development, :test do
+  gem 'pry-byebug'
+  gem 'factory_girl_rails'
+  gem "rspec-rails"
+end
+
 group :development do
   gem 'pry-rails'
   gem 'awesome_print'
@@ -36,7 +42,6 @@ end
 
 group :test do
   gem 'capybara'
-  gem 'factory_girl_rails'
   gem 'guard-rspec'
   gem 'launchy'
   gem 'database_cleaner'
