@@ -1,4 +1,3 @@
-# encoding: utf-8
 FactoryGirl.define do
   factory :user do
     sequence(:email) { |n| "normal_user#{n}@example.com" }
@@ -34,22 +33,5 @@ FactoryGirl.define do
 
   factory :guest, parent: :user do
     role 'guest'
-  end
-
-  factory :entry, class: Entry do
-    user_id { FactoryGirl.create(:admin).id }
-    kennzahl '1:1'
-    japanische_umschrift 'chi {muchi}'
-    deutsche_uebersetzung 'Torheit, Dummheit {Nicht-Torheit}'
-  end
-
-  factory :published_entry, parent: :entry do
-    freigeschaltet true
-  end
-
-  factory :comment, class: Comment do
-    user_id { FactoryGirl.create(:admin).id }
-    entry_id { FactoryGirl.create(:entry).id }
-    comment 'Test comment!'
   end
 end
