@@ -4,6 +4,7 @@ describe Entry do
   let!(:entry) { FactoryGirl.create(:entry) }
   let!(:blank_entry) { FactoryGirl.create(:blank_entry) }
   let!(:formatted_entry) { FactoryGirl.create(:formatted_entry) }
+  let!(:unrevised_entry) { FactoryGirl.create(:unrevised_entry) }
 
   describe 'blank_translation?' do
     it 'returns true if translation hold only string "leer"' do
@@ -13,6 +14,16 @@ describe Entry do
       expect(formatted_entry.blank_translation?).to be(false)
     end
   end
+
+  describe 'unrevised?' do
+    it 'returns true if translation matches a specific regex' do
+      expect(unrevised_entry.unrevised_translation?).to be(true)
+    end
+    it 'returns false if translation does not match a specific regex' do
+      expect(formatted_entry.unrevised_translation?).to be(false)
+    end
+  end
+
   it 'creates a new instance of an entry given valid attributes' do
     expect(entry).to be_persisted
     expect(entry).to be_valid
