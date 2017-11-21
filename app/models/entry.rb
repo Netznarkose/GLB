@@ -82,6 +82,10 @@ class Entry < ActiveRecord::Base
         "muss ausgefüllt sein!"
     end
   end
+
+  def blank_translation?
+    self.uebersetzung == 'leer'
+  end
 end
 
 
