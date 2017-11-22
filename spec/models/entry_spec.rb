@@ -10,6 +10,10 @@ describe Entry do
       unprocessed_entry = FactoryBot.create(:entry, uebersetzung: nil)
       expect(unprocessed_entry.unprocessed?).to be(true)
     end
+    it 'returns true if translation is empty' do
+      unprocessed_entry = FactoryBot.create(:entry, uebersetzung: "")
+      expect(unprocessed_entry.unprocessed?).to be(true)
+    end
     it 'returns true if translation hold only the string "leer"' do
       unprocessed_entry = FactoryBot.create(:entry, uebersetzung: 'leer')
       expect(unprocessed_entry.unprocessed?).to be(true)

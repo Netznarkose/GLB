@@ -88,7 +88,7 @@ class Entry < ActiveRecord::Base
   end
 
   def leer_or_nil?
-    self.uebersetzung.nil? || self.uebersetzung.downcase == 'leer' || /leer/ === self.uebersetzung.downcase
+    self.uebersetzung.nil? || self.uebersetzung.empty? || self.uebersetzung.downcase == 'leer' || /leer/ === self.uebersetzung.downcase
   end
 
   def basic_identifier?
