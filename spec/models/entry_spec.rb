@@ -15,6 +15,16 @@ describe Entry do
       expect(unprocessed_entry.unprocessed?).to be(true)
     end
 
+    it 'returns true if translation hold only the string "Leer"' do
+      unprocessed_entry = FactoryBot.create(:entry, uebersetzung: 'Leer')
+      expect(unprocessed_entry.unprocessed?).to be(true)
+    end
+
+    it 'returns true if translation hold only the string "Leer" wrapped in html-tags' do
+      unprocessed_entry = FactoryBot.create(:entry, uebersetzung: "<p>leer</p>\r\n")
+      expect(unprocessed_entry.unprocessed?).to be(true)
+    end
+
     it 'returns true if translation matches a regex' do
       uebersetzung = "x0273_04\n\n\n\n\nN\n\nSBDJ 273 : 4\n\nLemma\n\n"
       unprocessed_entry = FactoryBot.create(:entry, uebersetzung: uebersetzung)

@@ -88,11 +88,11 @@ class Entry < ActiveRecord::Base
   end
 
   def leer_or_nil?
-    self.uebersetzung == 'leer' || self.uebersetzung.nil?
+    self.uebersetzung.nil? || self.uebersetzung.downcase == 'leer' || /leer/ === self.uebersetzung.downcase
   end
 
   def basic_identifier?
-    /Lemma/ === self.uebersetzung && /SBDJ/ === self.uebersetzung
+    /Lemma/ === self.uebersetzung[0..38] && /SBDJ/ === self.uebersetzung[0..38]
   end
 
 
