@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe 'users management' do 
-  let(:user) { FactoryGirl.create(:user) }
-  let(:admin) { FactoryGirl.create(:admin) }
+  let(:user) { FactoryBot.create(:user) }
+  let(:admin) { FactoryBot.create(:admin) }
   describe 'authentication' do
     it 'successfull login' do
       visit root_path

@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 describe ProfilesController, type: :controller do
-  let(:admin) { FactoryGirl.create(:admin) }
-  let(:author) { FactoryGirl.create(:author) }
-  let(:user) { FactoryGirl.create(:user) }
-  let(:guest) { FactoryGirl.create(:guest) }
+  let(:admin) { FactoryBot.create(:admin) }
+  let(:author) { FactoryBot.create(:author) }
+  let(:user) { FactoryBot.create(:user) }
+  let(:guest) { FactoryBot.create(:guest) }
 
   describe 'get edit' do
     context 'as logged-in user' do

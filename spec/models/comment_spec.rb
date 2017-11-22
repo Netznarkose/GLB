@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Comment do
-  let!(:comment) { FactoryGirl.create(:comment) }
+  let!(:comment) { FactoryBot.create(:comment) }
 
   it 'creates a new instance of a comment given valid attributes' do
     expect(comment).to be_persisted

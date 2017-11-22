@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe User do
-  let!(:user) { FactoryGirl.create(:user) }
-  let!(:super_admin) { FactoryGirl.create(:user, email: 'ulrich.apel@uni-tuebingen.de') }
+  let!(:user) { FactoryBot.create(:user) }
+  let!(:super_admin) { FactoryBot.create(:user, email: 'ulrich.apel@uni-tuebingen.de') }
 
   it 'creates a new instance of a user given valid attributes' do
     expect(user).to be_valid
@@ -36,7 +36,7 @@ describe User do
       expect(user.persisted?).to eq(false)
     end
     it 'does not delete a user that holds entries' do
-      user.entries << FactoryGirl.create(:entry)
+      user.entries << FactoryBot.create(:entry)
       expect { user.destroy }.to raise_error('User still holds entries')
     end
   end

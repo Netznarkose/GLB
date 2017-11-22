@@ -1,12 +1,12 @@
 require 'spec_helper'
 
 describe CommentsController, type: :controller do
-  let(:comment) { FactoryGirl.create(:comment) }
-  let(:admin) { FactoryGirl.create(:admin) }
-  let(:editor) { FactoryGirl.create(:editor) }
-  let(:author) { FactoryGirl.create(:author) }
-  let(:commentator) { FactoryGirl.create(:commentator) }
-  let(:user) { FactoryGirl.create(:user) }
+  let(:comment) { FactoryBot.create(:comment) }
+  let(:admin) { FactoryBot.create(:admin) }
+  let(:editor) { FactoryBot.create(:editor) }
+  let(:author) { FactoryBot.create(:author) }
+  let(:commentator) { FactoryBot.create(:commentator) }
+  let(:user) { FactoryBot.create(:user) }
 
   describe 'GET edit' do
     context 'as admin' do
@@ -104,7 +104,7 @@ describe CommentsController, type: :controller do
       end
       context 'with valid attributes' do
         it 'creates a comment' do
-          attributes = FactoryGirl.attributes_for(:comment)
+          attributes = FactoryBot.attributes_for(:comment)
           expect {
             post :create, entry_id: attributes[:entry_id], comment: attributes
           }.to change(Comment, :count).by(1)
@@ -116,7 +116,7 @@ describe CommentsController, type: :controller do
       end
       context 'with invalid attributes' do
         it 'does not creates a comment' do
-          attributes = FactoryGirl.attributes_for(:comment, comment: '')
+          attributes = FactoryBot.attributes_for(:comment, comment: '')
           expect {
             post :create, entry_id: attributes[:entry_id], comment: attributes
           }.to change(Comment, :count).by(0)
@@ -131,7 +131,7 @@ describe CommentsController, type: :controller do
       end
       context 'with valid attributes' do
         it 'creates a comment' do
-          attributes = FactoryGirl.attributes_for(:comment)
+          attributes = FactoryBot.attributes_for(:comment)
           expect {
             post :create, entry_id: attributes[:entry_id], comment: attributes
           }.to change(Comment, :count).by(1)
@@ -142,7 +142,7 @@ describe CommentsController, type: :controller do
       end
       context 'with invalid attributes' do
         it 'does not creates a comment' do
-          attributes = FactoryGirl.attributes_for(:comment, comment: '')
+          attributes = FactoryBot.attributes_for(:comment, comment: '')
           expect {
             post :create, entry_id: attributes[:entry_id], comment: attributes
           }.to change(Comment, :count).by(0)
@@ -159,7 +159,7 @@ describe CommentsController, type: :controller do
       end
       context 'with valid attributes' do
         it 'creates a comment' do
-          attributes = FactoryGirl.attributes_for(:comment)
+          attributes = FactoryBot.attributes_for(:comment)
           expect {
             post :create, entry_id: attributes[:entry_id], comment: attributes
           }.to change(Comment, :count).by(1)
@@ -170,7 +170,7 @@ describe CommentsController, type: :controller do
       end
       context 'with invalid attributes' do
         it 'does not creates a comment' do
-          attributes = FactoryGirl.attributes_for(:comment, comment: '')
+          attributes = FactoryBot.attributes_for(:comment, comment: '')
           expect {
             post :create, entry_id: attributes[:entry_id], comment: attributes
           }.to change(Comment, :count).by(0)
@@ -187,7 +187,7 @@ describe CommentsController, type: :controller do
       end
       context 'with valid attributes' do
         it 'creates a comment' do
-          attributes = FactoryGirl.attributes_for(:comment)
+          attributes = FactoryBot.attributes_for(:comment)
           expect {
             post :create, entry_id: attributes[:entry_id], comment: attributes
           }.to change(Comment, :count).by(1)
@@ -198,7 +198,7 @@ describe CommentsController, type: :controller do
       end
       context 'with invalid attributes' do
         it 'does not creates a comment' do
-          attributes = FactoryGirl.attributes_for(:comment, comment: '')
+          attributes = FactoryBot.attributes_for(:comment, comment: '')
           expect {
             post :create, entry_id: attributes[:entry_id], comment: attributes
           }.to change(Comment, :count).by(0)
@@ -211,7 +211,7 @@ describe CommentsController, type: :controller do
     end
     context 'as non-logged-in user' do
       it 'does not creates a comment' do
-        attributes = FactoryGirl.attributes_for(:comment)
+        attributes = FactoryBot.attributes_for(:comment)
         expect {
           post :create, entry_id: attributes[:entry_id], comment: attributes
         }.to change(Comment, :count).by(0)

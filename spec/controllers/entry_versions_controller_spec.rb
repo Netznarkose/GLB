@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe EntryVersionsController, type: :controller do
-  let(:entry) { FactoryGirl.create(:entry) }
-  let(:admin) { FactoryGirl.create(:admin) }
+  let(:entry) { FactoryBot.create(:entry) }
+  let(:admin) { FactoryBot.create(:admin) }
 
   before :each do
     admin

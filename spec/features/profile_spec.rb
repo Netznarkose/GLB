@@ -8,7 +8,7 @@ describe 'user profile management' do
     end
   end
   context 'logged in users' do
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { FactoryBot.create(:user) }
     before do
       login_as_user(user)
     end

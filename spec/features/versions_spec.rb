@@ -1,14 +1,14 @@
 require 'spec_helper'
 
 describe 'versions management' do
-  let(:admin) { FactoryGirl.create(:admin) }
+  let(:admin) { FactoryBot.create(:admin) }
   context 'admin logs in' do
     before do
       login_as_user(admin)
     end
     context 'updates an entry' do
       before do
-        entry = FactoryGirl.create(:entry, sanskrit: 'previous content')
+        entry = FactoryBot.create(:entry, sanskrit: 'previous content')
         visit edit_entry_path(entry)
         fill_in 'entry_sanskrit', with: 'some editing in the field entry_lemma_in_katakana'
         click_button('Speichern')

@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe 'comments management' do
   describe 'admin write a comment' do
-    let(:entry) { FactoryGirl.create(:entry) }
-    let(:comment) { FactoryGirl.create(:comment) }
-    let(:admin) { FactoryGirl.create(:admin) }
+    let(:entry) { FactoryBot.create(:entry) }
+    let(:comment) { FactoryBot.create(:comment) }
+    let(:admin) { FactoryBot.create(:admin) }
     before do
       login_as_user(admin)
     end

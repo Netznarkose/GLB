@@ -1,6 +1,6 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :entry, class: Entry do
-    user_id { FactoryGirl.build(:admin).id }
+    user_id { FactoryBot.build(:admin).id }
     kennzahl '1:1'
     japanische_umschrift 'chi {muchi}'
     deutsche_uebersetzung 'Torheit, Dummheit {Nicht-Torheit}'

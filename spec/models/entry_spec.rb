@@ -1,23 +1,23 @@
 require 'spec_helper'
 
 describe Entry do
-  let!(:entry) { FactoryGirl.create(:entry) }
-  let!(:formatted_entry) { FactoryGirl.create(:formatted_entry) }
-  let!(:unformatted_entry) { FactoryGirl.create(:unformatted_entry) }
+  let!(:entry) { FactoryBot.create(:entry) }
+  let!(:formatted_entry) { FactoryBot.create(:formatted_entry) }
+  let!(:unformatted_entry) { FactoryBot.create(:unformatted_entry) }
 
   describe 'unprocessed?' do
     it 'returns true if translation is nil' do
-      unprocessed_entry = FactoryGirl.create(:entry, uebersetzung: nil)
+      unprocessed_entry = FactoryBot.create(:entry, uebersetzung: nil)
       expect(unprocessed_entry.unprocessed?).to be(true)
     end
     it 'returns true if translation hold only the string "leer"' do
-      unprocessed_entry = FactoryGirl.create(:entry, uebersetzung: 'leer')
+      unprocessed_entry = FactoryBot.create(:entry, uebersetzung: 'leer')
       expect(unprocessed_entry.unprocessed?).to be(true)
     end
 
     it 'returns true if translation matches a regex' do
       uebersetzung = "x0273_04\n\n\n\n\nN\n\nSBDJ 273 : 4\n\nLemma\n\n"
-      unprocessed_entry = FactoryGirl.create(:entry, uebersetzung: uebersetzung)
+      unprocessed_entry = FactoryBot.create(:entry, uebersetzung: uebersetzung)
       expect(unprocessed_entry.unprocessed?).to be(true)
     end
     it 'returns false if entry is formatted' do

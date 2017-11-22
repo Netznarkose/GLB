@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "PasswordResets" do
   it "emails user when requesting password reset" do
-    user = FactoryGirl.create(:author)
+    user = FactoryBot.create(:author)
     visit new_user_session_path
     click_link "Passwort vergessen?"
     fill_in "E-Mail", :with => user.email
