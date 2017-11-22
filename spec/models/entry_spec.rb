@@ -2,27 +2,40 @@ require 'spec_helper'
 
 describe Entry do
   let!(:entry) { FactoryGirl.create(:entry) }
-  let!(:blank_entry) { FactoryGirl.create(:blank_entry) }
   let!(:formatted_entry) { FactoryGirl.create(:formatted_entry) }
-  let!(:unrevised_entry) { FactoryGirl.create(:unrevised_entry) }
+  let!(:unformatted_entry) { FactoryGirl.create(:unformatted_entry) }
 
-  describe 'blank_translation?' do
-    it 'returns true if translation hold only string "leer"' do
-      expect(blank_entry.blank_translation?).to be(true)
+  describe 'unprocessed?' do
+    it 'returns true if translation is nil' do
+      unprocessed_entry = FactoryGirl.create(:entry, uebersetzung: nil)
+      expect(unprocessed_entry.unprocessed?).to be(true)
     end
-    it 'returns false if translation hold something else' do
-      expect(formatted_entry.blank_translation?).to be(false)
+    it 'returns true if translation hold only the string "leer"' do
+      unprocessed_entry = FactoryGirl.create(:entry, uebersetzung: 'leer')
+      expect(unprocessed_entry.unprocessed?).to be(true)
+    end
+
+    it 'returns true if translation matches a regex' do
+      uebersetzung = "x0273_04\n\n\n\n\nN\n\nSBDJ 273 : 4\n\nLemma\n\n"
+      unprocessed_entry = FactoryGirl.create(:entry, uebersetzung: uebersetzung)
+      expect(unprocessed_entry.unprocessed?).to be(true)
+    end
+    it 'returns false if entry is formatted' do
+      expect(formatted_entry.unprocessed?).to be(false)
+    end
+    it 'returns false if entry is unformatted' do
+      expect(unformatted_entry.unprocessed?).to be(false)
     end
   end
 
-  describe 'unrevised?' do
-    it 'returns true if translation matches a specific regex' do
-      expect(unrevised_entry.unrevised_translation?).to be(true)
-    end
-    it 'returns false if translation does not match a specific regex' do
-      expect(formatted_entry.unrevised_translation?).to be(false)
-    end
-  end
+  # describe 'unrevised?' do
+  #   it 'returns true if translation matches a specific regex' do
+  #     expect(unrevised_entry.unrevised_translation?).to be(true)
+  #   end
+  #   it 'returns false if translation does not match a specific regex' do
+  #     expect(formatted_entry.unrevised_translation?).to be(false)
+  #   end
+  # end
 
   it 'creates a new instance of an entry given valid attributes' do
     expect(entry).to be_persisted

@@ -83,13 +83,18 @@ class Entry < ActiveRecord::Base
     end
   end
 
-  def blank_translation?
-    self.uebersetzung == 'leer'
+  def unprocessed?
+    leer_or_nil? || basic_identifier?
   end
 
-  def unrevised_translation?
+  def leer_or_nil?
+    self.uebersetzung == 'leer' || self.uebersetzung.nil?
+  end
+
+  def basic_identifier?
     /Lemma/ === self.uebersetzung && /SBDJ/ === self.uebersetzung
   end
+
 
   def return_all_entries_with_unrevised_translations
     Entry.select {|e| e.unrevised_translation? == true }
