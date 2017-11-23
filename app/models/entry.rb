@@ -18,7 +18,8 @@ class Entry < ActiveRecord::Base
                     :freigeschaltet, :abweichende_kennzahl,
                     :japanischer_quelltext,
                     :japanischer_quelltext_bearbeitungsstand,
-                    :seite_textblock2005]
+                    :seite_textblock2005,
+                    :bearbeitungsstand]
 
   belongs_to :user
   has_many :comments

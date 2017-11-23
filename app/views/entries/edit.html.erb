@@ -36,6 +36,7 @@
   <div style="margin-left: 820px; width: 575px; margin-top: 21px;"> 
     <%= render 'shared/error_messages', object: f.object %>
     <div class="funky_grey_seperator">
+      <%= f.select(:bearbeitungsstand, ["Code veraltet", "unbearbeitet", "unformatiert", "formatiert"]) %>
       <h4>Kennungsdaten</h4>
       <% if can?(:manage, @entry) %>
         <%= f.select(:user_id, options_for_select(User.all.collect {|user| [ user.name, user.id ] }, { selected: @entry.user_id}), label: 'Verfasser') %>
