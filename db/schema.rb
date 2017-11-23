@@ -60,8 +60,8 @@ ActiveRecord::Schema.define(version: 20171123133836) do
     t.text     "eigene_ergaenzungen"
     t.text     "quellen_ergaenzungen"
     t.text     "literatur_ergaenzungen"
-    t.datetime "created_at",                                                                   null: false
-    t.datetime "updated_at",                                                                   null: false
+    t.datetime "created_at",                                                           null: false
+    t.datetime "updated_at",                                                           null: false
     t.integer  "user_id"
     t.string   "page_reference",                          limit: 255
     t.boolean  "freigeschaltet",                                      default: false
@@ -73,7 +73,7 @@ ActiveRecord::Schema.define(version: 20171123133836) do
     t.string   "japanischer_quelltext"
     t.string   "japanischer_quelltext_bearbeitungsstand"
     t.string   "seite_textblock2005"
-    t.string   "bearbeitungsstand",                                   default: "unbearbeitet"
+    t.string   "bearbeitungsstand",                                   default: "funk"
   end
 
   create_table "entry_docs", force: :cascade do |t|
