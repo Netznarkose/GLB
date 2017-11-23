@@ -9,8 +9,8 @@
         <button type="button" onclick="back_first_switch()" id="back_first" class="btn btn-default">1. Textblock</button>
       </div>
       <a href="#">Seite <span class="badge"><span id="page_count"></span></span></a>
-      <% if @entry.unprocessed? %>
-        <span class="label label-danger">unbearbeitet</span>
+      <% unless @entry.bearbeitungsstand.blank? %>
+        <span class="label label-danger"><%= @entry.bearbeitungsstand%></span>
       <% end %>
       <% pages = to_scan_pages(@entry.kennzahl) %>
 

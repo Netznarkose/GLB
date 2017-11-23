@@ -20,8 +20,8 @@
         <% unless entry.kennzahl.blank? %>
           <strong> | <%= entry.kennzahl%> |</strong>
         <% end %>
-        <% if entry.unprocessed? %>
-          <span class="label label-danger">unbearbeitet</span>
+        <% unless entry.bearbeitungsstand.blank? %>
+          <span class="label label-danger"><%= entry.bearbeitungsstand%></span>
         <% end %>
         <% if can?(:show, entry) && entry.comments.present? && current_user %>
           <a href="#"><%= entry.comments.count == 1 ? "Kommentar " : "Kommentare " %><span class="badge"><%= entry.comments.count %></span></a>
