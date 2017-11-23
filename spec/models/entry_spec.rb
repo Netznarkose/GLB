@@ -19,14 +19,16 @@ describe Entry do
       expect(unprocessed_entry.unprocessed?).to be(true)
     end
 
-    it 'returns true if translation hold only the string "Leer"' do
-      unprocessed_entry = FactoryBot.create(:entry, uebersetzung: 'Leer')
-      expect(unprocessed_entry.unprocessed?).to be(true)
-    end
-
     it 'returns true if translation hold only the string "Leer" wrapped in html-tags' do
       unprocessed_entry = FactoryBot.create(:entry, uebersetzung: "<p>leer</p>\r\n")
       expect(unprocessed_entry.unprocessed?).to be(true)
+    end
+
+    it 'returns false if the word "leer" occurs in an unformatted or formatted entry' do
+      uebersetzung = unformatted_entry.uebersetzung
+      uebersetzung.concat 'leer'
+      unprocessed_entry = FactoryBot.create(:entry, uebersetzung: uebersetzung)
+      expect(unprocessed_entry.unprocessed?).to be(false)
     end
 
     it 'returns true if translation matches a regex' do
@@ -34,6 +36,7 @@ describe Entry do
       unprocessed_entry = FactoryBot.create(:entry, uebersetzung: uebersetzung)
       expect(unprocessed_entry.unprocessed?).to be(true)
     end
+
     it 'returns false if entry is formatted' do
       expect(formatted_entry.unprocessed?).to be(false)
     end
