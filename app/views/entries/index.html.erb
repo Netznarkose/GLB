@@ -21,7 +21,7 @@
           <strong> | <%= entry.kennzahl%> |</strong>
         <% end %>
         <% if entry.unprocessed? %>
-          <span class="label label-danger">Unbearbeitet</span>
+          <span class="label label-danger">unbearbeitet</span>
         <% end %>
         <% if can?(:show, entry) && entry.comments.present? && current_user %>
           <a href="#"><%= entry.comments.count == 1 ? "Kommentar " : "Kommentare " %><span class="badge"><%= entry.comments.count %></span></a>
