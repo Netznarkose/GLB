@@ -4,8 +4,14 @@ class EntriesController < ApplicationController
   before_action :build_entry_comment, only: :show
 
   def index
-    @count = (params[:search] ? search_entries : sort_entries).count
-    @entries = (params[:search] ? search_entries : sort_entries).page(params[:page])
+    @count = 23
+    @entries = if params[:search]
+                 search_entries
+               elsif params[:select_bearbeitungsstand]
+                 Kaminari.paginate_array(select_bearbeitungsstand).page
+               else
+                 Kaminari.paginate_array(sort_entries).page
+               end
 
     respond_to do |format|
       format.html
@@ -95,5 +101,11 @@ class EntriesController < ApplicationController
 
   def sort_entries
     Entry.order(sort_column + ' ' + sort_direction)
+  end
+
+  def select_bearbeitungsstand
+    Entry.select do |entry|
+      entry.bearbeitungsstand == params[:select_bearbeitungsstand]
+    end
   end
 end

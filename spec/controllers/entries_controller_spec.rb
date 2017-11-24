@@ -18,6 +18,16 @@ describe EntriesController, type: :controller do
   describe 'Get index' do
     subject { get :index }
     it_behaves_like 'every user can access'
+    describe 'sorted entries' do
+      before do
+        3.times { FactoryBot.create(:entry, bearbeitungsstand: 'formatiert') }
+        7.times  { FactoryBot.create(:entry, bearbeitungsstand: 'unbearbeitet') }
+      end
+      it 'sorts entries according to selected field' do
+        get :index, select_bearbeitungsstand: 'formatiert'
+        # expect(Entries[0..2].bearbeitungsstand).to eq('formatiert')
+      end
+    end
   end
 
   describe 'GET show' do
@@ -116,7 +126,7 @@ describe EntriesController, type: :controller do
     context 'as commentator and guest' do
       subject { get :edit, id: entry.id }
 
-      it_behaves_like 'something that commentator and guest can not access' 
+      it_behaves_like 'something that commentator and guest can not access'
     end
   end
 
