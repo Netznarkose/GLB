@@ -10,8 +10,21 @@ module EntriesHelper
     %w{Ā ā Æ æ Ǣ ǣ Ē ē Ī ī Ō ō Ū ū Ḍ ḍ Ġ ġ Ḥ ḥ Ḷ ḷ Ḹ ḹ Ṃ ṃ Ṁ ṁ Ṇ ṇ Ṅ ṅ Ñ ñ Ṛ ṛ Ṝ ṝ Ś ś Ṣ ṣ Ṭ ṭ}
   end
 
+  def label_bearbeitungsstand(bearbeitungsstand)
+    case bearbeitungsstand
+    when "Code veraltet"
+      "label label-warning"
+    when "unbearbeitet"
+      "label label-danger"
+    when "unformatiert"
+      "label label-info"
+    when  "formatiert"
+      "label label-success"
+    end
+  end
+
   private
-  # make digits that are smaller then four digit to for digit numbers 
+  # make digits that are smaller then four digit to for digit numbers
   # example 9 becomes 0009
   def to_scan_pages_helper page
     page = page.to_s

@@ -3,8 +3,9 @@ require 'spec_helper'
 
 describe 'displays correct state of editing of entries in show' do
   let(:admin) { FactoryBot.create(:admin) }
-  let!(:formatted_entry) { FactoryBot.build(:formatted_entry) }
-  let!(:unprocessed_entry) { FactoryBot.build(:unprocessed_entry) }
+  let!(:formatted_entry) { FactoryBot.build(:entry, bearbeitungsstand: 'formatiert') }
+  let!(:unformatted_entry) { FactoryBot.build(:entry, bearbeitungsstand: 'unformatiert') }
+  let!(:unprocessed_entry) { FactoryBot.build(:entry, bearbeitungsstand: 'unbearbeitet') }
 
   before do
     login_as_user(admin)

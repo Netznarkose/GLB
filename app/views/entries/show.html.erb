@@ -10,7 +10,7 @@
       </div>
       <a href="#">Seite <span class="badge"><span id="page_count"></span></span></a>
       <% unless @entry.bearbeitungsstand.blank? %>
-        <span class="label label-danger"><%= @entry.bearbeitungsstand%></span>
+        <%= content_tag(:span, @entry.bearbeitungsstand, class: label_bearbeitungsstand(@entry.bearbeitungsstand)) %>
       <% end %>
       <% pages = to_scan_pages(@entry.kennzahl) %>
 
