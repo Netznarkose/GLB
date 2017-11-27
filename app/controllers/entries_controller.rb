@@ -6,7 +6,7 @@ class EntriesController < ApplicationController
   def index
     @count = 23
     @entries = if params[:search]
-                 search_entries
+                 Kaminari.paginate_array(search_entries).page
                elsif params[:select_bearbeitungsstand]
                  Kaminari.paginate_array(select_bearbeitungsstand).page
                else
