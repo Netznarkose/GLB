@@ -32,10 +32,10 @@
         <li><%= sortable 'kanji' %></li>
         <li><%= sortable 'kanji', 'Kanji (reversed)', 'desc' %></li>
         <li role="separator" class="divider"></li>
-        <li><%= link_to 'formatiert', select_bearbeitungsstand: 'formatiert'%></li>
-        <li><%= link_to 'unformatiert', select_bearbeitungsstand: 'unformatiert'%></li>
-        <li><%= link_to 'unbearbeitet', select_bearbeitungsstand: 'unbearbeitet'%></li>
-        <li><%= link_to 'Code veraltet', select_bearbeitungsstand: 'Code veraltet'%></li>
+        <li><%= sortable 'formatiert'%></li>
+        <li><%= sortable 'unformatiert'%></li>
+        <li><%= sortable 'unbearbeitet'%></li>
+        <li><%= sortable 'Code veraltet'%></li>
       </ul>
     </div>
   </ul>

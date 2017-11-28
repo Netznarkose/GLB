@@ -24,13 +24,9 @@ module EntriesHelper
   end
 
   def entry_search_attributes
-    esa = Entry.first.attributes.keys.map do |entry|
+    esa = (Entry::BEARBEITUNGS_STAND + Entry.column_names).map do |entry|
       [ entry.capitalize, entry ]
     end
-    esa.unshift(['Code veraltet', 'Code veraltet'])
-    esa.unshift(['Unbearbeitet', 'unbearbeitet'])
-    esa.unshift(['Unformatiert', 'unformatiert'])
-    esa.unshift(['Formatiert', 'formatiert'])
     esa.unshift(['Alle', 'all'])
   end
 

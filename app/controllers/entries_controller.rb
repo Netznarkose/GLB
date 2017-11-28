@@ -2,17 +2,10 @@ class EntriesController < ApplicationController
   include Export
   load_and_authorize_resource
   before_action :build_entry_comment, only: :show
-  before_action :pass_search_params_via_session
 
   def index
-    @count = 23
-    @entries = if params[:search]
-                 Kaminari.paginate_array(Entry.search(params[:search_field], params[:search])).page
-               elsif params[:select_bearbeitungsstand]
-                 Kaminari.paginate_array(select_bearbeitungsstand).page
-               else
-                 Kaminari.paginate_array(sort_entries).page
-               end
+    @count = (params[:search] ? search_entries : sort_entries).count
+    @entries = params[:search] ? paginate_entries(search_entries) : paginate_entries(sort_entries)
 
     respond_to do |format|
       format.html
@@ -21,6 +14,9 @@ class EntriesController < ApplicationController
       format.text { send_data customized_xml(all_entries), type: 'text/xml', disposition: 'attachment; filename=customized_glb.xml' }
       format.csv  { send_data customized_csv(all_entries), type: 'text/csv', disposition: 'attachment; filename=glb.csv' }
     end
+  end
+  def paginate_entries(search)
+    Kaminari.paginate_array(search).page
   end
 
   def show
@@ -97,21 +93,14 @@ class EntriesController < ApplicationController
   end
 
   def search_entries
-    Entry.search(params[:search])
+    Entry.search(params[:search_field], params[:search])
   end
 
   def sort_entries
-    Entry.order(sort_column + ' ' + sort_direction)
-  end
-
-  def select_bearbeitungsstand
-    Entry.select do |entry|
-      entry.bearbeitungsstand == params[:select_bearbeitungsstand]
+    if Entry::BEARBEITUNGS_STAND.include?(sort_column)
+      Entry.where(bearbeitungsstand: sort_column)
+    else
+      Entry.order(sort_column + ' ' + sort_direction)
     end
-  end
-  def pass_search_params_via_session
-    session[:current_bearbeitungsstand] ||= params[:select_bearbeitungsstand]
-    session[:current_sort] ||= params[:sort]
-    session[:current_direction] ||= params[:direction]
   end
 end

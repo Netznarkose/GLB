@@ -20,6 +20,13 @@ class Entry < ActiveRecord::Base
                     :japanischer_quelltext_bearbeitungsstand,
                     :seite_textblock2005,
                     :bearbeitungsstand]
+  BEARBEITUNGS_STAND = [
+    'formatiert',
+    'unformatiert',
+    'unbearbeitet',
+    'Code veraltet'
+  ]
+
 
   belongs_to :user
   has_many :comments
@@ -33,17 +40,12 @@ class Entry < ActiveRecord::Base
   before_save :cleanup
 
   scope :published, -> { where(freigeschaltet: true) }
-  scope :unbearbeitet, -> { where(bearbeitungsstand: 'unbearbeitet') }
 
-  def self.search(search_field = 'all', search_word)
-    if search_field == 'all'
-      search_all(search_word)
-    else
-      single_field_search(search_field, search_word)
-    end
+  def self.search(column = 'all', query)
+    column.eql?('all') ? all_columns(query) : single_column(column, query)
   end
 
-  def self.search_all(query)
+  def self.all_columns(query)
     if query
       Entry.where("japanische_umschrift LIKE ? OR
         kanji LIKE ? OR
@@ -51,21 +53,15 @@ class Entry < ActiveRecord::Base
         kennzahl = ? OR
         romaji_order LIKE ? OR
         jahreszahlen LIKE ? OR
-        uebersetzung LIKE ? AND
-        bearbeitungsstand = ?",
-        "%#{query}%","%#{query}%", "%#{query}%", "#{query}", "#{query}", "%#{query}%", "%#{query}%", "%unbearbeitet%")
+        uebersetzung LIKE ?",
+        "%#{query}%","%#{query}%", "%#{query}%", "#{query}", "#{query}", "%#{query}%", "%#{query}%")
     end
   end
-  def self.single_field_search(search_field, search_word)
-    if [
-        'formatiert',
-        'unformatiert',
-        'unbearbeitet',
-        'Code veraltet'
-    ].include?(search_field)
-      Entry.where(bearbeitungsstand: search_field).where("japanische_umschrift LIKE ?", "%#{search_word}%")
+  def self.single_column(column, query)
+    if Entry::BEARBEITUNGS_STAND.include?(column)
+      Entry.where(bearbeitungsstand: column).where("japanische_umschrift LIKE ?", "%#{query}%")
     else
-      Entry.where("#{search_field} LIKE ?", "%#{search_word}%")
+      Entry.where("#{column} LIKE ?", "%#{query}%")
     end
   end
 

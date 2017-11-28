@@ -5,6 +5,22 @@ describe Entry do
   let!(:formatted_entry) { FactoryBot.create(:formatted_entry) }
   let!(:unformatted_entry) { FactoryBot.create(:unformatted_entry) }
 
+  describe '#search' do
+    it 'returns search result for specific field' do
+      entry.update(kanji: 'foo')
+      expect(Entry.search('all', 'foo').first).to eq(entry)
+      expect(Entry.search('foo').first).to eq(entry)
+      expect(Entry.search('kanji', 'foo').first).to eq(entry)
+      expect(Entry.search('kanji', 'bar').first).not_to eq(entry)
+      expect(Entry.search('uebersetzung', 'foo').first).not_to eq(entry)
+    end
+    it 'returns search result for bearbeitungsstand' do
+      entry.update(bearbeitungsstand: 'unbearbeitet', japanische_umschrift: 'foo')
+      expect(Entry.search('all', 'foo').first).to eq(entry)
+      expect(Entry.search('unbearbeitet', 'foo').first).to eq(entry)
+      expect(Entry.search('formatiert', 'foo').first).not_to eq(entry)
+   end
+  end
   describe 'unprocessed?' do
     it 'returns true if translation is nil' do
       unprocessed_entry = FactoryBot.create(:entry, uebersetzung: nil)
@@ -44,15 +60,6 @@ describe Entry do
       expect(unformatted_entry.unprocessed?).to be(false)
     end
   end
-
-  # describe 'unrevised?' do
-  #   it 'returns true if translation matches a specific regex' do
-  #     expect(unrevised_entry.unrevised_translation?).to be(true)
-  #   end
-  #   it 'returns false if translation does not match a specific regex' do
-  #     expect(formatted_entry.unrevised_translation?).to be(false)
-  #   end
-  # end
 
   it 'creates a new instance of an entry given valid attributes' do
     expect(entry).to be_persisted
