@@ -2,11 +2,12 @@ class EntriesController < ApplicationController
   include Export
   load_and_authorize_resource
   before_action :build_entry_comment, only: :show
+  before_action :pass_search_params_via_session
 
   def index
     @count = 23
     @entries = if params[:search]
-                 Kaminari.paginate_array(search_entries).page
+                 Kaminari.paginate_array(Entry.search(params[:search_field], params[:search])).page
                elsif params[:select_bearbeitungsstand]
                  Kaminari.paginate_array(select_bearbeitungsstand).page
                else
@@ -107,5 +108,10 @@ class EntriesController < ApplicationController
     Entry.select do |entry|
       entry.bearbeitungsstand == params[:select_bearbeitungsstand]
     end
+  end
+  def pass_search_params_via_session
+    session[:current_bearbeitungsstand] ||= params[:select_bearbeitungsstand]
+    session[:current_sort] ||= params[:sort]
+    session[:current_direction] ||= params[:direction]
   end
 end

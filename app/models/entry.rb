@@ -33,8 +33,17 @@ class Entry < ActiveRecord::Base
   before_save :cleanup
 
   scope :published, -> { where(freigeschaltet: true) }
+  scope :unbearbeitet, -> { where(bearbeitungsstand: 'unbearbeitet') }
 
-  def self.search(query)
+  def self.search(search_field = 'all', search_word)
+    if search_field == 'all'
+      search_all(search_word)
+    else
+      single_field_search(search_field, search_word)
+    end
+  end
+
+  def self.search_all(query)
     if query
       Entry.where("japanische_umschrift LIKE ? OR
         kanji LIKE ? OR
@@ -42,8 +51,21 @@ class Entry < ActiveRecord::Base
         kennzahl = ? OR
         romaji_order LIKE ? OR
         jahreszahlen LIKE ? OR
-        uebersetzung LIKE ?",
-        "%#{query}%","%#{query}%", "%#{query}%", "#{query}", "#{query}", "%#{query}%", "%#{query}%")
+        uebersetzung LIKE ? AND
+        bearbeitungsstand = ?",
+        "%#{query}%","%#{query}%", "%#{query}%", "#{query}", "#{query}", "%#{query}%", "%#{query}%", "%unbearbeitet%")
+    end
+  end
+  def self.single_field_search(search_field, search_word)
+    if [
+        'formatiert',
+        'unformatiert',
+        'unbearbeitet',
+        'Code veraltet'
+    ].include?(search_field)
+      Entry.where(bearbeitungsstand: search_field).where("japanische_umschrift LIKE ?", "%#{search_word}%")
+    else
+      Entry.where("#{search_field} LIKE ?", "%#{search_word}%")
     end
   end
 

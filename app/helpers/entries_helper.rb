@@ -23,6 +23,17 @@ module EntriesHelper
     end
   end
 
+  def entry_search_attributes
+    esa = Entry.first.attributes.keys.map do |entry|
+      [ entry.capitalize, entry ]
+    end
+    esa.unshift(['Code veraltet', 'Code veraltet'])
+    esa.unshift(['Unbearbeitet', 'unbearbeitet'])
+    esa.unshift(['Unformatiert', 'unformatiert'])
+    esa.unshift(['Formatiert', 'formatiert'])
+    esa.unshift(['Alle', 'all'])
+  end
+
   private
   # make digits that are smaller then four digit to for digit numbers
   # example 9 becomes 0009
