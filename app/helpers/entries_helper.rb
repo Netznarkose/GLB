@@ -27,7 +27,7 @@ module EntriesHelper
     esa = (Entry::BEARBEITUNGS_STAND + Entry.column_names).map do |entry|
       [ entry.capitalize, entry ]
     end
-    esa.unshift(['Alle', 'all'])
+    esa.unshift(['Alle Felder', 'all'])
   end
 
   private
