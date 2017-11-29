@@ -4,6 +4,7 @@ describe Entry do
   let!(:entry) { FactoryBot.create(:entry) }
   let!(:formatted_entry) { FactoryBot.create(:formatted_entry) }
   let!(:unformatted_entry) { FactoryBot.create(:unformatted_entry) }
+  let!(:unprocessed_entry) { FactoryBot.create(:unprocessed_entry) }
 
   describe '#search' do
     it 'returns search result for specific field' do
@@ -20,6 +21,28 @@ describe Entry do
       expect(Entry.search('unbearbeitet', 'foo').first).to eq(entry)
       expect(Entry.search('formatiert', 'foo').first).not_to eq(entry)
    end
+  end
+  describe 'formatted?' do
+    it 'returns true if entry is formatted' do
+      expect(formatted_entry.formatted?).to be(true)
+    end
+    it 'returns false if entry is unformatted' do
+      expect(unformatted_entry.formatted?).to be(false)
+    end
+    it 'returns false if entry is unprocessed' do
+      expect(unprocessed_entry.formatted?).to be(false)
+    end
+  end
+  describe 'unformatted?' do
+    it 'returns true if entry is unformatted' do
+      expect(unformatted_entry.unformatted?).to be(true)
+    end
+    it 'returns false if entry is formatted' do
+      expect(formatted_entry.unformatted?).to be(false)
+    end
+    it 'returns false if entry is unprocessed' do
+      expect(unprocessed_entry.unformatted?).to be(false)
+    end
   end
   describe 'unprocessed?' do
     it 'returns true if translation is nil' do

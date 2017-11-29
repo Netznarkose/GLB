@@ -4,6 +4,8 @@ describe 'rake set_entry_bearbeitungsstand', type: :task do
   let(:rake_task_user) { FactoryBot.build(:admin, email: 'rake@user.com') }
   let(:entry) { FactoryBot.build(:entry) }
   let(:unprocessed_entry) { FactoryBot.build(:entry, bearbeitungsstand: nil, uebersetzung: nil) }
+  let(:formatted_entry) { FactoryBot.build(:formatted_entry) }
+  let(:unformatted_entry) { FactoryBot.build(:unformatted_entry) }
 
   context 'general' do
     it 'preloads the Rails environment' do
@@ -32,6 +34,19 @@ describe 'rake set_entry_bearbeitungsstand', type: :task do
       task.execute
       expect(Entry.last.bearbeitungsstand).to eq('unbearbeitet')
     end
+
+    it 'labels a formatted entry as formatiert' do
+      formatted_entry.save
+      task.execute
+      expect(Entry.last.bearbeitungsstand).to eq('formatiert')
+    end
+
+    it 'labels a unformatted entry as unformatiert' do
+      unformatted_entry.save
+      task.execute
+      expect(Entry.last.bearbeitungsstand).to eq('unformatiert')
+    end
+
     it 'does not overwrites labels that where already set' do
       entry.update(bearbeitungsstand: 'formatiert', uebersetzung: nil)
       task.execute

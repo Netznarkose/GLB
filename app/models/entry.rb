@@ -102,6 +102,32 @@ class Entry < ActiveRecord::Base
     end
   end
 
+  def formatted?
+    /<("[^"]*"|'[^']*'|[^'">])*>/ === self.uebersetzung.to_s.gsub('<p>', '').gsub('</p>', '')
+  end
+
+  def unformatted?
+    if formatted? || unprocessed?
+      false
+    else
+      true
+    end
+  end
+  def self.label_unformatted
+    Entry.all.each do |entry|
+      if entry.unformatted? && entry.bearbeitungsstand.blank?
+        entry.update(bearbeitungsstand: 'unformatiert')
+      end
+    end
+  end
+
+  def self.label_formatted
+    Entry.all.each do |entry|
+      if entry.formatted? && entry.bearbeitungsstand.blank?
+        entry.update(bearbeitungsstand: 'formatiert')
+      end
+    end
+  end
   def self.label_unprocessed
     Entry.all.each do |entry|
       if entry.unprocessed? && entry.bearbeitungsstand.blank?
