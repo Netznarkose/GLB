@@ -102,6 +102,14 @@ class Entry < ActiveRecord::Base
     end
   end
 
+  def self.label_unprocessed
+    Entry.all.each do |entry|
+      if entry.unprocessed? && entry.bearbeitungsstand.blank?
+        entry.update(bearbeitungsstand: 'unbearbeitet')
+      end
+    end
+  end
+
   def unprocessed?
     leer_or_nil? || basic_identifier?
   end
@@ -112,10 +120,5 @@ class Entry < ActiveRecord::Base
 
   def basic_identifier?
     /Lemma/ === self.uebersetzung[0..38] && /SBDJ/ === self.uebersetzung[0..38]
-  end
-
-
-  def return_all_entries_with_unrevised_translations
-    Entry.select {|e| e.unrevised_translation? == true }
   end
 end
