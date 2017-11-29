@@ -40,18 +40,6 @@ RSpec.configure do |config|
   config.order = "random"
 
   config.include(MailerMacros)
-  config.before(:suite) do
-    DatabaseCleaner.strategy = :truncation
-  end
-
-  config.before(:each) do
-    DatabaseCleaner.start
-    reset_email
-  end
-
-  config.after(:each) do
-    DatabaseCleaner.clean
-  end
   config.include Capybara::DSL
   #devise
   config.include Devise::Test::ControllerHelpers, type: :controller
