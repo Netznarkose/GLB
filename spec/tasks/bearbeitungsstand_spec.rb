@@ -1,8 +1,8 @@
-# File: spec/tasks/send_invoices_spec.rb
 require 'spec_helper'
 
 describe 'rake set_entry_bearbeitungsstand', type: :task do
   let(:rake_task_user) { FactoryBot.build(:admin, email: 'rake@user.com') }
+  let(:entry) { FactoryBot.build(:entry) }
   let(:unprocessed_entry) { FactoryBot.build(:entry, bearbeitungsstand: nil, uebersetzung: nil) }
 
   context 'general' do
@@ -31,6 +31,12 @@ describe 'rake set_entry_bearbeitungsstand', type: :task do
       unprocessed_entry.save
       task.execute
       expect(Entry.last.bearbeitungsstand).to eq('unbearbeitet')
+    end
+    it 'does not overwrites labels that where already set' do
+      entry.update(bearbeitungsstand: 'formatiert', uebersetzung: nil)
+      task.execute
+      expect(Entry.last.bearbeitungsstand).to eq('formatiert')
+      expect(Entry.last.bearbeitungsstand).not_to eq('unbearbeitet')
     end
   end
 end
