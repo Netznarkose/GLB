@@ -1,4 +1,5 @@
 class Entry < ActiveRecord::Base
+  include Label
   has_paper_trail
 
   ALLOWED_PARAMS = %i[namenskuerzel kennzahl
@@ -102,51 +103,12 @@ class Entry < ActiveRecord::Base
     end
   end
 
-  def formatted?
-    /<("[^"]*"|'[^']*'|[^'">])*>/ === uebersetzung.to_s.gsub('<p>', '').gsub('</p>', '')
-  end
-
-  def unformatted?
-    if formatted? || unprocessed?
-      false
-    else
-      true
+  def self.label_bearbeitungsstand
+    unlabeled_entries = Entry.select { |e| e.bearbeitungsstand.blank? }
+    unlabeled_entries.each do |e|
+      e.update(bearbeitungsstand: 'unformatiert') if e.unformatted?
+      e.update(bearbeitungsstand: 'formatiert') if e.formatted?
+      e.update(bearbeitungsstand: 'unbearbeitet') if e.unprocessed?
     end
-  end
-
-  def self.label_unformatted
-    Entry.all.each do |entry|
-      if entry.unformatted? && entry.bearbeitungsstand.blank?
-        entry.update(bearbeitungsstand: 'unformatiert')
-      end
-    end
-  end
-
-  def self.label_formatted
-    Entry.all.each do |entry|
-      if entry.formatted? && entry.bearbeitungsstand.blank?
-        entry.update(bearbeitungsstand: 'formatiert')
-      end
-    end
-  end
-
-  def self.label_unprocessed
-    Entry.all.each do |entry|
-      if entry.unprocessed? && entry.bearbeitungsstand.blank?
-        entry.update(bearbeitungsstand: 'unbearbeitet')
-      end
-    end
-  end
-
-  def unprocessed?
-    leer_or_nil? || basic_identifier?
-  end
-
-  def leer_or_nil?
-    uebersetzung.blank? || uebersetzung.casecmp('leer').zero? || /<p>leer<\/p>/ === uebersetzung.downcase
-  end
-
-  def basic_identifier?
-    /Lemma/ === uebersetzung[0..38] && /SBDJ/ === uebersetzung[0..38]
   end
 end
