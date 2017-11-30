@@ -11,6 +11,9 @@ describe Label do
     it 'has a valid factory' do
       expect(deprecated_syntax_entry).to be_valid
     end
+    it 'returns true of entry contains deprecated syntax' do
+      expect(deprecated_syntax_entry.deprecated_syntax?).to be(true)
+    end
   end
   describe 'formatted?' do
     it 'returns true if entry is formatted' do
@@ -36,9 +39,9 @@ describe Label do
     it 'returns false if entry is unprocessed' do
       expect(unprocessed_entry.unformatted?).to be(false)
     end
-    xit 'returns false if entry contains deprecated syntax' do
-      expect(deprecated_syntax_entry.unformatted?).to be(false)
-    end
+    # it 'returns false if entry contains deprecated syntax' do
+    #   expect(deprecated_syntax_entry.unformatted?).to be(false)
+    # end
   end
   describe 'unprocessed?' do
     it 'returns true if entry is unprocessed' do

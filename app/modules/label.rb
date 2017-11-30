@@ -1,11 +1,51 @@
 module Label
 
   def formatted?
-    /<("[^"]*"|'[^']*'|[^'">])*>/ === uebersetzung.to_s.gsub('<p>', '').gsub('</p>', '')
+    holds_html_tags? === strip_p_tags(uebersetzung)
+  end
+
+  def holds_html_tags?
+    /<("[^"]*"|'[^']*'|[^'">])*>/
+  end
+
+  def strip_p_tags(field)
+    field.to_s.gsub('<p>', '').gsub('</p>', '')
+  end
+
+  def deprecated_syntax?
+    nasty_regex = [
+      /<p>&icirc;/,
+      /&acirc;/,
+      /--&amp;gt;/,
+      /&ucirc;/,
+      //,
+      //,
+      /\\C\\/,
+      /\\J\\/,
+      /\\S\\/,
+      /\\P\\/,
+      /\\K\\/,
+      /\\T\\/,
+      /\\C/,
+      /\\J/,
+      /\\S/,
+      /\\P/,
+      /\\K/,
+      /\\T/,
+      /~n/,
+      /^s/,
+      /&amp;#39;/,
+      /^S/,
+      /&amp;rarr;/,
+      /--&gt;/
+    ]
+    nasty_regex.any? do |regex|
+      regex === uebersetzung
+    end
   end
 
   def unformatted?
-    if formatted? || unprocessed?
+    if formatted? || unprocessed? # || deprecated_syntax?
       false
     else
       true
