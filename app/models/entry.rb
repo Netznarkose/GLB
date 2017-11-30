@@ -109,6 +109,7 @@ class Entry < ActiveRecord::Base
       e.update(bearbeitungsstand: 'unformatiert') if e.unformatted?
       e.update(bearbeitungsstand: 'formatiert') if e.formatted?
       e.update(bearbeitungsstand: 'unbearbeitet') if e.unprocessed?
+      e.update(bearbeitungsstand: 'Code veraltet') if e.deprecated_syntax?
     end
   end
 end

@@ -6,6 +6,7 @@ describe 'rake set_entry_bearbeitungsstand', type: :task do
   let(:unprocessed_entry) { FactoryBot.build(:entry, bearbeitungsstand: nil, uebersetzung: nil) }
   let(:formatted_entry) { FactoryBot.build(:formatted_entry) }
   let(:unformatted_entry) { FactoryBot.build(:unformatted_entry) }
+  let(:deprecated_syntax_entry) { FactoryBot.build(:deprecated_syntax_entry) }
 
   context 'general' do
     it 'preloads the Rails environment' do
@@ -45,6 +46,12 @@ describe 'rake set_entry_bearbeitungsstand', type: :task do
       unformatted_entry.save
       task.execute
       expect(Entry.last.bearbeitungsstand).to eq('unformatiert')
+    end
+
+    it 'labels an entry that contains deprecated syntax as Code veraltet' do
+      deprecated_syntax_entry.save
+      task.execute
+      expect(Entry.last.bearbeitungsstand).to eq('Code veraltet')
     end
 
     it 'does not overwrites labels that where already set' do
