@@ -1,5 +1,4 @@
 module Label
-
   def formatted?
     holds_html_tags? === strip_p_tags(uebersetzung)
   end
@@ -13,7 +12,13 @@ module Label
   end
 
   def deprecated_syntax?
-    nasty_regex = [
+    deprecated_syntax_chars.any? do |regex|
+      regex === uebersetzung
+    end
+  end
+
+  def deprecated_syntax_chars
+    [
       /<p>&icirc;/,
       /&acirc;/,
       /--&amp;gt;/,
@@ -39,17 +44,10 @@ module Label
       /&amp;rarr;/,
       /--&gt;/
     ]
-    nasty_regex.any? do |regex|
-      regex === uebersetzung
-    end
   end
 
   def unformatted?
-    if formatted? || unprocessed? # || deprecated_syntax?
-      false
-    else
-      true
-    end
+    formatted? || unprocessed? || deprecated_syntax? ? false : true
   end
 
   def unprocessed?
