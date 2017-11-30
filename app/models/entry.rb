@@ -1,32 +1,31 @@
 class Entry < ActiveRecord::Base
   has_paper_trail
 
-  ALLOWED_PARAMS = [:namenskuerzel, :kennzahl,
-                    :spaltenzahl, :japanische_umschrift,
-                    :japanische_umschrift_din,
-                    :kanji, :pali, :sanskrit,
-                    :chinesisch, :tibetisch,
-                    :koreanisch, :weitere_sprachen,
-                    :alternative_japanische_lesungen,
-                    :schreibvarianten, :deutsche_uebersetzung,
-                    :lemma_art, :jahreszahlen,
-                    :uebersetzung, :quellen, :literatur,
-                    :eigene_ergaenzungen, :quellen_ergaenzungen,
-                    :literatur_ergaenzungen, :page_reference,
-                    :romaji_order, :lemma_in_katakana,
-                    :lemma_in_lateinbuchstaben, :user_id,
-                    :freigeschaltet, :abweichende_kennzahl,
-                    :japanischer_quelltext,
-                    :japanischer_quelltext_bearbeitungsstand,
-                    :seite_textblock2005,
-                    :bearbeitungsstand]
+  ALLOWED_PARAMS = %i[namenskuerzel kennzahl
+                      spaltenzahl japanische_umschrift
+                      japanische_umschrift_din
+                      kanji pali sanskrit
+                      chinesisch tibetisch
+                      koreanisch weitere_sprachen
+                      alternative_japanische_lesungen
+                      schreibvarianten deutsche_uebersetzung
+                      lemma_art jahreszahlen
+                      uebersetzung quellen literatur
+                      eigene_ergaenzungen quellen_ergaenzungen
+                      literatur_ergaenzungen page_reference
+                      romaji_order lemma_in_katakana
+                      lemma_in_lateinbuchstaben user_id
+                      freigeschaltet abweichende_kennzahl
+                      japanischer_quelltext
+                      japanischer_quelltext_bearbeitungsstand
+                      seite_textblock2005
+                      bearbeitungsstand].freeze
   BEARBEITUNGS_STAND = [
     'formatiert',
     'unformatiert',
     'unbearbeitet',
     'Code veraltet'
-  ]
-
+  ].freeze
 
   belongs_to :user
   has_many :comments
@@ -57,9 +56,10 @@ class Entry < ActiveRecord::Base
         "%#{query}%","%#{query}%", "%#{query}%", "#{query}", "#{query}", "%#{query}%", "%#{query}%")
     end
   end
+
   def self.single_column(column, query)
     if Entry::BEARBEITUNGS_STAND.include?(column)
-      Entry.where(bearbeitungsstand: column).where("japanische_umschrift LIKE ?", "%#{query}%")
+      Entry.where(bearbeitungsstand: column).where('japanische_umschrift LIKE ?', "%#{query}%")
     else
       Entry.where("#{column} LIKE ?", "%#{query}%")
     end
@@ -67,22 +67,22 @@ class Entry < ActiveRecord::Base
 
   def cleanup
     substituter = Substituter.new
-    if self.japanische_umschrift
-      self.romaji_order = substituter.substitute(self.japanische_umschrift).downcase
+    if japanische_umschrift
+      self.romaji_order = substituter.substitute(japanische_umschrift).downcase
     end
   end
 
   def group_lemma_schreibungen_und_aussprachen
     if japanische_umschrift.blank? &&
-        kanji.blank? &&
-        chinesisch.blank? &&
-        tibetisch.blank? &&
-        koreanisch.blank? &&
-        pali.blank? &&
-        sanskrit.blank? &&
-        weitere_sprachen.blank? &&
-        alternative_japanische_lesungen.blank? &&
-        schreibvarianten.blank?
+       kanji.blank? &&
+       chinesisch.blank? &&
+       tibetisch.blank? &&
+       koreanisch.blank? &&
+       pali.blank? &&
+       sanskrit.blank? &&
+       weitere_sprachen.blank? &&
+       alternative_japanische_lesungen.blank? &&
+       schreibvarianten.blank?
       errors[:base] = 'Mindestens ein Feld der Gruppe '\
         "'Lemma-Schreibungen und -Aussprachen' muss ausgefüllt sein!"
     end
@@ -90,20 +90,20 @@ class Entry < ActiveRecord::Base
 
   def group_uebersetzungen_quellenangaben_literatur_und_ergaenzungen
     if deutsche_uebersetzung.blank? &&
-        uebersetzung.blank? &&
-        quellen.blank? &&
-        literatur.blank? &&
-        eigene_ergaenzungen.blank? &&
-        quellen_ergaenzungen.blank? &&
-        literatur_ergaenzungen.blank?
+       uebersetzung.blank? &&
+       quellen.blank? &&
+       literatur.blank? &&
+       eigene_ergaenzungen.blank? &&
+       quellen_ergaenzungen.blank? &&
+       literatur_ergaenzungen.blank?
       errors[:base] = 'Mindestens ein Feld der Gruppe '\
         "'Uebersetzungen , Quellenangaben, Literatur und Ergaenzungen' "\
-        "muss ausgefüllt sein!"
+        'muss ausgefüllt sein!'
     end
   end
 
   def formatted?
-    /<("[^"]*"|'[^']*'|[^'">])*>/ === self.uebersetzung.to_s.gsub('<p>', '').gsub('</p>', '')
+    /<("[^"]*"|'[^']*'|[^'">])*>/ === uebersetzung.to_s.gsub('<p>', '').gsub('</p>', '')
   end
 
   def unformatted?
@@ -113,6 +113,7 @@ class Entry < ActiveRecord::Base
       true
     end
   end
+
   def self.label_unformatted
     Entry.all.each do |entry|
       if entry.unformatted? && entry.bearbeitungsstand.blank?
@@ -128,6 +129,7 @@ class Entry < ActiveRecord::Base
       end
     end
   end
+
   def self.label_unprocessed
     Entry.all.each do |entry|
       if entry.unprocessed? && entry.bearbeitungsstand.blank?
@@ -141,10 +143,10 @@ class Entry < ActiveRecord::Base
   end
 
   def leer_or_nil?
-    self.uebersetzung.nil? || self.uebersetzung.empty? || self.uebersetzung.downcase == 'leer' || /<p>leer<\/p>/ === self.uebersetzung.downcase
+    uebersetzung.blank? || uebersetzung.casecmp('leer').zero? || /<p>leer<\/p>/ === uebersetzung.downcase
   end
 
   def basic_identifier?
-    /Lemma/ === self.uebersetzung[0..38] && /SBDJ/ === self.uebersetzung[0..38]
+    /Lemma/ === uebersetzung[0..38] && /SBDJ/ === uebersetzung[0..38]
   end
 end
