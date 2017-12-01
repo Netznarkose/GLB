@@ -22,6 +22,10 @@ FactoryBot.define do
     uebersetzung "x0290_01\n   \n\n\nKusharon-ki, Ju she lun ji   \n290:1\n30 Fasz. Auch \\C\\ Ju she lun guang ji\\\noder einfach \\C\\ Guang ji\\ genannt. Vefasst von \\C\\ Jin Guang\\ der Tang-Dynastie.\nEntstehungsjahr unklar. Kommentarwerk zum \\C\\ Ju she lun\\ (--> Kusharon),\ndas von \\C\\ Xuan Zang\\ (--> Genjô) übersetzt wurde. Der Verfasser\nwar ein Schüler von Xuan Zang ( 602-646). Zusammen mit den Kommentaren\nder anderen Schüler \\C\\ Shen Tai\\ und \\C\\ Fa Bao\\ wird er als einer\nder \u0084drei großen Kommentare zum Ju she lun\u0093 bezeichnet.\nEs ist eine Besonderheit dieses Werkes,\ndaß es in der Absicht geschrieben wurde, einen von Xuan Zang persönlich\nautorisierten, offiziellen Kommentar zu erstellen, unter Betonung der Überlieferung\nstellte er alle Arten von Interpretationen nebeneinander und fügte\nden vielen Ausführungen keine Beurteilungen hinzu. Als maßgebliches\nKommentarwerk zum Ju she lun  ist es von jeher mit Hochachtung betrachtet\nworden.\nQuellen: (  ) 41, Lun shu bu 1-5;\nDrucke: Ausgabe Genroku 15 (1702); Ausgabe Meiji 21 (1888).\nES\n \n \n \n "
   end
 
+  factory :unprocessed_and_deprecated_entry, parent: :entry do
+   uebersetzung "x0039_01\n\n\n\n\nN\n\nSBDJ 39 : 1\n\nLemma\n\n "
+  end
+
   factory :published_entry, parent: :entry do
     freigeschaltet true
   end

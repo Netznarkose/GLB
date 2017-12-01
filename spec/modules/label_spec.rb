@@ -8,6 +8,16 @@ describe Label do
   let!(:deprecated_syntax_entry) { FactoryBot.create(:deprecated_syntax_entry) }
 
   describe 'deprecated_syntax_entry' do
+    context 'detects chars listed in blacklist' do
+      black_list = "<p>&icirc; &acirc; --&amp;gt; &ucirc;   \\C\\ \\J\\ \\S\\ \\P\\ \\K\\ \\T\\ \\C \\J \\S \\P \\K \\T ~n ^s &amp;#39; ^S &amp;rarr; --&gt;</p>\r\n"
+      black_list.split.each do |char|
+        it "char: #{char} detected" do
+          formatted_entry.uebersetzung << char
+          formatted_entry.save
+          expect(formatted_entry.deprecated_syntax?).to be(true)
+        end
+      end
+    end
     it 'has a valid factory' do
       expect(deprecated_syntax_entry).to be_valid
     end
