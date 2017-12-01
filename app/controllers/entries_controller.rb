@@ -16,7 +16,7 @@ class EntriesController < ApplicationController
     end
   end
   def paginate_entries(search)
-    Kaminari.paginate_array(search).page
+    Kaminari.paginate_array(search).page(params[:page])
   end
 
   def show
