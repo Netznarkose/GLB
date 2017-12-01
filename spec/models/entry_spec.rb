@@ -62,5 +62,9 @@ describe Entry do
       expect(Entry.search('unbearbeitet', 'foo').first).to eq(entry)
       expect(Entry.search('formatiert', 'foo').first).not_to eq(entry)
     end
+    it 'returns search case-insensitive result for bearbeitungsstand' do
+      entry.update(bearbeitungsstand: 'unbearbeitet', japanische_umschrift: 'Foo')
+      expect(Entry.search('unbearbeitet', 'foo').first).to eq(entry)
+    end
   end
 end
