@@ -74,7 +74,7 @@ describe 'sort index' do
       end
       it 'in descending order' do
         visit entries_path
-        click_link 'Unbearbeitet (reversed)'
+        click_link 'Unbearbeitet (rev)'
         expect(all('tr').first.text.split.first).to eq('Zeise')
         expect(all('tr')[4].text.split.first).to eq('Aalhaus')
       end

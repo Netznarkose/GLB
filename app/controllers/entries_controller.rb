@@ -15,8 +15,8 @@ class EntriesController < ApplicationController
       format.csv  { send_data customized_csv(all_entries), type: 'text/csv', disposition: 'attachment; filename=glb.csv' }
     end
   end
-  def paginate_entries(search)
-    Kaminari.paginate_array(search).page(params[:page])
+  def paginate_entries(entries)
+    Kaminari.paginate_array(entries).page(params[:page])
   end
 
   def show
@@ -98,7 +98,7 @@ class EntriesController < ApplicationController
 
   def sort_entries
     if Entry::BEARBEITUNGS_STAND.include?(sort_column)
-      Entry.where(bearbeitungsstand: sort_column)
+      Entry.where(bearbeitungsstand: sort_column).order(japanische_umschrift: sort_direction)
     else
       Entry.order(sort_column + ' ' + sort_direction)
     end

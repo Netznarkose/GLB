@@ -1,7 +1,7 @@
 module ApplicationHelper
-  def sortable(column, title = nil, sort_me = nil)
+  def sortable(column, title = nil, sort_direct = nil)
     title ||= column.titleize
-    direction = column == sort_column && sort_direction == 'asc' ? 'desc' : 'asc'
+    direction = sort_direct ? sort_direct : 'asc'
     link_to title, sort: column, direction: direction
   end
 end
