@@ -60,22 +60,23 @@ describe 'sort index' do
   end
   describe 'sort' do
     before do
-      FactoryBot.create(:entry, bearbeitungsstand: 'unbearbeitet', japanische_umschrift: 'Aalhaus')
-      FactoryBot.create(:entry, bearbeitungsstand: 'unbearbeitet', japanische_umschrift: 'Rote Flora')
-      FactoryBot.create(:entry, bearbeitungsstand: 'unbearbeitet', japanische_umschrift: 'Zeise Kino')
+      FactoryBot.create(:entry, id: 3, bearbeitungsstand: 'unbearbeitet', japanische_umschrift: 'Aalhaus')
+      FactoryBot.create(:entry, id: 1, bearbeitungsstand: 'unbearbeitet', japanische_umschrift: 'Rote Flora')
+      FactoryBot.create(:entry, id: 2, bearbeitungsstand: 'unbearbeitet', japanische_umschrift: 'Zeise')
     end
     describe 'it sorts entries' do
       it 'in ascending order' do
         visit entries_path
+        click_button 'Felder Auswahl'
         click_link 'Unbearbeitet'
-        expect(Entry.first.japanische_umschrift).to eq('Aalhaus')
-        expect(Entry.last.japanische_umschrift).to eq('Zeise Kino')
+        expect(all('tr').first.text.split.first).to eq('Aalhaus')
+        expect(all('tr')[4].text.split.first).to eq('Zeise')
       end
       it 'in descending order' do
         visit entries_path
         click_link 'Unbearbeitet (reversed)'
-        expect(Entry.first.japanische_umschrift).to eq('Zeise Kino')
-        expect(Entry.last.japanische_umschrift).to eq('Aalhaus')
+        expect(all('tr').first.text.split.first).to eq('Zeise')
+        expect(all('tr')[4].text.split.first).to eq('Aalhaus')
       end
     end
   end
