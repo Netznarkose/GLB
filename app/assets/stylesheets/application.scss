@@ -4,15 +4,9 @@
 
 body { padding-top: 10px; }
 
-.fill-width.dropdown {
-    position: static;
-}
-.fill-width.dropdown > .dropdown-menu {
-    left: auto;
-    margin-top: -33px;
-}
-.fill-width.dropdown > .dropdown-menu > li > a {
-   white-space: normal;
+.dropdown-menu{
+   max-height:300px;
+   overflow-y: scroll;
 }
 
 .sidebar {
@@ -20,7 +14,7 @@ body { padding-top: 10px; }
   left:0; 
   width: 240px; 
   margin-top: 22px; 
-  padding-left: 10px
+  padding-left: 10px;
 }
 
 
