@@ -15,9 +15,6 @@ class EntriesController < ApplicationController
       format.csv  { send_data customized_csv(all_entries), type: 'text/csv', disposition: 'attachment; filename=glb.csv' }
     end
   end
-  def paginate_entries(entries)
-    Kaminari.paginate_array(entries).page(params[:page])
-  end
 
   def show
     respond_to do |format|
@@ -67,6 +64,11 @@ class EntriesController < ApplicationController
   end
 
   private
+
+  def paginate_entries(entries)
+    Kaminari.paginate_array(entries).page(params[:page])
+  end
+
 
   def build_entry_comment
     if current_user
