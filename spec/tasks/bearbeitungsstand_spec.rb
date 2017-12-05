@@ -3,10 +3,10 @@ require 'spec_helper'
 describe 'rake set_entry_bearbeitungsstand', type: :task do
   let(:rake_task_user) { FactoryBot.build(:admin, email: 'rake@user.com') }
   let(:entry) { FactoryBot.build(:entry) }
-  let(:unprocessed_entry) { FactoryBot.build(:entry, bearbeitungsstand: nil, uebersetzung: nil) }
-  let(:formatted_entry) { FactoryBot.build(:formatted_entry) }
-  let(:unformatted_entry) { FactoryBot.build(:unformatted_entry) }
-  let(:deprecated_syntax_entry) { FactoryBot.build(:deprecated_syntax_entry) }
+  let(:unprocessed_entry) { FactoryBot.build(:unprocessed_entry, bearbeitungsstand: nil) }
+  let(:formatted_entry) { FactoryBot.build(:formatted_entry, bearbeitungsstand: nil) }
+  let(:unformatted_entry) { FactoryBot.build(:unformatted_entry, bearbeitungsstand: nil) }
+  let(:deprecated_syntax_entry) { FactoryBot.build(:deprecated_syntax_entry, bearbeitungsstand: nil) }
 
   context 'general' do
     it 'preloads the Rails environment' do
