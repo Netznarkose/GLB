@@ -69,14 +69,14 @@ describe 'sort index' do
         visit entries_path
         click_button 'Felder Auswahl'
         click_link 'Unbearbeitet'
-        expect(all('tr').first.text.split.first).to eq('Aalhaus')
-        expect(all('tr')[4].text.split.first).to eq('Zeise')
+        expect(all('strong')[0].text).to eq('Aalhaus')
+        expect(all('strong')[4].text).to eq('Zeise')
       end
       it 'in descending order' do
         visit entries_path
         click_link 'Unbearbeitet (rev)'
-        expect(all('tr').first.text.split.first).to eq('Zeise')
-        expect(all('tr')[4].text.split.first).to eq('Aalhaus')
+        expect(all('strong')[0].text).to eq('Zeise')
+        expect(all('strong')[4].text).to eq('Aalhaus')
       end
     end
   end
