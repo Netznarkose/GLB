@@ -10,6 +10,7 @@ require "spec_helper_methods"
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
 RSpec.configure do |config|
+  config.include FactoryBot::Syntax::Methods
   config.fail_fast = true
   Dir[Rails.root.join("spec/controllers/shared_examples/**/*.rb")].each {|f| require f}
   # ## Mock Framework

@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe 'entry_versions management' do
-  let(:admin) { FactoryBot.create(:admin) }
-  let(:entry) { FactoryBot.create(:entry) }
+  let(:admin) { create(:admin) }
+  let(:entry) { create(:entry) }
 
   context 'admin logs in' do
     before do

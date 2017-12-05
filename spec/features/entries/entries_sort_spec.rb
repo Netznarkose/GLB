@@ -1,11 +1,11 @@
 require 'spec_helper'
 
 describe 'sort index' do
-  let(:admin) { FactoryBot.create(:admin) }
-  let!(:formatted_entry) { FactoryBot.build(:entry, bearbeitungsstand: 'formatiert') }
-  let!(:unformatted_entry) { FactoryBot.build(:entry, bearbeitungsstand: 'unformatiert') }
-  let!(:unprocessed_entry) { FactoryBot.build(:entry, bearbeitungsstand: 'unbearbeitet') }
-  let!(:deprecated_syntax_entry) { FactoryBot.build(:entry, bearbeitungsstand: 'Code veraltet') }
+  let(:admin) { create(:admin) }
+  let!(:formatted_entry) { build(:entry, bearbeitungsstand: 'formatiert') }
+  let!(:unformatted_entry) { build(:entry, bearbeitungsstand: 'unformatiert') }
+  let!(:unprocessed_entry) { build(:entry, bearbeitungsstand: 'unbearbeitet') }
+  let!(:deprecated_syntax_entry) { build(:entry, bearbeitungsstand: 'Code veraltet') }
 
   before do
     login_as_user(admin)
@@ -60,9 +60,9 @@ describe 'sort index' do
   end
   describe 'sort' do
     before do
-      FactoryBot.create(:entry, id: 3, bearbeitungsstand: 'unbearbeitet', japanische_umschrift: 'Aalhaus')
-      FactoryBot.create(:entry, id: 1, bearbeitungsstand: 'unbearbeitet', japanische_umschrift: 'Rote Flora')
-      FactoryBot.create(:entry, id: 2, bearbeitungsstand: 'unbearbeitet', japanische_umschrift: 'Zeise')
+      create(:entry, id: 3, bearbeitungsstand: 'unbearbeitet', japanische_umschrift: 'Aalhaus')
+      create(:entry, id: 1, bearbeitungsstand: 'unbearbeitet', japanische_umschrift: 'Rote Flora')
+      create(:entry, id: 2, bearbeitungsstand: 'unbearbeitet', japanische_umschrift: 'Zeise')
     end
     describe 'it sorts entries' do
       it 'in ascending order' do
