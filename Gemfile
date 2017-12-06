@@ -15,10 +15,6 @@ gem 'bcrypt'
 gem 'cancancan'
 gem 'bootstrap_form'
 
-group :test, :development do
-  gem "rspec-rails"
-  gem 'pry-byebug'
-end
 group :assets do
   gem 'sass-rails', '~> 5.0'
   gem 'bootstrap-sass', '~> 3.3.7'
@@ -41,6 +37,7 @@ group :development do
 end
 
 group :test do
+  gem 'simplecov', require: false
   gem 'capybara'
   gem 'guard-rspec'
   gem 'launchy'
