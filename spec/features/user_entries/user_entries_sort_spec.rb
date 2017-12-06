@@ -96,26 +96,26 @@ describe 'sort user entries' do
       end
     end
   end
-end
-xdescribe 'sort' do
-  before do
-    FactoryBot.create(:entry, id: 3, bearbeitungsstand: 'unbearbeitet', japanische_umschrift: 'Aalhaus')
-    FactoryBot.create(:entry, id: 1, bearbeitungsstand: 'unbearbeitet', japanische_umschrift: 'Rote Flora')
-    FactoryBot.create(:entry, id: 2, bearbeitungsstand: 'unbearbeitet', japanische_umschrift: 'Zeise')
-  end
-  describe 'it sorts entries' do
-    it 'in ascending order' do
-      visit entries_path
-      click_button 'Felder Auswahl'
-      click_link 'Unbearbeitet'
-      expect(all('strong')[0].text).to eq('Aalhaus')
-      expect(all('strong')[4].text).to eq('Zeise')
+  describe 'sort' do
+    before do
+      create(:unprocessed_entry, id: 3, user_id: admin.id, japanische_umschrift: 'Aalhaus')
+      create(:unprocessed_entry, id: 1, user_id: admin.id, japanische_umschrift: 'Rote Flora')
+      create(:unprocessed_entry, id: 2, user_id: admin.id, japanische_umschrift: 'Zeise')
     end
-    it 'in descending order' do
-      visit entries_path
-      click_link 'Unbearbeitet (rev)'
-      expect(all('strong')[0].text).to eq('Zeise')
-      expect(all('strong')[4].text).to eq('Aalhaus')
+    describe 'it sorts admins entries' do
+      it 'in ascending order' do
+        visit user_entries_path(admin.id)
+        click_button 'Felder Auswahl'
+        click_link 'Unbearbeitet'
+        expect(all('td')[0].text).to eq('Aalhaus')
+        expect(all('td')[16].text).to eq('Zeise')
+      end
+      it 'in descending order' do
+        visit user_entries_path(admin.id)
+        click_link 'Unbearbeitet (rev)'
+        expect(all('td')[0].text).to eq('Zeise')
+        expect(all('td')[16].text).to eq('Aalhaus')
+      end
     end
   end
 end

@@ -1,35 +1,45 @@
 <div class="well sidebar-nav">
   <ul class="nav nav-pills nav-stacked">
-    <li class="disabled"><a>Einträge Durchsuchen</a></li>
-    <% keep_the_views_stupid = entry_owner? ? "Meine" : "#{@user.name}'s" %>
+    <li class="disabled"><a><%= @count == 1 ? 'Eintrag' : 'Einträge' %><span class="badge"><%= @count %></a></li>
+    <li class="disabled"><a>Index Durchsuchen</a></li>
     <div class="form-group">
-      <%= form_tag user_entries_path(@user), method: "get", class: 'form-inline' do %>
-        <%= text_field_tag :search, params[:search], { placeholder: "#{keep_the_views_stupid} Einträge" } %>
-        <div style="margin-top: 5px">
-          <%= submit_tag "Los!", class: 'btn btn-default' %>
+      <%= form_tag user_entries_path, method: :get, class: 'form-inline' do %>
+        <%= text_field_tag :search, params[:search] %>
+        <div style="margin-top: 10px">
+          <%= select_tag('search_field', options_for_select(entry_search_attributes), class: "form-control", :style => "width:160px") %> 
+        </div>
+        <div style="margin-top: 10px">
+          <%= submit_tag "Los!", class: 'btn btn-default' %>   
         </div>
       <% end %>
     </div>
-    </li>
   </ul>
 </div>
+
 <div class="well sidebar-nav">
   <ul class="nav nav-pills nav-stacked">
-    <li class="disabled"><a>Einträge Sortieren</a></li>
-    <div class="dropdown fill-width">
+    <li class="disabled"><a>Index Sortieren</a></li>
+    <div class="dropdown">
       <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
         Felder Auswahl
         <span class="caret"></span>
       </button>
-      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-        <li><%= sortable 'japanische_umschrift' %></li>
-        <li><%= sortable 'japanische_umschrift', 'Japanische Umschrift (reversed)', 'desc' %></li>
-        <li><%= sortable 'id' %></li>
-        <li><%= sortable 'id', 'Id (reversed)', 'desc' %></li>
-        <li><%= sortable 'kanji' %></li>
-        <li><%= sortable 'kanji', 'Kanji (reversed)', 'desc' %></li>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+        <li><%= sortable 'formatiert'%></li>
+        <li><%= sortable 'formatiert', 'Formatiert (rev)', 'desc' %></li>
+        <li><%= sortable 'unformatiert'%></li>
+        <li><%= sortable 'unformatiert', 'Unformatiert (rev)', 'desc' %></li>
+        <li><%= sortable 'unbearbeitet'%></li>
+        <li><%= sortable 'unbearbeitet', 'Unbearbeitet (rev)', 'desc' %></li>
+        <li><%= sortable 'Code veraltet'%></li>
+        <li><%= sortable 'Code veraltet', 'Code Veraltet (rev)', 'desc' %></li>
         <li role="separator" class="divider"></li>
-        <li><a href="#">Separated link</a></li>
+        <li><%= sortable 'japanische_umschrift' %></li>
+        <li><%= sortable 'japanische_umschrift', 'Japanische Umschrift (rev)', 'desc' %></li>
+        <li><%= sortable 'id' %></li>
+        <li><%= sortable 'id', 'Id (rev)', 'desc' %></li>
+        <li><%= sortable 'kanji' %></li>
+        <li><%= sortable 'kanji', 'Kanji (rev)', 'desc' %></li>
       </ul>
     </div>
   </ul>
