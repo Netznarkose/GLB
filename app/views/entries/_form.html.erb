@@ -8,12 +8,14 @@
           <h4>Kennungsdaten</h4>
         </div>
         <% if can?(:manage, @entry) %>
+          <%= f.check_box :freigeschaltet %>
           <%= f.select(:user_id, options_for_select(User.all.collect {|user| [ user.name, user.id ] }, { selected: current_user.id}), label: 'Verfasser') %>
         <% else %>
           <%= f.hidden_field :user_id, value: current_user.id  %>
         <% end %>
-        <%= f.check_box :freigeschaltet %>
+        <%= f.select(:bearbeitungsstand, ['formatiert', 'unformatiert', 'unbearbeitet', 'Code veraltet', ''], selected: '') %>
         <%= f.text_field :namenskuerzel %>
+        <%= f.select :bearbeitungsansatz, ['Übersetzung', 'ergänzte Übersetzung', 'Neufassung'], selected: 'Übersetzung' %> 
         <%= f.text_field :kennzahl %>
         <%= f.text_field :spaltenzahl %>
         <%= f.text_field :abweichende_kennzahl%>

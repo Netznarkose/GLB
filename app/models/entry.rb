@@ -20,7 +20,8 @@ class Entry < ActiveRecord::Base
                       japanischer_quelltext
                       japanischer_quelltext_bearbeitungsstand
                       seite_textblock2005
-                      bearbeitungsstand].freeze
+                      bearbeitungsstand
+                      bearbeitungsansatz].freeze
   BEARBEITUNGS_STAND = [
     'formatiert',
     'unformatiert',

@@ -45,6 +45,10 @@
           <dt>Namenskürzel</dt>
           <dd><%= @entry.namenskuerzel %></dd>
         <% end %>
+        <% unless @entry.bearbeitungsansatz.blank? %>
+          <dt>Bearbeitungsansatz</dt>
+          <dd><%= @entry.bearbeitungsansatz %></dd>
+        <% end %>
         <% unless @entry.kennzahl.blank? %>
           <dt>Kennzahl</dt>
           <dd><%= @entry.kennzahl %></dd>
