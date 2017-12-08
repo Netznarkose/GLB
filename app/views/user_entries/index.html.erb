@@ -1,8 +1,40 @@
 <% content_for :user_entries_index do %>
+   <h1><%= entry_owner? ? "Mir" : "#{@user.name}'s"%> zugewiesenen Einträge</h1>
+   <%# <span class="label"><%= @count %1><%= @count == 1 ? "Eintrag" : "Einträge" %1></span> %>
+   <table class="table table-striped">
+      <tr>
+         <th>Eintrag</th>
+         <th>Kennzahl</th>
+         <th>Zugewiesen am:</th>
+         <th>Zu erledigen zum:</th>
+         <th>Zugewiesen von:</th>
+         <th>Bearbeitungsstand</th>
+         <th>Freigeschaltet</th>
+         <th>Aktionen</th>
+      </tr>
+
+      <% @user.assigned_tasks.each do |task| %>
+         <tr>
+            <td><%= task.entry.japanische_umschrift %></td>
+            <td><%= task.entry.kennzahl %></td>
+            <td><%= task.assigned_at_date %></td>
+            <td><%= task.assigned_to_date %></td>
+            <td><%= User.find(task.assigned_from_user).name %></td>
+            <td><%= content_tag(:span, task.entry.bearbeitungsstand, class: label_bearbeitungsstand(task.entry.bearbeitungsstand)) %></td>
+            <td><%= task.entry.freigeschaltet ? (content_tag(:span, 'Freigeschaltet', class: 'label label-success')) : '' %></td>
+            <td>
+               <% if current_user.admin? || current_user.editor? || (current_user.author? && entry.user_id == current_user.id) %>
+                  <%= link_to 'Anzeigen', task.entry %>
+                  <%= link_to 'Bearbeiten', edit_entry_path(task.entry) %>
+                  <%= link_to 'Löschen', task.entry, method: :delete, data: { confirm: 'Wollen Sie diesen Eintrag wirklich löschen?' }%>
+               <% end %>
+            </td>
+         </tr>
+      <% end %>
+   </table>
+
    <h1><%= entry_owner? ? "Meine" : "#{@user.name}'s"%> Einträge</h1>
-   <span class="label"><%= @count %>
-   <%= @count == 1 ? "Eintrag" : "Einträge" %>
-   </span>
+   <span class="label"><%= @count %><%= @count == 1 ? "Eintrag" : "Einträge" %></span>
 
    <%= paginate @user_entries %>
    <table class="table table-striped">

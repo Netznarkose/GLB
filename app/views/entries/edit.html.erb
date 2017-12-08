@@ -14,6 +14,7 @@
       <div class="btn-group" role="group" aria-label="..."style="float: right;">
         <%= link_to 'Anzeigen', @entry, class: 'btn btn-default' %>
         <%= f.submit 'Speichern', class: 'btn btn-default' %>
+        <%= link_to 'Zuweisen', new_task_path({entry_id: @entry.id}), class: 'btn btn-default' %>
       </div>
       <% pages = to_scan_pages(@entry.kennzahl) %>
       <div style="margin-top: 50px; margin-bottom: 15px;">
@@ -36,7 +37,6 @@
   <div style="margin-left: 820px; width: 575px; margin-top: 21px;"> 
     <%= render 'shared/error_messages', object: f.object %>
     <div class="funky_grey_seperator">
-      <%= link_to 'Zuweisen', new_task_path({entry_id: @entry.id}), class: 'btn btn-default' %>
       <%= f.select(:bearbeitungsstand, ['formatiert', 'unformatiert', 'unbearbeitet', 'Code veraltet', '']) %>
       <h4>Kennungsdaten</h4>
       <% if can?(:manage, @entry) %>

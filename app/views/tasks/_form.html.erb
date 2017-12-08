@@ -14,6 +14,7 @@
   <div class="field">
     <%= f.label :assigned_from_user %><br>
     <%= User.find(@task.assigned_from_user).name %>
+    <%= f.hidden_field :assigned_from_user, value: @task.assigned_from_user %>
   </div>
   <div class="field">
     <%= f.label :assigned_to_user %><br>
