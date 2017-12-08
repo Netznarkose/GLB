@@ -28,7 +28,8 @@
   </div>
   <div class="field">
     <%= f.label :assigned_entry %><br>
-    <%= f.number_field :assigned_entry %>
+    <%= Entry.find(@task.assigned_entry).japanische_umschrift %>
+    <%= f.hidden_field :assigned_entry, value: @task.assigned_entry %>
   </div>
   <div class="actions"><br><br><br><br>
     <%= f.submit %>

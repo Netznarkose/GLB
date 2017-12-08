@@ -12,7 +12,7 @@ class TasksController < ApplicationController
 
   # GET /tasks/new
   def new
-    @task = Task.new(assigned_from_user: current_user.id)
+    @task = Task.new(assigned_from_user: current_user.id, assigned_entry: params['entry_id'])
   end
 
   # GET /tasks/1/edit
