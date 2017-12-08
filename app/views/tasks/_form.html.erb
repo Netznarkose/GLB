@@ -1,0 +1,36 @@
+<%= form_for(@task) do |f| %>
+  <% if @task.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@task.errors.count, "error") %> prohibited this task from being saved:</h2>
+
+      <ul>
+      <% @task.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :assigned_from_user %><br>
+    <%= User.find(@task.assigned_from_user).name %>
+  </div>
+  <div class="field">
+    <%= f.label :assigned_to_user %><br>
+    <%= f.select(:assigned_to_user, options_for_select(User.all.collect {|user| [ user.name, user.id ] })) %>
+  </div>
+  <div class="field">
+    <%= f.hidden_field :assigned_at_date, value: Date.today %>
+  </div>
+  <div class="field">
+    <%= f.label :assigned_to_date %><br>
+    <%= f.date_select :assigned_to_date %>
+  </div>
+  <div class="field">
+    <%= f.label :assigned_entry %><br>
+    <%= f.number_field :assigned_entry %>
+  </div>
+  <div class="actions"><br><br><br><br>
+    <%= f.submit %>
+  </div>
+<% end %>

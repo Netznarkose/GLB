@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171206081739) do
+ActiveRecord::Schema.define(version: 20171208114843) do
 
   create_table "ckeditor_assets", force: :cascade do |t|
     t.string   "data_file_name",               null: false
@@ -75,6 +75,8 @@ ActiveRecord::Schema.define(version: 20171206081739) do
     t.string   "seite_textblock2005"
     t.string   "bearbeitungsstand"
     t.string   "bearbeitungsansatz"
+    t.integer  "assign_to_user_id"
+    t.date     "assign_to_date"
   end
 
   create_table "entry_docs", force: :cascade do |t|
@@ -130,6 +132,16 @@ ActiveRecord::Schema.define(version: 20171206081739) do
     t.string   "page_reference"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "tasks", force: :cascade do |t|
+    t.integer  "assigned_from_user"
+    t.integer  "assigned_to_user"
+    t.date     "assigned_at_date"
+    t.date     "assigned_to_date"
+    t.integer  "assigned_entry"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
   end
 
   create_table "users", force: :cascade do |t|

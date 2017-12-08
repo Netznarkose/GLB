@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Assigned from user:</strong>
+  <%= @task.assigned_from_user %>
+</p>
+
+<p>
+  <strong>Assigned to user:</strong>
+  <%= @task.assigned_to_user %>
+</p>
+
+<p>
+  <strong>Assigned at date:</strong>
+  <%= @task.assigned_at_date %>
+</p>
+
+<p>
+  <strong>Assigned to date:</strong>
+  <%= @task.assigned_to_date %>
+</p>
+
+<p>
+  <strong>Assigned entry:</strong>
+  <%= @task.assigned_entry %>
+</p>
+
+<%= link_to 'Edit', edit_task_path(@task) %> |
+<%= link_to 'Back', tasks_path %>

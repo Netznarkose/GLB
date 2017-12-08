@@ -1,4 +1,7 @@
 de:
+  date:
+    order: 
+      - :year
   activerecord:
     attributes:
       entry:
@@ -15,6 +18,12 @@ de:
         eigene_ergaenzungen: "Eigene Ergänzungen"
         literatur: "Literatur SBDJ"
         literatur_ergaenzungen: "Literatur Ergänzungen"
+
+    attributes:
+      task:
+        assigned_to_user: "Wem?"
+        assigned_to_date: "Zu Wann?"
+        entry_id: "Was?"
 
     errors:
       models:

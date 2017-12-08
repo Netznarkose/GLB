@@ -36,6 +36,7 @@
   <div style="margin-left: 820px; width: 575px; margin-top: 21px;"> 
     <%= render 'shared/error_messages', object: f.object %>
     <div class="funky_grey_seperator">
+      <%= link_to 'Zuweisen', new_task_path, class: 'btn btn-default' %>
       <%= f.select(:bearbeitungsstand, ['formatiert', 'unformatiert', 'unbearbeitet', 'Code veraltet', '']) %>
       <h4>Kennungsdaten</h4>
       <% if can?(:manage, @entry) %>
