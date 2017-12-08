@@ -9,6 +9,11 @@ class User < ActiveRecord::Base
   scope :allowed_for_entries, -> { where(role: %w(admin editor author commentator)) }
   before_destroy :check_for_remaining_entries
 
+
+  def assigned_tasks
+    Task.where(assigned_to_user: self.id)
+  end
+
   def admin?
     role == 'admin'
   end
