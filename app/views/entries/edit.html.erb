@@ -14,7 +14,13 @@
       <div class="btn-group" role="group" aria-label="..."style="float: right;">
         <%= link_to 'Anzeigen', @entry, class: 'btn btn-default' %>
         <%= f.submit 'Speichern', class: 'btn btn-default' %>
-        <%= link_to 'Zuweisen', new_task_path({entry_id: @entry.id}), class: 'btn btn-default' %>
+        <% if can?(:manage, Task) %>
+          <% if @entry.task %>
+            <%= link_to 'Zuweisung Bearbeiten', edit_task_path({id: @entry.task.id, entry_id: @entry.id }), class: 'btn btn-default' %>
+          <% else %>
+            <%= link_to 'Zuweisen', new_task_path({entry_id: @entry.id}), class: 'btn btn-default' %>
+          <% end %>
+        <% end %>
       </div>
       <% pages = to_scan_pages(@entry.kennzahl) %>
       <div style="margin-top: 50px; margin-bottom: 15px;">

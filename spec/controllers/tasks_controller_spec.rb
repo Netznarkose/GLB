@@ -10,9 +10,12 @@ RSpec.describe TasksController, type: :controller do
     skip("Add a hash of attributes invalid for your model")
   }
   let!(:task) { create(:task) }
-  let!(:task) { create(:task) }
+  let!(:admin) { create(:admin) }
 
 
+  before do
+    sign_in(admin)
+  end
   describe "GET #index" do
     it "returns a success response" do
       task
@@ -31,15 +34,15 @@ RSpec.describe TasksController, type: :controller do
 
   describe "GET #new" do
     it "returns a success response" do
-      get :new, {}, valid_session
+      get :new
       expect(response).to be_success
     end
   end
 
   describe "GET #edit" do
     it "returns a success response" do
-      task = Task.create! valid_attributes
-      get :edit, {:id => task.to_param}, valid_session
+      task
+      get :edit, {:id => task.to_param}
       expect(response).to be_success
     end
   end
