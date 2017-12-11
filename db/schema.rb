@@ -75,8 +75,6 @@ ActiveRecord::Schema.define(version: 20171208114843) do
     t.string   "seite_textblock2005"
     t.string   "bearbeitungsstand"
     t.string   "bearbeitungsansatz"
-    t.integer  "assign_to_user_id"
-    t.date     "assign_to_date"
   end
 
   create_table "entry_docs", force: :cascade do |t|
