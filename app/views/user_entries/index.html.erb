@@ -9,8 +9,8 @@
          <th>Zu erledigen zum:</th>
          <th>Zugewiesen von:</th>
          <th>Bearbeitungsstand</th>
-         <th>Freigeschaltet</th>
-         <th>Aktionen</th>
+         <th>Eintrag</th>
+         <th>Aufgabe</th>
       </tr>
 
       <% @user.assigned_tasks.each do |task| %>
@@ -21,14 +21,14 @@
             <td><%= task.assigned_to_date %></td>
             <td><%= User.find(task.assigned_from_user).name %></td>
             <td><%= content_tag(:span, task.entry.bearbeitungsstand, class: label_bearbeitungsstand(task.entry.bearbeitungsstand)) %></td>
-            <td><%= task.entry.freigeschaltet ? (content_tag(:span, 'Freigeschaltet', class: 'label label-success')) : '' %></td>
             <td>
                <% if current_user.admin? || current_user.editor? || (current_user.author? && entry.user_id == current_user.id) %>
-                  <%= link_to 'Anzeigen', task.entry %>
-                  <%= link_to 'Bearbeiten', edit_entry_path(task.entry) %>
+                  <%= link_to 'Anzeigen', task.entry %> |
+                  <%= link_to 'Bearbeiten', edit_entry_path(task.entry) %> |
                   <%= link_to 'Löschen', task.entry, method: :delete, data: { confirm: 'Wollen Sie diesen Eintrag wirklich löschen?' }%>
                <% end %>
             </td>
+            <td><%= link_to 'Erledigt', edit_entry_path(task.entry) %></td>
          </tr>
       <% end %>
    </table>
@@ -61,8 +61,8 @@
             <td><%= entry.freigeschaltet ? (content_tag(:span, 'Freigeschaltet', class: 'label label-success')) : '' %></td>
             <td>
                <% if current_user.admin? || current_user.editor? || (current_user.author? && entry.user_id == current_user.id) %>
-                  <%= link_to 'Anzeigen', entry %>
-                  <%= link_to 'Bearbeiten', edit_entry_path(entry) %>
+                  <%= link_to 'Anzeigen', entry %> |
+                  <%= link_to 'Bearbeiten', edit_entry_path(entry) %> |
                   <%= link_to 'Löschen', entry, method: :delete, data: { confirm: 'Wollen Sie diesen Eintrag wirklich löschen?' }%>
                <% end %>
             </td>
