@@ -1,6 +1,6 @@
 <% content_for :user_entries_index do %>
-   <h1><%= entry_owner? ? "Mir" : "#{@user.name}'s"%> zugewiesenen Einträge</h1>
-   <%# <span class="label"><%= @count %1><%= @count == 1 ? "Eintrag" : "Einträge" %1></span> %>
+   <h1><%= entry_owner? ? "Mir" : "#{@user.name}"%> </h1>
+   <h4 style="margin-bottom: 30px">Zugewiesene Einträge</h4>
    <table class="table table-striped">
       <tr>
          <th>Eintrag</th>
@@ -33,10 +33,11 @@
       <% end %>
    </table>
 
-   <h1><%= entry_owner? ? "Meine" : "#{@user.name}'s"%> Einträge</h1>
+   <h4 style="margin-bottom: 30px">Erstellte Einträge</h1>
    <span class="label"><%= @count %><%= @count == 1 ? "Eintrag" : "Einträge" %></span>
 
-   <%= paginate @user_entries %>
+  <%= paginate @user_entries, theme: 'twitter-bootstrap-3', 
+  pagination_class: 'pagination-sm' %>
    <table class="table table-striped">
       <tr>
          <th>Japanische umschrift</th>
@@ -68,5 +69,6 @@
          </tr>
       <% end %>
    </table>
-   <%= paginate @user_entries %>
+<%= paginate @user_entries, theme: 'twitter-bootstrap-3', 
+  pagination_class: 'pagination-sm' %>
 <% end %>

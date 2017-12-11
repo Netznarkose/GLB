@@ -115,4 +115,7 @@ class Entry < ActiveRecord::Base
       e.update(bearbeitungsstand: 'Code veraltet') if e.deprecated_syntax?
     end
   end
+  def task
+    Task.find_by(assigned_entry: id)
+  end
 end
