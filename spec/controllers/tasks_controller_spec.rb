@@ -59,9 +59,9 @@ RSpec.describe TasksController, type: :controller do
         }.to change(Task, :count).by(1)
       end
 
-      it 'redirects to the created task' do
+      it 'redirects to user_entries of assigned user' do
         post :create, task: attributes_for(:task)
-        expect(response).to redirect_to(Task.last)
+        expect(response).to redirect_to(user_entries_path(Task.last.assigned_to_user))
       end
     end
 
@@ -93,10 +93,9 @@ RSpec.describe TasksController, type: :controller do
         expect(task.assigned_to_date).to eq(Date.today + 1.month)
       end
 
-      it 'redirects to the task' do
-        task
+      it 'redirects to user_entries of assigned user' do
         put :update, id: task.to_param, task: attributes_for(:task, assigned_to_date: Date.today + 1.month)
-        expect(response).to redirect_to(task)
+        expect(response).to redirect_to(user_entries_path(Task.last.assigned_to_user))
       end
     end
     context 'update user_id in assigned entry' do
