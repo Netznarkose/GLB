@@ -42,8 +42,9 @@ class TasksController < ApplicationController
 
   # DELETE /tasks/1
   def destroy
+    user = @task.assigned_to_user
     @task.destroy
-    redirect_to tasks_url, notice: 'Task was successfully destroyed.'
+    redirect_to user_entries_path(user), notice: 'Task was successfully destroyed.'
   end
 
   private

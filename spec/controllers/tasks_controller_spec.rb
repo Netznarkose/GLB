@@ -127,10 +127,10 @@ RSpec.describe TasksController, type: :controller do
           delete :destroy, id: task.to_param
         }.to change(Task, :count).by(-1)
       end
-      it 'redirects to the tasks list' do
+      it 'redirects to the user entries' do
         task
         delete :destroy, id: task.to_param
-        expect(response).to redirect_to(tasks_path)
+        expect(response).to redirect_to(user_entries_path(task.assigned_to_user))
       end
     end
     context 'as editor' do
