@@ -9,7 +9,7 @@ RSpec.describe "tasks/edit", type: :view do
     ))
   end
 
-  it "renders the edit task form" do
+  xit "renders the edit task form" do
     render
 
     assert_select "form[action=?][method=?]", task_path(@task), "post" do
