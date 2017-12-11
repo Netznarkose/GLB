@@ -28,6 +28,7 @@ class EntriesController < ApplicationController
   end
 
   def edit
+    flash[:notice] = "In Bearbeitung von #{@entry.user.name} zum #{@entry.task.assigned_to_date}" if @entry.task
   end
 
   def create
