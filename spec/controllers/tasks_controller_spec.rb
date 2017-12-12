@@ -87,7 +87,7 @@ RSpec.describe TasksController, type: :controller do
     context 'with valid params' do
       it 'updates the requested task' do
         task
-        put :update, id: task.to_param, task: attributes_for(:task, assigned_to_date: Date.today + 1.month)
+        put :update, id: task.to_param, task: attributes_for(:task, assigned_to_date: 1)
         task.reload
         expect(task.assigned_to_date).not_to eq(Date.today + 3.month)
         expect(task.assigned_to_date).to eq(Date.today + 1.month)
@@ -109,7 +109,7 @@ RSpec.describe TasksController, type: :controller do
     context 'with invalid params' do
       it "returns a success response (i.e. to display the 'edit' template)" do
         task
-        put :update, id: task.to_param, task: attributes_for(:task, assigned_to_date: '')
+        put :update, id: task.to_param, task: attributes_for(:task, assigned_from_user: '')
         expect(response).to be_success
       end
     end

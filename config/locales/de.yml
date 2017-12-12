@@ -1,6 +1,7 @@
 de:
   date:
     order: 
+      - :month
       - :year
   activerecord:
     attributes:
@@ -22,8 +23,8 @@ de:
     attributes:
       task:
         assigned_to_user: "Wem?"
-        assigned_to_date: "Zu Wann?"
-        entry_id: "Was?"
+        assigned_to_date: "Bearbeitungszeit (Monate)"
+        assigned_entry: "Welcher Eintrag?"
 
     errors:
       models:

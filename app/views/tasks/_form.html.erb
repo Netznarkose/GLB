@@ -1,38 +1,17 @@
-<%= form_for(@task) do |f| %>
-  <% if @task.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@task.errors.count, "error") %> prohibited this task from being saved:</h2>
-
-      <ul>
-      <% @task.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+<div class="row">
+  <div class="col-md-4"> 
+    <%= bootstrap_form_for(@task) do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+      <div class="funky_grey_seperator">
+        <%# <%= f.label :assigned_from_user %1> %>
+        <%# <%= User.find(@task.assigned_from_user).name %1> %>
+        <%= f.select(:assigned_entry, options_for_select(Entry.all.collect {|entry| [ entry.japanische_umschrift, entry.id ] }, { selected: @task.assigned_entry })) %>
+        <%= f.select(:assigned_to_user, options_for_select(User.all.collect {|user| [ user.name, user.id ] })) %>
+        <%= f.hidden_field :assigned_from_user, value: @task.assigned_from_user %>
+        <%= f.hidden_field :assigned_at_date, value: Date.today %>
+        <%= f.select :assigned_to_date, options_for_select(3..10) %>
+        <%= f.submit %>
       <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :assigned_from_user %><br>
-    <%= User.find(@task.assigned_from_user).name %>
-    <%= f.hidden_field :assigned_from_user, value: @task.assigned_from_user %>
+      </div>
   </div>
-  <div class="field">
-    <%= f.label :assigned_to_user %><br>
-    <%= f.select(:assigned_to_user, options_for_select(User.all.collect {|user| [ user.name, user.id ] })) %>
-  </div>
-  <div class="field">
-    <%= f.hidden_field :assigned_at_date, value: Date.today %>
-  </div>
-  <div class="field">
-    <%= f.label :assigned_to_date %><br>
-    <%= f.date_select :assigned_to_date %>
-  </div>
-  <div class="field">
-    <%= f.label :assigned_entry %><br>
-    <%= Entry.find(@task.assigned_entry).japanische_umschrift %>
-    <%= f.hidden_field :assigned_entry, value: @task.assigned_entry %>
-  </div>
-  <div class="actions"><br><br><br><br>
-    <%= f.submit %>
-  </div>
-<% end %>
+</div>

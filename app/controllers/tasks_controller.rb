@@ -17,8 +17,7 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params)
-
+    @task = Task.new(task_params.merge({assigned_to_date: calc_expiry_date}))
     if @task.save
       redirect_to user_entries_path(@task.assigned_to_user), notice: 'Task was successfully created.'
     else
@@ -27,7 +26,7 @@ class TasksController < ApplicationController
   end
 
   def update
-    if @task.update(task_params)
+    if @task.update(task_params.merge({assigned_to_date: calc_expiry_date}))
       redirect_to user_entries_path(@task.assigned_to_user), notice: 'Task was successfully updated.'
     else
       render :edit
@@ -51,4 +50,9 @@ class TasksController < ApplicationController
   def task_params
     params.require(:task).permit(:assigned_from_user, :assigned_to_user, :assigned_at_date, :assigned_to_date, :assigned_entry)
   end
+
+  def calc_expiry_date
+    Date.today + (task_params[:assigned_to_date].to_i).month
+  end
+
 end
