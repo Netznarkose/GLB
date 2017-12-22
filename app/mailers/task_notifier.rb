@@ -5,10 +5,10 @@ class TaskNotifier < ApplicationMailer
   #
   #   en.task_notifier.task_assigned.subject
   #
-  def task_assigned(mail_recipient)
-    @greeting = "Hi"
+  def task_assigned(task)
+    @task = task
 
-    mail to: mail_recipient
+    mail to: User.find(task.assigned_to_user).email
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml

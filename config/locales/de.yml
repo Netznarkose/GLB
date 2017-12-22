@@ -1,4 +1,8 @@
 de:
+  task_notifier:
+    task_assigned:
+      subject: "Zuweisung eines Eintrags" 
+
   date:
     order: 
       - :month

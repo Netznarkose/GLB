@@ -20,7 +20,7 @@ class TasksController < ApplicationController
     @task = Task.new(task_params.merge({assigned_to_date: calc_expiry_date}))
     if @task.save
       redirect_to user_entries_path(@task.assigned_to_user), notice: 'Task was successfully created.'
-      TaskNotifier.task_assigned(User.find(@task.assigned_to_user)).deliver
+      TaskNotifier.task_assigned(@task).deliver
     else
       render :new
     end

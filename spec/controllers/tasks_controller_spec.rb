@@ -64,6 +64,11 @@ RSpec.describe TasksController, type: :controller do
         expect(flash[:notice]).to eq('Task was successfully created.')
       end
 
+      xit 'sends an info-mail to assigned user' do
+        post :create, task: attributes_for(:task)
+        expect(ActionMailer::Base.deliveries.last.to).to eq([task.email_of_assigned_user])
+      end
+
       it 'redirects to user_entries of assigned user' do
         post :create, task: attributes_for(:task)
         expect(response).to redirect_to(user_entries_path(Task.last.assigned_to_user))
