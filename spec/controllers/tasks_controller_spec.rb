@@ -59,6 +59,15 @@ RSpec.describe TasksController, type: :controller do
         }.to change(Task, :count).by(1)
       end
 
+      it 'shows a notification' do
+        post :create, task: attributes_for(:task)
+        expect(flash[:notice]).to eq('Task was successfully created.')
+      end
+
+      it 'redirects to user_entries of assigned user' do
+        post :create, task: attributes_for(:task)
+        expect(response).to redirect_to(user_entries_path(Task.last.assigned_to_user))
+      end
       it 'redirects to user_entries of assigned user' do
         post :create, task: attributes_for(:task)
         expect(response).to redirect_to(user_entries_path(Task.last.assigned_to_user))

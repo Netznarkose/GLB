@@ -1,4 +1,17 @@
 DGLB::Application.configure do
+  config.action_mailer.delivery_method = :sendmail
+  # SMTP settings for gmail
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :authentication => :plain,
+    :address => "smtp.mailgun.org",
+    :port => 587,
+    :domain => "postmaster@sandboxd41599a8676d49ce94b50dc87e54a46f.mailgun.org",
+    :user_name => "postmaster@sandboxd41599a8676d49ce94b50dc87e54a46f.mailgun.org",
+    :password => "6ec8814fd1177a6d6fdeb49f7e4f916f"
+  }
+
+
   # Settings specified here will take precedence over those in config/application.rb
 
   # In the development environment your application's code is reloaded on
@@ -28,6 +41,6 @@ DGLB::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
 
-  # do not eager load all registered 
+  # do not eager load all registered
   config.eager_load  = false
 end
