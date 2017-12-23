@@ -5,28 +5,6 @@ RSpec.describe TasksController, type: :controller do
   let!(:admin) { create(:admin) }
   let!(:editor) { create(:editor) }
 
-  describe 'GET #index' do
-    before do
-      sign_in(admin)
-    end
-    it 'returns a success response' do
-      task
-      get :index
-      expect(response).to be_success
-    end
-  end
-
-  describe 'GET #show' do
-    before do
-      sign_in(admin)
-    end
-    it 'returns a success response' do
-      task
-      get :show, id: task.to_param
-      expect(response).to be_success
-    end
-  end
-
   describe 'GET #new' do
     before do
       sign_in(admin)

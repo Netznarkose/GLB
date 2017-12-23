@@ -1,13 +1,6 @@
 class TasksController < ApplicationController
   load_and_authorize_resource
-  before_action :set_task, only: %i[show edit update destroy]
-
-  def index
-    @tasks = Task.all
-  end
-
-  def show
-  end
+  before_action :set_task, only: %i[edit update destroy]
 
   def new
     @task = Task.new(assigned_from_user: current_user.id, assigned_entry: params['entry_id'])

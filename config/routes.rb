@@ -1,5 +1,5 @@
 DGLB::Application.routes.draw do
-  resources :tasks
+  resources :tasks, only: [:show, :new, :edit, :create, :update, :destroy]
   root to: 'entries#index'
   devise_for :users, skip: :registration
   resources :entries
