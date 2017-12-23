@@ -29,6 +29,10 @@ describe 'tasks' do
         it 'sees link Zuweisen Editieren' do
           expect(page).to have_link('Zuweisung Bearbeiten')
         end
+        it 'Notification disapears when user visits next template' do
+          visit root_path
+          expect(page).not_to have_content("In Bearbeitung von #{entry.user.name} zum #{entry.task.assigned_to_date}")
+        end
       end
     end
     context 'as editor' do
