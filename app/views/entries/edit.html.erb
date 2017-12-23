@@ -43,7 +43,6 @@
   <div style="margin-left: 820px; width: 575px; margin-top: 21px;"> 
     <%= render 'shared/error_messages', object: f.object %>
     <div class="funky_grey_seperator">
-      <%= f.select(:bearbeitungsstand, ['formatiert', 'unformatiert', 'unbearbeitet', 'Code veraltet', '']) %>
       <h4>Kennungsdaten</h4>
       <% if can?(:manage, @entry) %>
         <%= f.select(:user_id, options_for_select(User.all.collect {|user| [ user.name, user.id ] }, { selected: @entry.user_id}), label: 'Verfasser') %>
@@ -52,11 +51,12 @@
       <% end %>
       <%= f.check_box :freigeschaltet %>
       <%= f.text_field :namenskuerzel, label: 'Namenskürzel' %>
-      <%= f.select :bearbeitungsansatz, ['Übersetzung', 'ergänzte Übersetzung', 'Neufassung'], selected: 'Übersetzung' %> 
       <%= f.text_field :kennzahl, required: true %>
       <%= f.text_field :spaltenzahl %>
       <%= f.text_field :abweichende_kennzahl, label: 'Abweichende Kennzahl' %>
       <%= f.text_field :seite_textblock2005, label: 'Seite Textblock 2005' %>
+      <%= f.select :bearbeitungsansatz, ['Übersetzung', 'ergänzte Übersetzung', 'Neufassung'], selected: 'Übersetzung' %> 
+      <%= f.select(:bearbeitungsstand, ['formatiert', 'unformatiert', 'unbearbeitet', 'Code veraltet', '']) %>
     </div>
     <div class="funky_grey_seperator">
       <h4>Lemma-Schreibungen und -Aussprachen</h4>

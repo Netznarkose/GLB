@@ -15,11 +15,11 @@
         <% end %>
         <%= f.select(:bearbeitungsstand, ['formatiert', 'unformatiert', 'unbearbeitet', 'Code veraltet', ''], selected: '') %>
         <%= f.text_field :namenskuerzel, label: 'Namenskürzel' %>
-        <%= f.select :bearbeitungsansatz, ['Übersetzung', 'ergänzte Übersetzung', 'Neufassung'], selected: 'Übersetzung' %> 
         <%= f.text_field :kennzahl %>
         <%= f.text_field :spaltenzahl %>
         <%= f.text_field :abweichende_kennzahl, label: 'Abweichende Kennzahl' %>
         <%= f.text_field :seite_textblock2005, label: 'Seite Textblock 2005' %>
+        <%= f.select :bearbeitungsansatz, ['Übersetzung', 'ergänzte Übersetzung', 'Neufassung'], selected: 'Übersetzung' %> 
       </div>
       <div class="funky_grey_seperator">
         <h4>Lemma-Schreibungen und -Aussprachen</h4>
