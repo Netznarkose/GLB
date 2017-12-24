@@ -30,4 +30,10 @@ RSpec.describe TasksHelper, type: :helper do
       expect(task.name_of_task_creator).to eq(task_creator.name)
     end
   end
+  describe 'email_of_task_creator' do
+    it 'returns email of creator of task' do
+      task.update(assigned_from_user: task_creator.id)
+      expect(task.email_of_task_creator).to eq(task_creator.email)
+    end
+  end
 end

@@ -2,6 +2,8 @@ de:
   task_notifier:
     task_assigned:
       subject: "Zuweisung eines Eintrags" 
+    task_done:
+      subject: "Eine von Dir deligierte Aufgabe wurde erledigt" 
 
   date:
     order: 
