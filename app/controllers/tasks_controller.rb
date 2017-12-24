@@ -29,8 +29,10 @@ class TasksController < ApplicationController
 
   def destroy
     task_assignee = @task.assigned_to_user
-    @task.destroy
-    redirect_to user_entries_path(task_assignee), notice: 'Task was successfully destroyed.'
+    if @task.destroy
+      redirect_to user_entries_path(task_assignee), notice: 'Task was successfully destroyed.'
+      TaskNotifier.task_done(@task).deliver_now
+    end
   end
 
   private

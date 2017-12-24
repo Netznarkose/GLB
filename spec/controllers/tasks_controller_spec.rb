@@ -134,6 +134,11 @@ RSpec.describe TasksController, type: :controller do
           delete :destroy, id: task.to_param
         }.to change(Task, :count).by(-1)
       end
+      it 'sends an info-mail to task-creator' do
+        task.update(assigned_from_user: admin.id)
+        delete :destroy, id: task.to_param
+        expect(ActionMailer::Base.deliveries.last.to).to eq([admin.email])
+      end
     end
   end
 end
