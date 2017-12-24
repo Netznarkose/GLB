@@ -12,8 +12,8 @@ RSpec.describe TaskNotifier, type: :mailer do
       expect(mail.from).to eq([default_sender])
     end
 
-    xit "renders the body" do
-      expect(mail.body.encoded).to match(task)
+    it "renders the body" do
+      expect(mail.body.encoded).to include(task.name_of_assigned_user)
     end
   end
 
