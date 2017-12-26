@@ -35,17 +35,19 @@ RSpec.describe TaskNotifier, type: :mailer do
     end
   end
 
-  describe 'reminder' do
-    let(:mail) { TaskNotifier.reminder('example@user.org') }
+  describe 'task_expired' do
+    let(:mail) { TaskNotifier.task_expired(task) }
 
     it 'renders the headers' do
-      expect(mail.subject).to eq('Reminder')
-      expect(mail.to).to eq(['example@user.org'])
+      expect(mail.subject).to eq('Eine von Dir deligierte Aufgabe wurde nicht erledigt')
+      expect(mail.to).to eq([task.email_of_task_creator])
       expect(mail.from).to eq([default_sender])
     end
 
     it 'renders the body' do
-      expect(mail.body.encoded).to match('Hi')
+      ['die von dir deligierte Aufgabe', 'wurde nicht erledigt!'].map do |string|
+        expect(mail.body.encoded).to include(string)
+      end
     end
   end
 end

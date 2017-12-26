@@ -27,9 +27,9 @@ class TaskNotifier < ApplicationMailer
   #
   #   en.task_notifier.reminder.subject
   #
-  def reminder(mail_recipient)
-    @greeting = "Hi"
+  def task_expired(task)
+    @task = task
 
-    mail to: mail_recipient
+    mail to: User.find(task.assigned_from_user).email
   end
 end

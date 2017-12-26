@@ -4,6 +4,8 @@ de:
       subject: "Zuweisung eines Eintrags" 
     task_done:
       subject: "Eine von Dir deligierte Aufgabe wurde erledigt" 
+    task_expired:
+      subject: "Eine von Dir deligierte Aufgabe wurde nicht erledigt" 
 
   date:
     order: 
