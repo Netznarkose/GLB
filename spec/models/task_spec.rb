@@ -34,11 +34,14 @@ RSpec.describe Task, type: :model do
       expect(task.assigned_to_date).to eq(Date.today + 3.month)
     end
   end
-
-  describe 'entry' do
-    it 'returns assigned entry' do
-      task.assigned_entry = entry.id
-      expect(task.entry.id).to eq(entry.id)
+  describe 'expired?' do
+    it 'returns true if task is expired' do
+      task.update(assigned_to_date: Date.yesterday)
+      expect(task.expired?).to eq(true)
+    end
+    it 'returns false if task is expired' do
+      task.save
+      expect(task.expired?).to eq(false)
     end
   end
 end
