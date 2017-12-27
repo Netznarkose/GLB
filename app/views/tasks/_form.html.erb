@@ -3,13 +3,11 @@
     <%= bootstrap_form_for(@task) do |f| %>
       <%= render 'shared/error_messages', object: f.object %>
       <div class="funky_grey_seperator">
-        <%# <%= f.label :assigned_from_user %1> %>
-        <%# <%= User.find(@task.assigned_from_user).name %1> %>
         <%= f.select(:assigned_entry, options_for_select(Entry.all.collect {|entry| [ entry.japanische_umschrift, entry.id ] }, { selected: @task.assigned_entry })) %>
         <%= f.select(:assigned_to_user, options_for_select(User.all.collect {|user| [ user.name, user.id ] })) %>
         <%= f.hidden_field :assigned_from_user, value: @task.assigned_from_user %>
         <%= f.hidden_field :assigned_at_date, value: Date.today %>
-        <%= f.select :assigned_to_date, options_for_select(3..10) %>
+        <%= f.select(:assigned_to_date, options_for_select((1..6), { selected: 3 })) %>
         <%= f.submit %>
       <% end %>
       </div>
