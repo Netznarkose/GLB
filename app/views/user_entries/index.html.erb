@@ -1,73 +1,77 @@
 <% content_for :user_entries_index do %>
-   <h1><%= entry_owner? ? "Mir" : "#{@user.name}"%> </h1>
-   <h4 style="margin-bottom: 30px">Zugewiesene Einträge</h4>
-   <table class="table table-striped">
+  <h1><%= entry_owner? ? 'Meine' : "#{@user.name}"%> Einträge</h1>
+  <h4 style="margin-bottom: 30px">Zugewiesen:</h4>
+  <table class="table table-striped">
+    <tr>
+      <th>Japanische Umschrift</th>
+      <th>Kennzahl</th>
+      <th>Zugewiesen am:</th>
+      <th>Zu erledigen zum:</th>
+      <th>Zugewiesen von:</th>
+      <th>Bearbeitungsstand</th>
+      <th>Eintrag</th>
+      <th>Aufgabe</th>
+    </tr>
+
+    <% @user.assigned_tasks.each do |task| %>
       <tr>
-         <th>Eintrag</th>
-         <th>Kennzahl</th>
-         <th>Zugewiesen am:</th>
-         <th>Zu erledigen zum:</th>
-         <th>Zugewiesen von:</th>
-         <th>Bearbeitungsstand</th>
-         <th>Eintrag</th>
-         <th>Aufgabe</th>
-      </tr>
-
-      <% @user.assigned_tasks.each do |task| %>
-         <tr>
-            <td><%= task.entry.japanische_umschrift %></td>
-            <td><%= task.entry.kennzahl %></td>
-            <td><%= task.assigned_at_date %></td>
-            <td><%= task.assigned_to_date %></td>
-            <td><%= User.find(task.assigned_from_user).name %></td>
-            <td><%= content_tag(:span, task.entry.bearbeitungsstand, class: label_bearbeitungsstand(task.entry.bearbeitungsstand)) %></td>
-            <td>
-               <% if current_user.admin? || current_user.editor? || (current_user.author? && entry.user_id == current_user.id) %>
-                  <%= link_to 'Anzeigen', task.entry %> |
-                  <%= link_to 'Bearbeiten', edit_entry_path(task.entry) %> |
-                  <%= link_to 'Löschen', task.entry, method: :delete, data: { confirm: 'Wollen Sie diesen Eintrag wirklich löschen?' }%>
-               <% end %>
+        <td><%= task.entry.japanische_umschrift %></td>
+        <td><%= task.entry.kennzahl %></td>
+        <td><%= task.assigned_at_date %></td>
+        <% if task.expired? %>
+          <td style="color: red;"><%= task.assigned_to_date %></td>
+        <% else %>
+          <td><%= task.assigned_to_date %></td>
+        <% end %>
+        <td><%= task.name_of_task_creator %></td>
+        <td><%= content_tag(:span, task.entry.bearbeitungsstand, class: label_bearbeitungsstand(task.entry.bearbeitungsstand)) %></td>
+        <td>
+          <% if current_user.admin? || current_user.editor? || (current_user.author? && entry.user_id == current_user.id) %>
+            <%= link_to 'Anzeigen', task.entry %> |
+            <%= link_to 'Bearbeiten', edit_entry_path(task.entry) %> |
+            <%= link_to 'Löschen', task.entry, method: :delete, data: { confirm: 'Wollen Sie diesen Eintrag wirklich löschen?' }%>
+          <% end %>
           <td><%= link_to 'Erledigt', task, method: :delete, data: { confirm: 'Wollen Sie diese Aufgabe wirklich löschen?' }%></td>
-         </tr>
-      <% end %>
-   </table>
+      </tr>
+    <% end %>
+  </table>
 
-   <h4 style="margin-bottom: 30px">Erstellte Einträge</h1>
-   <span class="label"><%= @count %><%= @count == 1 ? "Eintrag" : "Einträge" %></span>
+  <h4 style="margin-bottom: 30px">Erstellt:</h1>
+  <span class="label"><%= @count %><%= @count == 1 ? "Eintrag" : "Einträge" %></span>
 
   <%= paginate @user_entries, theme: 'twitter-bootstrap-3', 
-  pagination_class: 'pagination-sm' %>
-   <table class="table table-striped">
-      <tr>
-         <th>Japanische umschrift</th>
-         <th>Kennzahl</th>
-         <th>Kanji</th>
-         <th>Namenskürzel</th>
-         <th>Kommentare</th>
-         <th>Bearbeitungsstand</th>
-         <th>Freigeschaltet</th>
-         <th>Aktionen</th>
-      </tr>
+    pagination_class: 'pagination-sm' %>
+  <table class="table table-striped">
+    <tr>
+      <th>Japanische Umschrift</th>
+      <th>Kennzahl</th>
+      <th>Kanji</th>
+      <th>Namenskürzel</th>
+      <th>Kommentare</th>
+      <th>Bearbeitungsstand</th>
+      <th>Freigeschaltet</th>
+      <th>Aktionen</th>
+    </tr>
 
-      <% @user_entries.each do |entry| %>
-         <tr>
-            <td><%= entry.japanische_umschrift %></td>
-            <td><%= entry.kennzahl %></td>
-            <td><%= entry.kanji %></td>
-            <td><%= entry.namenskuerzel %></td>
-            <td><%= entry.comments.any? ? (link_to entry.comments.count, entry_path(entry), class: 'badge') : '' %></td>
-            <td><%= content_tag(:span, entry.bearbeitungsstand, class: label_bearbeitungsstand(entry.bearbeitungsstand)) %></td>
-            <td><%= entry.freigeschaltet ? (content_tag(:span, 'Freigeschaltet', class: 'label label-success')) : '' %></td>
-            <td>
-               <% if current_user.admin? || current_user.editor? || (current_user.author? && entry.user_id == current_user.id) %>
-                  <%= link_to 'Anzeigen', entry %> |
-                  <%= link_to 'Bearbeiten', edit_entry_path(entry) %> |
-                  <%= link_to 'Löschen', entry, method: :delete, data: { confirm: 'Wollen Sie diesen Eintrag wirklich löschen?' }%>
-               <% end %>
-            </td>
-         </tr>
-      <% end %>
-   </table>
-<%= paginate @user_entries, theme: 'twitter-bootstrap-3', 
-  pagination_class: 'pagination-sm' %>
+    <% @user_entries.each do |entry| %>
+      <tr>
+        <td><%= entry.japanische_umschrift %></td>
+        <td><%= entry.kennzahl %></td>
+        <td><%= entry.kanji %></td>
+        <td><%= entry.namenskuerzel %></td>
+        <td><%= entry.comments.any? ? (link_to entry.comments.count, entry_path(entry), class: 'badge') : '' %></td>
+        <td><%= content_tag(:span, entry.bearbeitungsstand, class: label_bearbeitungsstand(entry.bearbeitungsstand)) %></td>
+        <td><%= entry.freigeschaltet ? (content_tag(:span, 'Freigeschaltet', class: 'label label-success')) : '' %></td>
+        <td>
+          <% if current_user.admin? || current_user.editor? || (current_user.author? && entry.user_id == current_user.id) %>
+            <%= link_to 'Anzeigen', entry %> |
+            <%= link_to 'Bearbeiten', edit_entry_path(entry) %> |
+            <%= link_to 'Löschen', entry, method: :delete, data: { confirm: 'Wollen Sie diesen Eintrag wirklich löschen?' }%>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+  <%= paginate @user_entries, theme: 'twitter-bootstrap-3', 
+    pagination_class: 'pagination-sm' %>
 <% end %>
