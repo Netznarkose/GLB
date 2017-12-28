@@ -1,12 +1,18 @@
 <div class="row">
   <div class="col-md-4"> 
     <h1>Status Ändern</h1>
-    <h3>Name: <%= @user.name %></h3>
-    <h3>Email: <%= @user.email%></h3>
-    <%= bootstrap_form_for(@user) do |f| %>
-      <%= f.select :role, ['Admin', 'Editor', 'Author', 'Commentator'], label: 'Status' %>
-      <%= f.submit "Speichern" %>
-      <%= link_to 'Zurück', users_path %>
-    <% end %>
+    <div class="funky_grey_seperator">
+      <dl>
+        <dt>Name</dt>
+        <dd><%= @user.name %></dd>
+        <dt>Email</dt>
+        <dd><%= @user.email %></dd>
+      </dl>
+      <%= bootstrap_form_for(@user) do |f| %>
+        <%= f.select :role, ['Admin', 'Editor', 'Author', 'Commentator'], label: 'Status' %>
+        <%= f.submit "Speichern" %></br>
+        <%= link_to 'Zurück', users_path %>
+      <% end %>
+    </div>
   </div>
 </div>
