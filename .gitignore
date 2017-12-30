@@ -15,3 +15,4 @@ public/compiled_assets
 *.DS_Store
 .pryrc
 coverage
+tags
