@@ -51,10 +51,6 @@ RSpec.describe TasksController, type: :controller do
         post :create, task: attributes_for(:task)
         expect(response).to redirect_to(user_entries_path(Task.last.assigned_to_user))
       end
-      it 'redirects to user_entries of assigned user' do
-        post :create, task: attributes_for(:task)
-        expect(response).to redirect_to(user_entries_path(Task.last.assigned_to_user))
-      end
     end
 
     context 'with invalid params' do
@@ -86,8 +82,13 @@ RSpec.describe TasksController, type: :controller do
       end
 
       it 'redirects to user_entries of assigned user' do
-        put :update, id: task.to_param, task: attributes_for(:task, assigned_to_date: Date.today + 1.month)
-        expect(response).to redirect_to(user_entries_path(Task.last.assigned_to_user))
+        put :update, id: task.to_param, task: attributes_for(:task, assigned_to_user: editor.id)
+        expect(response).to redirect_to(user_entries_path(editor))
+      end
+
+      it 'sends an info-mail to assigned user' do
+        put :update, id: task.to_param, task: attributes_for(:task, assigned_to_user: editor.id)
+        expect(ActionMailer::Base.deliveries.last.to).to eq([editor.email])
       end
     end
     context 'update user_id in assigned entry' do

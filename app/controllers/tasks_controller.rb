@@ -22,6 +22,7 @@ class TasksController < ApplicationController
   def update
     if @task.update(task_params.merge({assigned_to_date: calc_expiry_date}))
       redirect_to user_entries_path(@task.assigned_to_user), notice: 'Task was successfully updated.'
+      TaskNotifier.task_assigned(@task).deliver_now
     else
       render :edit
     end
