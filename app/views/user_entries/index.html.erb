@@ -31,7 +31,10 @@
             <%= link_to 'Bearbeiten', edit_entry_path(task.entry) %> |
             <%= link_to 'Löschen', task.entry, method: :delete, data: { confirm: 'Wollen Sie diesen Eintrag wirklich löschen?' }%>
           <% end %>
-          <td><%= link_to 'Erledigt', task, method: :delete, data: { confirm: 'Wollen Sie diese Aufgabe wirklich löschen?' }%></td>
+          <td>
+            <%= link_to 'Erledigt', task, method: :delete, data: { confirm: 'Wollen Sie diese Aufgabe wirklich löschen?' }%> |
+            <%= link_to 'Bearbeiten', edit_task_path({id: task.id, entry_id: task.assigned_entry }) %>
+          </td>
       </tr>
     <% end %>
   </table>
