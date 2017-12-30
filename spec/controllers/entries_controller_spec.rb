@@ -379,6 +379,17 @@ describe EntriesController, type: :controller do
           expect(response).to redirect_to(user_entries_path(admin))
         end
       end
+      context 'related task' do
+        before do
+          entry.update(user_id: admin.id)
+          task.update(assigned_entry: entry.id)
+        end
+        it 'gets deleted along' do
+          expect {
+            delete :destroy, id: entry.id
+          }.to change(Task, :count).by(-1)
+        end
+      end
       context 'other users entries' do
         before do
           entry

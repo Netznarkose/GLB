@@ -41,8 +41,14 @@ class Entry < ActiveRecord::Base
   validate :group_uebersetzungen_quellenangaben_literatur_und_ergaenzungen
 
   before_save :cleanup
+  before_destroy :destroy_related_task
 
   scope :published, -> { where(freigeschaltet: true) }
+
+  def destroy_related_task
+    related_task = Task.where(assigned_entry: self).first
+    related_task.destroy unless related_task.blank?
+  end
 
   def self.search(column = 'all', query)
     column.eql?('all') ? all_columns(query) : single_column(column, query)
@@ -115,6 +121,7 @@ class Entry < ActiveRecord::Base
       e.update(bearbeitungsstand: 'Code veraltet') if e.deprecated_syntax?
     end
   end
+
   def task
     Task.find_by(assigned_entry: id)
   end
