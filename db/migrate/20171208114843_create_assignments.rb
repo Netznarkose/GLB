@@ -1,11 +1,11 @@
 class CreateAssignments < ActiveRecord::Migration
   def change
     create_table :assignments do |t|
-      t.integer :assigned_from_user
-      t.integer :assigned_to_user
-      t.date :assigned_at_date
-      t.date :assigned_to_date
-      t.integer :assigned_entry
+      t.integer :creator_id
+      t.integer :recipient_id
+      t.date :from_date
+      t.date :to_date
+      t.integer :entry_id
 
       t.timestamps null: false
     end
