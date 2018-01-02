@@ -1,11 +1,11 @@
 <div class="row">
   <div class="col-md-4"> 
-    <%= bootstrap_form_for(@task) do |f| %>
+    <%= bootstrap_form_for(@assignment) do |f| %>
       <%= render 'shared/error_messages', object: f.object %>
       <div class="funky_grey_seperator">
-        <%= f.select(:assigned_entry, options_for_select(Entry.all.collect {|entry| [ entry.japanische_umschrift, entry.id ] }, { selected: @task.assigned_entry })) %>
+        <%= f.select(:assigned_entry, options_for_select(Entry.all.collect {|entry| [ entry.japanische_umschrift, entry.id ] }, { selected: @assignment.assigned_entry })) %>
         <%= f.select(:assigned_to_user, options_for_select(User.all.collect {|user| [ user.name, user.id ] })) %>
-        <%= f.hidden_field :assigned_from_user, value: @task.assigned_from_user %>
+        <%= f.hidden_field :assigned_from_user, value: @assignment.assigned_from_user %>
         <%= f.hidden_field :assigned_at_date, value: Date.today %>
         <%= f.select(:assigned_to_date, options_for_select((1..6), { selected: 3 })) %>
         <%= f.submit %>

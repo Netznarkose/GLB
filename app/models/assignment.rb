@@ -1,5 +1,5 @@
-class Task < ActiveRecord::Base
-  include TasksHelper
+class Assignment < ActiveRecord::Base
+  include AssignmentsHelper
   validates :assigned_from_user, :assigned_to_user, :assigned_at_date, :assigned_to_date, presence: true
   before_save :update_user_id_in_entry
 

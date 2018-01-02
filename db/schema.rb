@@ -13,6 +13,16 @@
 
 ActiveRecord::Schema.define(version: 20171208114843) do
 
+  create_table "assignments", force: :cascade do |t|
+    t.integer  "assigned_from_user"
+    t.integer  "assigned_to_user"
+    t.date     "assigned_at_date"
+    t.date     "assigned_to_date"
+    t.integer  "assigned_entry"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
   create_table "ckeditor_assets", force: :cascade do |t|
     t.string   "data_file_name",               null: false
     t.string   "data_content_type"
@@ -130,16 +140,6 @@ ActiveRecord::Schema.define(version: 20171208114843) do
     t.string   "page_reference"
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "tasks", force: :cascade do |t|
-    t.integer  "assigned_from_user"
-    t.integer  "assigned_to_user"
-    t.date     "assigned_at_date"
-    t.date     "assigned_to_date"
-    t.integer  "assigned_entry"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
   end
 
   create_table "users", force: :cascade do |t|

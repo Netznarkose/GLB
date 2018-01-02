@@ -1,6 +1,6 @@
-class CreateTasks < ActiveRecord::Migration
+class CreateAssignments < ActiveRecord::Migration
   def change
-    create_table :tasks do |t|
+    create_table :assignments do |t|
       t.integer :assigned_from_user
       t.integer :assigned_to_user
       t.date :assigned_at_date

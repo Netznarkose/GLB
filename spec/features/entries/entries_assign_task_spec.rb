@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe 'tasks' do
+describe 'assignments' do
   let(:admin) { create(:admin) }
   let(:editor) { create(:editor) }
   let(:entry) { create(:entry) }
-  let(:task) { create(:task) }
+  let(:assignment) { create(:assignment) }
 
   describe 'entry#edit template' do
     context 'as admin' do
@@ -19,12 +19,12 @@ describe 'tasks' do
       end
       context 'assigned entry' do
         before do
-          task.update(assigned_entry: entry.id, assigned_to_user: editor.id)
+          assignment.update(assigned_entry: entry.id, assigned_to_user: editor.id)
           entry.update(user_id: editor.id)
           visit edit_entry_path(entry)
         end
         it 'sees Notification' do
-          expect(page).to have_content("In Bearbeitung von #{entry.user.name} zum #{entry.task.assigned_to_date}")
+          expect(page).to have_content("In Bearbeitung von #{entry.user.name} zum #{entry.assignment.assigned_to_date}")
         end
         it 'sees link Zuweisen Editieren' do
           expect(page).to have_link('Zuweisung Bearbeiten')

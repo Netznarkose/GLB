@@ -41,13 +41,13 @@ class Entry < ActiveRecord::Base
   validate :group_uebersetzungen_quellenangaben_literatur_und_ergaenzungen
 
   before_save :cleanup
-  before_destroy :destroy_related_task
+  before_destroy :destroy_related_assignment
 
   scope :published, -> { where(freigeschaltet: true) }
 
-  def destroy_related_task
-    related_task = Task.where(assigned_entry: self).first
-    related_task.destroy unless related_task.blank?
+  def destroy_related_assignment
+    related_assignment = Assignment.where(assigned_entry: self).first
+    related_assignment.destroy unless related_assignment.blank?
   end
 
   def self.search(column = 'all', query)
@@ -122,7 +122,7 @@ class Entry < ActiveRecord::Base
     end
   end
 
-  def task
-    Task.find_by(assigned_entry: id)
+  def assignment
+    Assignment.find_by(assigned_entry: id)
   end
 end

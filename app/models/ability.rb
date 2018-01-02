@@ -9,7 +9,7 @@ class Ability
       can :index, User
       can :manage, Entry
       can :manage, Comment
-      can :destroy, Task
+      can :destroy, Assignment
     elsif user.author?
       can :index, User
       can [:index,:show, :new], Entry

@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Entry do
   let!(:entry) { FactoryBot.create(:entry) }
-  let!(:task) { FactoryBot.create(:task) }
+  let!(:assignment) { FactoryBot.create(:assignment) }
 
   describe 'general' do
     it 'creates a new instance of an entry given valid attributes' do
@@ -68,20 +68,20 @@ describe Entry do
       expect(Entry.search('unbearbeitet', 'foo').first).to eq(entry)
     end
   end
-  describe 'destroy_related_task' do
-    context 'with task' do
+  describe 'destroy_related_assignment' do
+    context 'with assignment' do
       before do
-        task.update(assigned_entry: entry.id)
+        assignment.update(assigned_entry: entry.id)
       end
       it 'destroys it' do
-        expect(Task.where(id: task.id).first).to eq(task)
-        entry.destroy_related_task
-        expect(Task.where(id: task.id).first).to eq(nil)
+        expect(Assignment.where(id: assignment.id).first).to eq(assignment)
+        entry.destroy_related_assignment
+        expect(Assignment.where(id: assignment.id).first).to eq(nil)
       end
     end
-    context 'without task' do
+    context 'without assignment' do
       it 'does not raise an error' do
-        expect{ entry.destroy_related_task }.not_to raise_error
+        expect{ entry.destroy_related_assignment }.not_to raise_error
       end
     end
   end

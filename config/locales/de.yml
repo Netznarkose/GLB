@@ -1,10 +1,10 @@
 de:
-  task_notifier:
-    task_assigned:
+  assignment_notifier:
+    create:
       subject: "Zuweisung eines Eintrags" 
-    task_done:
+    done:
       subject: "Eine von Dir deligierte Aufgabe wurde erledigt" 
-    task_expired:
+    expired:
       subject: "Eine von Dir deligierte Aufgabe wurde nicht erledigt" 
 
   date:

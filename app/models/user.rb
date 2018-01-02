@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
 
 
   def assigned_tasks
-    Task.where(assigned_to_user: self.id)
+    Assignment.where(assigned_to_user: self.id)
   end
 
   def admin?

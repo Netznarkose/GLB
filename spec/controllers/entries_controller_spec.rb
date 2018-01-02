@@ -9,7 +9,7 @@ describe EntriesController, type: :controller do
   let(:author) { FactoryBot.create(:author) }
   let(:commentator) { FactoryBot.create(:commentator) }
   let(:user) { FactoryBot.create(:user) }
-  let(:task) { FactoryBot.create(:task, assigned_entry: entry.id) }
+  let(:assignment) { FactoryBot.create(:assignment, assigned_entry: entry.id) }
 
   before do
     admin
@@ -102,11 +102,11 @@ describe EntriesController, type: :controller do
     end
     context 'when entry is assigned' do
       it 'shows a flash-message' do
-        sign_in admin
-        task
+        sign_in(admin)
+        assignment
         entry.update(user_id: admin.id)
         get :edit, id: entry.id
-        expect(flash[:notice]).to eq("In Bearbeitung von #{entry.user.name} zum #{entry.task.assigned_to_date}" )
+        expect(flash[:notice]).to eq("In Bearbeitung von #{entry.user.name} zum #{entry.assignment.assigned_to_date}" )
       end
     end
     context 'as author' do
@@ -379,15 +379,15 @@ describe EntriesController, type: :controller do
           expect(response).to redirect_to(user_entries_path(admin))
         end
       end
-      context 'related task' do
+      context 'related assignment' do
         before do
           entry.update(user_id: admin.id)
-          task.update(assigned_entry: entry.id)
+          assignment.update(assigned_entry: entry.id)
         end
         it 'gets deleted along' do
           expect {
             delete :destroy, id: entry.id
-          }.to change(Task, :count).by(-1)
+          }.to change(Assignment, :count).by(-1)
         end
       end
       context 'other users entries' do
