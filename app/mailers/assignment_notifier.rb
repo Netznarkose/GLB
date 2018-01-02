@@ -8,7 +8,7 @@ class AssignmentNotifier < ApplicationMailer
   def create(assignment)
     @assignment = assignment
 
-    mail to: User.find(assignment.assigned_to_user).email
+    mail to: User.find(assignment.recipient_id).email
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -19,7 +19,7 @@ class AssignmentNotifier < ApplicationMailer
   def done(assignment)
     @assignment = assignment
 
-    mail to: User.find(assignment.assigned_from_user).email
+    mail to: User.find(assignment.creator_id).email
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -30,6 +30,6 @@ class AssignmentNotifier < ApplicationMailer
   def expired(assignment)
     @assignment = assignment
 
-    mail to: User.find(assignment.assigned_from_user).email
+    mail to: User.find(assignment.creator_id).email
   end
 end

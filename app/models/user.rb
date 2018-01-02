@@ -10,8 +10,8 @@ class User < ActiveRecord::Base
   before_destroy :check_for_remaining_entries
 
 
-  def assigned_tasks
-    Assignment.where(assigned_to_user: self.id)
+  def assignments
+    Assignment.where(recipient_id: self.id)
   end
 
   def admin?

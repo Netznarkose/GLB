@@ -3,16 +3,16 @@ class AssignmentsController < ApplicationController
   before_action :set_assignment, only: %i[edit update destroy]
 
   def new
-    @assignment = Assignment.new(assigned_from_user: current_user.id, assigned_entry: params['entry_id'])
+    @assignment = Assignment.new(creator_id: current_user.id, entry_id: params['entry_id'])
   end
 
   def edit
   end
 
   def create
-    @assignment = Assignment.new(assignment_params.merge({assigned_to_date: calc_expiry_date}))
+    @assignment = Assignment.new(assignment_params.merge({to_date: calc_expiry_date}))
     if @assignment.save
-      redirect_to user_entries_path(@assignment.assigned_to_user), notice: 'Assignment was successfully created.'
+      redirect_to user_entries_path(@assignment.recipient_id), notice: 'Assignment was successfully created.'
       AssignmentNotifier.create(@assignment).deliver_now
     else
       render :new
@@ -20,8 +20,8 @@ class AssignmentsController < ApplicationController
   end
 
   def update
-    if @assignment.update(assignment_params.merge({assigned_to_date: calc_expiry_date}))
-      redirect_to user_entries_path(@assignment.assigned_to_user), notice: 'Task was successfully updated.'
+    if @assignment.update(assignment_params.merge({to_date: calc_expiry_date}))
+      redirect_to user_entries_path(@assignment.recipient_id), notice: 'Task was successfully updated.'
       AssignmentNotifier.create(@assignment).deliver_now
     else
       render :edit
@@ -29,7 +29,7 @@ class AssignmentsController < ApplicationController
   end
 
   def destroy
-    assignment_recipient = @assignment.assigned_to_user
+    assignment_recipient = @assignment.recipient_id
     if @assignment.destroy
       redirect_to user_entries_path(assignment_recipient), notice: 'Task was successfully destroyed.'
       AssignmentNotifier.done(@assignment).deliver_now
@@ -45,11 +45,11 @@ class AssignmentsController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def assignment_params
-    params.require(:assignment).permit(:assigned_from_user, :assigned_to_user, :assigned_at_date, :assigned_to_date, :assigned_entry)
+    params.require(:assignment).permit(:creator_id, :recipient_id, :from_date, :to_date, :entry_id)
   end
 
   def calc_expiry_date
-    Date.today + (assignment_params[:assigned_to_date].to_i).month
+    Date.today + (assignment_params[:to_date].to_i).month
   end
 
 end

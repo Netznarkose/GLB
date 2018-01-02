@@ -1,21 +1,21 @@
 module AssignmentsHelper
   def entry
-    Entry.find(assigned_entry)
+    Entry.find(entry_id)
   end
 
   def name_of_recipient
-    User.find(assigned_to_user).name
+    User.find(recipient_id).name
   end
 
   def email_of_recipient
-    User.find(assigned_to_user).email
+    User.find(recipient_id).email
   end
 
   def name_of_creator
-    User.find(assigned_from_user).name
+    User.find(creator_id).name
   end
 
   def email_of_creator
-    User.find(assigned_from_user).email
+    User.find(creator_id).email
   end
 end

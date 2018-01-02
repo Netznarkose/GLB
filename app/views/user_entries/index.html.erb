@@ -13,27 +13,27 @@
       <th>Aufgabe</th>
     </tr>
 
-    <% @user.assigned_tasks.each do |task| %>
+    <% @user.assignments.each do |assignment| %>
       <tr>
-        <td><%= task.entry.japanische_umschrift %></td>
-        <td><%= task.entry.kennzahl %></td>
-        <td><%= task.assigned_at_date %></td>
-        <% if task.expired? %>
-          <td style="color: red;"><%= task.assigned_to_date %></td>
+        <td><%= assignment.entry.japanische_umschrift %></td>
+        <td><%= assignment.entry.kennzahl %></td>
+        <td><%= assignment.from_date %></td>
+        <% if assignment.expired? %>
+          <td style="color: red;"><%= assignment.to_date %></td>
         <% else %>
-          <td><%= task.assigned_to_date %></td>
+          <td><%= assignment.to_date %></td>
         <% end %>
-        <td><%= task.name_of_task_creator %></td>
-        <td><%= content_tag(:span, task.entry.bearbeitungsstand, class: label_bearbeitungsstand(task.entry.bearbeitungsstand)) %></td>
+        <td><%= assignment.name_of_assignment_creator %></td>
+        <td><%= content_tag(:span, assignment.entry.bearbeitungsstand, class: label_bearbeitungsstand(assignment.entry.bearbeitungsstand)) %></td>
         <td>
           <% if current_user.admin? || current_user.editor? || (current_user.author? && entry.user_id == current_user.id) %>
-            <%= link_to 'Anzeigen', task.entry %> |
-            <%= link_to 'Bearbeiten', edit_entry_path(task.entry) %> |
-            <%= link_to 'Löschen', task.entry, method: :delete, data: { confirm: 'Wollen Sie diesen Eintrag wirklich löschen?' }%>
+            <%= link_to 'Anzeigen', assignment.entry %> |
+            <%= link_to 'Bearbeiten', edit_entry_path(assignment.entry) %> |
+            <%= link_to 'Löschen', assignment.entry, method: :delete, data: { confirm: 'Wollen Sie diesen Eintrag wirklich löschen?' }%>
           <% end %>
           <td>
-            <%= link_to 'Erledigt', task, method: :delete, data: { confirm: 'Wollen Sie diese Aufgabe wirklich löschen?' }%> |
-            <%= link_to 'Bearbeiten', edit_task_path({id: task.id, entry_id: task.assigned_entry }) %>
+            <%= link_to 'Erledigt', assignment, method: :delete, data: { confirm: 'Wollen Sie diese Aufgabe wirklich löschen?' }%> |
+            <%= link_to 'Bearbeiten', edit_assignment_path({id: assignment.id, entry_id: assignment.entry_id }) %>
           </td>
       </tr>
     <% end %>

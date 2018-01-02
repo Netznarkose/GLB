@@ -71,7 +71,7 @@ describe Entry do
   describe 'destroy_related_assignment' do
     context 'with assignment' do
       before do
-        assignment.update(assigned_entry: entry.id)
+        assignment.update(entry_id: entry.id)
       end
       it 'destroys it' do
         expect(Assignment.where(id: assignment.id).first).to eq(assignment)

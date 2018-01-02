@@ -43,19 +43,19 @@ RSpec.describe AssignmentsController, type: :controller do
       end
 
       it 'sends an info-mail to assigned user' do
-        post :create, assignment: attributes_for(:assignment, assigned_to_user: editor.id)
+        post :create, assignment: attributes_for(:assignment, recipient_id: editor.id)
         expect(ActionMailer::Base.deliveries.last.to).to eq([editor.email])
       end
 
       it 'redirects to user_entries of assigned user' do
         post :create, assignment: attributes_for(:assignment)
-        expect(response).to redirect_to(user_entries_path(Assignment.last.assigned_to_user))
+        expect(response).to redirect_to(user_entries_path(Assignment.last.recipient_id))
       end
     end
 
     context 'with invalid params' do
       it "returns a success response (i.e. to display the 'new' template)" do
-        post :create, assignment: attributes_for(:assignment, assigned_from_user: nil)
+        post :create, assignment: attributes_for(:assignment, creator_id: nil)
         expect(response).to be_success
       end
     end
@@ -63,7 +63,7 @@ RSpec.describe AssignmentsController, type: :controller do
       it 'sets user_id in entry to id of assigned user' do
         post :create, assignment: attributes_for(:assignment)
         last_assignment = Assignment.last
-        expect(Entry.find(last_assignment.assigned_entry).user_id).to eq(last_assignment.assigned_to_user)
+        expect(Entry.find(last_assignment.entry_id).user_id).to eq(last_assignment.recipient_id)
       end
     end
   end
@@ -75,34 +75,34 @@ RSpec.describe AssignmentsController, type: :controller do
     context 'with valid params' do
       it 'updates the requested assignment' do
         assignment
-        put :update, id: assignment.to_param, assignment: attributes_for(:assignment, assigned_to_date: 1)
+        put :update, id: assignment.to_param, assignment: attributes_for(:assignment, to_date: 1)
         assignment.reload
-        expect(assignment.assigned_to_date).not_to eq(Date.today + 3.month)
-        expect(assignment.assigned_to_date).to eq(Date.today + 1.month)
+        expect(assignment.to_date).not_to eq(Date.today + 3.month)
+        expect(assignment.to_date).to eq(Date.today + 1.month)
       end
 
       it 'redirects to user_entries of assigned user' do
-        put :update, id: assignment.to_param, assignment: attributes_for(:assignment, assigned_to_user: editor.id)
+        put :update, id: assignment.to_param, assignment: attributes_for(:assignment, recipient_id: editor.id)
         expect(response).to redirect_to(user_entries_path(editor))
       end
 
       it 'sends an info-mail to assigned user' do
-        put :update, id: assignment.to_param, assignment: attributes_for(:assignment, assigned_to_user: editor.id)
+        put :update, id: assignment.to_param, assignment: attributes_for(:assignment, recipient_id: editor.id)
         expect(ActionMailer::Base.deliveries.last.to).to eq([editor.email])
       end
     end
     context 'update user_id in assigned entry' do
       it 'sets user_id in entry to id of assigned user' do
-        post :update, id: assignment.to_param, assignment: attributes_for(:assignment, assigned_to_user: editor.id)
+        post :update, id: assignment.to_param, assignment: attributes_for(:assignment, recipient_id: editor.id)
         last_assignment = Assignment.last
-        expect(Entry.find(last_assignment.assigned_entry).user_id).to eq(last_assignment.assigned_to_user)
+        expect(Entry.find(last_assignment.entry_id).user_id).to eq(last_assignment.recipient_id)
       end
     end
 
     context 'with invalid params' do
       it "returns a success response (i.e. to display the 'edit' template)" do
         assignment
-        put :update, id: assignment.to_param, assignment: attributes_for(:assignment, assigned_from_user: '')
+        put :update, id: assignment.to_param, assignment: attributes_for(:assignment, creator_id: '')
         expect(response).to be_success
       end
     end
@@ -122,7 +122,7 @@ RSpec.describe AssignmentsController, type: :controller do
       it 'redirects to the user entries' do
         assignment
         delete :destroy, id: assignment.to_param
-        expect(response).to redirect_to(user_entries_path(assignment.assigned_to_user))
+        expect(response).to redirect_to(user_entries_path(assignment.recipient_id))
       end
     end
     context 'as editor' do
@@ -136,7 +136,7 @@ RSpec.describe AssignmentsController, type: :controller do
         }.to change(Assignment, :count).by(-1)
       end
       it 'sends an info-mail to assignment-creator' do
-        assignment.update(assigned_from_user: admin.id)
+        assignment.update(creator_id: admin.id)
         delete :destroy, id: assignment.to_param
         expect(ActionMailer::Base.deliveries.last.to).to eq([admin.email])
       end

@@ -46,7 +46,7 @@ class Entry < ActiveRecord::Base
   scope :published, -> { where(freigeschaltet: true) }
 
   def destroy_related_assignment
-    related_assignment = Assignment.where(assigned_entry: self).first
+    related_assignment = Assignment.where(entry_id: self).first
     related_assignment.destroy unless related_assignment.blank?
   end
 
@@ -123,6 +123,6 @@ class Entry < ActiveRecord::Base
   end
 
   def assignment
-    Assignment.find_by(assigned_entry: id)
+    Assignment.find_by(entry_id: id)
   end
 end

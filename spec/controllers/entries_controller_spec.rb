@@ -9,7 +9,7 @@ describe EntriesController, type: :controller do
   let(:author) { FactoryBot.create(:author) }
   let(:commentator) { FactoryBot.create(:commentator) }
   let(:user) { FactoryBot.create(:user) }
-  let(:assignment) { FactoryBot.create(:assignment, assigned_entry: entry.id) }
+  let(:assignment) { FactoryBot.create(:assignment, entry_id: entry.id) }
 
   before do
     admin
@@ -106,7 +106,7 @@ describe EntriesController, type: :controller do
         assignment
         entry.update(user_id: admin.id)
         get :edit, id: entry.id
-        expect(flash[:notice]).to eq("In Bearbeitung von #{entry.user.name} zum #{entry.assignment.assigned_to_date}" )
+        expect(flash[:notice]).to eq("In Bearbeitung von #{entry.user.name} zum #{entry.assignment.to_date}" )
       end
     end
     context 'as author' do
@@ -382,7 +382,7 @@ describe EntriesController, type: :controller do
       context 'related assignment' do
         before do
           entry.update(user_id: admin.id)
-          assignment.update(assigned_entry: entry.id)
+          assignment.update(entry_id: entry.id)
         end
         it 'gets deleted along' do
           expect {

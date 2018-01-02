@@ -3,11 +3,11 @@
     <%= bootstrap_form_for(@assignment) do |f| %>
       <%= render 'shared/error_messages', object: f.object %>
       <div class="funky_grey_seperator">
-        <%= f.select(:assigned_entry, options_for_select(Entry.all.collect {|entry| [ entry.japanische_umschrift, entry.id ] }, { selected: @assignment.assigned_entry })) %>
-        <%= f.select(:assigned_to_user, options_for_select(User.all.collect {|user| [ user.name, user.id ] })) %>
-        <%= f.hidden_field :assigned_from_user, value: @assignment.assigned_from_user %>
-        <%= f.hidden_field :assigned_at_date, value: Date.today %>
-        <%= f.select(:assigned_to_date, options_for_select((1..6), { selected: 3 })) %>
+        <%= f.select(:entry_id, options_for_select(Entry.all.collect {|entry| [ entry.japanische_umschrift, entry.id ] }, { selected: @assignment.entry_id })) %>
+        <%= f.select(:recipient_id, options_for_select(User.all.collect {|user| [ user.name, user.id ] })) %>
+        <%= f.hidden_field :creator_id, value: @assignment.creator_id %>
+        <%= f.hidden_field :from_date, value: Date.today %>
+        <%= f.select(:to_date, options_for_select((1..6), { selected: 3 })) %>
         <%= f.submit %>
       <% end %>
       </div>

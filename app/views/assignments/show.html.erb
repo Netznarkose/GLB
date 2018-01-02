@@ -2,27 +2,27 @@
 
 <p>
   <strong>Assigned from user:</strong>
-  <%= @task.assigned_from_user %>
+  <%= @task.creator_id %>
 </p>
 
 <p>
   <strong>Assigned to user:</strong>
-  <%= @task.assigned_to_user %>
+  <%= @task.recipient_id %>
 </p>
 
 <p>
   <strong>Assigned at date:</strong>
-  <%= @task.assigned_at_date %>
+  <%= @task.from_date %>
 </p>
 
 <p>
   <strong>Assigned to date:</strong>
-  <%= @task.assigned_to_date %>
+  <%= @task.to_date %>
 </p>
 
 <p>
   <strong>Assigned entry:</strong>
-  <%= @task.assigned_entry %>
+  <%= @task.entry_id %>
 </p>
 
 <%= link_to 'Edit', edit_task_path(@task) %> |

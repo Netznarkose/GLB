@@ -30,9 +30,9 @@ de:
 
     attributes:
       task:
-        assigned_to_user: "Wem?"
-        assigned_to_date: "Bearbeitungszeit (Monate)"
-        assigned_entry: "Welcher Eintrag?"
+        recipient_id: "Wem?"
+        to_date: "Bearbeitungszeit (Monate)"
+        entry_id: "Welcher Eintrag?"
 
     errors:
       models:
