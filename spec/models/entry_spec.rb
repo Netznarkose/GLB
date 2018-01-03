@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe Entry do
-  let!(:entry) { FactoryBot.create(:entry) }
-  let!(:assignment) { FactoryBot.create(:assignment) }
+RSpec.describe Assignment, type: :model do
+  let!(:entry) { create(:entry) }
+  let!(:assignment) { create(:assignment) }
 
   describe 'general' do
     it 'creates a new instance of an entry given valid attributes' do
