@@ -50,3 +50,10 @@ RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, :type => :helper
   config.include Rails.application.routes.url_helpers
 end
+Shoulda::Matchers.configure do |config|
+  config.integrate do |with|
+    with.test_framework :rspec
+    with.library :active_model
+    with.library :active_record
+  end
+end

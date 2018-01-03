@@ -37,6 +37,7 @@ group :development do
 end
 
 group :test do
+  gem 'shoulda-matchers', '~> 3.1'
   gem 'simplecov', require: false
   gem 'capybara'
   gem 'guard-rspec'

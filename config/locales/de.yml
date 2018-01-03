@@ -60,4 +60,8 @@ de:
           attributes:
             comment:
               blank: "Kommentar daft nicht leer sein!"
+        assignment:
+          attributes:
+            entry_id:
+              taken: "Der Eintrag ist bereits einem anderem User Zugewiesen"
 

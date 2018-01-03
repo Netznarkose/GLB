@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 RSpec.describe Assignment, type: :model do
-  let!(:assignment) { FactoryBot.create(:assignment) }
-  let!(:entry) { FactoryBot.create(:entry) }
+  let!(:assignment) { create(:assignment) }
+  let!(:entry) { create(:entry) }
 
   describe 'general' do
     it 'has a valid factory' do
@@ -11,22 +11,12 @@ RSpec.describe Assignment, type: :model do
   end
 
   describe 'validations' do
-    it 'is invalid without creator_id' do
-      assignment.creator_id = nil
-      expect(assignment).not_to be_valid
-    end
-    it 'is invalid without recipient_id' do
-      assignment.recipient_id = nil
-      expect(assignment).not_to be_valid
-    end
-    it 'is invalid without from_date' do
-      assignment.from_date = nil
-      expect(assignment).not_to be_valid
-    end
-    it 'is invalid without to_date' do
-      assignment.to_date = nil
-      expect(assignment).not_to be_valid
-    end
+    it { should validate_presence_of(:creator_id) }
+    it { should validate_presence_of(:recipient_id) }
+    it { should validate_presence_of(:from_date) }
+    it { should validate_presence_of(:to_date) }
+    it { should validate_presence_of(:entry_id) }
+    it { should validate_uniqueness_of(:entry_id) }
   end
 
   describe 'date' do
