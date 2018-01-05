@@ -12,22 +12,28 @@ module EntriesHelper
 
   def label_bearbeitungsstand(bearbeitungsstand)
     case bearbeitungsstand
-    when "Code veraltet"
-      "label label-warning"
-    when "unbearbeitet"
-      "label label-danger"
-    when "unformatiert"
-      "label label-info"
-    when  "formatiert"
-      "label label-success"
+    when 'Code veraltet'
+      'label label-warning'
+    when 'unbearbeitet'
+      'label label-danger'
+    when 'unformatiert'
+      'label label-info'
+    when 'formatiert'
+      'label label-success'
     end
   end
 
   def entry_search_attributes
-    esa = (Entry::BEARBEITUNGS_STAND + Entry.column_names).map do |entry|
-      [ entry.capitalize, entry ]
+    all_fields = (['alle'] + Entry::BEARBEITUNGS_STAND + Entry.column_names)
+    field_select = params[:field_select] if all_fields.include?(params[:field_select])
+    a = all_fields.map do |entry|
+      [entry.capitalize, entry]
     end
-    esa.unshift(['Alle Felder', 'all'])
+    unless field_select.blank?
+      a.delete([field_select.capitalize, field_select])
+      a.unshift([field_select.capitalize, field_select])
+    end
+    a
   end
 
   private

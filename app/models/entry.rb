@@ -50,8 +50,8 @@ class Entry < ActiveRecord::Base
     related_assignment.destroy unless related_assignment.blank?
   end
 
-  def self.search(column = 'all', query)
-    column.eql?('all') ? all_columns(query) : single_column(column, query)
+  def self.search(column = 'alle', query)
+    column.eql?('alle') ? all_columns(query) : single_column(column, query)
   end
 
   def self.all_columns(query)
@@ -69,7 +69,7 @@ class Entry < ActiveRecord::Base
 
   def self.single_column(column, query)
     if Entry::BEARBEITUNGS_STAND.include?(column)
-      Entry.where(bearbeitungsstand: column).where('japanische_umschrift LIKE ?', "%#{query}%")
+      Entry.where(bearbeitungsstand: column).where('japanische_umschrift LIKE ?', "#{query}%")
     else
       Entry.where("#{column} LIKE ?", "%#{query}%")
     end

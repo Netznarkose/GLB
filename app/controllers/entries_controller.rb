@@ -96,7 +96,7 @@ class EntriesController < ApplicationController
   end
 
   def search_entries
-    Entry.search(params[:search_field], params[:search])
+    Entry.search(params[:field_select], params[:search])
   end
 
   def sort_entries

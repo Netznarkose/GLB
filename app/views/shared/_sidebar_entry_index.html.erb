@@ -6,7 +6,7 @@
       <%= form_tag entries_path, method: :get, class: 'form-inline' do %>
         <%= text_field_tag :search, params[:search] %>
         <div style="margin-top: 10px">
-          <%= select_tag('search_field', options_for_select(entry_search_attributes), class: "form-control", :style => "width:160px") %> 
+          <%= select_tag('field_select', options_for_select(entry_search_attributes), class: "form-control", :style => "width:160px") %> 
         </div>
         <div style="margin-top: 10px">
           <%= submit_tag "Los!", class: 'btn btn-default' %>   

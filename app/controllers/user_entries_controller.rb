@@ -14,7 +14,7 @@ class UserEntriesController < ApplicationController
   end
 
   def search_user_entries
-    @user.entries.search(params[:search_field], params[:search])
+    @user.entries.search(params[:field_select], params[:search])
   end
 
   def sort_user_entries

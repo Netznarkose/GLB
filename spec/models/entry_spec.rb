@@ -51,7 +51,7 @@ RSpec.describe Assignment, type: :model do
   describe '#search' do
     it 'returns search result for specific field' do
       entry.update(kanji: 'foo')
-      expect(Entry.search('all', 'foo').first).to eq(entry)
+      expect(Entry.search('alle', 'foo').first).to eq(entry)
       expect(Entry.search('foo').first).to eq(entry)
       expect(Entry.search('kanji', 'foo').first).to eq(entry)
       expect(Entry.search('kanji', 'bar').first).not_to eq(entry)
@@ -59,7 +59,7 @@ RSpec.describe Assignment, type: :model do
     end
     it 'returns search result for bearbeitungsstand' do
       entry.update(bearbeitungsstand: 'unbearbeitet', japanische_umschrift: 'foo')
-      expect(Entry.search('all', 'foo').first).to eq(entry)
+      expect(Entry.search('alle', 'foo').first).to eq(entry)
       expect(Entry.search('unbearbeitet', 'foo').first).to eq(entry)
       expect(Entry.search('formatiert', 'foo').first).not_to eq(entry)
     end
