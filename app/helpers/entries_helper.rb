@@ -23,20 +23,25 @@ module EntriesHelper
     end
   end
 
-  def entry_search_attributes
-    all_fields = (['alle'] + Entry::BEARBEITUNGS_STAND + Entry.column_names)
-    field_select = params[:field_select] if all_fields.include?(params[:field_select])
-    a = all_fields.map do |entry|
-      [entry.capitalize, entry]
+  def all_fields
+    (['all'] + Entry::BEARBEITUNGS_STAND + Entry.column_names).map do |entry|
+      if entry == 'all'
+        ['Alle Felder', 'all']
+      else
+        [entry.capitalize, entry]
+      end
     end
-    unless field_select.blank?
-      a.delete([field_select.capitalize, field_select])
-      a.unshift([field_select.capitalize, field_select])
+  end
+
+  def selected_field
+    if params[:field_select]
+      field_select = params[:field_select]
+      [field_select.capitalize, field_select]
     end
-    a
   end
 
   private
+
   # make digits that are smaller then four digit to for digit numbers
   # example 9 becomes 0009
   def to_scan_pages_helper page
@@ -50,4 +55,5 @@ module EntriesHelper
     end
     page
   end
+
 end

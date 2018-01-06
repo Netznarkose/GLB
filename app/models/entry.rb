@@ -50,8 +50,8 @@ class Entry < ActiveRecord::Base
     related_assignment.destroy unless related_assignment.blank?
   end
 
-  def self.search(column = 'alle', query)
-    column.eql?('alle') ? all_columns(query) : single_column(column, query)
+  def self.search(column = 'all', query)
+    column.eql?('all') ? all_columns(query) : single_column(column, query)
   end
 
   def self.all_columns(query)
