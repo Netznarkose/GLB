@@ -21,6 +21,6 @@ class Assignment < ActiveRecord::Base
   end
 
   def days_expired_since_assignment
-    ((Date.today - from_date).to_i).round
+    (Date.today - from_date).to_i.round
   end
 end

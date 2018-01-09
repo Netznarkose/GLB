@@ -44,6 +44,12 @@ RSpec.describe Assignment, type: :model do
         expect(assignment.remindable?).to eq(true)
       end
     end
+    it 'returns true if two/third of processing-time elapsed' do
+      assignment.update(to_date: Date.today + 1.month)
+      Timecop.freeze(Date.today + 22.days) do
+        expect(assignment.remindable?).to eq(true)
+      end
+    end
     it 'returns false if assignment is not remindable' do
       expect(assignment.remindable?).to eq(false)
     end
