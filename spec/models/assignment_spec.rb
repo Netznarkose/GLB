@@ -32,9 +32,20 @@ RSpec.describe Assignment, type: :model do
       assignment.update(to_date: Date.yesterday)
       expect(assignment.expired?).to eq(true)
     end
-    it 'returns false if assignment is expired' do
+    it 'returns false if assignment is not expired' do
       assignment.save
       expect(assignment.expired?).to eq(false)
+    end
+  end
+
+  describe 'remindable?' do
+    it 'returns true if two/third of processing-time elapsed' do
+      Timecop.freeze(Date.today + 2. month + 2.days) do
+        expect(assignment.remindable?).to eq(true)
+      end
+    end
+    it 'returns false if assignment is not remindable' do
+      expect(assignment.remindable?).to eq(false)
     end
   end
 end

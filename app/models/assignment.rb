@@ -11,4 +11,16 @@ class Assignment < ActiveRecord::Base
   def expired?
     to_date < Date.today
   end
+
+  def remindable?
+    days_expired_since_assignment > two_third_of_processing_time
+  end
+
+  def two_third_of_processing_time
+    ((2.0/3.0) * (to_date - from_date).to_i).round
+  end
+
+  def days_expired_since_assignment
+    ((Date.today - from_date).to_i).round
+  end
 end
