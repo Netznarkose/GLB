@@ -35,6 +35,22 @@ RSpec.describe AssignmentNotifier, type: :mailer do
     end
   end
 
+  describe 'reminder' do
+    let(:mail) { AssignmentNotifier.reminder(assignment) }
+
+    it 'renders the headers' do
+      expect(mail.subject).to eq('Erinnerung')
+      expect(mail.to).to eq([assignment.email_of_recipient])
+      expect(mail.from).to eq([default_sender])
+    end
+
+    it 'renders the body' do
+      ['eine dir zugewiesene Aufgabe', 'muss bald erledigt werden!'].map do |string|
+        expect(mail.body.encoded).to include(string)
+      end
+    end
+  end
+
   describe 'expired_creator' do
     let(:mail) { AssignmentNotifier.expired_creator(assignment) }
 

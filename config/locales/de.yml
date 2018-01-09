@@ -4,6 +4,8 @@ de:
       subject: "Zuweisung eines Eintrags" 
     done:
       subject: "Eine von Dir deligierte Aufgabe wurde erledigt" 
+    reminder:
+      subject: "Erinnerung" 
     expired_creator:
       subject: "Eine von Dir deligierte Aufgabe wurde nicht erledigt" 
     expired_recipient:

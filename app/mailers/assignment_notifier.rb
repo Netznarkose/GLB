@@ -22,6 +22,12 @@ class AssignmentNotifier < ApplicationMailer
     mail to: User.find(assignment.creator_id).email
   end
 
+  def reminder(assignment)
+    @assignment = assignment
+
+    mail to: User.find(assignment.recipient_id).email
+  end
+
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
   #
