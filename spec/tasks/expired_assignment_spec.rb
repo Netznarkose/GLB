@@ -14,10 +14,14 @@ describe 'rake db:expired_assignment', type: :task do
   end
 
   context 'when db holds expired assignment' do
-    it 'sends an email notification' do
+    it 'sends an email notification to creator and recipient of assignment' do
       assignment.update(to_date: Date.yesterday)
+      ActionMailer::Base.deliveries.clear
       task.execute
-      expect(ActionMailer::Base.deliveries.last.subject).to eq('Eine von Dir deligierte Aufgabe wurde nicht erledigt')
+      expect(ActionMailer::Base.deliveries.map(&:to)).to eq([
+        [assignment.email_of_creator],
+        [assignment.email_of_recipient]
+      ])
     end
     it 'resets entry.user_id to id of assignment_creator' do
       assignment.save

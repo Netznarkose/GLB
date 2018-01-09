@@ -35,8 +35,8 @@ RSpec.describe AssignmentNotifier, type: :mailer do
     end
   end
 
-  describe 'expired' do
-    let(:mail) { AssignmentNotifier.expired(assignment) }
+  describe 'expired_creator' do
+    let(:mail) { AssignmentNotifier.expired_creator(assignment) }
 
     it 'renders the headers' do
       expect(mail.subject).to eq('Eine von Dir deligierte Aufgabe wurde nicht erledigt')
@@ -46,6 +46,21 @@ RSpec.describe AssignmentNotifier, type: :mailer do
 
     it 'renders the body' do
       ['die von dir deligierte Aufgabe', 'wurde nicht erledigt!'].map do |string|
+        expect(mail.body.encoded).to include(string)
+      end
+    end
+  end
+  describe 'expired_recipient' do
+    let(:mail) { AssignmentNotifier.expired_recipient(assignment) }
+
+    it 'renders the headers' do
+      expect(mail.subject).to eq('Eine Dir zugewiesene Aufgabe hast du nicht erledigt')
+      expect(mail.to).to eq([assignment.email_of_recipient])
+      expect(mail.from).to eq([default_sender])
+    end
+
+    it 'renders the body' do
+      ['die von dir deligierte Aufgabe', 'hast du nicht erledigt!'].map do |string|
         expect(mail.body.encoded).to include(string)
       end
     end
