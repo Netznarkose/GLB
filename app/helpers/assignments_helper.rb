@@ -18,4 +18,8 @@ module AssignmentsHelper
   def email_of_creator
     User.find(creator_id).email
   end
+
+  def deadline
+    Date.today + two_third_of_processing_time
+  end
 end

@@ -1,4 +1,14 @@
-<p>Hallo <%= @assignment.name_of_recipient %>,<p>
+<p>Hallo <%= @assignment.name_of_recipient %>,</p>
 <p>
-dir wurde der Eintrag <%= @assignment.entry.japanische_umschrift %> von <%= @assignment.name_of_creator %> zum <%= @assignment.to_date %> zugewiesen!
+Ihnen wurde der Eintrag <strong><%= @assignment.entry.japanische_umschrift %> (<%= @assignment.entry.kennzahl %>)</strong> von <strong><%= @assignment.name_of_creator %> </strong> zur Bearbeitung zugewiesen.</br>
+
+Bitte übersetzen und bearbeiten Sie diesen Eintrag bis zum <strong><%= @assignment.deadline %></strong>.</br>
+
+Sollte der Eintrag bis zu diesem Zeitpunkt nicht als "erledigt" markiert worden sein, wird das Bearbeitungsrecht rückgängig gemacht, und der Eintrag wird evtl. anderweitig vergeben.</br>
+
+Bei Problemen oder Fragen können Sie sich gerne an Ulrich Apel apel@wadoku.de wenden.</br></br>
+
+Mit freundlichen Grüßen</br></br>
+
+das automatische Mitteilungssystem von buddhismus-lexikon.eu 
 </p>

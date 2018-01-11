@@ -13,7 +13,7 @@ RSpec.describe AssignmentNotifier, type: :mailer do
     end
 
     it 'renders the body' do
-      ['dir wurde der Eintrag', 'zugewiesen'].map do |string|
+      ['Ihnen wurde der Eintrag', 'zugewiesen'].map do |string|
         expect(mail.body.encoded).to include(string)
       end
     end
