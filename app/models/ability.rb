@@ -7,7 +7,10 @@ class Ability
       can :manage, :all
     elsif user.editor?
       can :index, User
-      can :manage, Entry
+      can [:show, :index, :destroy, :new, :create, :edit], Entry
+      can :update, Entry do |entry| # Editor updates only own entries
+        entry.user_id == user.id
+      end
       can :manage, Comment
       can :destroy, Assignment
     elsif user.author?
