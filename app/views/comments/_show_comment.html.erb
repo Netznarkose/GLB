@@ -1,22 +1,20 @@
-<div class="funky_grey_seperator">
-  <%= bootstrap_form_for [@entry, @comment] do |f| %>
-    <%= render 'shared/error_messages', object: f.object %>
-    <%= f.submit "Speichern", class: 'btn btn-default', style: 'float:right; margin-bottom: 15px' %>
-    <%= f.text_area :comment, label: 'Kommentar' %>
-  <% end %>
-  <ul class="unstyled">
-    <% @entry.comments.order("updated_at DESC").each do |comment| %>
-      <li>
-        <strong><%= comment.user.name %></strong> 
-        <%= "(#{comment.updated_at.to_formatted_s(:short)})" %>
-        <% if can?(:destroy, comment)%>
-          <div class="btn-group" role="group" aria-label="..."style="float: right;">
-            <%= link_to 'Bearbeiten', edit_entry_comment_path(@entry, comment), class: 'btn btn-default' %>
-            <%= link_to "Löschen", [@entry, comment], method: :delete, class: 'btn btn-default' %>
-          </div>       
-        <% end %>
-        <div style="margin-bottom: 1em"><%= comment.comment %></div>
-      </li>
-    <% end%>
-  </ul>
-</div>
+<%= bootstrap_form_for [@entry, @comment] do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+  <%= f.submit "Speichern", class: 'btn btn-default', style: 'float:right; margin-bottom: 15px' %>
+  <%= f.text_area :comment, label: 'Kommentar' %>
+<% end %>
+<ul class="unstyled">
+  <% @entry.comments.order("updated_at DESC").each do |comment| %>
+    <li>
+      <strong><%= comment.user.name %></strong> 
+      <%= "(#{comment.updated_at.to_formatted_s(:short)})" %>
+      <% if can?(:destroy, comment)%>
+        <div class="btn-group" role="group" aria-label="..."style="float: right;">
+          <%= link_to 'Bearbeiten', edit_entry_comment_path(@entry, comment), class: 'btn btn-default' %>
+          <%= link_to "Löschen", [@entry, comment], method: :delete, class: 'btn btn-default' %>
+        </div>       
+      <% end %>
+      <div><%= comment.comment %></div>
+    </li>
+  <% end%>
+</ul>

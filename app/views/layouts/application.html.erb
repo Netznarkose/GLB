@@ -76,16 +76,7 @@
         </div>
       <% end %>
       <div class="row">
-        <% if content_for(:show) %>
-          <div class="col-md-2"> 
-            <div class="sidebar">
-              <%= render "shared/sidebar_entry_show" %>
-            </div>
-          </div>
-          <div class="col-md-10">
-            <%= yield(:show) %>
-          </div>
-        <% elsif content_for(:index)%>
+        <% if content_for(:index)%>
           <div class="col-md-2"> 
             <div class="sidebar">
               <%= render "shared/sidebar_entry_index" %>
