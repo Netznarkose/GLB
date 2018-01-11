@@ -1,4 +1,17 @@
 <p>Hallo <%= @assignment.name_of_recipient %>,<p>
 <p>
-eine dir zugewiesene Aufgabe <%= @assignment.entry.japanische_umschrift %> muss bald erledigt werden!
+
+Ihnen wurde am <strong><%= @assignment.from_date %></strong> von <%= @assignment.name_of_creator %> der Eintrag <strong><%= @assignment.entry.japanische_umschrift %> (<%= @assignment.entry.kennzahl %>)</strong> zur Bearbeitung zugewiesen.</br>
+
+Unserem Redaktionssystem zufolge wurde der Eintrag noch nicht als "erledigt" markiert.
+
+Bitte schließen Sie Ihre Bearbeitungen ab und klicken Sie den Button "Erledigt" im Bearbeitungslayout.</br>
+
+Wenn Sie den Eintrag bis zum <%= @assignment.to_date %> nicht bearbeitet und markiert haben, wird Ihr Bearbeitungsrecht automatisch rückgängig gemacht und der Eintrag wird danach möglicherweise anderweitig vergeben.</br>
+
+Bei Problemen oder Fragen können Sie sich gerne an Ulrich Apel apel@wadoku.de wenden.</br></br>
+
+Mit freundlichen Grüßen</br></br>
+
+das automatische Mitteilungssystem von buddhismus-lexikon.eu
 </p>

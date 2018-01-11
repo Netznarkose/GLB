@@ -45,7 +45,7 @@ RSpec.describe AssignmentNotifier, type: :mailer do
     end
 
     it 'renders the body' do
-      ['eine dir zugewiesene Aufgabe', 'muss bald erledigt werden!'].map do |string|
+      ['Wenn Sie den Eintrag bis zum', 'nicht bearbeitet'].map do |string|
         expect(mail.body.encoded).to include(string)
       end
     end
