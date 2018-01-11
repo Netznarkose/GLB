@@ -31,7 +31,7 @@ class AssignmentsController < ApplicationController
   def destroy
     assignment_recipient = @assignment.recipient_id
     if @assignment.destroy
-      redirect_to user_entries_path(assignment_recipient), notice: 'Task was successfully destroyed.'
+      redirect_to user_entries_path(assignment_recipient), notice: 'Der Eintrag wurde mit erledigt markiert.'
       AssignmentNotifier.done(@assignment).deliver_now
     end
   end

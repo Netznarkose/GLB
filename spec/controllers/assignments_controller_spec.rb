@@ -119,6 +119,10 @@ RSpec.describe AssignmentsController, type: :controller do
           delete :destroy, id: assignment.to_param
         }.to change(Assignment, :count).by(-1)
       end
+      it 'shows correct notification-message' do
+        delete :destroy, id: assignment.to_param
+        expect(flash[:notice]).to eq('Der Eintrag wurde mit erledigt markiert.')
+      end
       it 'redirects to the user entries' do
         assignment
         delete :destroy, id: assignment.to_param
