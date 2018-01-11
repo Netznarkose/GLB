@@ -13,6 +13,7 @@ class Ability
     elsif user.author?
       can :index, User
       can [:index,:show, :new], Entry
+      can :destroy, Assignment
       can [:edit, :update, :create, :destroy], Entry do |entry| # Author updates only own entries
         entry.user_id == user.id
       end

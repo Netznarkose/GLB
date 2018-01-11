@@ -1,15 +1,15 @@
 require 'spec_helper'
 
 describe EntriesController, type: :controller do
-  let(:entry) { FactoryBot.create(:entry) }
-  let(:unpublished_entry) { FactoryBot.create(:entry) }
-  let(:published_entry) { FactoryBot.create(:published_entry) }
-  let(:admin) { FactoryBot.create(:admin) }
-  let(:editor) { FactoryBot.create(:editor) }
-  let(:author) { FactoryBot.create(:author) }
-  let(:commentator) { FactoryBot.create(:commentator) }
-  let(:user) { FactoryBot.create(:user) }
-  let(:assignment) { FactoryBot.create(:assignment, entry_id: entry.id) }
+  let(:entry) { create(:entry) }
+  let(:unpublished_entry) { create(:entry) }
+  let(:published_entry) { create(:published_entry) }
+  let(:admin) { create(:admin) }
+  let(:editor) { create(:editor) }
+  let(:author) { create(:author) }
+  let(:commentator) { create(:commentator) }
+  let(:user) { create(:user) }
+  let(:assignment) { create(:assignment, entry_id: entry.id) }
 
   before do
     admin
