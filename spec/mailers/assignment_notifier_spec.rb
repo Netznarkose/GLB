@@ -29,7 +29,7 @@ RSpec.describe AssignmentNotifier, type: :mailer do
     end
 
     it 'renders the body' do
-      ['die von dir deligierte Aufgabe', 'wurde soeben erledigt!'].map do |string|
+      ['der von Ihnen', 'wurde soeben erledigt!'].map do |string|
         expect(mail.body.encoded).to include(string)
       end
     end
