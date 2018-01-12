@@ -1,10 +1,12 @@
 <%= content_tag :div, id: 'kennzahl', data: { kennzahl: @entry.kennzahl.to_i } do %>
 <% end %>
+<% pages = to_scan_pages(@entry.kennzahl) %>
 <%= bootstrap_form_for @entry do |f| %>
   <div style="width: 800px; position: fixed">
     <div class="funky_grey_seperator">
       <div style="float: left;">
-        <a href="#">Seite <span class="badge"><span id="page_count"></span></span></a>
+        <%= link_to 'Seite', "https://buddhismus-lexikon.eu/SBDJ-Original-JPGs/SBDJ_Seite_#{pages[0]}.jpg" %>
+        <a href="#"><span class="badge"><span id="page_count"></span></span></a>
         <div class="btn-group" role="group" aria-label="...">
           <button type="button" onclick="back_switch()" id="back"class="btn btn-default">Zurück</button>
           <button type="button" onclick="forward_switch()" id="forward" class="btn btn-default">Vor</button>
@@ -22,7 +24,6 @@
           <% end %>
         <% end %>
       </div>
-      <% pages = to_scan_pages(@entry.kennzahl) %>
       <div style="margin-top: 50px; margin-bottom: 15px;">
         <%= image_tag "http://buddhismus-lexikon.eu:/SBDJ-Original-JPGs/Lex_#{pages[0]}_oben.jpg", style: "display: block;", id: "page0", size: '760x400'  %>
         <%= image_tag "http://buddhismus-lexikon.eu:/SBDJ-Original-JPGs/Lex_#{pages[0]}_mitten.jpg", style: "display: none;", id: "page1", size: '760x400'  %>
