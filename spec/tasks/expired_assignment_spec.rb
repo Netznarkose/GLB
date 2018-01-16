@@ -18,10 +18,8 @@ describe 'rake db:expired_assignment', type: :task do
       assignment.update(to_date: Date.yesterday)
       ActionMailer::Base.deliveries.clear
       task.execute
-      expect(ActionMailer::Base.deliveries.map(&:to)).to eq([
-        [assignment.email_of_creator],
-        [assignment.email_of_recipient]
-      ])
+      expect(ActionMailer::Base.deliveries.last.to).to eq([assignment.email_of_recipient])
+      expect(ActionMailer::Base.deliveries.last.cc).to eq([assignment.email_of_creator])
     end
     it 'resets entry.user_id to id of assignment_creator' do
       assignment.save

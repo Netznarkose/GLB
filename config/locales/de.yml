@@ -6,10 +6,8 @@ de:
       subject: "Eine von Dir deligierte Aufgabe wurde erledigt" 
     reminder:
       subject: "Erinnerung" 
-    expired_creator:
-      subject: "Eine von Dir deligierte Aufgabe wurde nicht erledigt" 
-    expired_recipient:
-      subject: "Eine Dir zugewiesene Aufgabe hast du nicht erledigt" 
+    expired:
+      subject: "Eine Zuweisung wurde nicht erledigt"
 
   date:
     order: 

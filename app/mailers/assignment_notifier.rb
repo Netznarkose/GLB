@@ -33,15 +33,10 @@ class AssignmentNotifier < ApplicationMailer
   #
   #   en.assignment_notifier.reminder.subject
   #
-  def expired_creator(assignment)
-    @assignment = assignment
-
-    mail to: User.find(assignment.creator_id).email
-  end
-
-  def expired_recipient(assignment)
+  def expired(assignment)
     @assignment = assignment
 
     mail to: User.find(assignment.recipient_id).email
+    mail cc: User.find(assignment.creator_id).email
   end
 end
