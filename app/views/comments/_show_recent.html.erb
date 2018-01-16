@@ -1,4 +1,5 @@
-<ol class="unstyled">
+<ol class="capyb">
+  <% unless @entry.comments.first.nil? %>
   <% @entry.comments.order("updated_at DESC").limit(1).each do |comment| %>
     <li>
       <strong><%= comment.user.name %></strong> 
@@ -12,4 +13,5 @@
       <div><%= comment.comment %></div>
     </li>
   <% end%>
+<% end%>
 </ol>

@@ -1,15 +1,17 @@
-<ol start="2">
-  <% @entry.comments.order("updated_at DESC")[1..@entry.comments.count].each do |comment| %>
-    <li>
-      <strong><%= comment.user.name %></strong> 
-      <%= "(#{comment.updated_at.to_formatted_s(:short)})" %>
-      <% if can?(:destroy, comment)%>
-        <div style="float: right;">
-          <%= link_to 'Bearbeiten', edit_entry_comment_path(@entry, comment) %> |
-          <%= link_to "Löschen", [@entry, comment], method: :delete %>
-        </div>       
-      <% end %>
-      <div><%= comment.comment %></div>
-    </li>
+<ol start="2" class="caypb">
+  <% unless @entry.comments.first.nil? %>
+    <% @entry.comments.order("updated_at DESC")[1..@entry.comments.count].each do |comment| %>
+      <li>
+        <strong><%= comment.user.name %></strong> 
+        <%= "(#{comment.updated_at.to_formatted_s(:short)})" %>
+        <% if can?(:destroy, comment)%>
+          <div style="float: right;">
+            <%= link_to 'Bearbeiten', edit_entry_comment_path(@entry, comment) %> |
+            <%= link_to "Löschen", [@entry, comment], method: :delete %>
+          </div>       
+        <% end %>
+        <div><%= comment.comment %></div>
+      </li>
+    <% end%>
   <% end%>
 </ol>
