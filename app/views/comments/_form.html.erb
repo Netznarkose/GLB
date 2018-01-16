@@ -1,0 +1,4 @@
+<%= bootstrap_form_for [@entry, @comment] do |f| %>
+  <%= f.submit "Speichern", class: 'btn btn-default', style: 'float:right; margin-bottom: 15px' %>
+  <%= f.text_area :comment, label: 'Kommentar' %>
+<% end %>

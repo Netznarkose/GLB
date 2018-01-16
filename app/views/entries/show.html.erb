@@ -36,7 +36,8 @@
         <%= image_tag "http://buddhismus-lexikon.eu:/SBDJ-Original-JPGs/Lex_#{pages[2]}_unten.jpg", style: "display: none;", id: "page8", size: '760x400'  %>
       </div>
       <% if current_user %>
-        <%= render 'comments/show_comment' %>
+        <%= render 'comments/form' %>
+        <%= render 'comments/show_recent' %>
       <% end %>
     </div>
 </div>
@@ -187,5 +188,9 @@
             <dd><%= @entry.japanischer_quelltext_bearbeitungsstand %></dd>
           <% end %>
         </dl>
+      </div>
+      <div class="funky_grey_seperator">
+        <h4>Kommentare</h4>
+        <%= render 'comments/show' %>
       </div>
     </div>
