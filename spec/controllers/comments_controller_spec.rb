@@ -110,7 +110,6 @@ describe CommentsController, type: :controller do
           }.to change(Comment, :count).by(1)
           assigns(:comment).tap do |comment|
             expect(comment).to be_valid
-            expect(flash[:notice]).to eq('Kommentar erfolgreich erstellt.')
           end
         end
       end
@@ -121,7 +120,6 @@ describe CommentsController, type: :controller do
             post :create, entry_id: attributes[:entry_id], comment: attributes
           }.to change(Comment, :count).by(0)
           expect(response).to render_template('entries/show')
-          expect(flash[:notice]).to eq('Kommentar konnte nicht erstellt werden.')
         end
       end
     end
@@ -235,7 +233,6 @@ describe CommentsController, type: :controller do
             comment: { comment: 'hey some changes in the content' }
           comment.reload
           expect(comment.comment).to eq('hey some changes in the content')
-          expect(flash[:notice]).to eq('Kommentar erfolgreich bearbeitet.')
         end
       end
     end
@@ -330,7 +327,6 @@ describe CommentsController, type: :controller do
             delete :destroy, entry_id: comment.entry_id, id: comment.id
           }.to change(Comment, :count).by(-1)
           expect(response).to redirect_to(entry_path(comment.entry))
-          expect(flash[:notice]).to eq('Kommentar erfolgreich gelöscht.')
         end
       end
       context 'other users comments' do
@@ -343,7 +339,6 @@ describe CommentsController, type: :controller do
             delete :destroy, entry_id: comment.entry_id, id: comment.id
           }.to change(Comment, :count).by(-1)
           expect(response).to redirect_to(entry_path(comment.entry))
-          expect(flash[:notice]).to eq('Kommentar erfolgreich gelöscht.')
         end
       end
     end
@@ -361,7 +356,6 @@ describe CommentsController, type: :controller do
             delete :destroy, entry_id: comment.entry_id, id: comment.id
           }.to change(Comment, :count).by(-1)
           expect(response).to redirect_to(entry_path(comment.entry))
-          expect(flash[:notice]).to eq('Kommentar erfolgreich gelöscht.')
         end
       end
       context 'other users comments' do
@@ -374,7 +368,6 @@ describe CommentsController, type: :controller do
             delete :destroy, entry_id: comment.entry_id, id: comment.id
           }.to change(Comment, :count).by(-1)
           expect(response).to redirect_to(entry_path(comment.entry))
-          expect(flash[:notice]).to eq('Kommentar erfolgreich gelöscht.')
         end
       end
     end
@@ -392,7 +385,6 @@ describe CommentsController, type: :controller do
             delete :destroy, entry_id: comment.entry_id, id: comment.id
           }.to change(Comment, :count).by(-1)
           expect(response).to redirect_to(entry_path(comment.entry))
-          expect(flash[:notice]).to eq('Kommentar erfolgreich gelöscht.')
         end
       end
       context 'other users comments' do
@@ -423,7 +415,6 @@ describe CommentsController, type: :controller do
             delete :destroy, entry_id: comment.entry_id, id: comment.id
           }.to change(Comment, :count).by(-1)
           expect(response).to redirect_to(entry_path(comment.entry))
-          expect(flash[:notice]).to eq('Kommentar erfolgreich gelöscht.')
         end
       end
       context 'other users comments' do

@@ -11,16 +11,15 @@ class CommentsController < ApplicationController
     @comment = @entry.comments.build(comment_params)
     @comment.user_id = current_user.id
     if @comment.save
-      redirect_to entry_path(@entry), notice: 'Kommentar erfolgreich erstellt.'
+      redirect_to entry_path(@entry)
     else
-      flash[:notice] = 'Kommentar konnte nicht erstellt werden.'
       render 'entries/show'
     end
   end
 
   def update
     if @comment.update_attributes(comment_params)
-      redirect_to entry_path(@entry), notice: 'Kommentar erfolgreich bearbeitet.'
+      redirect_to entry_path(@entry)
     else
       render 'entries/show'
     end
@@ -28,7 +27,7 @@ class CommentsController < ApplicationController
 
   def destroy
     @comment.destroy
-    redirect_to entry_path(@comment.entry), notice: 'Kommentar erfolgreich gelöscht.'
+    redirect_to entry_path(@comment.entry)
   end
 
   private
