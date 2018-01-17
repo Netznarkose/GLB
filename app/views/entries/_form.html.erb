@@ -4,8 +4,10 @@
       <%= render 'shared/error_messages', object: f.object %>
       <div class="funky_grey_seperator">
         <div style="margin-bottom: 2em">
-          <%= f.submit 'Speichern' %>
           <h4>Kennungsdaten</h4>
+          <div style="float: right;">
+            <%= f.submit 'Speichern' %>
+          </div>
         </div>
         <% if can?(:manage, @entry) %>
           <%= f.check_box :freigeschaltet %>
