@@ -4,7 +4,7 @@ CKEDITOR.editorConfig = function( config )
   config.extraPlugins = 'markups';
   config.skin = 'moono';
   config.forcePasteAsPlainText = true;
-  config.width = 540;
+  config.width = 551;
 
   config.toolbar_MyToolbar =
     [
