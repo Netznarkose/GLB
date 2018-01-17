@@ -1,4 +1,9 @@
 <%= bootstrap_form_for [@entry, @comment] do |f| %>
-  <%= f.submit "Speichern", class: 'btn btn-default', style: 'float:right; margin-bottom: 15px' %>
+  <div style="padding-bottom: 20px";>
+    <div class="btn-group" role="group" aria-label="..."style="float: right;">
+      <%= f.submit "Speichern", class: 'btn btn-default' %>
+      <%= link_to "#{@entry.comments.count} Kommentare", {anchor: 'C4'}, {class: 'btn btn-default'} %>
+    </div>
+  </div>
   <%= f.text_area :comment, label: 'Kommentar' %>
 <% end %>
