@@ -1,7 +1,17 @@
 <h1>Versions Index </h1>
-<div class="funky_grey_seperator">
-    <span class="right-action"> <%= link_to 'Aktuelle Version', entry_path(@entry), class: 'btn' %></span>
-    <% @entry_versions_all.to_enum.with_index(1) do |item, index| %>
-	<p><h6><%= link_to "Version: #{index}) #{item.created_at.strftime('%b %d, %Y')}", entry_version_path(item.item_id, index) %></h6></p>
-    <% end %>
-</div>
+<span class="right-action"> <%= link_to 'Aktuelle Version', entry_path(@entry), class: 'btn' %></span>
+<table class="table">
+  <tr>
+    <th>Version</th>
+    <th>Datum</th>
+    <th>Aktion</th>
+  </tr>
+
+  <% @versions.to_enum.with_index(1)  do |version, index| %>
+    <tr>
+      <td><%= index %></td>
+      <td><%= "#{version.created_at.strftime('%b %d, %Y')}" %></td>
+      <td><%= link_to "Anzeigen", entry_version_path(version.item_id, version.id) %></td>
+    </tr>
+  <% end %>
+</table>
