@@ -1,144 +1,196 @@
-<%# <h1>Version: <%= @version_number %1> <span style="font-size: 0.5em">Erstellt am: <%= @entry_created_at.strftime('%b %d, %Y')%></span></h1> %>
-<%# <div class="funky_grey_seperator"> %>
-<%#   <span class="right-action"> <%= link_to 'Aktuelle Version', entry_path(@entry), class: 'btn' %1></span> %>
-<%#   <span class="right-action"> <%= link_to 'Versionsindex', entry_versions_path(@entry), class: 'btn' %1></span> %>
-  <h4>Kennungsdaten</h4>
-  <dl class="dl">
-    <% unless @version.user_id.blank? %>
-      <dt class="label">Verfasser</dt>
-      <dd><%= @version.user.name %></dd>
+<%= content_tag :div, id: 'kennzahl', data: {kennzahl: @version.kennzahl.to_i } do %>
+<% end %>
+<% pages = to_scan_pages(@version.kennzahl) %>
+<div style="width: 800px; position: fixed; margin-top: 22px;">
+  <h1>Version: <%= @version_number %> <span style="font-size: 0.5em">Editiert am: <%= @created_at.strftime('%b %d, %Y')%>
+    <%# <% unless @version_author.nil? %1> %>
+    |   Editor: <%= "#{@version_author}" %></span></h1>
+<%# <% end %1> %>
+<% unless @version.freigeschaltet %>
+  <div class="funky_grey_seperator">
+    <div style="float: left;">
+      <%= link_to 'Seite', "https://buddhismus-lexikon.eu/SBDJ-Original-JPGs/SBDJ_Seite_#{pages[0]}.jpg" %>
+      <a href="#"><span class="badge"><span id="page_count"></span></span></a>
+      <% unless @version.bearbeitungsstand.blank? %>
+        <%= content_tag(:span, @version.bearbeitungsstand, class: label_bearbeitungsstand(@version.bearbeitungsstand)) %>
+      <% end %>
+      <div class="btn-group" role="group" aria-label="...">
+        <button type="button" onclick="back_switch()" id="back"class="btn btn-default">Zurück</button>
+        <button type="button" onclick="forward_switch()" id="forward" class="btn btn-default">Vor</button>
+        <button type="button" onclick="back_first_switch()" id="back_first" class="btn btn-default">1. Textblock</button>
+      </div>
+    </div>
+    <% if can?(:edit, Entry) %>
+      <div class="btn-group" role="group" aria-label="..."style="float: right;">
+        <%= link_to 'Aktuelle Version', entry_path(@version), class: 'btn btn-default' %>
+        <%= link_to 'Versionsindex', entry_versions_path(@version), class: 'btn btn-default' %>
+      </div>
     <% end %>
-    <% unless @version.namenskuerzel.blank? %>
-      <dt class="label">Namenskürzel</dt>
-      <dd><%= @version.namenskuerzel %></dd>
-    <% end %>
-    <% unless @version.kennzahl.blank? %>
-      <dt class="label">Kennzahl</dt>
-      <dd><%= @version.kennzahl %></dd>
-    <% end %>
-    <% unless @version.spaltenzahl.blank? %>
-      <dt class="label">Spaltenzahl</dt>
-      <dd><%= @version.spaltenzahl %></dd>
-    <% end %>
-    <% unless @version.page_reference.blank? %>
-      <dt class="label">Page Referenz</dt>
-      <dd><%= @version.page_reference %></dd>
-    <% end %>
+    <div style="margin-top: 50px; margin-bottom: 15px;">
+      <%= image_tag "http://buddhismus-lexikon.eu:/SBDJ-Original-JPGs/Lex_#{pages[0]}_oben.jpg", style: "display: block;", id: "page0", size: '760x400'  %>
+      <%= image_tag "http://buddhismus-lexikon.eu:/SBDJ-Original-JPGs/Lex_#{pages[0]}_mitten.jpg", style: "display: none;", id: "page1", size: '760x400'  %>
+      <%= image_tag "http://buddhismus-lexikon.eu:/SBDJ-Original-JPGs/Lex_#{pages[0]}_unten.jpg", style: "display: none;", id: "page2", size: '760x400'  %>
 
-    <% unless @version.lemma_art.blank? %>
-      <dt class="label">Art des Lemmas</dt>
-      <dd><%= @version.lemma_art %></dd>
-    <% end %>
-    <% unless @version.jahreszahlen.blank? %>
-      <dt class="label">Jahreszahlen</dt>
-      <dd><%= @version.jahreszahlen %></dd>
-    <% end %>
-    <% unless @version.abweichende_kennzahl.blank? %>
-      <dt class="label">Abweichende Kennzahl</dt>
-      <dd><%= @version.abweichende_kennzahl %></dd>
-    <% end %>
-    <% unless @version.seite_textblock2005.blank? %>
-      <dt class="label">Seite Textblock 2005</dt>
-      <dd><%= @version.seite_textblock2005 %></dd>
-    <% end %>
-  </dl>
-</div>
-<div class="funky_grey_seperator">
-  <h4>Lemma-Schreibungen und -Aussprache</h4>
-  <dl class="dl">
-    <% unless @version.japanische_umschrift.blank? %>
-      <dt class="label">Japanische Umschrift</dt>
-      <dd><%= @version.japanische_umschrift %></dd>
-    <% end %>
-    <% unless @version.japanische_umschrift_din.blank? %>
-      <dt class="label">Japanische Umschrift Din</dt>
-      <dd><%= @version.japanische_umschrift_din %></dd>
-    <% end %>
-    <% unless @version.kanji.blank? %>
-      <dt class="label">Kanji</dt>
-      <dd><%= @version.kanji %></dd>
-    <% end %>
-    <% unless @version.chinesisch.blank? %>
-      <dt class="label">Chinesisch</dt>
-      <dd><%= @version.chinesisch %></dd>
-    <% end %>
-    <% unless @version.tibetisch.blank? %>
-      <dt class="label">Tibetisch</dt>
-      <dd><%= @version.tibetisch %></dd>
-    <% end %>
-    <% unless @version.koreanisch.blank? %>
-      <dt class="label">Koreanisch</dt>
-      <dd><%= @version.koreanisch %></dd>
-    <% end %>
-    <% unless @version.pali.blank? %>
-      <dt class="label">Pali</dt>
-      <dd><%= @version.pali %></dd>
-    <% end %>
-    <% unless @version.sanskrit.blank? %>
-      <dt class="label">Sanskrit</dt>
-      <dd><%= @version.sanskrit %></dd>
-    <% end %>
-    <% unless @version.weitere_sprachen.blank? %>
-      <dt class="label">Weitere Sprachen</dt>
-      <dd><%= @version.weitere_sprachen %></dd>
-    <% end %>
-    <% unless @version.alternative_japanische_lesungen.blank? %>
-      <dt class="label">Alternative japanische Lesungen</dt>
-      <dd><%= @version.alternative_japanische_lesungen %></dd>
-    <% end %>
-    <% unless @version.schreibvarianten.blank? %>
-      <dt class="label">Schreibvarianten</dt>
-      <dd><%= @version.schreibvarianten %></dd>
-    <% end %>
-    <% unless @version.lemma_in_katakana.blank? %>
-      <dt class="label">Lemma in Katakana</dt>
-      <dd><%= @version.lemma_in_katakana %></dd>
-    <% end %>
-    <% unless @version.lemma_in_lateinbuchstaben.blank? %>
-      <dt class="label">Lemma in Lateinbuchstaben</dt>
-      <dd><%= @version.lemma_in_lateinbuchstaben %></dd>
-    <% end %>
-  </dl>
-</div>
+      <%= image_tag "http://buddhismus-lexikon.eu:/SBDJ-Original-JPGs/Lex_#{pages[1]}_oben.jpg", style: "display: none;", id: "page3", size: '760x400'  %>
+      <%= image_tag "http://buddhismus-lexikon.eu:/SBDJ-Original-JPGs/Lex_#{pages[1]}_mitten.jpg", style: "display: none;", id: "page4", size: '760x400'  %>
+      <%= image_tag "http://buddhismus-lexikon.eu:/SBDJ-Original-JPGs/Lex_#{pages[1]}_unten.jpg", style: "display: none;", id: "page5", size: '760x400'  %>
 
-<div class="funky_grey_seperator">
-  <h4>Übersetzungen, Quellenangaben, Literatur und Ergänzungen</h4>
-  <dl class="dl">
-    <% unless @version.uebersetzung.blank? %>
-      <dt class="label">Übersetzung</dt>
-      <dd><%= raw(@version.uebersetzung) %></dd>
-    <% end %>
-    <% unless @version.deutsche_uebersetzung.blank? %>
-      <dt class="label">Deutsche Übersetzung</dt>
-      <dd><%= @version.deutsche_uebersetzung %></dd>
-    <% end %>
-    <% unless @version.quellen.blank? %>
-      <dt class="label">Quellen</dt>
-      <dd><%= raw(@version.quellen) %></dd>
-    <% end %>
-    <% unless @version.literatur.blank? %>
-      <dt class="label">Literatur</dt>
-      <dd><%= raw(@version.literatur) %></dd>
-    <% end %>
-    <% unless @version.eigene_ergaenzungen.blank? %>
-      <dt class="label">Eigene Ergänzungen</dt>
-      <dd><%= raw(@version.eigene_ergaenzungen) %></dd>
-    <% end %>
-    <% unless @version.quellen_ergaenzungen.blank? %>
-      <dt class="label">Quellen Ergänzungen</dt>
-      <dd><%= raw(@version.quellen_ergaenzungen) %></dd>
-    <% end %>
-    <% unless @version.literatur_ergaenzungen.blank? %>
-      <dt class="label">Literatur Ergänzungen</dt>
-      <dd><%= raw(@version.literatur_ergaenzungen) %></dd>
-    <% end %>
-    <% unless @version.japanischer_quelltext.blank? %>
-      <dt class="label">Japanischer Quelltext</dt>
-      <dd><%= @version.japanischer_quelltext %></dd>
-    <% end %>
-    <% unless @version.japanischer_quelltext_bearbeitungsstand.blank? %>
-      <dt class="label">Japanischer Quelltext Bearbeitungsstand</dt>
-      <dd><%= @version.japanischer_quelltext_bearbeitungsstand %></dd>
-    <% end %>
-  </dl>
+      <%= image_tag "http://buddhismus-lexikon.eu:/SBDJ-Original-JPGs/Lex_#{pages[2]}_oben.jpg", style: "display: none;", id: "page6", size: '760x400'  %>
+      <%= image_tag "http://buddhismus-lexikon.eu:/SBDJ-Original-JPGs/Lex_#{pages[2]}_mitten.jpg", style: "display: none;", id: "page7", size: '760x400'  %>
+      <%= image_tag "http://buddhismus-lexikon.eu:/SBDJ-Original-JPGs/Lex_#{pages[2]}_unten.jpg", style: "display: none;", id: "page8", size: '760x400'  %>
+    </div>
+  </div>
+</div>
+<% end %>
+</div>
+<div style="margin-left: 820px; width: 575px; margin-top: 21px;"> 
+  <div class="funky_grey_seperator">
+    <h4>Kennungsdaten</h4>
+    <dl>
+      <% unless @version.user_id.blank? %>
+        <dt>Verfasser</dt>
+        <dd><%= @version.user.name %></dd>
+      <% end %>
+      <% unless @version.namenskuerzel.blank? %>
+        <dt>Namenskürzel</dt>
+        <dd><%= @version.namenskuerzel %></dd>
+      <% end %>
+      <% unless @version.bearbeitungsansatz.blank? %>
+        <dt>Bearbeitungsansatz</dt>
+        <dd><%= @version.bearbeitungsansatz %></dd>
+      <% end %>
+      <% unless @version.kennzahl.blank? %>
+        <dt>Kennzahl</dt>
+        <dd><%= @version.kennzahl %></dd>
+      <% end %>
+      <% unless @version.spaltenzahl.blank? %>
+        <dt>Spaltenzahl</dt>
+        <dd><%= @version.spaltenzahl %></dd>
+      <% end %>
+      <% unless @version.page_reference.blank? %>
+        <dt>Page Referenz</dt>
+        <dd><%= @version.page_reference %></dd>
+      <% end %>
+
+      <% unless @version.lemma_art.blank? %>
+        <dt>Art des Lemmas</dt>
+        <dd><%= @version.lemma_art %></dd>
+      <% end %>
+      <% unless @version.jahreszahlen.blank? %>
+        <dt>Jahreszahlen</dt>
+        <dd><%= @version.jahreszahlen %></dd>
+      <% end %>
+      <% unless @version.abweichende_kennzahl.blank? %>
+        <dt>Abweichende Kennzahl</dt>
+        <dd><%= @version.abweichende_kennzahl %></dd>
+      <% end %>
+      <% unless @version.seite_textblock2005.blank? %>
+        <dt>Seite Textblock 2005</dt>
+        <dd><%= @version.seite_textblock2005 %></dd>
+      <% end %>
+    </dl>
+  </div>
+  <div class="funky_grey_seperator">
+    <h4>Lemma-Schreibungen und -Aussprache</h4>
+    <dl>
+      <% unless @version.japanische_umschrift.blank? %>
+        <dt>Japanische Umschrift</dt>
+        <dd><%= @version.japanische_umschrift %></dd>
+      <% end %>
+      <% unless @version.japanische_umschrift_din.blank? %>
+        <dt>Japanische Umschrift Din</dt>
+        <dd><%= @version.japanische_umschrift_din %></dd>
+      <% end %>
+      <% unless @version.kanji.blank? %>
+        <dt>Kanji</dt>
+        <dd><%= @version.kanji %></dd>
+      <% end %>
+      <% unless @version.chinesisch.blank? %>
+        <dt>Chinesisch</dt>
+        <dd><%= @version.chinesisch %></dd>
+      <% end %>
+      <% unless @version.tibetisch.blank? %>
+        <dt>Tibetisch</dt>
+        <dd><%= @version.tibetisch %></dd>
+      <% end %>
+      <% unless @version.koreanisch.blank? %>
+        <dt>Koreanisch</dt>
+        <dd><%= @version.koreanisch %></dd>
+      <% end %>
+      <% unless @version.pali.blank? %>
+        <dt>Pali</dt>
+        <dd><%= @version.pali %></dd>
+      <% end %>
+      <% unless @version.sanskrit.blank? %>
+        <dt>Sanskrit</dt>
+        <dd><%= @version.sanskrit %></dd>
+      <% end %>
+      <% unless @version.weitere_sprachen.blank? %>
+        <dt>Weitere Sprachen</dt>
+        <dd><%= @version.weitere_sprachen %></dd>
+      <% end %>
+      <% unless @version.alternative_japanische_lesungen.blank? %>
+        <dt>Alternative japanische Lesungen</dt>
+        <dd><%= @version.alternative_japanische_lesungen %></dd>
+      <% end %>
+      <% unless @version.schreibvarianten.blank? %>
+        <dt>Schreibvarianten</dt>
+        <dd><%= @version.schreibvarianten %></dd>
+      <% end %>
+      <% unless @version.lemma_in_katakana.blank? %>
+        <dt>Lemma in Katakana</dt>
+        <dd><%= @version.lemma_in_katakana %></dd>
+      <% end %>
+      <% unless @version.lemma_in_lateinbuchstaben.blank? %>
+        <dt>Lemma in Lateinbuchstaben</dt>
+        <dd><%= @version.lemma_in_lateinbuchstaben %></dd>
+      <% end %>
+    </dl>
+  </div>
+
+  <div class="funky_grey_seperator">
+    <h4>Übersetzungen, Quellenangaben, Literatur und Ergänzungen</h4>
+    <dl>
+      <% unless @version.uebersetzung.blank? %>
+        <dt>Übersetzung</dt>
+        <dd><%= raw(@version.uebersetzung) %></dd>
+      <% end %>
+      <% unless @version.deutsche_uebersetzung.blank? %>
+        <dt>Deutsche Übersetzung</dt>
+        <dd><%= @version.deutsche_uebersetzung %></dd>
+      <% end %>
+      <% unless @version.quellen.blank? %>
+        <dt>Quellen</dt>
+        <dd><%= raw(@version.quellen) %></dd>
+      <% end %>
+      <% unless @version.literatur.blank? %>
+        <dt>Literatur</dt>
+        <dd><%= raw(@version.literatur) %></dd>
+      <% end %>
+      <% unless @version.eigene_ergaenzungen.blank? %>
+        <dt>Eigene Ergänzungen</dt>
+        <dd><%= raw(@version.eigene_ergaenzungen) %></dd>
+      <% end %>
+      <% unless @version.quellen_ergaenzungen.blank? %>
+        <dt>Quellen Ergänzungen</dt>
+        <dd><%= raw(@version.quellen_ergaenzungen) %></dd>
+      <% end %>
+      <% unless @version.literatur_ergaenzungen.blank? %>
+        <dt>Literatur Ergänzungen</dt>
+        <dd><%= raw(@version.literatur_ergaenzungen) %></dd>
+      <% end %>
+      <% unless @version.japanischer_quelltext.blank? %>
+        <dt>Japanischer Quelltext</dt>
+        <dd><%= @version.japanischer_quelltext %></dd>
+      <% end %>
+      <% unless @version.japanischer_quelltext_bearbeitungsstand.blank? %>
+        <dt>Japanischer Quelltext Bearbeitungsstand</dt>
+        <dd><%= @version.japanischer_quelltext_bearbeitungsstand %></dd>
+      <% end %>
+    </dl>
+  </div>
+  <div class="funky_grey_seperator">
+    <h4 id="C4">Kommentare</h4>
+    <%= render 'comments/show' %>
+  </div>
 </div>

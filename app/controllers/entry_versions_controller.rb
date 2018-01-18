@@ -6,7 +6,11 @@ class EntryVersionsController < ApplicationController
   end
 
   def show
-    @version = @entry.versions.find(params[:id]).reify
+    @version_number = params[:version_number]
+    fetch_version = @entry.versions.find(params[:id])
+    @version_author = User.find(fetch_version.whodunnit.to_i).name
+    @created_at = fetch_version.created_at
+    @version =  fetch_version.reify
   end
 
   private
