@@ -2,15 +2,15 @@ class EntryVersionsController < ApplicationController
   before_action :find_current_entry, only: [:index, :show]
 
   def index
-    @versions = @entry.versions.all
+    @versions = @entry.versions.reverse_order.offset(1)
   end
 
   def show
     @version_number = params[:version_number]
     fetch_version = @entry.versions.find(params[:id])
-    @version_author = User.find(fetch_version.whodunnit.to_i).name
     @created_at = fetch_version.created_at
-    @version =  fetch_version.reify
+    @version_author = fetch_version.user_name
+    @version = fetch_version.reify
   end
 
   private
