@@ -1,4 +1,3 @@
-<span><%= link_to "aktuelle version", entry_path(@entry) %></span>
 <h1>Versions Index </h1>
 <table class="table">
   <tr>
@@ -10,10 +9,10 @@
 
   <% @versions.to_enum.with_index(1)  do |version, index| %>
     <tr>
-      <td><%= index %></td>
+      <td><%= index == 1 ? 'Aktuelle Version' : index %></td>
       <td><%= "#{version.created_at.strftime('%b %d, %Y')}" %></td>
       <td><%= "#{version.user_name}" %></td>
-      <td><%= link_to "Anzeigen", entry_version_path(version.item_id, version.id, {version_number: index}) %></td>
+      <td><%= link_to "Anzeigen", index == 1 ? entry_path(@entry) : entry_version_path(version.item_id, version.id, {version_number: index}) %></td>
     </tr>
   <% end %>
 </table>

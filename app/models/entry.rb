@@ -1,6 +1,6 @@
 class Entry < ActiveRecord::Base
   include Label
-  has_paper_trail
+  has_paper_trail class_name: 'EntryVersion'
 
   ALLOWED_PARAMS = %i[namenskuerzel kennzahl
                       spaltenzahl japanische_umschrift

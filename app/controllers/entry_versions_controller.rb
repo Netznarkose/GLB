@@ -2,7 +2,7 @@ class EntryVersionsController < ApplicationController
   before_action :find_current_entry, only: [:index, :show]
 
   def index
-    @versions = @entry.versions.reverse_order.offset(1)
+    @versions = @entry.versions.reverse_order
   end
 
   def show
