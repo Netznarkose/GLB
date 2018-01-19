@@ -1,5 +1,5 @@
 class EntryVersion < PaperTrail::Version
   def user_name
-    User.find(self.whodunnit).name rescue nil
+    User.all.map { |user| user.id == whodunnit.to_i ? user.name : nil }.first
   end
 end
