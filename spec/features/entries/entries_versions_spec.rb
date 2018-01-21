@@ -19,7 +19,7 @@ describe 'entry_versions management' do
       end
       it 'visits version index and sees current- plus two versions of entry' do
         visit entry_versions_path(entry)
-        expect(page.all('tr > td').count).to eq(12)
+        expect(page.all('tr > td').count).to eq(8)
       end
       it 'visits current version and sees respective changes' do
         visit entry_versions_path(entry)

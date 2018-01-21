@@ -2,9 +2,9 @@
 <% end %>
 <% pages = to_scan_pages(@version.kennzahl) %>
 <div style="width: 800px; position: fixed; margin-top: 22px;">
-  <h1>Version: <%= @version_number %> <span style="font-size: 0.5em">Editiert am: <%= @created_at.strftime('%b %d, %Y')%>
-    <% if @version_author %>
-    | Editor: <%= @version_author %></span></h1>
+  <h1>Version: <%= version_number %> <span style="font-size: 0.5em">Editiert am: <%= created_at.strftime('%b %d, %Y')%>
+    <% if version_author %>
+    | Editor: <%= version_author %></span></h1>
 <% end %>
 <% unless @version.freigeschaltet %>
   <div class="funky_grey_seperator">
