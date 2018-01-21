@@ -2,7 +2,7 @@ class EntryVersionsController < ApplicationController
   before_action :find_current_entry, only: [:index, :show]
 
   def index
-    @versions = @entry.versions.reverse_order
+    @versions = @entry.versions.filter_versions_without_objects.reverse_order
   end
 
   def show
