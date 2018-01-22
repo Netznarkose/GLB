@@ -1,14 +1,4 @@
 de:
-  assignment_notifier:
-    create:
-      subject: "Zuweisung eines Eintrags" 
-    done:
-      subject: "Eine von Dir deligierte Aufgabe wurde erledigt" 
-    reminder:
-      subject: "Erinnerung" 
-    expired:
-      subject: "Eine Zuweisung wurde nicht erledigt"
-
   date:
     order: 
       - :month

@@ -7,7 +7,7 @@ RSpec.describe AssignmentNotifier, type: :mailer do
     let(:mail) { AssignmentNotifier.create(assignment) }
 
     it 'renders the headers' do
-      expect(mail.subject).to eq('Zuweisung eines Eintrags')
+      expect(mail.subject).to eq("Zuweisung des Eintrags #{assignment.entry.japanische_umschrift} (#{assignment.entry.kennzahl})")
       expect(mail.to).to eq([assignment.email_of_recipient])
       expect(mail.from).to eq([default_sender])
     end
@@ -23,7 +23,7 @@ RSpec.describe AssignmentNotifier, type: :mailer do
     let(:mail) { AssignmentNotifier.done(assignment) }
 
     it 'renders the headers' do
-      expect(mail.subject).to eq('Eine von Dir deligierte Aufgabe wurde erledigt')
+      expect(mail.subject).to eq("Eintrag #{assignment.entry.japanische_umschrift} (#{assignment.entry.kennzahl}) erledigt")
       expect(mail.to).to eq([assignment.email_of_creator])
       expect(mail.from).to eq([default_sender])
     end
@@ -39,7 +39,7 @@ RSpec.describe AssignmentNotifier, type: :mailer do
     let(:mail) { AssignmentNotifier.reminder(assignment) }
 
     it 'renders the headers' do
-      expect(mail.subject).to eq('Erinnerung')
+      expect(mail.subject).to eq("Überschreitung des Bearbeitungszeitraums für Eintrag #{assignment.entry.japanische_umschrift} (#{assignment.entry.kennzahl})")
       expect(mail.to).to eq([assignment.email_of_recipient])
       expect(mail.from).to eq([default_sender])
     end
@@ -55,7 +55,7 @@ RSpec.describe AssignmentNotifier, type: :mailer do
     let(:mail) { AssignmentNotifier.expired(assignment) }
 
     it 'renders the headers' do
-      expect(mail.subject).to eq('Eine Zuweisung wurde nicht erledigt')
+      expect(mail.subject).to eq("Rücknahme des Bearbeitungsrechts für Eintrag #{assignment.entry.japanische_umschrift} (#{assignment.entry.kennzahl})")
       expect(mail.to).to eq([assignment.email_of_recipient])
       expect(mail.cc).to eq([assignment.email_of_creator])
       expect(mail.from).to eq([default_sender])
