@@ -25,14 +25,10 @@
         <span class="caret"></span>
       </button>
       <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-        <li><%= sortable 'formatiert'%></li>
-        <li><%= sortable 'formatiert', 'Formatiert (rev)', 'desc' %></li>
-        <li><%= sortable 'unformatiert'%></li>
-        <li><%= sortable 'unformatiert', 'Unformatiert (rev)', 'desc' %></li>
-        <li><%= sortable 'unbearbeitet'%></li>
-        <li><%= sortable 'unbearbeitet', 'Unbearbeitet (rev)', 'desc' %></li>
-        <li><%= sortable 'Code veraltet'%></li>
-        <li><%= sortable 'Code veraltet', 'Code Veraltet (rev)', 'desc' %></li>
+        <% Entry::BEARBEITUNGS_STAND.each do |elem| %>
+          <li><%= sortable "#{elem}"%></li>
+          <li><%= sortable "#{elem}", "#{elem.capitalize} (rev)", 'desc' %></li>
+        <% end %>
         <li role="separator" class="divider"></li>
         <li><%= sortable 'japanische_umschrift' %></li>
         <li><%= sortable 'japanische_umschrift', 'Japanische Umschrift (rev)', 'desc' %></li>

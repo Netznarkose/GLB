@@ -25,10 +25,17 @@ class Entry < ActiveRecord::Base
                       assign_to_user_id
                       assign_to_date].freeze
   BEARBEITUNGS_STAND = [
-    'formatiert',
+    'leer',
     'unformatiert',
     'unbearbeitet',
-    'Code veraltet'
+    'Code veraltet',
+    'bereits formatiert',
+    'formatiert',
+    'geprüft',
+    'revidiert',
+    'korrigiert',
+    'korrekturgelesen',
+    'mit Index-Markierungen versehen'
   ].freeze
 
   belongs_to :user

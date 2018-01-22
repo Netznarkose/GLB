@@ -15,13 +15,13 @@
         <% else %>
           <%= f.hidden_field :user_id, value: current_user.id  %>
         <% end %>
-        <%= f.select(:bearbeitungsstand, ['formatiert', 'unformatiert', 'unbearbeitet', 'Code veraltet', ''], selected: '') %>
         <%= f.text_field :namenskuerzel, label: 'Namenskürzel' %>
         <%= f.text_field :kennzahl %>
         <%= f.text_field :spaltenzahl %>
         <%= f.text_field :abweichende_kennzahl, label: 'Abweichende Kennzahl' %>
         <%= f.text_field :seite_textblock2005, label: 'Seite Textblock 2005' %>
         <%= f.select :bearbeitungsansatz, ['Übersetzung', 'ergänzte Übersetzung', 'Neufassung'], selected: 'Übersetzung' %> 
+        <%= f.select(:bearbeitungsstand, Entry::BEARBEITUNGS_STAND) %>
       </div>
       <div class="funky_grey_seperator">
         <h4>Lemma-Schreibungen und -Aussprachen</h4>
