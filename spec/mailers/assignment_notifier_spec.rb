@@ -2,7 +2,7 @@ require 'spec_helper'
 
 RSpec.describe AssignmentNotifier, type: :mailer do
   let(:assignment) { create(:assignment) }
-  let(:default_sender) { 'postmaster@sandboxd41599a8676d49ce94b50dc87e54a46f.mailgun.org' }
+  let(:default_sender) { 'no_reply_support@buddhismus-lexikon.eu' }
   describe 'create' do
     let(:mail) { AssignmentNotifier.create(assignment) }
 
