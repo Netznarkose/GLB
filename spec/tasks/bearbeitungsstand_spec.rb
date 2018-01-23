@@ -18,17 +18,6 @@ describe 'rake db:label_bearbeitungsstand', type: :task do
     end
   end
 
-  context 'user' do
-    it 'creates an rake-task user if it does not exist' do
-      expect { task.execute }.to change(User, :count).by(1)
-    end
-
-    it 'does not create a rake-task user if user exist' do
-      rake_task_user.save
-      expect { task.execute }.to change(User, :count).by(0)
-    end
-  end
-
   context 'entries' do
     it 'labels an unprocessed entry as unbearbeitet' do
       unprocessed_entry.save
