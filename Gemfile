@@ -14,6 +14,7 @@ gem 'bootstrap-kaminari-views'
 gem 'bcrypt'
 gem 'cancancan'
 gem 'bootstrap_form'
+gem 'whenever', require: false
 
 group :assets do
   gem 'sass-rails', '~> 5.0'
