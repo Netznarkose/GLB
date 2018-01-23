@@ -19,7 +19,9 @@
       <% if can?(:edit, Entry) %>
         <div class="btn-group" role="group" aria-label="..."style="float: right;">
           <%= link_to 'Bearbeiten', edit_entry_path(@entry), class: 'btn btn-default' %>
-          <%= link_to "#{@entry.versions.size - 1 } Versionen", entry_versions_path(@entry), class: 'btn btn-default' %>
+          <% if (@entry.versions.filter_versions_without_objects.count - 1) > 0  %>
+            <%= link_to "#{@entry.versions.filter_versions_without_objects.count - 1 } Versionen", entry_versions_path(@entry), class: 'btn btn-default' %>
+          <% end %>
         </div>
       <% end %>
       <div style="margin-top: 50px; margin-bottom: 15px;">

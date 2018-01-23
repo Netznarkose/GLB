@@ -7,12 +7,12 @@
     <th>Aktion</th>
   </tr>
 
-  <% @versions.to_enum.with_index(1)  do |version, index| %>
+  <% @versions.each_with_index do |version, index| %>
     <tr>
-      <td><%= index == 1 ? 'Aktuelle Version' : index %></td>
+      <td><%= index == 0 ? 'Aktuelle Version' : index %></td>
       <td><%= "#{version.created_at.strftime('%b %d, %Y')}" %></td>
       <td><%= "#{version.user_name}" %></td>
-      <td><%= link_to "Anzeigen", index == 1 ? entry_path(@entry) : entry_version_path(version.item_id, version.id, {version_number: index}) %></td>
+      <td><%= link_to "Anzeigen", index == 0 ? entry_path(@entry) : entry_version_path(version.item_id, version.id, {version_number: index}) %></td>
     </tr>
   <% end %>
 </table>
