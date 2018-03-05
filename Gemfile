@@ -18,6 +18,7 @@ gem 'whenever', require: false
 gem 'sass-rails', '~> 5.0'
 gem 'bootstrap-sass', '~> 3.3.7'
 gem 'uglifier', '>= 1.3.0'
+gem 'therubyracer', platforms: :ruby
 
 group :development, :test do
   gem 'pry-byebug'
@@ -28,8 +29,10 @@ end
 group :development do
   gem 'pry-rails'
   gem 'awesome_print'
-  gem 'rvm-capistrano'
   gem 'capistrano'
+  gem 'capistrano-rvm'
+  gem 'capistrano-bundler'
+  gem "capistrano-rails", "~> 1.3", require: false
   gem 'better_errors'
   gem 'binding_of_caller'
 end

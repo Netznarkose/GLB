@@ -1,6 +1,6 @@
 <% content_for :index do %>
   <h1>Das Große Lexikon des Buddhismus</h1>
-  <%= paginate @entries, theme: 'twitter-bootstrap-3', 
+  <%= paginate @entries, theme: 'twitter-bootstrap-3',
   pagination_class: 'pagination-sm' %>
 <table class="table table-striped">
   <% @entries.each do |entry| %>
@@ -42,6 +42,6 @@
     <% end %>
   <% end %>
 </table>
-<%= paginate @entries, theme: 'twitter-bootstrap-3', 
+<%= paginate @entries, theme: 'twitter-bootstrap-3',
   pagination_class: 'pagination-sm' %>
 <% end %>
