@@ -1,9 +1,9 @@
 source 'https://rubygems.org'
 
 gem 'rails', '4.2.10'
-gem 'sqlite3'
+gem 'pg', '~> 0.20'
 gem 'jquery-rails'
-gem "ckeditor"
+gem 'ckeditor', '~> 4.2.4'
 gem 'nokogiri'
 
 gem 'devise'
@@ -18,6 +18,7 @@ gem 'bootstrap_form'
 gem 'sass-rails', '~> 5.0'
 gem 'bootstrap-sass', '~> 3.3.7'
 gem 'uglifier', '>= 1.3.0'
+gem 'rails_12factor', group: :production
 
 group :development, :test do
   gem 'pry-byebug'
@@ -44,5 +45,4 @@ group :test do
   gem 'database_cleaner'
 end
 
-# Added at 2018-04-10 13:49:55 +0200 by toni:
-gem "rake", "~> 12.3"
+ruby "2.3.4"
