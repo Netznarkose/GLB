@@ -153,13 +153,13 @@
       <div class="funky_grey_seperator">
         <h4>Übersetzungen, Quellenangaben, Literatur und Ergänzungen</h4>
         <dl>
-          <% unless @entry.uebersetzung.blank? %>
-            <dt>Übersetzung</dt>
-            <dd><%= raw(@entry.uebersetzung) %></dd>
-          <% end %>
           <% unless @entry.deutsche_uebersetzung.blank? %>
             <dt>Deutsche Übersetzung</dt>
             <dd><%= @entry.deutsche_uebersetzung %></dd>
+          <% end %>
+          <% unless @entry.uebersetzung.blank? %>
+            <dt>Übersetzung</dt>
+            <dd><%= raw(@entry.uebersetzung) %></dd>
           <% end %>
           <% unless @entry.quellen.blank? %>
             <dt>Quellen</dt>
