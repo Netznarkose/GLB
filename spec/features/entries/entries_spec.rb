@@ -28,11 +28,14 @@ describe 'entries management' do
           create(:entry, uebersetzung: 'funky translation')
           visit entries_path
         end
-        it 'gets the template title' do
+        it 'sees page title' do
           expect(page).to have_content('Das Große Lexikon des Buddhismus')
         end
-        it "but does not sees the field 'uebersetzungsfeld'" do
+        it 'does not see the transliation of entries' do
           expect(page).not_to have_content('funky translation')
+        end
+        it 'does not see links to export entries ' do
+          expect(page).not_to have_link('Einträge')
         end
       end
     end
