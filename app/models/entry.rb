@@ -1,5 +1,6 @@
 class Entry < ActiveRecord::Base
   include Label
+  include Validations
   has_paper_trail class_name: 'EntryVersion'
 
   ALLOWED_PARAMS = %i[namenskuerzel kennzahl
@@ -44,9 +45,6 @@ class Entry < ActiveRecord::Base
   has_many :entry_docs
   has_many :entry_htmls
 
-  validates :kennzahl, presence: true
-  validate :group_lemma_schreibungen_und_aussprachen
-  validate :group_uebersetzungen_quellenangaben_literatur_und_ergaenzungen
 
   before_save :cleanup
   before_destroy :destroy_related_assignment
