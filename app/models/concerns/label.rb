@@ -1,8 +1,35 @@
 module Label
+  extend ActiveSupport::Concern
+  class_methods do
+    def detect_bearbeitungsstand
+      unlabeled_entries = Entry.where(bearbeitungsstand: [nil, ''])
+      unlabeled_entries.each do |e|
+        e.update(bearbeitungsstand: 'unformatiert') if e.unformatted?
+        e.update(bearbeitungsstand: 'formatiert') if e.formatted?
+        e.update(bearbeitungsstand: 'unbearbeitet') if e.unprocessed?
+        e.update(bearbeitungsstand: 'Code veraltet') if e.deprecated_syntax?
+      end
+    end
+  end
+
+  def unformatted?
+    formatted? || unprocessed? || deprecated_syntax? ? false : true
+  end
+
   def formatted?
     holds_html_tags? === strip_p_tags(uebersetzung)
   end
 
+  def unprocessed?
+    leer_or_nil? || basic_identifier?
+  end
+
+  def deprecated_syntax?
+    deprecated_syntax_chars.any? do |regex|
+      regex === uebersetzung
+    end
+  end
+  
   def holds_html_tags?
     /<("[^"]*"|'[^']*'|[^'">])*>/
   end
@@ -11,11 +38,6 @@ module Label
     field.to_s.gsub('<p>', '').gsub('</p>', '')
   end
 
-  def deprecated_syntax?
-    deprecated_syntax_chars.any? do |regex|
-      regex === uebersetzung
-    end
-  end
 
   def deprecated_syntax_chars
     [
@@ -46,13 +68,6 @@ module Label
     ]
   end
 
-  def unformatted?
-    formatted? || unprocessed? || deprecated_syntax? ? false : true
-  end
-
-  def unprocessed?
-    leer_or_nil? || basic_identifier?
-  end
 
   def leer_or_nil?
     uebersetzung.blank? || uebersetzung.casecmp('leer').zero? || /<p>leer<\/p>/ === uebersetzung.downcase

@@ -1,6 +1,7 @@
 class Entry < ActiveRecord::Base
   include Label
   include Validations
+  include Search
   has_paper_trail class_name: 'EntryVersion'
 
   ALLOWED_PARAMS = %i[namenskuerzel kennzahl
@@ -56,75 +57,10 @@ class Entry < ActiveRecord::Base
     related_assignment.destroy unless related_assignment.blank?
   end
 
-  def self.search(column = 'all', query)
-    column.eql?('all') ? all_columns(query) : single_column(column, query)
-  end
-
-  def self.all_columns(query)
-    if query
-      Entry.where("japanische_umschrift LIKE ? OR
-        kanji LIKE ? OR
-        namenskuerzel = ? OR
-        kennzahl = ? OR
-        romaji_order LIKE ? OR
-        jahreszahlen LIKE ? OR
-        uebersetzung LIKE ?",
-        "%#{query}%","%#{query}%", "%#{query}%", "#{query}", "#{query}", "%#{query}%", "%#{query}%")
-    end
-  end
-
-  def self.single_column(column, query)
-    if Entry::BEARBEITUNGS_STAND.include?(column)
-      Entry.where(bearbeitungsstand: column).where('japanische_umschrift LIKE ?', "#{query}%")
-    else
-      Entry.where("#{column} LIKE ?", "%#{query}%")
-    end
-  end
-
   def cleanup
     substituter = Substituter.new
     if japanische_umschrift
       self.romaji_order = substituter.substitute(japanische_umschrift).downcase
-    end
-  end
-
-  def group_lemma_schreibungen_und_aussprachen
-    if japanische_umschrift.blank? &&
-       kanji.blank? &&
-       chinesisch.blank? &&
-       tibetisch.blank? &&
-       koreanisch.blank? &&
-       pali.blank? &&
-       sanskrit.blank? &&
-       weitere_sprachen.blank? &&
-       alternative_japanische_lesungen.blank? &&
-       schreibvarianten.blank?
-      errors[:base] = 'Mindestens ein Feld der Gruppe '\
-        "'Lemma-Schreibungen und -Aussprachen' muss ausgefüllt sein!"
-    end
-  end
-
-  def group_uebersetzungen_quellenangaben_literatur_und_ergaenzungen
-    if deutsche_uebersetzung.blank? &&
-       uebersetzung.blank? &&
-       quellen.blank? &&
-       literatur.blank? &&
-       eigene_ergaenzungen.blank? &&
-       quellen_ergaenzungen.blank? &&
-       literatur_ergaenzungen.blank?
-      errors[:base] = 'Mindestens ein Feld der Gruppe '\
-        "'Uebersetzungen , Quellenangaben, Literatur und Ergaenzungen' "\
-        'muss ausgefüllt sein!'
-    end
-  end
-
-  def self.label_bearbeitungsstand
-    unlabeled_entries = Entry.where(bearbeitungsstand: [nil, ''])
-    unlabeled_entries.each do |e|
-      e.update(bearbeitungsstand: 'unformatiert') if e.unformatted?
-      e.update(bearbeitungsstand: 'formatiert') if e.formatted?
-      e.update(bearbeitungsstand: 'unbearbeitet') if e.unprocessed?
-      e.update(bearbeitungsstand: 'Code veraltet') if e.deprecated_syntax?
     end
   end
 
