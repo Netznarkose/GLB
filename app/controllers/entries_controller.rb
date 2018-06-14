@@ -100,8 +100,8 @@ class EntriesController < ApplicationController
   end
 
   def sort_entries
-    if Entry::BEARBEITUNGS_STAND.include?(sort_column)
-      Entry.where(bearbeitungsstand: sort_column).order(japanische_umschrift: sort_direction)
+    if Entry::STATUS.include?(sort_column)
+      Entry.where(status: sort_column).order(japanische_umschrift: sort_direction)
     else
       Entry.order(sort_column + ' ' + sort_direction)
     end

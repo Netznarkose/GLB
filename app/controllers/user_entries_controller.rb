@@ -18,8 +18,8 @@ class UserEntriesController < ApplicationController
   end
 
   def sort_user_entries
-    if Entry::BEARBEITUNGS_STAND.include?(sort_column)
-      @user.entries.where(bearbeitungsstand: sort_column).order(japanische_umschrift: sort_direction)
+    if Entry::STATUS.include?(sort_column)
+      @user.entries.where(status: sort_column).order(japanische_umschrift: sort_direction)
     else
       @user.entries.order(sort_column + ' ' + sort_direction)
     end

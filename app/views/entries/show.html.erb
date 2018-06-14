@@ -6,8 +6,8 @@
       <div style="float: left;">
         <%= link_to 'Seite', embed_scans(@entry.kennzahl)[0][:url] %>
         <a href="#"><span class="badge"><span id="page_count"></span></span></a>
-        <% unless @entry.bearbeitungsstand.blank? %>
-          <%= content_tag(:span, @entry.bearbeitungsstand, class: label_bearbeitungsstand(@entry.bearbeitungsstand)) %>
+        <% unless @entry.status.blank? %>
+          <%= content_tag(:span, @entry.status, class: label_status(@entry.status)) %>
         <% end %>
         <div class="btn-group" role="group" aria-label="...">
           <button type="button" onclick="page_down()" id="back"class="btn btn-default">Zurück</button>

@@ -23,8 +23,8 @@ module EntriesHelper
     ['Ā', 'ā', 'Æ', 'æ', 'Ǣ', 'ǣ', 'Ē', 'ē', 'Ī', 'ī', 'Ō', 'ō', 'Ū', 'ū', 'Ḍ', 'ḍ', 'Ġ', 'ġ', 'Ḥ', 'ḥ', 'Ḷ', 'ḷ', 'Ḹ', 'ḹ', 'Ṃ', 'ṃ', 'Ṁ', 'ṁ', 'Ṇ', 'ṇ', 'Ṅ', 'ṅ', 'Ñ', 'ñ', 'Ṛ', 'ṛ', 'Ṝ', 'ṝ', 'Ś', 'ś', 'Ṣ', 'ṣ', 'Ṭ', 'ṭ']
   end
 
-  def label_bearbeitungsstand(bearbeitungsstand)
-    case bearbeitungsstand
+  def label_status(status)
+    case status
     when 'Code veraltet'
       'label label-warning'
     when 'unbearbeitet'
@@ -37,7 +37,7 @@ module EntriesHelper
   end
 
   def all_fields
-    (['all'] + Entry::BEARBEITUNGS_STAND + Entry.column_names).map do |entry|
+    (['all'] + Entry::STATUS + Entry.column_names).map do |entry|
       if entry == 'all'
         ['Alle Felder', 'all']
       else

@@ -48,7 +48,7 @@
       <%= f.text_field :abweichende_kennzahl, label: 'Abweichende Kennzahl' %>
       <%= f.text_field :seite_textblock2005, label: 'Seite Textblock 2005' %>
       <%= f.select :bearbeitungsansatz, ['Übersetzung', 'ergänzte Übersetzung', 'Neufassung'], selected: 'Übersetzung' %> 
-      <%= f.select(:bearbeitungsstand, Entry::BEARBEITUNGS_STAND) %>
+      <%= f.select(:status, Entry::STATUS) %>
     </div>
     <div class="funky_grey_seperator">
       <h4>Lemma-Schreibungen und -Aussprachen</h4>

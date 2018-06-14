@@ -23,7 +23,7 @@
         <span class="caret"></span>
       </button>
       <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-        <% Entry::BEARBEITUNGS_STAND.each do |elem| %>
+        <% Entry::STATUS.each do |elem| %>
           <li><%= sortable "#{elem}"%></li>
           <li><%= sortable "#{elem}", "#{elem.capitalize} (rev)", 'desc' %></li>
         <% end %>

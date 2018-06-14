@@ -20,8 +20,8 @@ module Search
       end
 
       def single_column(column, query)
-        if Entry::BEARBEITUNGS_STAND.include?(column)
-          Entry.where(bearbeitungsstand: column).where('japanische_umschrift LIKE ?', "#{query}%")
+        if Entry::STATUS.include?(column)
+          Entry.where(status: column).where('japanische_umschrift LIKE ?', "#{query}%")
         else
           Entry.where("#{column} LIKE ?", "%#{query}%")
         end

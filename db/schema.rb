@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180127180645) do
+ActiveRecord::Schema.define(version: 20180614174443) do
 
   create_table "assignments", force: :cascade do |t|
     t.integer  "creator_id"
@@ -84,7 +84,7 @@ ActiveRecord::Schema.define(version: 20180127180645) do
     t.string   "japanischer_quelltext"
     t.string   "japanischer_quelltext_bearbeitungsstand"
     t.string   "seite_textblock2005"
-    t.string   "bearbeitungsstand"
+    t.string   "status"
     t.string   "bearbeitungsansatz"
   end
 

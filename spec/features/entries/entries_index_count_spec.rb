@@ -16,7 +16,7 @@ describe 'entries index counter' do
     end
     context 'with filtering' do
       it 'gets the right amount of entries displayed' do
-        create(:entry, bearbeitungsstand: 'unbearbeitet')
+        create(:entry, status: 'unbearbeitet')
         click_button 'Felder Auswahl'
         click_link 'Unbearbeitet'
         expect(page.find('span.badge').text).to eq('1')

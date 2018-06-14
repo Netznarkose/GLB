@@ -22,11 +22,11 @@ class Entry < ActiveRecord::Base
                       japanischer_quelltext
                       japanischer_quelltext_bearbeitungsstand
                       seite_textblock2005
-                      bearbeitungsstand
+                      status
                       bearbeitungsansatz
                       assign_to_user_id
                       assign_to_date].freeze
-  BEARBEITUNGS_STAND = [
+  STATUS = [
     'leer',
     'unformatiert',
     'unbearbeitet',

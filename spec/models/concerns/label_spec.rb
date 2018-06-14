@@ -7,15 +7,15 @@ describe Label do
   let(:unprocessed_entry) { FactoryBot.create(:unprocessed_entry) }
   let(:deprecated_syntax_entry) { FactoryBot.create(:deprecated_syntax_entry) }
 
-  describe '#detect_bearbeitungsstand' do
+  describe '#detect_status' do
     before do
-      entry.update(bearbeitungsstand: nil, deutsche_uebersetzung: nil)
+      entry.update(status: nil, deutsche_uebersetzung: nil)
     end
     it 'adds label to unlabeled entries' do
-      expect(entry.bearbeitungsstand.present?).to eq(false)
-      Entry.detect_bearbeitungsstand
+      expect(entry.status.present?).to eq(false)
+      Entry.label_status
       entry.reload
-      expect(entry.bearbeitungsstand.present?).to eq(true)
+      expect(entry.status.present?).to eq(true)
     end
   end
 

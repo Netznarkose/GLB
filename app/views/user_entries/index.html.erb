@@ -24,7 +24,7 @@
           <td><%= assignment.to_date %></td>
         <% end %>
         <td><%= assignment.name_of_creator %></td>
-        <td><%= content_tag(:span, assignment.entry.bearbeitungsstand, class: label_bearbeitungsstand(assignment.entry.bearbeitungsstand)) %></td>
+        <td><%= content_tag(:span, assignment.entry.status, class: label_status(assignment.entry.status)) %></td>
         <td>
           <% if can?(:show, :edit, :delete, assignment.entry) %>
             <%= link_to 'Anzeigen', assignment.entry %> |
@@ -65,7 +65,7 @@
         <td><%= entry.kanji %></td>
         <td><%= entry.namenskuerzel %></td>
         <td><%= entry.comments.any? ? (link_to entry.comments.count, entry_path(entry), class: 'badge') : '' %></td>
-        <td><%= content_tag(:span, entry.bearbeitungsstand, class: label_bearbeitungsstand(entry.bearbeitungsstand)) %></td>
+        <td><%= content_tag(:span, entry.status, class: label_status(entry.status)) %></td>
         <td><%= entry.freigeschaltet ? (content_tag(:span, 'Freigeschaltet', class: 'label label-success')) : '' %></td>
         <td>
           <% if current_user.admin? || current_user.editor? || (current_user.author? && entry.user_id == current_user.id) %>

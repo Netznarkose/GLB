@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
   end
 
   def sort_column
-    (Entry.column_names + Entry::BEARBEITUNGS_STAND).include?(params[:sort]) ? params[:sort] : 'japanische_umschrift'
+    (Entry.column_names + Entry::STATUS).include?(params[:sort]) ? params[:sort] : 'japanische_umschrift'
   end
 
   def sort_direction

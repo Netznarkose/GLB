@@ -1,13 +1,13 @@
 module Label
   extend ActiveSupport::Concern
   class_methods do
-    def detect_bearbeitungsstand
-      unlabeled_entries = Entry.where(bearbeitungsstand: [nil, ''])
+    def label_status
+      unlabeled_entries = Entry.where(status: [nil, ''])
       unlabeled_entries.each do |e|
-        e.update(bearbeitungsstand: 'unformatiert') if e.unformatted?
-        e.update(bearbeitungsstand: 'formatiert') if e.formatted?
-        e.update(bearbeitungsstand: 'unbearbeitet') if e.unprocessed?
-        e.update(bearbeitungsstand: 'Code veraltet') if e.deprecated_syntax?
+        e.update(status: 'unformatiert') if e.unformatted?
+        e.update(status: 'formatiert') if e.formatted?
+        e.update(status: 'unbearbeitet') if e.unprocessed?
+        e.update(status: 'Code veraltet') if e.deprecated_syntax?
       end
     end
   end
@@ -29,7 +29,7 @@ module Label
       regex === uebersetzung
     end
   end
-  
+
   def holds_html_tags?
     /<("[^"]*"|'[^']*'|[^'">])*>/
   end
