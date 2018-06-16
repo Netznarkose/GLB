@@ -1,9 +1,10 @@
 require 'spec_helper'
 
-describe 'assignments' do
-  let(:admin) { create(:admin) }
-  let(:editor) { create(:editor) }
-  let(:entry) { create(:entry) }
+describe 'assignments', type: :feature do
+  let(:admin)      { create(:admin) }
+  let(:editor)     { create(:editor) }
+  let(:recipient)  { create(:author) }
+  let(:entry)      { create(:entry) }
   let(:assignment) { create(:assignment) }
 
   describe 'entry#edit template' do
@@ -19,19 +20,19 @@ describe 'assignments' do
       end
       context 'assigned entry' do
         before do
-          assignment.update(entry_id: entry.id, recipient_id: editor.id)
+          assignment.update(entry_id: entry.id, recipient_id: recipient.id)
           entry.update(user_id: editor.id)
           visit edit_entry_path(entry)
         end
         it 'sees Notification' do
-          expect(page).to have_content("In Bearbeitung von #{entry.user_name} zum #{entry.assignment.to_date}")
+          expect(page).to have_content("In Bearbeitung von #{recipient.name} zum #{entry.assignment.to_date}")
         end
         it 'sees link Zuweisen Editieren' do
           expect(page).to have_link('Zuweisung Bearbeiten')
         end
         it 'Notification disapears when user visits next template' do
           visit root_path
-          expect(page).not_to have_content("In Bearbeitung von #{entry.user_name} zum #{entry.assignment.to_date}")
+          expect(page).not_to have_content("In Bearbeitung von #{recipient.name} zum #{entry.assignment.to_date}")
         end
       end
     end

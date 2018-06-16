@@ -106,7 +106,7 @@ describe EntriesController, type: :controller do
         assignment
         entry.update(user_id: admin.id)
         get :edit, id: entry.id
-        expect(flash[:notice]).to eq("In Bearbeitung von #{entry.user_name} zum #{entry.assignment.to_date}" )
+        expect(flash[:notice]).to eq("In Bearbeitung von #{entry.assignment.name_of_recipient} zum #{entry.assignment.to_date}" )
       end
     end
     context 'as author' do

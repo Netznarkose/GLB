@@ -28,7 +28,7 @@ class EntriesController < ApplicationController
   end
 
   def edit
-    flash.now[:notice] = "In Bearbeitung von #{@entry.user_name} zum #{@entry.assignment.to_date}" if @entry.assignment
+    flash.now[:notice] = "In Bearbeitung von #{@entry.assignment.name_of_recipient} zum #{@entry.assignment.to_date}" if @entry.assignment
   end
 
   def create
