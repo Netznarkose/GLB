@@ -7,18 +7,8 @@ module Validations
   end
 
   def group_lemma_schreibungen_und_aussprachen
-    if japanische_umschrift.blank? &&
-       kanji.blank? &&
-       chinesisch.blank? &&
-       tibetisch.blank? &&
-       koreanisch.blank? &&
-       pali.blank? &&
-       sanskrit.blank? &&
-       weitere_sprachen.blank? &&
-       alternative_japanische_lesungen.blank? &&
-       schreibvarianten.blank?
-      errors[:base] = 'Mindestens ein Feld der Gruppe '\
-        "'Lemma-Schreibungen und -Aussprachen' muss ausgefüllt sein!"
+    if japanische_umschrift.blank? && kanji.blank? && chinesisch.blank? && tibetisch.blank? && koreanisch.blank? && pali.blank? && sanskrit.blank? && weitere_sprachen.blank? && alternative_japanische_lesungen.blank? && schreibvarianten.blank?
+      errors.add(:japanische_umschrift, :blank) # why does it have to be an entry-field?
     end
   end
 

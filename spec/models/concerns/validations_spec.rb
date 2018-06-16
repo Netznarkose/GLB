@@ -13,9 +13,7 @@ RSpec.describe Validations, type: :concern do
   lemma_schreibungen_und_aussprachen is filled out' do
       entry.japanische_umschrift = ''
       expect(entry.valid?).to be(false)
-      expect(entry.errors.messages[:base].first).to eq('Mindestens '\
-                                                       "ein Feld der Gruppe \'Lemma-Schreibungen und -Aussprachen\' "\
-                                                       'muss ausgefüllt sein!')
+      expect(entry.errors[:japanische_umschrift][0]).to eq('Mindestens ein Feld der Gruppe Lemma, Schreibungen & Aussprachen muss ausgefüllt sein!')
     end
     it 'is valid when at least on field of the group
   lemma_schreibungen_und_aussprachen is filled out' do

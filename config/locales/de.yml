@@ -1,6 +1,6 @@
 de:
   date:
-    order: 
+    order:
       - :month
       - :year
   activerecord:
@@ -46,8 +46,10 @@ de:
               confirmation: "Passwortbestätigung stimmt nicht mit Passwort überein"
         entry:
           attributes:
-            kennzahl: 
+            kennzahl:
               blank: "muss ausgefüllt sein!"
+            japanische_umschrift:
+              blank: 'Mindestens ein Feld der Gruppe Lemma, Schreibungen & Aussprachen muss ausgefüllt sein!'
         comment:
           attributes:
             comment:
@@ -56,4 +58,3 @@ de:
           attributes:
             entry_id:
               taken: "Der Eintrag ist bereits einem anderem User Zugewiesen"
-
