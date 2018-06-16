@@ -1,4 +1,4 @@
-<h1>Versions Index </h1>
+
 <table class="table">
   <tr>
     <th>Version</th>
@@ -11,7 +11,7 @@
     <tr>
       <td><%= index == 0 ? 'Aktuelle Version' : index %></td>
       <td><%= "#{version.created_at.strftime('%b %d, %Y')}" %></td>
-      <td><%= "#{version.user_name}" %></td>
+      <td><%= "#{version.user.name}" %></td>
       <td><%= link_to "Anzeigen", index == 0 ? entry_path(@entry) : entry_version_path(version.item_id, version.id, {version_number: index}) %></td>
     </tr>
   <% end %>

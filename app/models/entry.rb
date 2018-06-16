@@ -4,6 +4,17 @@ class Entry < ActiveRecord::Base
   include Search
   has_paper_trail class_name: 'EntryVersion'
 
+  belongs_to :user
+  delegate :name, to: :user
+  has_many :comments
+  has_many :entry_docs
+  has_many :entry_htmls
+
+  before_save :cleanup
+  before_destroy :destroy_related_assignment
+
+  scope :published, -> { where(freigeschaltet: true) }
+
   ALLOWED_PARAMS = %i[namenskuerzel kennzahl
                       spaltenzahl japanische_umschrift
                       japanische_umschrift_din
@@ -40,18 +51,6 @@ class Entry < ActiveRecord::Base
     'mit Index-Markierungen versehen'
   ].freeze
 
-  belongs_to :user
-  delegate :name, to: :user, allow_nil: true, prefix: :user
-  has_many :comments
-  has_many :entry_docs
-  has_many :entry_htmls
-
-
-  before_save :cleanup
-  before_destroy :destroy_related_assignment
-
-  scope :published, -> { where(freigeschaltet: true) }
-
   def destroy_related_assignment
     related_assignment = Assignment.where(entry_id: self).first
     related_assignment.destroy unless related_assignment.blank?
@@ -59,9 +58,7 @@ class Entry < ActiveRecord::Base
 
   def cleanup
     substituter = Substituter.new
-    if japanische_umschrift
-      self.romaji_order = substituter.substitute(japanische_umschrift).downcase
-    end
+    self.romaji_order = substituter.substitute(japanische_umschrift).downcase if japanische_umschrift
   end
 
   def assignment

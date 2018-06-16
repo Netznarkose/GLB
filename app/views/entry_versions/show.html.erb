@@ -40,7 +40,7 @@
     <dl>
       <% unless @version.user_id.blank? %>
         <dt>Verfasser</dt>
-        <dd><%= @version.user_name || 'Unbekannt' %></dd>
+        <dd><%= @version.user.name || 'Unbekannt' %></dd>
       <% end %>
       <% unless @version.namenskuerzel.blank? %>
         <dt>Namenskürzel</dt>

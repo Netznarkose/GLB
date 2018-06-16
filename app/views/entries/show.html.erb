@@ -42,7 +42,7 @@
         <dl>
           <% unless @entry.user_id.blank? %>
             <dt>Verfasser</dt>
-            <dd><%= @entry.user_name %></dd>
+            <dd><%= @entry.user.name %></dd>
           <% end %>
           <% unless @entry.namenskuerzel.blank? %>
             <dt>Namenskürzel</dt>

@@ -1,7 +1,8 @@
 require 'spec_helper'
 
 RSpec.describe Entry, type: :model do
-  let(:entry) { create(:entry) }
+  let(:entry)      { create(:entry, user_id: user.id) }
+  let(:user)       { create(:user) }
   let(:assignment) { create(:assignment) }
 
   describe 'general' do
@@ -24,7 +25,7 @@ RSpec.describe Entry, type: :model do
     end
     context 'without assignment' do
       it 'does not raise an error' do
-        expect{ entry.destroy_related_assignment }.not_to raise_error
+        expect { entry.destroy_related_assignment }.not_to raise_error
       end
     end
   end

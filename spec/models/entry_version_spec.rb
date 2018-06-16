@@ -10,15 +10,15 @@ RSpec.describe EntryVersion, type: :model do
         entry.update(user_id: admin.id)
         last_version = entry.versions.last
         last_version.update(whodunnit: admin.id)
-        expect(last_version.user_name).to eq(admin.name)
+        expect(last_version.user.name).to eq(admin.name)
       end
     end
     context 'if db does not holds related user' do
-      it 'returns nil' do
+      it 'returns Unbekannt' do
         entry.update(user_id: admin.id)
         last_version = entry.versions.last
         last_version.update(whodunnit: 23)
-        expect(last_version.user_name).to eq(nil)
+        expect(last_version.user.name).to eq('Unbekannt')
       end
     end
   end
