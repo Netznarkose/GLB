@@ -1,10 +1,8 @@
 <%= content_tag :div, id: 'kennzahl', data: {kennzahl: @version.kennzahl.to_i } do %>
 <% end %>
 <div style="width: 800px; position: fixed">
-  <h1>Version: <%= version_number %> <span style="font-size: 0.5em">Editiert am: <%= created_at.strftime('%b %d, %Y')%>
-    <% if version_author %>
-    | Editor: <%= version_author %></span></h1>
-<% end %>
+  <h1>Version: <%= version_number %> <span style="font-size: 0.5em">Editiert am: <%= @unreified_version.created_at.strftime('%b %d, %Y')%>
+    | Editor: <%= @unreified_version.user.name %></span></h1>
 <% unless @version.freigeschaltet %>
   <div class="funky_grey_seperator">
     <div style="float: left;">

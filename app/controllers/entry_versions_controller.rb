@@ -1,8 +1,8 @@
 class EntryVersionsController < ApplicationController
   before_action :find_current_entry, only: [:index, :show]
-  before_action :find_current_version, only: [:show, :created_at, :version_author]
+  before_action :find_current_version, only: :show
 
-  helper_method :created_at, :version_author, :version_number
+  helper_method :version_number
 
   def index
     @versions = @entry.versions.filter_versions_without_objects.reverse_order
@@ -10,14 +10,6 @@ class EntryVersionsController < ApplicationController
 
   def show
     @version = @unreified_version.reify
-  end
-
-  def created_at
-    @unreified_version.created_at
-  end
-
-  def version_author
-    @unreified_version.user_name
   end
 
   def version_number

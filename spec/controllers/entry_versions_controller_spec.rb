@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe EntryVersionsController, type: :controller do
-  let(:entry) { FactoryBot.create(:entry) }
-  let(:admin) { FactoryBot.create(:admin) }
+  let(:entry) { create(:entry) }
+  let(:admin) { create(:admin) }
 
   before :each do
     admin
@@ -17,7 +17,7 @@ describe EntryVersionsController, type: :controller do
   end
   describe "GET #show" do
     it "returns http success" do
-      get :show, entry_id: entry.id, id: 1 
+      get :show, entry_id: entry.id, id: 1
       expect(response).to have_http_status(:success)
     end
   end
