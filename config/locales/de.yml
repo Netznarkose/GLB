@@ -50,6 +50,8 @@ de:
               blank: "muss ausgefüllt sein!"
             japanische_umschrift:
               blank: 'Mindestens ein Feld der Gruppe Lemma, Schreibungen & Aussprachen muss ausgefüllt sein!'
+            deutsche_uebersetzung:
+              blank: 'Mindestens ein Feld der Gruppe Uebersetzungen, Quellenangaben, Literatur & Ergaenzungen muss ausgefüllt sein!'
         comment:
           attributes:
             comment:

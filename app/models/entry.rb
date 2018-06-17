@@ -3,6 +3,7 @@ class Entry < ActiveRecord::Base
   include Validations
   include Search
   include Params
+  include Assignable
   has_paper_trail class_name: 'EntryVersion'
 
   belongs_to :user

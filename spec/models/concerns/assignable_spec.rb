@@ -1,10 +1,15 @@
 require 'spec_helper'
 
-RSpec.describe Assignment, type: :concern do
+RSpec.describe Assignable, type: :concern do
   let(:entry) { create(:entry) }
   let(:entry_with_assignment) { create(:entry) }
   let!(:assignment) { create(:assignment, entry_id: entry_with_assignment.id) }
 
+  describe '#assignment' do
+    it 'fetches attached assignment' do
+      expect(entry_with_assignment.assignment).to eq(assignment)
+    end
+  end
   describe 'destroy_related_assignment' do
     context 'with assignment' do
       it 'destroys it' do

@@ -25,9 +25,7 @@ RSpec.describe Validations, type: :concern do
   uebersetzungen_quellenangaben_literatur_und_ergaenzungen is filled out' do
       entry.deutsche_uebersetzung = ''
       expect(entry.valid?).to be(false)
-      expect(entry.errors.messages[:base].first).to eq('Mindestens ein Feld '\
-                                                       "der Gruppe \'Uebersetzungen , Quellenangaben, Literatur und "\
-                                                       "Ergaenzungen\' muss ausgefüllt sein!")
+      expect(entry.errors[:deutsche_uebersetzung][0]).to eq('Mindestens ein Feld der Gruppe Uebersetzungen, Quellenangaben, Literatur & Ergaenzungen muss ausgefüllt sein!')
     end
     it 'is valid when at least one field of the
   group uebersetzungen_quellenangaben_literatur_und_ergaenzungen

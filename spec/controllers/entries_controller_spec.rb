@@ -1,15 +1,16 @@
 require 'spec_helper'
 
 describe EntriesController, type: :controller do
-  let(:entry) { create(:entry) }
-  let(:unpublished_entry) { create(:entry) }
-  let(:published_entry) { create(:published_entry) }
-  let(:admin) { create(:admin) }
-  let(:editor) { create(:editor) }
-  let(:author) { create(:author) }
-  let(:commentator) { create(:commentator) }
-  let(:user) { create(:user) }
-  let(:assignment) { create(:assignment, entry_id: entry.id) }
+  let(:entry)                 { create(:entry) }
+  let(:entry_with_assignment) { create(:entry) }
+  let(:unpublished_entry)     { create(:entry) }
+  let(:published_entry)       { create(:published_entry) }
+  let(:admin)                 { create(:admin) }
+  let(:editor)                { create(:editor) }
+  let(:author)                { create(:author) }
+  let(:commentator)           { create(:commentator) }
+  let(:user)                  { create(:user) }
+  let!(:assignment)           { create(:assignment, entry_id: entry_with_assignment.id) }
 
   before do
     admin
@@ -94,6 +95,7 @@ describe EntriesController, type: :controller do
   describe 'GET edit' do
     before do
       entry
+      entry_with_assignment
     end
     context 'as admin & editor' do
       subject { get :edit, id: entry.id }
@@ -103,10 +105,8 @@ describe EntriesController, type: :controller do
     context 'when entry is assigned' do
       it 'shows a flash-message' do
         sign_in(admin)
-        assignment
-        entry.update(user_id: admin.id)
-        get :edit, id: entry.id
-        expect(flash[:notice]).to eq("In Bearbeitung von #{entry.assignment.name_of_recipient} zum #{entry.assignment.to_date}" )
+        get :edit, id: entry_with_assignment.id
+        expect(flash[:notice]).to eq("In Bearbeitung von #{entry_with_assignment.assignment.name_of_recipient} zum #{entry_with_assignment.assignment.to_date}" )
       end
     end
     context 'as author' do

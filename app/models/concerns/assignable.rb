@@ -1,4 +1,5 @@
-module Assignment
+module Assignable
+  extend ActiveSupport::Concern
   def destroy_related_assignment
     assignment.destroy if assignment.present?
   end

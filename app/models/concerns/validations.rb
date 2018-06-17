@@ -6,23 +6,34 @@ module Validations
     validate :group_uebersetzungen_quellenangaben_literatur_und_ergaenzungen
   end
 
+  private
+  
   def group_lemma_schreibungen_und_aussprachen
-    if japanische_umschrift.blank? && kanji.blank? && chinesisch.blank? && tibetisch.blank? && koreanisch.blank? && pali.blank? && sanskrit.blank? && weitere_sprachen.blank? && alternative_japanische_lesungen.blank? && schreibvarianten.blank?
+    unless [
+      japanische_umschrift,
+      kanji, chinesisch,
+      tibetisch, koreanisch,
+      pali,
+      sanskrit,
+      weitere_sprachen,
+      alternative_japanische_lesungen,
+      schreibvarianten
+    ].any?(&:present?)
       errors.add(:japanische_umschrift, :blank) # why does it have to be an entry-field?
     end
   end
 
   def group_uebersetzungen_quellenangaben_literatur_und_ergaenzungen
-    if deutsche_uebersetzung.blank? &&
-       uebersetzung.blank? &&
-       quellen.blank? &&
-       literatur.blank? &&
-       eigene_ergaenzungen.blank? &&
-       quellen_ergaenzungen.blank? &&
-       literatur_ergaenzungen.blank?
-      errors[:base] = 'Mindestens ein Feld der Gruppe '\
-        "'Uebersetzungen , Quellenangaben, Literatur und Ergaenzungen' "\
-        'muss ausgefüllt sein!'
+    unless [
+      deutsche_uebersetzung,
+      uebersetzung,
+      quellen,
+      literatur,
+      eigene_ergaenzungen,
+      quellen_ergaenzungen,
+      literatur_ergaenzungen
+    ].any?(&:present?)
+      errors.add(:deutsche_uebersetzung, :blank)
     end
   end
 end
