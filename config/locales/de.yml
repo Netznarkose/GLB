@@ -3,6 +3,15 @@ de:
     order:
       - :month
       - :year
+  assignment_notifier:
+    create:
+      subject: "Zuweisung des Eintrags %{japanische_umschrift} (%{kennzahl})"
+    done:
+      subject: "Eintrag %{japanische_umschrift} (%{kennzahl}) erledigt"
+    reminder:
+      subject: "Überschreitung des Bearbeitungszeitraums für Eintrag %{japanische_umschrift} (%{kennzahl})"
+    expired:
+      subject: "Rücknahme des Bearbeitungsrechts für Eintrag %{japanische_umschrift} (%{kennzahl})"
   activerecord:
     attributes:
       entry:
